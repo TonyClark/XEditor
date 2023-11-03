@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Rule
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Rule</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+No Documentation Specified
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/XRules/index.html">XRules</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/XOCL/Syntax/index.html">Syntax</A>
+<BR><HR>
+<B>Subclasses</B>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+<TR><TD>Rule(name,ruleDefs)</TD><TD> No Documentation </TD></TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR><TD><B>name</B></TD><TD><A HREF="../../../Root/XCore/String/index.html">String<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>ruleDefs</B></TD><TD><A HREF="../../../Root/XRules/RuleDef/index.html">Set(RuleDef)<A></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Performable/index.html">Performable</A>: endLine, line. <BR><B>From</B> <A HREF="../../../Root/XCore/Located/index.html">Located</A>: charEnd, charStart. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>add(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>addToRuleDefs(v:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>name():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>processClauseElement(e:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>processClauseExp(e:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>ruleDefs():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>toString():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XOCL/Syntax/index.html">Syntax</A>: compile, eval, lift, liftKeyArgs, liftValue, maxLocals, syntaxInit. <BR><B>From</B> <A HREF="../../../Root/XCore/Performable/index.html">Performable</A>: FV, compile, endLine, eval, line, maxLocals, pprint, pprint, pprint, setEndLine, setLine. <BR><B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=1><FONT SIZE="+2">
+<B>Grammar</B></FONT></TD>
+</TR>
+<TD><PRE>
+@Grammar extends OCL::OCL.grammar
+    
+      Rule ::= n = Name args = RuleArgs actions = Action* 'end' {
+      
+        Rule(n,Set{RuleDef(args->size,Seq{Clause(args,actions)})})
+        
+      }.
+      
+      RuleArgs ::= '(' (
+      
+        ')' { Seq{} }
+        
+      | t = Term ts = (',' Term)* ')' { Seq{t | ts} }
+      
+      ).
+      
+      RulePath ::= n = Name ns = ('::' Name)* { Seq{n | ns} }.
+      
+      Term ::= 
+        n = Num { Const(n) }
+      | f = Float { Const(f) }
+      | s = Str { Const(s) }
+      | 'true' { Const(true) }
+      | 'false' { Const(false) }
+      | 'null' { Const(null) }
+      | NamedTerm
+      | Terms
+      | '<' e = DropExp '>' { Const(OCL::Drop(e)) }.
+      
+      Num ::= Int | Float.
+      
+      NamedTerm ::= n = Name (
+      
+        ':' t = RulePath { Var(n,t) } 
+        
+      | ns = ('::' Name)* '[' fields = Fields ']' { Record(Seq{n|ns},fields) }
+        
+      | { Var(n) }
+      
+      ).
+      
+      Fields ::= f = Field fs = (';' Field)* { Seq{f|fs} } | { Seq{} }.
+      
+      Field ::= n = Name '=' t = Term { Field(n,t) }.
+      
+      Terms ::= 'Seq{' ( '}' { Const(Seq{}) }
+        
+      | h = Term ( '}' { Terms(h,Const(Seq{})) }
+        
+        | '|' t = Term '}' { Terms(h,t) }
+        
+        | ts = (',' Term)* '}' { Seq{h|ts}->reverse->iterate(t ts = Const(Seq{}) | Terms(t,ts)) }
+        
+        )
+      
+      ).
+      
+      Action ::= TryGoal | ClauseEl | ThrowTerm | IfGoal.
+      
+      IfGoal ::= 'if' test = Action* 'then' conseq = Action* ('else' alt = Action* 'end' { If(test,conseq,alt) } | 'end' { If(test,conseq,Seq{Fail()}) }).
+      
+      ThrowTerm ::= 'throw' t = Term { Throw(t) }.
+      
+      TryGoal ::= 'try' as = Action* cs = CatchClause* ('else' e = Action 'end' { Try(as,cs,e) } | 'end' { Try(as,cs) }).
+      
+      CatchClause ::= 'catch' '(' t = Term ')' as = Action* { Catch(t,as) }.
+      
+      Cut ::= '!' { Cut() }.
+      
+      Fail ::= 'fail' { Fail() }.
+      
+      ClauseEl ::= r = ClauseRel { Rule::processClauseElement(r) } | Cut | Fail.
+      
+      ClauseRel ::= a1 = ClauseExp (o = RelOp a2 = ClauseExp { Seq{"REL",a1,o,a2} } | { a1 }).
+      
+      ClauseExp ::= a1 = ClauseAtom (o = ArithOp a2 = ClauseExp { Seq{"EXP",a1,o,a2} } | {a1} ) | EvalExp.
+        
+      EvalExp ::= 'eval' e = Atom args = RuleArgs { EvalCall(XOCL::Exp(e),args) }.
+      
+      ClauseAtom ::= RuleCall | FunCall | s = Str { Const(s) } | i = Num { Const(i) } | ClauseBool | '(' a = ClauseExp ')' { a }.
+      
+      RuleCall ::= n = Name (args = RuleArgs { Call(n,args) } | { Var(n) }).
+      
+      FunCall ::= 'call' e = Atom args = RuleArgs { FunCall(XOCL::Exp(e),args) }.
+      
+      ClauseBool ::= 'true' { Const(true) } | 'false' { Const(false) }.
+      
+      ArithOp ::= '+' { "+" } | '-' { "-" } | '*' { "*" } | '/' { "/" }.
+      
+      RelOp ::= '=' { "=" } | '<' { "<" } | '>' { ">" } | '<>' { "<>" } | 
+             
+                '>=' { ">=" } | '<=' { "<=" }. 
+      
+    end
+</PRE></TD>
+</TABLE>
+</HTML>

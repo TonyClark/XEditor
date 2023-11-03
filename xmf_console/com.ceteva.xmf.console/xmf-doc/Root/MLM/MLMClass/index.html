@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+MLMClass
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>MLMClass</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+        A multi-level class is defined to have a level. A multi-level
+        class has a meta-class which must occur at the next higher
+        level. A class at level 1 will have objects as instances at level 0.
+        The class specifies properties, each of which has a level number
+        indicating when they become slots in (potentially indirect) 
+        instances of the class.
+      
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/MLM/index.html">MLM</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/MLM/LevelNamed/index.html">LevelNamed</A>
+<BR><HR>
+<B>Subclasses</B>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+<TR><TD>MLMClass(name,level,meta,properties,slots)</TD><TD> No Documentation </TD></TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR><TD><B>meta</B></TD><TD><A HREF="../../../Root/MLM/TypeRef/index.html">TypeRef<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>operations</B></TD><TD><A HREF="../../../Root/MLM/MLMOp/index.html">Seq(MLMOp)<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>properties</B></TD><TD><A HREF="../../../Root/MLM/MLMProp/index.html">Seq(MLMProp)<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>slots</B></TD><TD><A HREF="../../../Root/MLM/MLMSlot/index.html">Seq(MLMSlot)<A></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/MLM/LevelNamed/index.html">LevelNamed</A>: level, name. <BR><B>From</B> <A HREF="../../../Root/XCore/Located/index.html">Located</A>: charEnd, charStart. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>getDiagram(links:<A HREF="../../../Root/XCore/Table/index.html">Table<A>):<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getSnapshotDiagramElement(snapshotName:<A HREF="../../../Root/XCore/String/index.html">String<A>,links:<A HREF="../../../Root/XCore/Table/index.html">Table<A>):<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>hasMetaType(name:<A HREF="../../../Root/XCore/String/index.html">String<A>,cs:<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setDefiniens(env:<A HREF="../../../Root/Compiler/Env/index.html">Env<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>toString():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/MLM/LevelNamed/index.html">LevelNamed</A>: getName. <BR><B>From</B> <A HREF="../../../Root/AbstractSyntax/Definiens/index.html">Definiens</A>: getName. <BR><B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+</HTML>

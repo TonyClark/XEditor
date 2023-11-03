@@ -1,0 +1,452 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Root
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Root</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      The root name space contains all XMF definitions. Adding a named element to 
+      this name space makes it globally available. XMF is initialized with a
+      number of named elements in this name space. Typically you will add your
+      own elements here when developing new name spaces containing your definitions.
+      Although named elements are added to a name space using the 'add/1' 
+      operation, the preferred (and more declarative) way of adding definitions
+      to name spaces (including packages and classes) is to use the 'context'
+      construct. Typically the 'context' construct appears at the top level of
+      a file or equivalent collection of definitions.
+    
+<BR><HR><BR>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="65px" preserveAspectRatio="none" style="width:177px;height:65px;background:#FFFFFF;" version="1.1" viewBox="0 0 177 65" width="177px" zoomAndPan="magnify"><defs/><g><path d="M8.5,6 L153.5,6 A3.75,3.75 0 0 1 156,8.5 L163,28.4883 L167.5,28.4883 A2.5,2.5 0 0 1 170,30.9883 L170,56.4766 A2.5,2.5 0 0 1 167.5,58.9766 L8.5,58.9766 A2.5,2.5 0 0 1 6,56.4766 L6,8.5 A2.5,2.5 0 0 1 8.5,6 " fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/><line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="163" y1="28.4883" y2="28.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="144" x="10" y="21.5352">ObjectWithProperties</text><!--SRC=[3Sj13eCm30J0UrxX7z5RpuPQYI79McQbjghwTvZx4264h20nvELf6nspQEzu3__uhEKyV8Qc3ka-ZTymGRAXX6w7LfDbtU_sTBP78YpfTigl_2y0]--></g></svg>
+<BR><HR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Contents</B></FONT></TD>
+</TR>
+<TR><TD><B><A HREF="../Root/AbstractSyntax/index.html">AbstractSyntax</A></B></TD><TD>
+      This package contains classes and operations that support the construction
+      and manipulation of abstract syntax trees. All abstract syntax tree objects 
+      should be instances of XCore:Located so that editors can reference the
+      source code.
+    </TD></TR>
+<TR><TD><B><A HREF="../Root/Arrays/index.html">Arrays</A></B></TD><TD>
+      This package defines classes that support indexed storage of 1 or more
+      dimensions. Use Simple2DArray(cols,rows) to create an array with the
+      given dimensions.
+    </TD></TR>
+<TR><TD><B>AllAspects</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Aspects/index.html">Aspects</A></B></TD><TD>
+      This package defines classes that support XMF aspects. An aspect is a collection
+      of definitions that are added to model elements. An aspect allows you to group
+      structure and behaviour that relate to a collection of (possibly otherwise unrelated)
+      classes. An aspect contains a collection of aspect components. Each aspect component
+      is a name space and a collection of named elements for that name space. By adding
+      an aspect component to an aspect, each component causes the named elements to be added
+      to the component name space. For example, consider defining an aspect that allows
+      certain types of XCore element to be translated to HTML. The HTML aspect will contain
+      class definitions for just the attributes and operations that need to be added to
+      the existing XCore classes.
+     </TD></TR>
+<TR><TD><B><A HREF="../Root/Assembler/index.html">Assembler</A></B></TD><TD>
+      Executable code in XModeler is contained in code-boxes. A code-box is a byte-coded
+      sequence of machine instructions that can run on the XModeler VM. The assembler is
+      used to translate a sequence of objects of type Instr into a code-box.
+    </TD></TR>
+<TR><TD><B><A HREF="../Root/Associations/index.html">Associations</A></B></TD><TD>
+      The associations package defines elements used to represent
+      binary associations. Associations between classes are implemented
+      as attributes on each class plus a round-trip constraint that
+      must hold between instances of the classes.
+    </TD></TR>
+<TR><TD><B><A HREF="../Root/Comms/index.html">Comms</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Compiler/index.html">Compiler</A></B></TD><TD>
+      The XOCL Compiler translates code into a representation of machine instructions.
+      This package contains classes and definitions that are used in the translation
+      process.
+    </TD></TR>
+<TR><TD><B><A HREF="../Root/Comprehensions/index.html">Comprehensions</A></B></TD><TD>
+      This package defines syntax translation classes that implement list and set comprehensions.
+      A typical list comprehension is [ x + 1 | x:Integer <- 0.to(100), ?x.isPrime() ]. A set
+      comprehension uses { ... }.
+    </TD></TR>
+<TR><TD><B><A HREF="../Root/Debug/index.html">Debug</A></B></TD><TD>
+      Usage: @Debug::MonitorCalls(NS1,NS2,...) COMMAND en-d.report(stdout)
+      where NSi is a name space (expression).
+    </TD></TR>
+<TR><TD><B><A HREF="../Root/DocTables/index.html">DocTables</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/CodeGen/index.html">CodeGen</A></B></TD><TD>
+      Defines a construct that allows code (or more generally) text templates 
+      to be defined where literal text can be interleaved with program code   
+      to generate output. The literal text and programs can be nested to any 
+      depth using a feature that is similar to [| with |] (lifting) and <     
+      with > (dropping) in abstract syntax.
+    </TD></TR>
+<TR><TD><B><A HREF="../Root/Docs/index.html">Docs</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Env/index.html">Env</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Evaluator/index.html">Evaluator</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Exceptions/index.html">Exceptions</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Filmstrips/index.html">Filmstrips</A></B></TD><TD>
+      A filmstrip is a recording of the execution of an operation. The
+      filmstrip records the state of a collection of designated objects
+      prior to the execution and after the execution. The fikmstrip may
+      monitor several operations at once and will record all of the pre
+      and post states nested within the execution.
+    </TD></TR>
+<TR><TD><B><A HREF="../Root/Generics/index.html">Generics</A></B></TD><TD>
+      A collection of general purpose generic classes.
+    </TD></TR>
+<TR><TD><B><A HREF="../Root/Graphs/index.html">Graphs</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/IO/index.html">IO</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Import/index.html">Import</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Instrs/index.html">Instrs</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Java/index.html">Java</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/JavaDeployer/index.html">JavaDeployer</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Languages/index.html">Languages</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Location/index.html">Location</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Manifests/index.html">Manifests</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Models/index.html">Models</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/OCL/index.html">OCL</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/ObjectWithProperties/index.html">ObjectWithProperties</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Parser/index.html">Parser</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Preference/index.html">Preference</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/PreferenceManager/index.html">PreferenceManager</A></B></TD><TD>
+      A preference manager manages a collection of named preferences.
+    </TD></TR>
+<TR><TD><B><A HREF="../Root/Projects/index.html">Projects</A></B></TD><TD>
+      This package defines classes that implement XMF projects.
+    </TD></TR>
+<TR><TD><B><A HREF="../Root/Sheet/index.html">Sheet</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Signatures/index.html">Signatures</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Stacks/index.html">Stacks</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Time/index.html">Time</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/TopLevel/index.html">TopLevel</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/Undo/index.html">Undo</A></B></TD><TD>
+       This package defines the general undo machine
+     </TD></TR>
+<TR><TD><B><A HREF="../Root/Walkers/index.html">Walkers</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/WithDocEnv/index.html">WithDocEnv</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/XCore/index.html">XCore</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/XEditor/index.html">XEditor</A></B></TD><TD>
+      The XEditor package provides support for the XEditor tool.
+      It defines handlers for events that are raised by the
+      underlying Java code.
+    </TD></TR>
+<TR><TD><B><A HREF="../Root/XMF/index.html">XMF</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/XML/index.html">XML</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/XMap/index.html">XMap</A></B></TD><TD>
+      This package defines various constructs that allow XMF objects to
+      be mapped and synchronised.
+    </TD></TR>
+<TR><TD><B><A HREF="../Root/XMatch/index.html">XMatch</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/XOCL/index.html">XOCL</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/XOCLWalker/index.html">XOCLWalker</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B><A HREF="../Root/XRules/index.html">XRules</A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>anonymous</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>foldRefs</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>formats</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>order</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>prec</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>resolve</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>resolvePath</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_URLInputChannel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_addAtt</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_allInstances</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_allSubClasses</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_arrayDaemons</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_arrayDaemonsActive</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_arrayLength</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_arrayRef</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_arraySet</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_arraySetDaemons</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_arraySetDaemonsActive</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_asSeq</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_asSet</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_asString</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_available</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_backtrace</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_bufferAsString</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_bufferDaemons</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_bufferDaemonsActive</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_bufferIncrement</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_bufferSetAsString</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_bufferSetDaemons</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_bufferSetDaemonsActive</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_bufferSetSize</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_bufferSize</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_bufferStorage</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_call</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_callcc</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_ceiling</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_charCount</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_clientInputChannel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_clientInterface</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_clientOutputChannel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_client_connect</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_close</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_closeAll</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_closeZipInputChannel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_codeBoxCodeSize</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_codeBoxConstants</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_codeBoxInstrAt</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_codeBoxLocals</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_codeBoxName</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_codeBoxOperandsAt</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_codeBoxResourceName</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_codeBoxSetCode</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_codeBoxSetConstants</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_codeBoxSetInstrAt</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_codeBoxSetName</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_codeBoxSetResourceName</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_codeBoxSetSource</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_codeBoxSource</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_codeBoxToFun</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_codeSet</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_copy</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_copyFile</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_cos</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemonAction</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemonId</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemonPersistent</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemonSetAction</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemonSetId</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemonSetPersistent</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemonSetSlot</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemonSetTarget</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemonSetTraced</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemonSetType</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemonSlot</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemonTarget</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemonTraced</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemonType</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemons</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemonsOff</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_daemonsOn</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_date</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_dateStructured</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_dbAutoCommit</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_dbClose</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_dbCommit</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_dbConnect</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_dbLoadDriver</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_dbQuery</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_dbQueryClose</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_dbQueryLookup</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_dbQueryNext</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_dbQueryPrevious</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_dbUpdate</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_delay</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_deleteFile</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_die</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_dirContents</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_div</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_endUndoContext</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_eof</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_exec</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_execRedo</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_execUndo</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_exit</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_extendHeap</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_fileExists</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_fileInputChannel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_fileOutputChannel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_fileReadOnly</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_fileSize</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_floor</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_flush</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_forName</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_foreignMOPMapping</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_foreignTypeMapping</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_fork</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_forwardRefListeners</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_forwardRefPath</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_forwardRefSetListeners</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_forwardRefSetPath</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_forwardRefSetValue</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_forwardRefValue</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_forwardRefs</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funArgs</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funArity</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funCodeBox</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funDoc</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funDynamics</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funGlobals</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funInstLevel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funIsIntrinsic</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funIsVarArgs</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funName</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funOwner</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funProperties</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSelf</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSetArgs</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSetArity</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSetCodeBox</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSetDoc</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSetDynamics</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSetGlobals</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSetInstLevel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSetIsIntrinsic</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSetIsVarArgs</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSetName</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSetOwner</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSetProperties</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSetSelf</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSetSig</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSetSupers</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSetTraced</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSig</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funSupers</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_funTraced</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_getForeignSlot</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_getLastModified</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_getNonReferencedElements</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_getSlotValue</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_getVar</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_graphLayout</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_gzipInputChannel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_gzipOutputChannel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_hasForeignSlot</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_hasSlot</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_hasVar</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_hashCode</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_heapSize</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_import</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_imports</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_invoke</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_invokeMethod</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_isDir</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_isOlder</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_letVar</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_lineCount</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_load</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_load3_tmp</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_loadImage</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_loadbin</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_local</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_lowerCase</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_lsh</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_memory</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mk24bit</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mkArray</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mkBasicTokenChannel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mkBuffer</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mkCode</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mkCodeBox</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mkDaemon</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mkDataInputChannel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mkDataOutputChannel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mkDir</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mkFloat</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mkFun</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mkObj</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mkString</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mkSymbol</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mkTable</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_mod</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_needsGC</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_newListeners</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_newObj</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_nextToken</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_objDaemonsActive</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_objHotLoad</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_objIsNotVMNew</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_objIsSaveAsLookup</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_objSetDaemonsActive</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_objSetHotLoad</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_objSetNotVMNew</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_objSetSaveAsLookup</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_objSlots</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_of</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_operationCodeBox</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_operatorPrecedenceList</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_patternMatch</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_peek</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_random</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_readString</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_readVector</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_readXML</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_ready</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_rebindStdin</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_rebindStdout</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_redoStackSize</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_removeAtt</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_renameFile</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_resetSaveLoad</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_resetToInitialState</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_round</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_rsh</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_save</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_save2</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_save3_tmp</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_saxInputChannel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_self</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_sendForeignInstance</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_setCharAt</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_setConstructorArgs</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_setDaemons</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_setDefaultGetMOP</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_setDefaultSendMOP</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_setDefaultSetMOP</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_setFileLastModified</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_setForeignSlot</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_setForwardRefs</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_setOf</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_setSlotValue</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_setSlotVisibility</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_setTypes</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_setUndoSize</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_sin</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_size</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_slotNames</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_sortNamedElements</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_sqrt</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_stackFrames</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_startUndoContext</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_stats</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_stringInputChannel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_symbolName</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_symbolSetName</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_symbolSetValue</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_symbolValue</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_tableHasKey</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_tableHasValue</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_tableKeys</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_tableRemove</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_tag</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_tempDir</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_tempFile</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_thread</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_threadId</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_threadKill</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_threadNext</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_threadState</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_time</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_timeAdd</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_timeDifference</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_toJava</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_tokenChannelTextTo</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_tos</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_undoStackSize</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_unify</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_usedHeap</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_value</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_valueToString</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_wake</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_write</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_writeCommand</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_writePacket</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_xmf</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_yield</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_zipInputChannel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_zipNewEntry</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>Kernel_zipOutputChannel</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>gc</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>print</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>resetOperatorTable</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>restoreMachineState</B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>saveMachineState</B></TD><TD>No Documentation Specified</TD></TR>
+</TABLE>
+</HTML>

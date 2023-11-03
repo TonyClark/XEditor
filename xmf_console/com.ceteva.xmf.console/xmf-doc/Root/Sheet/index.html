@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Sheet
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Sheet</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+No Documentation Specified
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../Root/index.html">Root</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../Root/XCore/Object/index.html">Object</A>
+<BR><HR>
+<B>Subclasses</B>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+<TR><TD>Sheet(rows,cols)</TD><TD>
+        The default type for each cell in the sheet is Element
+      </TD></TR>
+<TR><TD>Sheet(rows,cols,map)</TD><TD>
+        Map is a binary operator that maps (row,col) pairs
+        to classifiers.
+      </TD></TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR><TD><B>cols</B></TD><TD><A HREF="../../Root/XCore/Element/index.html">Seq(Element)<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>data</B></TD><TD><A HREF="../../Array(Element)/index.html">Array(Element)<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>inspectWidth</B></TD><TD><A HREF="../../Root/XCore/Integer/index.html">Integer<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>map</B></TD><TD><A HREF="../../Root/XCore/Operation/index.html">Operation<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>rows</B></TD><TD><A HREF="../../Root/XCore/Element/index.html">Seq(Element)<A></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+</FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>colIndex(col:<A HREF="../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getCell(row:<A HREF="../../Root/XCore/Element/index.html">Element<A>,col:<A HREF="../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>hasCell(row:<A HREF="../../Root/XCore/Element/index.html">Element<A>,col:<A HREF="../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>hasCol(col:<A HREF="../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>hasRow(row:<A HREF="../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>initCells(values:<A HREF="../../Root/XCore/Seq(Element)/index.html">Seq(Seq(Element))<A>):<A HREF="../../Root/Sheet/index.html">Sheet<A></B></TD><TD>
+        Initialise the sheet with the cell values. Values is a sequence of
+        rows. Each row is a sequence of values. Returns the receiver.
+      </TD></TR>
+<TR><TD><B>pprint(out:<A HREF="../../Root/XCore/Element/index.html">Element<A>,width:<A HREF="../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>pprintLine(out:<A HREF="../../Root/XCore/Element/index.html">Element<A>,width:<A HREF="../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>rowIndex(row:<A HREF="../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setCell(row:<A HREF="../../Root/XCore/Element/index.html">Element<A>,col:<A HREF="../../Root/XCore/Element/index.html">Element<A>,value:<A HREF="../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+        Sets the value of the cell indexed by (row,col).
+        Returns the receiver.
+      </TD></TR>
+<TR><TD><B>toString():<A HREF="../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>type(row:<A HREF="../../Root/XCore/Element/index.html">Element<A>,col:<A HREF="../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+</HTML>

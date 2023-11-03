@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+ToXML
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>ToXML</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+No Documentation Specified
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../../Root/XML/Generator/index.html">Generator</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../../Root/XOCL/Sugar/index.html">Sugar</A>
+<BR><HR>
+<B>Subclasses</B>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+<TR><TD>ToXML(name,tag,refTag,id,attMaps,elementMaps)</TD><TD> No Documentation </TD></TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR><TD><B>attMaps</B></TD><TD><A HREF="../../../../Root/XML/Generator/AttributeMap/index.html">Seq(AttributeMap)<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>elementMaps</B></TD><TD><A HREF="../../../../Root/XML/Generator/ElementMap/index.html">Seq(ElementMap)<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>id</B></TD><TD><A HREF="../../../../Root/XCore/String/index.html">String<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>name</B></TD><TD><A HREF="../../../../Root/XCore/String/index.html">String<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>refTag</B></TD><TD><A HREF="../../../../Root/XCore/String/index.html">String<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>tag</B></TD><TD><A HREF="../../../../Root/XCore/String/index.html">String<A></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../../Root/XCore/Performable/index.html">Performable</A>: endLine, line. <BR><B>From</B> <A HREF="../../../../Root/XCore/Located/index.html">Located</A>: charEnd, charStart. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>desugar():<A HREF="../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugarAttributeMaps():<A HREF="../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugarElementMaps():<A HREF="../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugarNoRef():<A HREF="../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugarRef():<A HREF="../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../../Root/XOCL/Sugar/index.html">Sugar</A>: FV, compile, desugar, eval, lift, maxLocals, typeExp. <BR><B>From</B> <A HREF="../../../../Root/XCore/Performable/index.html">Performable</A>: FV, compile, endLine, eval, line, maxLocals, pprint, pprint, pprint, setEndLine, setLine. <BR><B>From</B> <A HREF="../../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=1><FONT SIZE="+2">
+<B>Grammar</B></FONT></TD>
+</TR>
+<TD><PRE>
+@Grammar extends OCL::OCL.grammar
+    
+      ToXML ::= 
+      
+        // The name of the operation...
+        
+        name = OptionalName 
+        
+        // The tag, id attribute, tag to use when referencing ...
+        
+        '(' tag = Name id = OptionalId refTag = OptRefTag ')' 
+        
+        // Mapping XML attribute names to XMF slot names...
+        
+        attMaps = AttMaps 
+        
+        // Which children to generate...
+        
+        elementMaps = WrappedMap* 
+        
+        'end'
+      
+        { ToXML(name,tag,refTag,id,attMaps,elementMaps) }.
+        
+      AttMaps ::= 
+      
+        '[' attMap = AttMap attMaps = (',' AttMap)* { Seq{attMap | attMaps} }  ']' 
+        
+      | '[' ']' { Seq{} }.
+      
+      AttMap ::= 
+        
+        test = AttMapTest name = Name { AttributeMap(test,name,Var(name)) } |
+        
+        test = AttMapTest XMLName = Name '=' exp = Exp { AttributeMap(test,XMLName,exp) }.
+      
+      AttMapTest ::= 
+      
+        // A guard on the attribute...
+        
+        '?' Exp | { [| true |] }.
+      
+      OptionalName ::= 
+      
+        Name 
+        
+      | { "toXML" }.
+      
+      OptionalId ::=
+      
+        ',' Name
+        
+      | { "" }.
+      
+      OptRefTag ::= ',' Name | { "" }.
+      
+      WrappedMap ::= startTag = StartTag map = WrappedMap endTag = EndTag { WrappedMap(startTag,map,endTag) } | ElementMap.
+      
+      StartTag ::= '<' n = Name '>' { n }.
+      
+      EndTag ::= '</' n = Name '>' { n }.
+      
+      ElementMap ::= map = (Just | Ref) ('*' map = { Map(map) } ('*' map = { Join(map) })* { map } | { map }).
+      
+      Just ::= name = Name { Just(name) }.
+        
+      Ref ::= 'Ref' '(' tag = Name ',' ref = Name ',' att = Name ')' { Ref(tag,ref,att) }.
+      
+    end
+</PRE></TD>
+</TABLE>
+</HTML>

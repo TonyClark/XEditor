@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+For
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>For</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      A for loop selects elements from a sequence in turn and 
+      performs an action. The for directives can be used to indicate
+      looping through a collection or parts of a table. Using the
+      directives for tables can be much more efficient because an
+      intermediate collection is not constructed. 
+    
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/XOCL/index.html">XOCL</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/AbstractSyntax/DefiniensContainer/index.html">DefiniensContainer</A>
+,<A HREF="../../../Root/XOCL/Sugar/index.html">Sugar</A>
+<BR><HR>
+<B>Subclasses</B>
+<A HREF="../../../Root/CodeGen/Loop/index.html">Loop</A>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+<TR><TD>For(names,directive,colls,guard,body,isExp)</TD><TD> No Documentation </TD></TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR><TD><B>body</B></TD><TD><A HREF="../../../Root/XCore/Performable/index.html">Performable<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>colls</B></TD><TD><A HREF="../../../Root/XCore/Performable/index.html">Seq(Performable)<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>directive</B></TD><TD><A HREF="../../../Root/XCore/String/index.html">String<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>guard</B></TD><TD><A HREF="../../../Root/XCore/Performable/index.html">Performable<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>isExp</B></TD><TD><A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>names</B></TD><TD><A HREF="../../../Root/XCore/String/index.html">Seq(String)<A></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Performable/index.html">Performable</A>: endLine, line. <BR><B>From</B> <A HREF="../../../Root/XCore/Located/index.html">Located</A>: charEnd, charStart. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>bindIndices():<A HREF="../../../Root/OCL/ValueBinding/index.html">Seq(ValueBinding)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>bindNames():<A HREF="../../../Root/OCL/ValueBinding/index.html">Seq(ValueBinding)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>collBindings():<A HREF="../../../Root/OCL/ValueBinding/index.html">Seq(ValueBinding)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>decIndices():<A HREF="../../../Root/OCL/ValueBinding/index.html">Seq(ValueBinding)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugar():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugarClassifiedBy():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugarInReverse():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugarInReverseAction():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugarInReverseExp():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugarInSeq():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugarInSeqAction():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugarInSeqExp():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugarInTableKeys():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugarInTableKeys(name:<A HREF="../../../Root/XCore/String/index.html">String<A>,coll:<A HREF="../../../Root/XCore/Performable/index.html">Performable<A>):<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugarInTableValues(name:<A HREF="../../../Root/XCore/String/index.html">String<A>,coll:<A HREF="../../../Root/XCore/Performable/index.html">Performable<A>):<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugarInTableValues():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>emptyCollCheck():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getDefiniens():<A HREF="../../../Root/AbstractSyntax/Definiens/index.html">Seq(Definiens)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>indexCheck(n:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>indexNames():<A HREF="../../../Root/OCL/ValueBinding/index.html">Seq(ValueBinding)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>lift():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>pprint(out:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,indent:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>protect(exp:<A HREF="../../../Root/XCore/Performable/index.html">Performable<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>takeTails():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>toString():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>walkerBindings():<A HREF="../../../Root/OCL/ValueBinding/index.html">Seq(ValueBinding)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>walkerResults():<A HREF="../../../Root/XCore/Performable/index.html">Seq(Performable)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>walkerSetup():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/AbstractSyntax/DefiniensContainer/index.html">DefiniensContainer</A>: getDefiniens. <BR><B>From</B> <A HREF="../../../Root/XOCL/Sugar/index.html">Sugar</A>: FV, compile, desugar, eval, lift, maxLocals, typeExp. <BR><B>From</B> <A HREF="../../../Root/XCore/Performable/index.html">Performable</A>: FV, compile, endLine, eval, line, maxLocals, pprint, pprint, pprint, setEndLine, setLine. <BR><B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=1><FONT SIZE="+2">
+<B>Grammar</B></FONT></TD>
+</TR>
+<TD><PRE>
+@Grammar extends OCL::OCL.grammar 
+   
+       For ::= 
+       
+         // A for-loop may bind a sequence of names...
+    
+         names = ForNames 
+         
+         // The directive defines how to interpret the
+         // collections...
+         
+         dir = ForDirective 
+         
+         // A collection for each of the names...
+         
+         colls = ForColls 
+         
+         // An optional boolean expression that
+         // must be true in order to process
+         // the names...
+         
+         guard = ('when' <<Exp>> | { null })
+         
+         // We are either performing commands or
+         // producing a sequence of values...
+         
+         isExp = ForType 
+         
+         // The body - either a command or an 
+         // expression..
+         
+         body = <<Exp>> 
+         
+         'end' 
+         
+         { For(names,dir,colls,guard,body,isExp) }. 
+       
+       ForColls ::= exp = <<Exp>> exps = (',' <<Exp>>)* { Seq{exp | exps} }.
+    
+       ForDirective ::= 
+    
+         // The directive controls how the collections
+         // are processed...
+         
+         // A walker produces instances of named types...
+         
+         'classifiedBy'  { "classifiedBy" }  
+         
+         // Select elements from the collections...
+         
+       | 'in'            { "in" }    
+       
+         // Reverse the collections...
+                 
+       | 'inReverse'     { "inReverse" }   
+       
+         // Get keys from a table...
+           
+       | 'inTableKeys'   { "inTableKeys" }  
+       
+         // Get values from a table...
+          
+       | 'inTableValues' { "inTableValues" } 
+       
+         // Call ->asSeq...
+         
+       | 'inSeq'         { "inSeq" }.
+         
+       ForNames ::= 
+       
+         name = AName 
+         
+         names = (',' AName)* 
+         
+         { Seq{name | names} }.
+         
+       ForType ::= 
+       
+         'do' { false } 
+         
+       | 'produce' { true }.
+    
+     end
+</PRE></TD>
+</TABLE>
+</HTML>

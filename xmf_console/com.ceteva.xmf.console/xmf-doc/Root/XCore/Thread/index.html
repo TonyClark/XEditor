@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Thread
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Thread</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      A thread is a unit of concurrent execution. When a thread is created, it 
+      continues processing on the XVM until either it performs a read operation 
+      that blocks on input or when it explicitly calls yield. All XOCL values 
+      implement the yield operation. In both cases the thread is said to 
+      yield control. When a thread yields control, the XOS schedules another 
+      thread that is waiting. The scheduling algorithm aims to ensure that all 
+      waiting threads get scheduled providing that they yield.
+    
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/XCore/index.html">XCore</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/XCore/Element/index.html">Element</A>
+<BR><HR>
+<B>Subclasses</B>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+</FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>asSeq():<A HREF="../../../Root/XCore/Thread/index.html">Seq(Thread)<A></B></TD><TD> 
+      Returns all the threads in the system by chaining down
+      the linked list of threads from the receiver.
+    </TD></TR>
+<TR><TD><B>id():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>kill():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD> 
+      A thread can commit suicide by calling this operation on itself.
+    </TD></TR>
+<TR><TD><B>next():<A HREF="../../../Root/XCore/Thread/index.html">Thread<A></B></TD><TD>
+      Returns the thread that will be scheduled next.
+    </TD></TR>
+<TR><TD><B>sleep():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Sets the live-status of the receiver to SLEEP. The receiver
+      cannot be rescheduled until it has been woken up.
+    </TD></TR>
+<TR><TD><B>state():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      Returns the live-status of the receiver.
+    </TD></TR>
+<TR><TD><B>stateString():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Returns the live-status of the receiver as a symbolic string.
+    </TD></TR>
+<TR><TD><B>toString():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>wake(result:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Changes the live-status of the receiver to be ACTIVE
+      and therefore ready for rescheduling.
+    </TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+</HTML>

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Set(Element)
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Set(Element)</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      An instance of Set where the element type is Element. This is the super-type 
+      of all set data types
+    
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>asSeq():<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Turns a set into a sequence.
+    </TD></TR>
+<TR><TD><B>asSet():<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>
+      Turns a set into a set.
+    </TD></TR>
+<TR><TD><B>collect(filter:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>contains(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if a set contains the element.
+    </TD></TR>
+<TR><TD><B>default():<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD> 
+      Returns the default value of a set: the empty set. 
+    </TD></TR>
+<TR><TD><B>dot(name:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>
+      Returns the result of iterating over
+      a set and applying dot to the slot named
+      name.
+    </TD></TR>
+<TR><TD><B>excluding(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>exists(pred:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns true if an element satisfying
+      the predicate exists in a set.
+    </TD></TR>
+<TR><TD><B>flatten():<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>
+      Turns a set of sets into a set.
+    </TD></TR>
+<TR><TD><B>forAll(pred:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns true if all elements in the
+      set satisfy the predicate.
+    </TD></TR>
+<TR><TD><B>get(name:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>includes(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if a set includes element.
+    </TD></TR>
+<TR><TD><B>includesAll(c:<A HREF="../../../Root/XCore/Collection(Element)/index.html">Collection(Element)<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if a set includes all elements from
+      another collection.
+    </TD></TR>
+<TR><TD><B>including(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>intersection(set:<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A>):<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>
+      Returns the intersection of two sets.
+    </TD></TR>
+<TR><TD><B>isEmpty():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if the set is empty.
+    </TD></TR>
+<TR><TD><B>isKindOf(type:<A HREF="../../../Root/XCore/Classifier/index.html">Classifier<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if all elements in a set are of the
+      type.
+    </TD></TR>
+<TR><TD><B>iter(iterator:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,value:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Iterates over the set.
+    </TD></TR>
+<TR><TD><B>lift():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>map(message:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,args:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>max():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      Find the element with the maximum value in the set.
+      
+    </TD></TR>
+<TR><TD><B>mul(s:<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A>):<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>
+      Generates a set containing all combinations of 
+      elements in the two sequences.
+    </TD></TR>
+<TR><TD><B>power():<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>
+      Returns the powerset of elements in
+      a set, i.e. all possible subsets of a set
+      including the empty set.
+    </TD></TR>
+<TR><TD><B>reject(pred:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>sel():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>select(predicate:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>
+      Filters a set using a predicate.
+    </TD></TR>
+<TR><TD><B>size():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      Returns the size of a set.
+    </TD></TR>
+<TR><TD><B>toString():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Produces a printed representation of a set.
+    </TD></TR>
+<TR><TD><B>union(set:<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A>):<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>
+      Returns the union of two sets.
+    </TD></TR>
+</TABLE>
+</HTML>

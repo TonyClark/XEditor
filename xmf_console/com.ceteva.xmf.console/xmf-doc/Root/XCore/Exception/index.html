@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Exception
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Exception</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      An exception is raised when something goes wrong. An exception contains a
+      message that reports what went wrong. An exception also contains a sequence
+      of stack frames that defines the history of computation at the point the
+      exception was raised. An exception may optionally contain information 
+      about where in the source file the error occurred. This is encoded as the
+      lineCount.
+    
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/XCore/index.html">XCore</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/XCore/Object/index.html">Object</A>
+<BR><HR>
+<B>Subclasses</B>
+<A HREF="../../../Root/XCore/MachineException/index.html">MachineException</A>
+,<A HREF="../../../Root/Parser/ParseError/index.html">ParseError</A>
+,<A HREF="../../../Root/Exceptions/UnboundVar/index.html">UnboundVar</A>
+,<A HREF="../../../Root/Exceptions/IndexOutOfBounds/index.html">IndexOutOfBounds</A>
+,<A HREF="../../../Root/Exceptions/PatternFailed/index.html">PatternFailed</A>
+,<A HREF="../../../Root/Exceptions/ArityError/index.html">ArityError</A>
+,<A HREF="../../../Root/Exceptions/NoProperty/index.html">NoProperty</A>
+,<A HREF="../../../Root/Exceptions/MapFailed/index.html">MapFailed</A>
+,<A HREF="../../../Root/Exceptions/FileNotFound/index.html">FileNotFound</A>
+,<A HREF="../../../Root/Exceptions/XMFEditorError/index.html">XMFEditorError</A>
+,<A HREF="../../../Root/Exceptions/NoSlot/index.html">NoSlot</A>
+,<A HREF="../../../Root/Exceptions/ClassInheritanceException/index.html">ClassInheritanceException</A>
+,<A HREF="../../../Root/Exceptions/Error/index.html">Error</A>
+,<A HREF="../../../Root/Exceptions/NameSpaceRef/index.html">NameSpaceRef</A>
+,<A HREF="../../../Root/Exceptions/TypeError/index.html">TypeError</A>
+,<A HREF="../../../Root/Exceptions/AttributeTypeException/index.html">AttributeTypeException</A>
+,<A HREF="../../../Root/Exceptions/NoOperation/index.html">NoOperation</A>
+,<A HREF="../../../Root/Exceptions/SlotAccessDenied/index.html">SlotAccessDenied</A>
+,<A HREF="../../../Root/Java/MissingPackage/index.html">MissingPackage</A>
+,<A HREF="../../../Root/Java/MissingFactory/index.html">MissingFactory</A>
+,<A HREF="../../../Root/Manifests/BuildError/index.html">BuildError</A>
+,<A HREF="../../../Root/Exceptions/IllegalParentsException/index.html">IllegalParentsException</A>
+,<A HREF="../../../Root/Exceptions/NoKeyInTable/index.html">NoKeyInTable</A>
+,<A HREF="../../../Root/Exceptions/PathNotFound/index.html">PathNotFound</A>
+,<A HREF="../../../Root/Exceptions/StringConversionError/index.html">StringConversionError</A>
+,<A HREF="../../../Root/Stacks/StackUnderflow/index.html">StackUnderflow</A>
+,<A HREF="../../../Root/Walkers/DispatchError/index.html">DispatchError</A>
+,<A HREF="../../../Root/Walkers/TypeCheckError/index.html">TypeCheckError</A>
+,<A HREF="../../../Root/Arrays/ArrayIndexOutOfBounds/index.html">ArrayIndexOutOfBounds</A>
+,<A HREF="../../../Root/XML/UnknownTag/index.html">UnknownTag</A>
+,<A HREF="../../../Root/XML/NoAttribute/index.html">NoAttribute</A>
+,<A HREF="../../../Root/XML/ExpectingTag/index.html">ExpectingTag</A>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+<TR><TD>Exception()</TD><TD> No Documentation </TD></TR>
+<TR><TD>Exception(message)</TD><TD> No Documentation </TD></TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR><TD><B>backtrace</B></TD><TD><A HREF="../../../Root/XCore/Element/index.html">[Element]<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>charCount</B></TD><TD><A HREF="../../../Root/XCore/Integer/index.html">Integer<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>lineCount</B></TD><TD><A HREF="../../../Root/XCore/Integer/index.html">Integer<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>message</B></TD><TD><A HREF="../../../Root/XCore/String/index.html">String<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>resourceName</B></TD><TD><A HREF="../../../Root/XCore/String/index.html">String<A></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+</FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>display():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Call this operation to display an exception to the user.
+      If Mosaic is in full swing then the stack trace will be
+      displayed as a tree. Otherwise the stack trace is printed 
+      in text.
+    </TD></TR>
+<TR><TD><B>printBacktrace(short:<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>printBacktrace():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Call this operation to print out the state of the XMF
+      call stack at the point the exception was created
+      assuming it called setBacktrace() at that point.
+    </TD></TR>
+<TR><TD><B>printBacktraceHeader(out:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>printBasicBacktrace():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>printFrame(frame:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      An exception stack frame contains information about the operation
+      that was currently executing, the target of the call, the arguments
+      and any locals. There also may be information about the original
+      source file and the position of execution in that file.
+    </TD></TR>
+<TR><TD><B>setBacktrace():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>stackFrames():<A HREF="../../../Root/Exceptions/StackFrame/index.html">Seq(StackFrame)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>toString():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+</HTML>

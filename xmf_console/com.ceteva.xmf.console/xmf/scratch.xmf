@@ -1,0 +1,37 @@
+parserImport XOCL;
+parserImport Filmstrips;
+parserImport XML::Parser;
+
+import Env;
+
+context Root
+  @Operation test()
+    @Constraint
+      x = 10
+    end.eval(NullEnv(),null,0)
+  end
+
+Root::lib := Models::Lib::Library();
+
+Models::Lib.edit();
+
+context Root
+  @Operation anyOrder()
+    @Grammar Test
+      Value ::= Integer | Float | Boolean | String | Element | List.
+      Integer ::= <Integer v=value/> {v.asInt() }.
+      Float ::= <Float v=value/> {v.asFloat() }.
+      Boolean ::= <Boolean v=value/> {v.asBool() }.
+      String ::= <String v=value/> { v }.
+      Element ::= <Element h=handle l=label/> { xmf.getObjectWithHandle(h.asInt()) }.
+      List ::= <List> vs=Value* </List> { vs }.
+    end
+  end
+
+context Root
+  @Operation test()
+    let h = xmf.getHandle(Class("X")) then
+        p = XML::Parser::ParserChannel(IO::StringInputChannel("<List> <List/> <Element label=\"XMF\" handle=\"" + h + "\"/><String value=\"Spam\"/><Float value=\"10.9\"/> <Boolean value=\"true\"/> <Integer value=\"100\"/> </List>"),anyOrder())
+    in p.parse("Value")
+    end
+  end

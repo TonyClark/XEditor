@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Statement
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Statement</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+No Documentation Specified
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../../../Root/Languages/MicroJava/Statements/index.html">Statements</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../../../Root/XOCL/Syntax/index.html">Syntax</A>
+<BR><HR>
+<B>Subclasses</B>
+<A HREF="../../../../../Root/Languages/MicroJava/Statements/Dec/index.html">Dec</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Statements/Block/index.html">Block</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Statements/For/index.html">For</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Statements/Try/index.html">Try</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Statements/While/index.html">While</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Statements/Update/index.html">Update</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Statements/Switch/index.html">Switch</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Statements/Return/index.html">Return</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Statements/Do/index.html">Do</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Statements/Throw/index.html">Throw</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Statements/DefaultCase/index.html">DefaultCase</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Statements/Send/index.html">Send</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Statements/CommentLine/index.html">CommentLine</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Statements/FieldUpdate/index.html">FieldUpdate</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Statements/Break/index.html">Break</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Statements/If/index.html">If</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Statements/Case/index.html">Case</A>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../../../Root/XCore/Performable/index.html">Performable</A>: endLine, line. <BR><B>From</B> <A HREF="../../../../../Root/XCore/Located/index.html">Located</A>: charEnd, charStart. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../../../Root/XOCL/Syntax/index.html">Syntax</A>: compile, eval, lift, liftKeyArgs, liftValue, maxLocals, syntaxInit. <BR><B>From</B> <A HREF="../../../../../Root/XCore/Performable/index.html">Performable</A>: FV, compile, endLine, eval, line, maxLocals, pprint, pprint, pprint, setEndLine, setLine. <BR><B>From</B> <A HREF="../../../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=1><FONT SIZE="+2">
+<B>Grammar</B></FONT></TD>
+</TR>
+<TD><PRE>
+@Grammar extends JExp.grammar
+    
+      Statement ::= Break | Block | Send | While | Do | If | JTry | JThrow | SideEffect | Switch | Return | Dec | For.
+      
+      Statements ::= Statement*.
+      
+      Break ::= 'break' ';' { Break() }.
+      
+      Send ::= e = (JNavigate '.' | { null }) n = Name a = JArgs ';' { Send(e,n,a) }.
+      
+      SideEffect ::= VarUpdate | FieldUpdate.
+      
+      VarUpdate ::= n = Name '=' e = JExp ';' { Update(n,e) }.
+      
+      FieldUpdate ::= e = JExp '.' n = Name '=' v = JExp ';' { FieldUpdate(e,n,v) }.
+      
+      Dec ::= type = JPath name = Name ('=' value = JExp ';' { Dec(type,name,value) } | ';' { Dec(type,name,null) }).
+       
+      If ::= 'if' '(' e = JExp ')' s1 = Statement ('else' s2 = Statement { If(e,s1,s2) } | { If(e,s1,null) }).
+      
+      For ::= 'for' '(' d = Dec p = JExp ';' n = Name '=' e = JExp c = { Update(n,e) } ')' b = Statement { Statements::For(d,p,c,b) }.
+      
+      Block ::= '{' statements = Statements '}' { Block(statements) }.
+      
+      Return ::= 'return' (';' { Return(null) } | e = JExp ';' { Return(e) }).
+      
+      While ::= 'while' '(' e = JExp ')' s = Statement { While(e,s) }.
+      
+      Do ::= 'do' '{' statements = Statements '}' 'while' '(' t = JExp ')' ';' { Do(statements,t) }.
+      
+      Switch ::= 'switch' '(' e = JExp ')' '{' cs = Case* d = DefaultCase '}' { Switch(e,cs,d) }.
+      
+      Case ::= 'case' e = JExp ':' ss = Statement* { Case(e,ss) }.
+      
+      DefaultCase ::= 'default' ':' ss = Statement* { DefaultCase(ss) } | { null }.
+      
+      JTry ::= 'try' b = Block cs = JCatch* { Try(b,cs) }.
+      
+      JThrow ::= 'throw' e = JExp ';' { Throw(e) }.
+      
+      JCatch ::= 'catch' '(' p = JPath n = Name ')' b = Block { Catch(p,n,b) }.
+      
+    end
+</PRE></TD>
+</TABLE>
+</HTML>

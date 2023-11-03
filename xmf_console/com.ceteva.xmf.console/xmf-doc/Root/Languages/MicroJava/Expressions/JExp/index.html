@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+JExp
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>JExp</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+No Documentation Specified
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../../../Root/Languages/MicroJava/Expressions/index.html">Expressions</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../../../Root/XOCL/Syntax/index.html">Syntax</A>
+<BR><HR>
+<B>Subclasses</B>
+<A HREF="../../../../../Root/Languages/MicroJava/Expressions/FieldRef/index.html">FieldRef</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Update/index.html">Update</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/UnExp/index.html">UnExp</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Cast/index.html">Cast</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Int/index.html">Int</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/This/index.html">This</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Float/index.html">Float</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Boolean/index.html">Boolean</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/BinExp/index.html">BinExp</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/New/index.html">New</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Send/index.html">Send</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Var/index.html">Var</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/JString/index.html">JString</A>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../../../Root/XCore/Performable/index.html">Performable</A>: endLine, line. <BR><B>From</B> <A HREF="../../../../../Root/XCore/Located/index.html">Located</A>: charEnd, charStart. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>pprint(out:<A HREF="../../../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>pprint(out:<A HREF="../../../../../Root/XCore/Element/index.html">Element<A>,indent:<A HREF="../../../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../../../Root/XOCL/Syntax/index.html">Syntax</A>: compile, eval, lift, liftKeyArgs, liftValue, maxLocals, syntaxInit. <BR><B>From</B> <A HREF="../../../../../Root/XCore/Performable/index.html">Performable</A>: FV, compile, endLine, eval, line, maxLocals, pprint, pprint, pprint, setEndLine, setLine. <BR><B>From</B> <A HREF="../../../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=1><FONT SIZE="+2">
+<B>Grammar</B></FONT></TD>
+</TR>
+<TD><PRE>
+@Grammar 
+     
+       JExp ::= JAssign.
+       
+       JAssign ::= n = Name '=' e = JBool { Update(n,e) } | JBool.
+       
+       JBool ::= e = JBit JBoolTail^(e).
+       
+       JBoolTail(e) ::= op = BoolOp e2 = JBit e = { BinExp(e,op,e2) } JBoolTail^(e) | { e }.
+       
+       BoolOp ::= '&&' { "&&" } | '||' { "||" }.
+       
+       JBit ::= e = JEql JBitTail^(e).
+       
+       JBitTail(e) ::= op = BitOp e2 = JEql e = { BinExp(e,op,e2) } JBitTail^(e) | { e }. 
+       
+       BitOp ::= '&' {"&" } | '|' { "|" }.
+       
+       JEql ::= e = JCmp JEqlTail^(e).
+       
+       JEqlTail(e) ::= op = EqlOp e2 = JCmp e = { BinExp(e,op,e2) } JEqlTail^(e) | { e }.
+       
+       EqlOp ::= '==' { "==" }| '!=' { "!=" }.
+       
+       JCmp ::= e = JArith JCmpTail^(e).
+       
+       JCmpTail(e) ::= op = CmpOp e2 = JArith e = { BinExp(e,op,e2) } JCmpTail^(e) | { e }.
+       
+       CmpOp ::= '>' { ">" } | '>=' { ">=" } | '<' { "<" } | '<=' { "<=" }.  
+       
+       JArith ::= e = JDot JArithTail^(e).
+       
+       JArithTail(e) ::= op = ArithOp e2 = JDot e = { BinExp(e,op,e2) } JArithTail^(e) | { e }.
+       
+       ArithOp ::= '+' { "+" } | '-' { "-" } | '*' { "*" } | '/' { "/" }.
+       
+       JNavigate ::= e = JCast JNavigateTail^(e).
+       
+       JNavigateTail(e) ::= '.' n = Name e = { FieldRef(e,n) } JNavigateTail^(e) | { e }.
+       
+       JDot ::= e = JCast JDotTail^(e).
+       
+       JDotTail(e) ::= '.' n = Name JDotNameTail^(e,n) | {e}.
+       
+       JDotNameTail(e,n) ::= a = JArgs e = { Send(e,n,a) } JDotTail^(e) | e = { FieldRef(e,n) } JDotTail^(e).
+       
+       JArgs ::= '(' es = (JExps | { Seq{} }) ')' { es }.
+       
+       JExps ::= e = JExp es = (',' JExp)* { Seq{e | es} }.
+       
+       JCast ::= '(' p = JPath ')' a = JAtom { Cast(p,a) } | JAtom.
+       
+       JAtom ::= JBoolean | JInt | JFloat | JString | JNew | JVar | JSend | JThis | '(' JExp ')'.
+       
+       JBoolean ::= 'true' { Boolean(true) } | 'false' { Boolean(false) }.
+       
+       JInt ::= i = Int { (Expressions.getElement("Int"))(i) }.
+       
+       JFloat ::= f = Float { (Expressions.getElement("Int"))(f) }.
+       
+       JString ::= s = Str { JString(s) }.
+       
+       JNew ::= 'new' p = JPath (as = JArgs { New(p,as) } | '[' e = JExp ']' { New(p,Seq{}) }).
+       
+       JThis ::= 'this' { This() }. 
+       
+       JPath ::= n = Name ns = ('.' Name)* { Seq{n | ns} }.
+       
+       JVar ::= name = Name { Var(name) }.
+       
+       JSend ::= name = Name args = JArgs { Send(null,name,args) }.
+       
+     end
+</PRE></TD>
+</TABLE>
+</HTML>

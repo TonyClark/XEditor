@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Symbol
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Symbol</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      Symbol is a sub-class of String. Whereas there may be two different strings 
+      with the same sequence of characters, there can only be one symbol with the 
+      same sequence of characters. This is useful when using names as the basis for
+      lookup (in tables). For example XMF ensures that classes, packages, operations,
+      slots are named using symbols so that the lookup of these features by name is
+      as efficient as possible. If strings were used the lookup would necessarily
+      involve a character by character comparison. Using symbols the lookup can use 
+      the symbols identity as the comparison operator. You can reference a symbol
+      by constructing an instance: Symbol(name).
+    
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>asSymbol():<A HREF="../../../Root/XCore/Symbol/index.html">Symbol<A></B></TD><TD> 
+      Returns self.
+    </TD></TR>
+<TR><TD><B>greater(other:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns true if self is alphanumerically greater
+      than other.
+    </TD></TR>
+<TR><TD><B>init(args:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>less(other:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns true if self is alphanumerically less
+      than other.
+    </TD></TR>
+<TR><TD><B>lift():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>toString():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Converts a symbol to a string.
+    </TD></TR>
+</TABLE>
+</HTML>
