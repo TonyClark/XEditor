@@ -1,0 +1,16 @@
+parserImport XOCL;
+
+import Signatures;
+import NamedElement;
+
+context XCore::Classifier
+ 
+   @Derived toType():Signature
+     if classifiers.hasKey(self)
+     then classifiers.get(self)
+     else
+       let t:Type = ClassifierAsType(self)
+       in classifiers.put(self,t); t
+       end
+     end
+   end

@@ -1,0 +1,101 @@
+parserImport XOCL;
+parserImport XEditor;
+parserImport XML::Parser;
+
+import XEditor;
+import XML::Parser;
+import IO;
+
+context XEditor
+  @Grammar Values
+      Value     ::= Integer | Float | Boolean | String | Element | ValueList | ValueSet.
+      Integer   ::= <Integer v=value/> {v.asInt() }.
+      Float     ::= <Float v=value/> {v.asFloat() }.
+      Boolean   ::= <Boolean v=value/> {v.asBool() }.
+      String    ::= <String v=value/> { v }.
+      Element   ::= <Element h=handle/> { xmf.getObjectWithHandle(h.asInt()) }.
+      ValueList ::= <List> vs=(Value*) </List> { vs }.
+      ValueSet  ::= <Set_> vs=(Value*) </Set_> { vs->asSet }.
+    end
+
+context XEditor
+  @Operation createInspectorValue(value:Element)
+    let Inspector = xmf.javaClass("inspect.Inspector");
+        InspectorField = xmf.javaClass("inspect.InspectorField");
+        InspectorString = xmf.javaClass("inspect.value.InspectorString");
+        InspectorBool = xmf.javaClass("inspect.value.InspectorBool");
+        InspectorInt = xmf.javaClass("inspect.value.InspectorInt");
+        InspectorFloat = xmf.javaClass("inspect.value.InspectorFloat");
+        InspectorElement = xmf.javaClass("inspect.value.InspectorElement");
+        InspectorList = xmf.javaClass("inspect.value.InspectorList");
+        InspectorSet = xmf.javaClass("inspect.value.InspectorSet")
+    in @Letrec getValue(v) = 
+        @TypeCase(v)
+          Null    do InspectorElement(xmf.getHandle(null),"null",[]) end
+          Boolean do InspectorBool(v) end
+          Float do InspectorFloat(v) end
+          Integer do InspectorInt(v) end
+          String do InspectorString(v) end
+          Seq(XCore::Element) do InspectorList([ getValue(x) | x <- v ]) end
+          Set(XCore::Element) do InspectorSet([ getValue(x) | x <- v ]) end
+          else 
+            let operations = v.of().allOperations()->select(o | o.arity() = 0)->collect(o | o.name.toString())
+            in InspectorElement(xmf.getHandle(v),v.toString(),operations)
+            end
+        end
+      in getValue(value)
+      end
+    end
+  end
+
+@EventHandler provisionallySetSlot(objectHandle,name,xml) 
+    try
+      if xmf.hasHandle(objectHandle)
+      then 
+       let object = xmf.getObjectWithHandle(objectHandle)
+       in if object.hasSlot(name)
+          then 
+            let attribute = object.of().getAttribute(name) then
+                type = attribute.type;
+                value = ParserChannel(StringInputChannel(xml),Values).parse("Value")
+            in if value.isKindOf(type)
+               then 
+                 object.set(name,value);
+                 [true,createInspectorValue(value)]
+               elseif value.isKindOf(attribute.underlyingType()) 
+               then
+                 if type.inheritsFrom(Seq(XCore::Element))
+                 then 
+                   if object.get(name)->isEmpty
+                   then 
+                     object.set(name,[value]);
+                     [true,createInspectorValue([value])]
+                   else 
+                     let index = xmf.choose("Insert Element","Select Index",0.to(object.get(name)->size-1)) then
+                         newValue = object.get(name).insertAt(value,index)
+                     in object.set(name,newValue);
+                        [true,createInspectorValue(newValue)]
+                     end
+                   end
+                 elseif type.inheritsFrom(Set(XCore::Element))
+                 then 
+                   let newValue = object.get(name)->including(value)
+                   in object.set(name,newValue);
+                      [true,createInspectorValue(newValue)]
+                   end
+                 else [false,null]
+                 end
+               else [false,null]
+               end
+            end
+          else [false,null]
+          end
+        end
+       else [false,null]
+       end
+    catch(exception)
+      Root::xmfException := exception;
+      exception.printBacktrace();
+      [false,null]
+    end
+  end;

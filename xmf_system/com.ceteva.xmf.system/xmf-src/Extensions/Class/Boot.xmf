@@ -1,0 +1,4 @@
+("Extensions/Class/ClassArg.o").loadBin(true);
+("Extensions/Class/Class.o").loadBin(true);
+("Extensions/Class/GenericClass.o").loadBin(true);
+("Extensions/Class/ClassGrammar.o").loadBin(true);

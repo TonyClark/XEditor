@@ -1,0 +1,82 @@
+parserImport XOCL;
+
+import Filmstrips;
+import AbstractSyntax;
+
+context Filmstrips 
+
+  @Class Snapshot extends DiagramSupplier
+  
+    @Attribute records:[Record] end
+    @Attribute links:  [Link]   end
+
+    @Operation asJavaSnapshot(colours:ColourMap)
+      let Snapshot = xmf.javaClass("diagrams.filmstrips.Snapshot")
+      in Snapshot(self.getDiagram(colours))
+      end
+    end
+    
+    @Operation populate(objects:[Object])
+      @For o in objects do
+        self.populateRecord(o,objects);
+        @For s in o.slots() do
+          if s.value <> null andthen not(s.value.isKindOf(Operation))
+          then 
+            if s.value.isKindOf(Object)
+            then self.populateLink(s.name,o,s.value,objects)
+            elseif s.value.isKindOf(Seq(Element)) or s.value.isKindOf(Set(Element))
+            then 
+              let seq = s.value->asSeq
+              in @Count i from 0 to seq->size do
+                   let value = seq->at(i)
+                   in self.populateIndexedLink(s.name,i,o,value,objects)
+                   end
+                 end
+              end
+            end
+          end
+        end
+      end
+    end
+
+    @Operation populateRecord(o:Object,objects:[Object])
+      let fields = [];
+          id = objects->indexOf(o)
+      in @For s in o.slots() do
+           if [Integer,String,Float,Boolean]->contains(s.value.of())
+           then fields := [Field(s.name,s.value)] + fields
+           end
+         end;
+         self.records := [Record(id,o.of(),fields)] + records
+      end
+    end
+
+    @Operation populateLink(name:String,object:Object,value:Object,objects:[Object])
+      if objects->includes(value)
+      then
+        let source = objects->indexOf(object);
+            target = objects->indexOf(value)
+        in self.links := [Link(name,source,target)] + links
+        end
+      end
+    end
+
+    @Operation populateIndexedLink(name:String,index:Integer,object:Object,value:Object,objects:[Object])
+      if objects->includes(value)
+      then
+        let source = objects->indexOf(object);
+            target = objects->indexOf(value)
+        in self.links := [IndexedLink(name,index,source,target)] + links
+        end
+      end
+    end
+      
+    @Operation getDiagram(colours:ColourMap):String
+      "\@startuml\n" + "top to bottom direction\n" + "allowmixing\n" + 
+         "skinparam nodesep 5\nskinparam ranksep 5\n" +
+         records->iterate(o s="" | s + o.getDiagramObject(colours)) + 
+         links->iterate(l s="" | s + l.getDiagramLink()) +
+      "\@enduml\n"
+    end
+      
+  end

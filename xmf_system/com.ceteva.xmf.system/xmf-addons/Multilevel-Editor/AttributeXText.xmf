@@ -1,0 +1,78 @@
+parserImport XOCL;
+parserImport XMap;
+
+import Clients;
+import Diagrams;
+import DiagramsMapping;
+import ClassDiagrams;
+import ClassMapping;
+import Menus;
+import IO;
+import SnapshotDiagrams;
+
+context AttributeXText
+  @Operation init(args)
+    super(args);
+ 
+	if(self.attribute.isIntrinsic)
+	then
+	  self.text.instLevel.instLevel.text := self.attribute.instLevel.toString()
+	else
+	  false
+	end;
+	
+	if self.attribute.owner.isKindOf(Extensions::MetaAdaptor)
+	then
+		self.text.instLevel.setActive(true)
+	else
+		self.text.instLevel.instLevel.setEditable(false)
+	end;
+
+    @SlotValueChanged multi once AttributeXText::levelChanged(attribute,"instLevel")  end;
+    
+    @SlotValueChanged multi once AttributeXText::instLevelChangedDaemon(text.instLevel.instLevel,"text") end; 
+	
+    self
+  end
+  
+context AttributeXText
+  @Operation levelChanged(obj,slot,new,old)
+//	if text.instLevel.instLevel.text <> new 
+	if old <> new 
+    then
+    	text.instLevel.instLevel.setText(new.toString()); 
+    	text.packWidth()
+    else 
+     false
+    end
+  end
+
+context AttributeXText 
+	@Operation instLevelChangedDaemon(obj,slot,newInstLevel,oldInstLevel )
+      if attribute.instLevel <> newInstLevel
+      then
+        try
+        	newInstLevel.asInt();
+        	if newInstLevel <> " "
+        	then
+                if 0 <= newInstLevel.asInt() andthen newInstLevel.asInt() < attribute.owner.level
+                then attribute.instLevel := newInstLevel.asInt(); attribute.isIntrinsic := true
+                else text.instLevel.instLevel.setText(if attribute.isIntrinsic 
+                     	then attribute.instLevel.toString()
+                     	else " "
+                     	end);                     
+                     xmf.warning("Level " + newInstLevel + " not allowed")
+                end	
+        	else
+  	       		attribute.isIntrinsic := false	
+        	end
+        catch(x)
+        	xmf.warning("Level " + newInstLevel + " not an integer number");
+        	attribute.isIntrinsic := false;
+        	text.instLevel.instLevel.setText(" ")
+        end//;
+        //attribute.instLevel := newInstLevel
+      else
+        false
+      end      
+    end	

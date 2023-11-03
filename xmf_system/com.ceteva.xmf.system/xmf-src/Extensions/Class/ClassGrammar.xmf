@@ -1,0 +1,131 @@
+parserImport Parser::BNF;
+
+/******************************************************************************
+ *                                                                            *
+ *                        Class Definition Syntax                             *
+ *                        -----------------------                             *
+ *                                                                            *
+ *   The syntax of class definitions.                                         *
+ *                                                                            *
+ ******************************************************************************/ 
+
+import OCL;
+import XOCL;
+
+context Class
+
+  @Grammar extends OCL::OCL.grammar
+  
+    Class ::= 
+    
+      // The name of the class may be dropped...
+      
+      name = ClassName 
+
+      // Optional arguments...
+
+      args = OptClassArgs
+      
+      // The type of the class may be different 
+      // from XCore::Class...
+      
+      metaClass = OptMetaClass 
+      
+      // A class may optionally be abstract...
+      
+      isAbstract = IsAbstract 
+      
+      // A stand-alone class?
+      
+      isOrphan = IsOrphan
+      
+      // The parents of a class default to 
+      // XCore::Object...
+      
+      parents = Parents 
+      
+      // Any expressions can be included as 
+      // definitions...
+      
+      defs = Defs
+      
+      'end'
+      
+      { if args <> null 
+        then GenericClass(name,args,parents,args,metaClass,isAbstract,parents,defs) 
+        elseif isOrphan
+        then [| <Class(name,metaClass,isAbstract,parents,defs).desugar()>.init() |]
+        else Class(name,metaClass,isAbstract,parents,defs) 
+        end }.
+      
+    ClassName ::= AName | '(' e= <<Exp>> ')' { e }.
+      
+    Defs ::= 
+    
+      // Definitions are sequences of expressions. Most often they are @-expressions..
+    
+      (<<AtExp>> ! | <<Exp>> !)* //<<Exp>> * 
+      
+      // Dropped sequence of  expressions...
+      
+    | '<*' e = <<Exp>> '*>' 
+    
+      { Drop(e) } 
+      
+      // If the class definition is used as a pattern...
+      
+    | '<*|' p = <<Pattern>> '|*>' 
+    
+      { DropPattern(p) }.
+
+    OptClassArgs ::= ClassArgs | { null }.
+
+    ClassArgs ::= '(' c= <<ClassArg>> cs=(',' <<ClassArg>>)* ')' { [c] + cs }.
+
+    ClassArg ::= n=Name ':' t=TypeExp { ClassArg(n,t) }.
+      
+    OptMetaClass ::= 
+    
+      // Specify the meta-class as any expression
+      // or let it default...
+    
+      'metaclass' <<Exp>> 
+       
+    | { [| XCore::Class |] }.
+      
+    IsAbstract ::= 
+    
+      // By default a class is not abstract...
+    
+      'isabstract' { true } 
+      
+    | { false }.
+    
+    IsOrphan ::= 
+    
+      // By default a class lives in a name-space and must be
+      // added to the name-space before it is usable...
+    
+      'isOrphan' { true }
+      
+    | { false }.
+    
+    Parents ::= 
+    
+      // The parents default to just Object.
+      // Careful with the parents of a class when
+      // there is more than 1 since the order is
+      // important and is right-to-left...
+    
+      'extends' 
+      
+      parent = <<Exp>> 
+      
+      parents = (',' <<Exp>>)* 
+      
+      { Seq{ parent | parents } } 
+      
+    | { Seq{} }.
+    
+  end
+  

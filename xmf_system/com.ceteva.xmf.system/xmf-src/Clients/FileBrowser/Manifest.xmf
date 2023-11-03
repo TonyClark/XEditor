@@ -1,0 +1,13 @@
+parserImport XOCL;
+parserImport Manifests;
+
+import Projects;
+
+@Manifest FileBrowser
+  FileBrowser = @File FileBrowser end
+  @File Extensions end
+  @File DirectoryXNode end
+  @File FileHeader end
+  @File ^None Boot end
+do Project(FileBrowser,dir,self)
+end;

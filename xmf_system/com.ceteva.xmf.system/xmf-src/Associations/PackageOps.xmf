@@ -1,0 +1,144 @@
+parserImport XOCL;
+
+import Associations;
+
+context Package
+  @Attribute associations : Set(Association) (+,-) end
+
+@For package in Root.allContentsOf(Package) do
+  if not package.hasSlot("associations")
+  then package.addStructuralFeature("associations",Set{})
+  end
+end;
+
+context Package  
+    @Attribute associationInstances : Set(AssociationInstance) (+,-) end  
+
+@For package in Root.allContentsOf(Package) do
+  if not package.hasSlot("associationInstances")
+  then package.addStructuralFeature("associationInstances",Set{})
+  end
+end;      
+
+context Package
+  @Attribute intrinsicAssociationConstraints : Set(IntrinsicAssociationConstraint) (+,-) end
+
+@For package in Root.allContentsOf(Package) do
+  if not package.hasSlot("intrinsicAssociationConstraints")
+  then package.addStructuralFeature("intrinsicAssociationConstraints",Set{})
+  end
+end;                  
+                                                      
+context Package
+  // Use 'add' to add either an operation or a classifier 
+  // to a package.
+  @Operation add(n:NamedElement):Classifier
+    if n.isKindOf(Operation)
+    then self.addOperation(n); super(n)
+    else 
+      if n.isKindOf(Package)
+      then
+        self.addPackage(n);
+        super(n)
+      elseif n.isKindOf(Class)
+      then
+        self.addClass(n);
+        super(n)
+      elseif n.isKindOf(Association)
+      then
+        self.addAssociation(n);
+        super(n)
+      elseif n.isKindOf(AssociationInstance)
+      then
+        self.addAssociationInstance(n);
+        super(n)
+      elseif n.isKindOf(IntrinsicAssociationConstraint)
+      then
+        self.addIntrinsicAssociationConstraint(n);
+        super(n)
+      else
+        super(n)
+      end
+    end
+  end
+  
+context Package 
+  // addClass is used to add classes to a package.
+  @Operation addAssociation(a:Association)
+    self.resolveNameClash(a.name,self.associations);
+    a.setOwner(self);
+    self.associations := self.associations->including(a);
+    self
+  end
+
+context Package 
+  // addClass is used to add classes to a package.
+  @Operation addAssociationInstance(a:addAssociationInstance)
+    self.resolveNameClash(a.name,self.associationInstances);
+    a.setOwner(self);
+    self.associationInstances := self.associationInstances->including(a);
+    self
+  end
+
+context Package 
+  // addClass is used to add classes to a package.
+  @Operation addIntrinsicAssociationConstraint(a:IntrinsicAssociationConstraint)
+    self.resolveNameClash(a.name,self.intrinsicAssociationConstraints);
+    a.setOwner(self);
+    self.intrinsicAssociationConstraints := self.intrinsicAssociationConstraints->including(a);
+    self
+  end      
+                  
+context Package
+
+  // Remove an element from a package. Needs to be redefined
+  // from the inherited NameSpace::remove because a package is 
+  // a namespace for operations, packages and classes.
+  
+  @Operation remove(n:NamedElement):Classifier
+    if n.isKindOf(Operation)
+    then 
+      self.removeOperation(n); 
+      super(n)
+    else
+      if n.isKindOf(Package)
+      then 
+        self.removePackage(n);
+        super(n)
+      else 
+        if n.isKindOf(Class)
+        then 
+          self.removeClass(n);
+          super(n)
+        elseif n.isKindOf(Association)
+        then
+          self.removeAssociation(n);
+          super(n)
+        elseif n.isKindOf(AssociationInstance)
+        then
+          self.removeAssociationInstance(n);
+          super(n)   
+        elseif n.isKindOf(IntrinsicAssociationConstraint)
+        then
+          self.removeIntrinsicAssociationConstraint(n);
+          super(n)   
+        else super(n)
+        end
+      end
+    end
+  end 
+  
+context Package 
+  @Operation removeAssociation(association)
+    self.associations := self.associations->excluding(association)
+  end   
+  
+  context Package 
+  @Operation removeAssociationInstance(associationInstance)
+    self.associationInstances := self.associationInstances->excluding(associationInstance)
+  end   
+  
+  context Package 
+  @Operation removeIntrinsicAssociationConstraint(intrinsicAssociationConstraint)
+    self.intrinsicAssociationConstraints := self.intrinsicAssociationConstraints->excluding(intrinsicAssociationConstraint)
+  end  

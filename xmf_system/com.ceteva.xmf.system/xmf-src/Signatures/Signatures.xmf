@@ -1,0 +1,9 @@
+parserImport XOCL;
+
+context Root
+
+@Package Signatures 
+
+  @Bind classifiers = Table(100) end
+  
+end

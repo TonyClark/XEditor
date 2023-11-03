@@ -1,0 +1,50 @@
+parserImport XOCL;
+
+import Exceptions;
+import Evaluator;
+import Parser::Machine;
+
+context Evaluator
+
+  @Operation loadFile(name:String,target,env,imports)
+    let fileStem = if name->hasSuffix(".xmf") then name.reverse().drop(4).reverse() else name end then
+        sourceFile = fileStem + ".xmf"
+    in if not sourceFile.fileExists()
+       then throw FileNotFound(sourceFile)
+       else
+         format(stdout,"[ Load ~S",Seq{sourceFile});
+         let time = Time() then
+             unit = parseEvaluationUnit(sourceFile) 
+         in format(stdout," (~S)",Seq{(Time() - time).pprint()});
+            time := Time();
+            let value = unit.eval(target,env,imports)
+            in format(stdout," (~S)",Seq{(Time() - time).pprint()});
+               format(stdout," ]~%");
+               value
+            end
+         end
+       end
+    end
+  end
+   
+context Evaluator
+
+  @Operation parseEvaluationUnit(file:String):EvaluationUnit
+  
+     // Use this operation to parse an evaluation unit from the 
+     // supplied file. Deals with parse errors by recording them
+     // as compiler errors. Returns null if the parse failed...
+     
+     try
+       OCL::OCL.grammar.parseFile(file,"EvaluationUnit",Seq{})
+     catch(x)
+       @TypeCase(x)
+         Parser::ParseError do
+           // This should be an evaluator error.
+           Compiler::compilationError(x.pprint(),file,x);
+           null
+         end
+         else throw x
+       end
+     end
+   end

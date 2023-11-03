@@ -1,0 +1,14 @@
+parserImport Manifests;
+
+@Manifest Filmstrips
+  @File Filmstrips     end
+  @File ColourMap      end
+  @File Link           end
+  @File IndexedLink    end
+  @File Field          end
+  @File Record         end
+  @File Snapshot       end
+  @File FilmstripStep  end
+  @File Filmstrip      end
+  @File Constraint     end
+end;

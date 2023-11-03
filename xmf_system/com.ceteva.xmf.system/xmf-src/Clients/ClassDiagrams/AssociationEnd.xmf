@@ -1,0 +1,58 @@
+parserImport XOCL;
+
+import Clients;
+import Diagrams;
+import ClassDiagrams;
+import Menus;
+
+context ClassDiagrams
+
+  @Class AssociationEnd extends RightClickableProxy
+  
+    @Attribute name : Label end
+    @Attribute displayName : Label end
+    @Attribute mult : Multiplicity end
+    @Attribute instLevel : Label end
+    
+    @Constructor(name,displayName,mult,instLevel) !
+    	if not Root.hasElement("FMML")
+    	then
+    		instLevel.hide()
+       	end    	 
+    end
+
+    @Operation proxyElementTarget()
+      xmf.menuManager().getProxy(self).mult
+    end
+
+    @Operation mult():String
+      mult.text
+    end
+
+    @Operation name():String
+      name.text
+    end
+
+    @Operation setName(text:String)
+      name.textChanged(text)
+    end
+    
+    @Operation setDisplayName(text:String)
+      displayName.textChanged(text)
+    end
+    
+    @Operation setMult(mult)
+      self.mult.setMultiplicity(mult)
+    end
+    
+    @Operation setInstLevel(instLevel)
+/*		    if instLevel = " " or instLevel = ""
+   			then
+			   	self.instLevel.setColor(Clients::Diagrams::Color())
+			else
+			    self.instLevel.setColor(Clients::Diagrams::Color(0,0,0))
+			end; */
+      self.instLevel.textChanged(instLevel+"")
+    end
+    
+  end 

@@ -1,0 +1,47 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import AbstractSyntax;
+import XEditor;
+
+@EventHandler topLevelPeriod(console,command,x,y) 
+
+  // A '.' was pressed in the console. Handle name resolution...
+  
+    try 
+      // The command parser will leave the largest expression left of the '.'
+      // in the global variable LEFT_OPERAND. Typing '.' causes an exception...
+      TopLevel::Console::LEFT_OPERAND := null;
+      TopLevel::Console.grammar.parseString(command,TopLevel::Console.grammar.startingSymbol,[]);
+      ""
+    catch(exception)
+      Root::xmfException := exception;
+      let exp = TopLevel::Console::LEFT_OPERAND
+      in if exp <> null
+         then 
+           // exp is the largest expression left of the '.' ...
+           try
+             // Evaluate the expression and get its type. The names
+             // offered after the '.' are the attributes and the operations...
+             let value = resolve(exp).eval(null,[],[XCore,Root]) then
+                 type = value.of()
+             in @TypeCase(type)
+                  Class do
+                    console.handleNameResolution(type.allAttributes().name->asSeq + type.allOperations().name->asSeq)
+                  end
+                  Classifier do
+                    console.handleNameResolution(type.allOperations().name->asSeq)
+                  end
+                  else null
+                end
+             end
+           catch(exception)
+             Root::xmfException := exception;
+             print(exception.toString());
+             null
+           end
+         else null
+         end
+      end
+    end
+  end;

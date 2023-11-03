@@ -1,0 +1,33 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import Filmstrips;
+import AbstractSyntax;
+
+@EventHandler getFilmstrips()
+
+  // Return the registered filmstrip names...
+  
+    try
+      format(stdout,"Selecting Filmstrip Suppliers ...~%",[]);
+      registeredFilmstrips.keys()
+    catch(exception)
+      format(stdout,"FilmstripSupplier generation error ~S.~%",[exception]);
+      Root::xmfException := exception;
+      []
+    end
+  end;
+
+@EventHandler generateFilmstrip(name)
+
+  // Generate a filmstrip...
+  
+    try
+      format(stdout,"Generating Filmstrip ...~%",[]);
+      registeredFilmstrips.get(name).run().asJavaFilmstrip()
+    catch(exception)
+      format(stdout,"Filmstrip generation error ~S.~%",[exception]);
+      Root::xmfException := exception;
+      []
+    end
+  end;

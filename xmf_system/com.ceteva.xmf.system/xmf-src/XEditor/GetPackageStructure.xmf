@@ -1,0 +1,19 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import AbstractSyntax;
+
+@EventHandler getPackageStructure()
+
+  // Generate the paxkage tree for the whole of XMF...
+ 
+    try
+      format(stdout,"Generating Package Structure ...~%",[]);
+      @Letrec f(p) = Seq{p.name.toString() | p.contents()->asSeq->select(o | o.isKindOf(Package) and o <> null)->collect(child | f(child))}
+      in f(Root)
+      end
+    catch(exception)
+      format(stdout,"Package structure generation error ~S.~%",[exception]);
+      Root::xmfException := exception
+    end
+  end;

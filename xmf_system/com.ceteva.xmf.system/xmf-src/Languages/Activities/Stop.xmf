@@ -1,0 +1,14 @@
+parserImport XOCL;
+
+import Languages;
+import Activities;
+
+context Activities
+
+  @Class Stop extends ActivityElement
+
+    @Operation getDiagramElement():String 
+      "stop\n"
+    end
+
+  end

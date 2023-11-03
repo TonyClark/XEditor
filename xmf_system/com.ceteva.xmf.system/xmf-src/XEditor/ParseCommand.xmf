@@ -1,0 +1,32 @@
+parserImport XOCL;
+parserImport XEditor;
+
+@EventHandler parseCommand(text,editor)  
+
+  // Commands typed into the REPL are just standard XOCL, however certain operators are
+  // handled differently. For example '.' and '::' will offer an interactive menu of 
+  // options. In order to make this happen, a different grammar is used...
+  
+   editor.startActivity("Parsing Toplevel Command");
+    try 
+      let grammar = TopLevel.grammar then
+          model = grammar.parseString(text,grammar.startingSymbol,[])
+      in 
+        editor.endActivity("Parse Toplevel Command");
+        [-1,-1,""]
+      end
+    catch(exception)
+       editor.displayError(exception.toString());
+       @TypeCase(exception)
+         Exceptions::XMFEditorError do Root::xmfException := exception;
+           [exception.charStart,exception.charEnd,exception.message]
+         end
+         Parser::ParseError do Root::xmfException := exception;
+           [exception.errorPos,exception.errorPos,exception.message]
+         end
+        Object do Root::xmfException := exception;
+           [text->size - 1,text->size - 1,exception.toString()]
+        end
+       end
+     end
+  end;

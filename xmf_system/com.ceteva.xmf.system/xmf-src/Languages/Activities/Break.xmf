@@ -1,0 +1,14 @@
+parserImport XOCL;
+
+import Languages;
+import Activities;
+
+context Activities
+
+  @Class Start extends ActivityElement
+
+    @Operation getDiagramElement():String 
+      "break\n"
+    end
+
+  end

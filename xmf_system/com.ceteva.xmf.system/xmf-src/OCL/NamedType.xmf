@@ -1,0 +1,56 @@
+parserImport XOCL;
+
+/******************************************************************************
+ *                                                                            *
+ *                           Named Type Expressions                           *
+ *                         ---------------------------                        *
+ *                                                                            *
+ *  A named type is just a sequence of names that represent the path to a     *
+ *  classifier.                                                               *
+ *                                                                            *
+ ******************************************************************************/
+
+import AbstractSyntax;
+import OCL;
+import TypeExp;
+
+context OCL
+
+  @Class NamedType extends TypeExp, DefiniendumContainer
+  
+    @Attribute path : [String] = static Seq{Symbol("XCore"),Symbol("Element")} end
+    
+    @Constructor(path) ! end
+
+    @Operation getDefiniendums():[Object]
+      let pExp = Path::toPath(path)
+      in pExp.root.charStart := charStart;
+         pExp.root.charEnd := charEnd;
+         [pExp]
+      end
+    end
+    
+    @Operation isElement():Boolean
+      path.equals([Symbol("XCore"),Symbol("Element")])
+    end
+    
+    @Operation pprint(out,indent)
+      format(out,"~{::~;~S~}",Seq{path})
+    end
+    
+    @Operation toExp():Performable
+    
+      // Expect the path to be in scope...
+      
+      let pExp = Path::toPath(path->map("toString"))
+      in pExp.root.charStart := charStart;
+         pExp.root.charEnd := charEnd;
+         pExp
+      end
+    end
+    
+    @Operation toSig()
+      Seq{NAMED,path}
+    end
+    
+  end

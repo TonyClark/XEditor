@@ -1,0 +1,23 @@
+parserImport XOCL;
+
+import Models;
+import Banking;
+
+context Banking
+
+  @Class Account
+
+    @Bind counter = 0 end
+
+    @Operation nextId() 
+      Account::counter := Account::counter + 1;
+      Account::counter
+    end
+
+    @Attribute id       : Integer  = self.nextId() (<) end
+    @Attribute customer : Customer (<) end
+    @Attribute funds    : Integer  (<) end  
+
+    @Constructor(customer,funds) ! end
+
+  end

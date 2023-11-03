@@ -1,0 +1,17 @@
+parserImport XOCL;
+
+import Models;
+import Shopping;
+
+context Shopping
+  @Class Purchase extends Transaction
+
+    @Attribute price:Integer (<) end
+
+    @Constructor(product,price) ! end
+
+    @Operation return()
+      self.getProduct().setQuantity(self.getProduct().getQuantity() + 1)
+    end
+
+  end

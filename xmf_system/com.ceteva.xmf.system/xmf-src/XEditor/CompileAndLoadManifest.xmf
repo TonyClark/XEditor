@@ -1,0 +1,30 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import AbstractSyntax;
+
+@EventHandler compileAndLoadManifest(path)
+
+  // A manifest is recognised by the editor and will offer up a menu item that will
+  // invoke this handler. The manifest is compiled and then loaded after which the
+  // files referenced by the manifest are compiled and loaded...
+  
+    try
+      if path.hasSuffix(".xmf")
+      then 
+        Compiler::compileFile(path,true,true);
+        let manifest = (path->asSeq->reverse->drop(4)->reverse->asString + ".o").loadBin()
+        in manifest.buildAndLoad(path.splitBy("/",0,0)->butLast.separateWith("/"))
+        end
+      end
+    catch(exception)
+       @TypeCase(exception)
+         Parser::ParseError do
+           exception.printBacktrace()
+         end
+        Object do
+           exception.printBacktrace()
+        end
+       end
+     end
+  end;

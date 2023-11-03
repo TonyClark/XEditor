@@ -1,0 +1,23 @@
+parserImport XOCL;
+
+
+context Languages
+
+  @Package Activities
+
+    @Operation test()
+      ActivitySequence([
+        Start(),
+        Label("L1"),
+        Activity("Hello World",@Operation() null end),
+        Repeat(@Operation[label="TEST"]() null end,[Activity("A1",@Operation() null end)],null),
+        Condition(@Operation[label="SPAM"]() null end,
+          Activity("Hello",@Operation() null end),
+          Guard(@Operation[label="PLAP"]() null end,
+            ActivitySequence([Activity("Error",@Operation() null end),Detach()]))),
+        Goto("L1"),
+        Stop()
+      ])
+    end
+
+  end

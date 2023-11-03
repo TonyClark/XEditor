@@ -1,0 +1,60 @@
+parserImport XOCL;
+
+import AbstractSyntax;
+
+context AbstractSyntax
+  @Class DefinitionHandler
+    @Doc
+      A definition handler associated a class, an attribute name, and a
+      handler that is used to manage associations between definiens and
+      defini$ndums. The handler is supplied with the object, the name and
+      the current definiens environment. It returns a new environment
+      that will be used to walk the slot value.
+    end
+    @Attribute class:Class end
+    @Attribute name:String end
+    @Attribute handler:Operation end
+    @Constructor(class,name,handler) ! end
+    @Operation invokeHandler(object,name,env) 
+      handler(object,name,env)
+    end
+  end
+
+context AbstractSyntax
+  @Class DefinitionManager
+    @Attribute handlers:[DefinitionHandler] end
+    @Operation addHandler(class:Class,name:String,handler:Operation)
+     self.handlers := Seq{DefinitionHandler(class,name,handler) | handlers}
+    end
+    @Operation setDefinitions(o,env)
+      if o <> null andthen o.of().of() <> Enum
+      then 
+        if o.isKindOf(Definiendum) 
+        then 
+          if env.binds(o.getName())
+          then o.definiens := env.lookup(o.getName())
+          else throw Exception("Cannot find definiens for: " + o.getName() + " in " + env)
+          end
+        end;
+        if o.isKindOf(Object)
+        then
+          @For s in o.slots() do
+            if not(s.name.toString() = "definiens")
+            then
+              @Find(h,handlers) when h.class = o.of() and h.name = s.name.toString() do
+                self.setDefinitions(s.value,h.invokeHandler(o,s.name.toString(),env))
+              else self.setDefinitions(s.value,env)
+              end
+            end
+          end
+        else 
+          if o.isKindOf(Seq(Element))
+          then 
+            @For v in o do
+              self.setDefinitions(v,env)
+            end
+          end
+        end
+      end
+    end
+  end

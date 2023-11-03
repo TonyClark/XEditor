@@ -1,0 +1,120 @@
+parserImport XOCL;
+
+import XCore;
+import Clients::Menus;
+
+// Operations used by menus.
+
+context Class
+  @Operation editDefinition()
+    // If the class defines a resource then edit the source file.
+    if self.getResourceName() = ""
+    then format(stdout,"No recorded resource for ~S~%",Seq{self})
+    else xmf.editHomeFile(self.getResourceName())
+    end
+  end
+
+context Class
+  @Operation newAttributeHandler(type)
+    @Operation newAttribute()
+      let
+        name = self.newName("att") then
+        attribute = XCore::Attribute(name,type)
+      in
+        self.add(attribute);
+        attribute.init()
+      end
+    end
+  end
+  
+context Class
+  @Operation newOtherAttributeHandler()
+    @Operation newOtherAttribute()
+      let 
+        selectedClass = xmf.treeSelection(
+            "Select End",
+            Seq{"Classes","*",Snapshot().makePackageTree({self.owner})},
+            {},
+            null)
+      then
+        name = self.newName("att") 
+      then 
+        attribute = if selectedClass <> null then XCore::Attribute(name,selectedClass) else null end
+      in
+        if attribute <> null then 
+          self.add(attribute);
+          attribute.init() 
+        end
+      end
+    end
+  end
+
+context Class	
+	@Operation newAuxiliaryTypeHandler()
+	@Operation newAuxiliaryType()
+		let
+        	tmp = Seq{}
+        in
+			@For e in AuxiliaryClasses.classes->select(t | t.of() = AuxiliaryClasses::ComposedType or t.of() = AuxiliaryClasses::Unit) do
+				tmp := tmp.including(Seq{e})	
+	 		end;  
+       		let 
+		        selectedClass = xmf.treeSelection(
+        	    "Select Type",
+            	Seq{"Auxiliary Types","*", tmp},
+            	{},
+	            null)
+    		then
+        		name = self.newName("att") 
+      		then 
+        		attribute = if selectedClass <> null then XCore::Attribute(name,selectedClass,selectedClass) else null end
+      		in
+        		if attribute <> null then 
+	          	self.add(attribute);
+    	      	attribute.init() 
+        		end
+      		end
+    	end
+    end
+    end	
+  
+  
+context Class
+  @Operation newOtherAttributeHandler_Old()
+    @Operation newOtherAttribute_Old()
+      let 
+        metaClasses = self.owner.metaPackage.allContents()->select(c | c.isKindOf(Class) and c <> null) then
+        metaClasses = metaClasses + self.owner.allContents()->select(c | c.isKindOf(Class) and c <> null) then
+        attributes = metaClasses->select(a | a.allParents()->includes(Attribute))->asSeq then
+        attributeOf = xmf.select("Attribute class","Please choose a metaclass for the attribute",attributes,null,null)
+      in
+        if attributeOf <> null
+        then
+          let
+            dataType = Seq{Integer,String,Boolean,Float} then
+            type = xmf.select("Attribute type","Please choose a type for the attribute",dataType,null,null)
+          in
+            if type <> null
+            then
+              let
+                name = self.newName("att") then
+                attribute = attributeOf(name,type)
+              in
+          		self.add(attribute);
+          		attribute.init()
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
+context Class
+  @Operation newConstructor()
+    let constructor = @Constructor() end
+    in
+      self.add(constructor)
+    end
+  end
+  

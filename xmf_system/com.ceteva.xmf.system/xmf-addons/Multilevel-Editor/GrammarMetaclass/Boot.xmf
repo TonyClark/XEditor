@@ -1,0 +1,4 @@
+("Extensions/Class/Metaclass.o").loadBin(true);
+("Extensions/Class/MetaclassGrammar.o").loadBin(true);
+("Extensions/Class/IntrinsicAttribute.o").loadBin(true);
+("Extensions/Class/IntrinsicAttributeGrammar.o").loadBin(true);

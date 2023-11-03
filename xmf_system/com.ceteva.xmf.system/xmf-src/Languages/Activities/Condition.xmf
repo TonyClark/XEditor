@@ -1,0 +1,23 @@
+parserImport XOCL;
+
+import Languages;
+import Activities;
+
+context Activities
+
+  @Class Condition extends ActivityElement
+
+    @Attribute test : Operation (<) end
+    @Attribute conseq : ActivityElement (<) end
+    @Attribute alt :ActivityElement (<) end
+
+    @Constructor(test,conseq,alt) ! end
+
+    @Operation getDiagramElement():String 
+      "if (" + test.getProperty("label","?") + ") " +
+      "then (yes)\n  " + conseq.getDiagramElement() + "\n" +
+      "else (no)\n  " + alt.getDiagramElement() + "\n" +
+      "endif\n"
+    end
+
+  end

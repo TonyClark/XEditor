@@ -1,0 +1,22 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import AbstractSyntax;
+
+@EventHandler documentXMF()
+
+  // Generate the documentation for the whole of XMF. The documetation is represented
+  // as a tree of HTML files...
+  
+    try
+      format(stdout,"Generating documentation ...~%",[]);
+      let root = IO::File("",".").absolutePath()
+      in Root.toHTML(root + "/xmf-doc");
+         format(stdout,"... documentation generated.~%",[]);
+         ""
+      end
+    catch(exception)
+      format(stdout,"Documentation generation error ~S.~%",[exception]);
+      Root::xmfException := exception
+    end
+  end;

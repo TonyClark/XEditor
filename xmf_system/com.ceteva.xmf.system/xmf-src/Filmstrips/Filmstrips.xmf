@@ -1,0 +1,14 @@
+parserImport XOCL;
+
+context Root
+  @Package Filmstrips
+    @Doc
+      A filmstrip is a recording of the execution of an operation. The
+      filmstrip records the state of a collection of designated objects
+      prior to the execution and after the execution. The fikmstrip may
+      monitor several operations at once and will record all of the pre
+      and post states nested within the execution.
+    end
+
+    @Bind registeredFilmstrips = Table(10) end
+  end

@@ -1,0 +1,21 @@
+parserImport XOCL;
+parserImport Manifests;
+
+import Projects;
+
+@Manifest SnapshotMapping
+  SnapshotMapping = @File SnapshotMapping end
+  @File SlotXText end
+  @File DocXNote end
+  @File ObjectXNode end
+  @File SlotXEdge end
+  @File SetValueXEdge end
+  @File DependencyNameXText end
+  @File DependencyXDependencyEdge end
+  @File SnapshotXSnapshotDiagram end
+  @File MappingClient end
+  @File MenuOperations end
+  @File OrderSequence end
+  @File ^None Boot end
+do Project(SnapshotMapping,dir,self)
+end;

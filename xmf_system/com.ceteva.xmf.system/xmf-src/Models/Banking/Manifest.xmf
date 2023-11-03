@@ -1,0 +1,12 @@
+parserImport Manifests;
+
+
+@Manifest Bank
+
+  @File Banking   end
+  @File Customer  end
+  @File Account   end
+  @File Bank      end
+  @File Filmstrip end
+
+end;

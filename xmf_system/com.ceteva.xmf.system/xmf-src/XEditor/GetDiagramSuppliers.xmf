@@ -1,0 +1,17 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import AbstractSyntax;
+
+@EventHandler getDiagramSuppliers()
+
+  // Generate all the instances of DiagramSupplier...
+ 
+    try
+      format(stdout,"Generating Diagram Suppliers ...~%",[]);
+      DiagramSupplier.allInstances()->collect(ds | [ds.getDiagramLabel(),ds.getDiagram(Table(10))])
+    catch(exception)
+      format(stdout,"DiagramSupplier generation error ~S.~%",[exception]);
+      Root::xmfException := exception
+    end
+  end;

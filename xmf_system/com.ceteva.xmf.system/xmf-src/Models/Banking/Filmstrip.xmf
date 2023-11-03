@@ -1,0 +1,14 @@
+parserImport XOCL;
+parserImport Filmstrips;
+
+import Models;
+import Banking;
+import Filmstrips;
+
+@Filmstrip bankFilmstrip
+   b = Bank()
+in
+   roots [[Bank],[b]];
+   monitor [Banking.classes,Banking.classes->iterate(c os = {} | c.operations + os)];
+   start populateBank(b) 
+end; 

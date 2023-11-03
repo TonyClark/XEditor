@@ -1,0 +1,174 @@
+parserImport XOCL;
+
+import AbstractSyntax;
+import Walkers;
+import Code;
+import OCL;
+
+context AbstractSyntax
+  @Class FVWalker extends CompilerWalker 
+
+    @Attribute editor:Object end
+
+    @Constructor(editor) ! end
+
+    @Operation addParentSlots(p:OCL,env:FVEnv):FVEnv
+      if p.isKindOf(OCL::Var) andthen env.binds(p.name)
+      then 
+        let element = env.getElement(p.name)
+        in if element <> null andthen element.isKindOf(Class)
+           then element.allAttributes()->iterate(a e=env | e.addVar(a.name.toString()))
+           else env
+           end
+        end
+      else env
+      end
+    end
+
+    @Operation bindPattern(p:Pattern,env:FVEnv):FVEnv 
+      @TypeCase(p) 
+        Varp do
+          env.addVar(p.name)
+        end
+        else env
+      end
+    end
+
+    @Operation walkAttribute(line:Integer,charStart,charEnd,doc:Performable,init:Performable,meta:Performable,modifiers:AttributeModifiers,mult:String,name:String,properties:Seq(Element),type:Performable,env:FVEnv)
+      init=self.walk(init,env);
+      meta=self.walk(meta,env);
+      type=self.walk(type,env)
+    end
+
+    @Operation walkCaseArm(action:Performable,patterns:Seq(Pattern),env)
+      let names = patterns->iterate(p vs = [] | p.getVars() + vs)->collect(v | v.name) then
+          env2 = names->iterate(n e=env | e.addVar(n))
+      in self.walk(action,env2)
+      end
+    end
+
+    @Operation walkClass(line:Integer,charStart:Integer,charEnd:Integer,defs:Seq(Performable),isAbstract:Boolean,metaClass:Performable,name:String,parents:Seq(Performable),env:FVEnv)
+      let env2 = defs->iterate(a e=env | if a.isKindOf(XOCL::Attribute) then e.addVar(a.name) else e end) then
+          env3 = parents->iterate(p e=env2 | self.addParentSlots(p,e))
+      in 
+        @For def in defs do 
+          self.walk(def,env3)
+        end;
+        self.walk(metaClass,env);
+        @For parent in parents do
+          self.walk(parent,env)
+        end
+      end
+    end
+
+    @Operation walkCompilationUnit(resource:String,imports:Seq(Import),exps:Seq(Performable),source:String,parserImports:Seq(ParserImport),env:FVEnv)
+      let env = imports->iterate(i e=env | if i.isDefined() then e.addNameSpace(i.lookup()) else e end)
+      in @For exp in exps do
+           self.walk(exp,env)
+         end
+      end
+    end
+
+    @Operation walkContextDef(charStart:Integer,charEnd:Integer,element:OCL,isForward:Boolean,path:Seq(Element),env:FVEnv)
+      let o = env.getPath(path)
+      in if o = null
+         then self.walk(element.env)
+         elseif o.isKindOf(Class)
+         then self.walk(element,o.allContentsOf(NamedElement)->iterate(a e=env | e.addVar(a.name.toString())))
+         else self.walk(element,env)
+         end
+      end
+    end
+
+    @Operation walkCount(line:Integer,body:Performable,lower:Performable,upper:Performable,var:String,env:FVEnv)
+      self.walk(body,env.addVar(var));
+      self.walk(lower,env);
+      self.walk(upper,env)
+    end
+
+    @Operation walkFor(line:Integer,charStart:Integer,charEnd:Integer,body:Performable,colls:Seq(Performable),directive:String,guard:Performable,isExp:Boolean,names:Seq(String),env:FVEnv)
+      let env2 = names->iterate(n e=env | e.addVar(n))
+      in body=self.walk(body,env2.addVar("isLast"));
+         @For coll in colls do
+           self.walk(coll,env)
+         end;
+         self.walk(directive,env2);
+         self.walk(guard,env2);
+         self.walk(isExp,env)
+      end
+    end
+
+    @Operation walkGenericClass(line:Integer,charStart:Integer,charEnd:Integer,defs:Seq(Performable),isAbstract:Boolean,metaClass:Performable,name:String,args:[ClassArg],parents:Seq(Performable),env:FVEnv)
+      let env2 = args->iterate(a e=env | e.addVar(a.getName())).addVar("Self")
+      in 
+        @For def in defs do 
+          self.walk(def,env2)
+        end;
+        self.walk(metaClass,env2);
+        @For parent in parents do
+          self.walk(parent,env2)
+        end
+      end
+    end
+
+    @Operation walkIterExp(charStart:Integer,charEnd:Integer,body:OCL,collection:OCL,iterOp:String,name:String,env:FVEnv)
+      self.walk(body,env.addVar(name));
+      self.walk(collection,env)
+    end
+
+    @Operation walkIterate(charStart:Integer,charEnd:Integer,accumulator:String,body:OCL,collection:OCL,name:String,value:OCL,env:FVEnv)
+      self.walk(body,env.addVar(accumulator).addVar(name));
+      self.walk(collection,env);
+      self.walk(value,env)
+    end
+
+    @Operation walkLet(line:Integer,charStart:Integer,charEnd:Integer,bindings:Seq(ValueBinding),body:OCL,env:FVEnv)
+      @For b in bindings do
+        self.walk(b.value,env)
+      end;
+      self.walk(body,bindings->iterate(b e=env | e.addVar(b.name)))
+    end
+
+    @Operation walkOperation(charStart:Integer,charEnd:Integer,documentation:Performable,imports:Seq(Seq(String)),isMultiArgs:Boolean,name:String,parameters:Seq(Pattern),performable:Performable,type:TypeExp,properties,env:FVEnv)
+      self.walk(performable,parameters->iterate(p e=env | self.bindPattern(p,e)))
+    end
+
+    @Operation walkPackage(line:Integer,charStart:Integer,charEnd:Integer,defs:Seq(Performable),meta:Performable,metaPackage:Performable,name:String,parents:Seq(Performable),defImports:Seq(Performable),env:FVEnv)
+      let env2 = defs->iterate(def e=env | if def.isKindOf(XOCL::Def) then e.addVar(def.name.toString()) else e end)
+      in self.walk(meta,env);
+         self.walk(metaPackage,env);
+         @For parent in parents do
+           self.walk(parent,env)
+         end;
+         @For def in defs do
+           self.walk(def,env2)
+         end;
+        @For i in defImports do
+          self.walk(i,env)
+        end
+      end
+    end
+
+    @Operation walkTry(line:Integer,body:Performable,handler:Performable,name:String,env:FVEnv)
+      self.walk(handler,env.addVar(name));
+      self.walk(body,env)
+    end
+
+    @Operation walkVar(line:Integer,charStart:Integer,charEnd:Integer,name:String,env:FVEnv)
+      let element = env.getElement(name)
+      in if element <> null andthen element.isKindOf(Resource)  
+         then editor.registerResource(name,charStart,charEnd,element.resourceName)
+         end
+      end;
+      if (name <> "super") andthen not(env.binds(name))
+      then editor.unboundVar(name,charStart,charEnd)
+      end
+    end
+
+    @Operation walkWithOpenFile(line:Integer,body:Performable,channel:String,file:Performable,mode:String,env:FVEnv)
+      self.walk(body,env.addVar(channel));
+      self.walk(channel,env);
+      self.walk(file,env)
+    end
+    
+  end

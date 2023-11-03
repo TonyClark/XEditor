@@ -1,0 +1,19 @@
+parserImport Manifests;
+
+@Manifest Activities
+
+  @File Activities         end
+  @File ActivityElement    end
+  @File Activity           end
+  @File ActivitySequence   end
+  @File Start              end
+  @File Stop               end
+  @File Condition          end
+  @File Guard              end
+  @File Detach             end
+  @File Repeat             end
+  @File Break              end
+  @File Label              end
+  @File Goto               end
+
+end;

@@ -1,0 +1,101 @@
+parserImport XOCL;
+
+import Comms;
+import IO;
+
+context XMF
+  @Operation bootMosaic()
+    try 
+      let mosaicClient = Clients::Mosaic::MosaicClient("com.ceteva.mosaic")
+      in
+        xmf.clientManager().add(mosaicClient);
+        
+        // the following is a hack to support the lookup of images which have hard
+        // coded path names in them
+        
+        mosaicClient.setFilenameRedirect("C:/Documents and Settings/Tony Clark/workspace/",xmf.homeDir() + "/../");
+        
+        @Fork(Mosaic)
+          try 
+            mosaicClient.start()
+          catch(exception)
+            format(stdout,"~S~%",Seq{exception})
+          end
+        end
+      end
+    catch(exception)
+      format(stdout,"~S~%",Seq{exception})
+    end
+  end
+
+context XMF
+  @Operation saveImage()
+    xmf.saveImage(xmf.imageDir(),"*.img")
+  end
+  
+context XMF
+  @Operation saveImage(path):Boolean
+    if @Busy("Saving Image") saveMachineState(path) end <> true
+    then
+      let input = Kernel_clientInputChannel("com.ceteva.console");
+          output = Kernel_clientOutputChannel("com.ceteva.console");
+          grammar = xmf.topLevel().grammar
+      in Root::stdin.setChannel(input);
+         Root::stdout.setChannel(output);
+         Kernel_rebindStdin(input);
+         Kernel_rebindStdout(output);
+         //xmf.menuManager().reset();
+            
+         // Why do we need to do this?
+         // (xmf.homeDir() + "/Boot/Mosaic/ToolInterface.o").loadBin(false);
+            
+         // the following should be done through reinflation...
+         // @For client in xmf.getAllClients() do
+         //   client.renew()
+         // end;
+         // The following is expected to override the current thread
+         // defined for Console...
+         @Fork(Console) xmf.topLevel().loop() end;
+         false
+      end
+    else true
+    end
+  end
+  
+context XMF
+  @Operation saveImageAndInflater():Boolean
+    // Returns true when saving and false when restoring..., also returns false when cancel is chosen
+    let path = xmf.saveFile(xmf.projDir(),"*.img","XModeler")
+    in if path <> ""
+       then 
+         let ok = true
+         in if path.fileExists()
+            then ok := xmf.question("Overwrite " + path)
+            end;
+            if ok 
+            then 
+              let inflationPath = (path->asSeq->reverse->drop(4)->reverse->asString + ".xml")
+              in if not(xmf.saveImage(path))
+                 then 
+                   xmf.inflate(inflationPath);
+                   false
+                 else 
+                   if inflationPath.fileExists()
+                   then ok := xmf.question("Overwrite " + inflationPath)
+                   end;
+                   if ok 
+                   then 
+                     xmf.findClientByName("com.ceteva.mosaic").saveInflater(inflationPath);
+                     true
+                   else true
+                   end
+                end
+              end
+            else true
+            end
+         end
+       //else true
+       else false // Jens, so 'cancel' on shutdown can be detected
+       end
+    end
+  end

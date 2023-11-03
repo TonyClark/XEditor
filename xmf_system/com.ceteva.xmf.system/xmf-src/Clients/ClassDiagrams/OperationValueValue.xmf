@@ -1,0 +1,89 @@
+parserImport XOCL;
+parserImport XMap;
+
+import Clients;
+import Diagrams;
+import ClassDiagrams;
+
+context ClassDiagrams
+  
+   @Class OperationValueValue extends Box
+		@Attribute text : Text end
+		@Attribute value : Object end
+		@Attribute min : Number end
+		@Attribute max : Number end
+		
+		@Constructor(value,x,y,min,max)
+			//self.createText(text)	
+            self.text := Text(value+"",1,0,true,false,false,Color(255,200,60));
+			self.add(self.text);
+			self.fillColor := Color(0,0,0);
+			self.hideAllEdges();
+            self.setValueColor();
+			self
+		end
+		
+		@Operation setValueColor() 
+          if value.isKindOf(Number)
+            then 
+            if (min <> null andthen value < min) or (max <> null andthen value > max) 
+              then self.text.setColor(Color(255, 60,60))
+              else self.text.setColor(Color(255,200,60))
+            end
+          end
+		end
+
+		@Operation setTextAndColor(result) 
+          self.value := result;
+          self.text.setText(result+"");
+          self.setValueColor()
+		end
+		
+		/*@Operation createText(text)	
+
+			self.value := Text(text,1,0,true,false,false,Color(0,100,20));
+			self.add(self.value)//;
+			//self.checkDaemons()
+		end*/
+		
+		@Operation maxWidth():XCore::Element
+      		self.text.maxWidth()+2
+   		 end
+   		 
+   		 @Operation minWidth():XCore::Element
+            self.text.minWidth()+2
+   		 end
+   		 
+   		@Operation maxHeight():XCore::Element
+      		self.text.maxHeight()
+    	end
+	
+  		@Operation valueChanged(obj, slot, new, old)
+            obj.value := new
+  			/*if new = " " or new = ""
+   			then
+   				@WithoutDaemons(instLevel)
+   					obj.text := " ";
+   					obj.renew(obj.owner)
+   				end;
+			   	obj.owner.setFillColor(Clients::Diagrams::Color())
+			else
+			    obj.owner.setFillColor(Clients::Diagrams::Color(0,0,0))
+			end*/
+	  	end
+  	
+	  @Operation expandWidth()
+    
+      	if self.width <> self.text.width + 2 then
+        	self.resize(self.text.width + 2,height)
+      	end
+      end
+      
+    @Operation expandHeight()
+      
+      if self.height <> self.text.height then
+        self.resize(width,self.text.height)
+      end
+    end
+    
+   end

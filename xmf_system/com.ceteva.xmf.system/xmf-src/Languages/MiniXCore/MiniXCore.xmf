@@ -1,0 +1,162 @@
+parserImport XOCL;
+
+
+context Languages
+
+  @Package MiniXCore
+
+    @Class Element 
+      @Doc 
+        All values in XCore are elements. Every
+        XCore class inherits from Element or one of its
+        sub-classes. Direct inheritance to Element is
+        implicit where no inheritance is shown in this model. 
+        The operation of() returns the
+        classifier of an element. The operation se_nd handles message
+        passing at an element.
+      end
+      @Operation of():Classifier null end
+      @Operation send(message:String,args:[Element]):Element null end
+    end
+
+    @Class List 
+      @Attribute values:[Element] end
+      @Operation cons(head:Element):List null end
+      @Operation head():Element null end
+      @Operation tail():[Element] null end
+      @Doc
+        Collections of elements are manges as lists.
+      end
+    end
+    
+    @Class Obj 
+      @Attribute slots:[Slot] end
+      @Attribute daemons:[Daemon] end
+      @Operation get(name:String):Element null end
+      @Operation set(name:String,value:Element):Element null end
+      @Doc
+        Objects are instances of classes. Objects have
+        slots for each attribute of the class. The operations
+        get and set are used to access and update the slots.
+        Daemons are used to monitor updates on slots.
+      end
+    end
+
+    @Class Slot extends NamedElement
+      @Attribute value:Element end
+    end
+
+    @Class Daemon extends Operation end
+
+    @Class Constraint extends Operation end
+
+    @Class Operation extends NamedElement
+      @Attribute args:[Arg] end
+      @Operation invoke(values:[Element]):Element null end
+      @Doc
+        Operations implement behaviour for XCore classes.
+        Each operation returns a value and may perform
+        updates on the slots of objects.
+      end
+    end
+
+    @Class Arg extends NamedElement
+      @Attribute type:Classifier end
+    end
+
+    @Class Classifier extends NamedElement, NameSpace
+      @Attribute parents:[Classifier] end
+      @Attribute grammar:Grammar end
+      @Attribute operations:[Operation] end
+      @Attribute constraints:[Constraint] end
+      @Operation classify(element:Element):Boolean null end
+      @Operation send(instance:Element,name:String,args:[Element]):Element null end
+      @Doc
+        A classifier is a type that is used to classify
+        elements and to provide behaviour via operations. 
+        Each element is an instance of a single 
+        classifier. Inheritance is defined using classifier parents.
+        A classifier can be used to classify
+        a collection of objects by defining constraints.
+        An element is classified by a classifier when all
+        of the local and inherited constraints are satisfied
+        by the element. Classifiers for basic types String,
+        Float, Integer, Boolean are assumed. XCore implements a MOP
+        by allowing sub-classes of Classifier to redefine how messages
+        are sent.
+      end 
+    end
+
+    @Class Grammar 
+      @Attribute start:String end
+      @Attribute clauses:[Clause] end
+      @Operation parse(text:String):Element null end
+      @Doc
+        Any classifier may implement a language feature by
+        implementing a grammar. The grammar defines BNF-style
+        clauses and a starting non-terminal used to parse a
+        string. The text-language XOCL is defined using 
+        XOCL grammars attached to classes.
+      end
+    end
+
+    @Class Clause end
+
+    @Class Class extends Classifier
+      @Attribute attribute:[Attribute] end
+      @Attribute constructors:[Constructor] end
+      @Operation new(args:[Element]):Object null end
+      @Operation get(instance:Object,name:String):Element null end
+      @Operation set(instance:Object,name:String,value:Element):Element null end
+      @Doc
+        A class is a classifier with structural features
+        defined by attributes. A class defines Java-like
+        constructors that can be used for instantiation.
+        A class is instantiated using the operation new.
+        XCore implements a MOP by allowing sub-classes of 
+        Class to redefine how slots and accessed an updated.
+      end
+    end
+
+    @Class GenericClass extends Class
+      @Attribute args:[Arg] end
+      @Doc
+        A generic class is a class with parameters.
+        When the parameters are supplied to the generic
+        class it produces a new instance which is also
+        a class.
+      end
+    end
+
+    @Class Package extends Class
+      @Attribute metaPackage:Package end
+      @Doc
+        A package is a container of classes and
+        sub-packages. A package has a meta-package which
+        contains the (meta-)classifiers for the contents
+        of the package.
+      end
+    end
+
+    @Class NameSpace extends Container 
+      @Operation getElement(name:String):Element null end
+      @Doc
+        A name-space is a container of named elements.
+        The '::' operator is used to navigate name-spaces,
+        for example, Root::XCore::Class::new.
+      end
+    end
+
+    @Class NamedElement extends Contained
+      @Attribute name:String end
+    end
+
+    @Class Contained
+      @Attribute owner:Container end
+    end
+
+    @Class Container
+      @Attribute contents:[Contained] end
+    end
+
+  end

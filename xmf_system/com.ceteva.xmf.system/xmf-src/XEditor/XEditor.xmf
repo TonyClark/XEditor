@@ -1,0 +1,263 @@
+parserImport XOCL;
+
+import Exceptions;
+
+context Root
+
+  @Package XEditor
+
+    @Doc
+      The XEditor package provides support for the XEditor tool.
+      It defines handlers for events that are raised by the
+      underlying Java code.
+    end
+
+    @Class MenuItem isabstract 
+
+      @Bind counter = 0 end
+
+      @Operation nextId():Integer
+        MenuItem::counter := MenuItem::counter + 1;
+        MenuItem::counter
+      end
+
+      @AbstractOp toJMenu() end
+
+      @AbstractOp getItem(id:Integer):MenuItem end
+
+      @AbstractOp check(o:Object):Boolean end
+    
+    end
+
+    @Class MenuLeaf extends MenuItem
+      @Attribute name   : String                       end
+      @Attribute id     : Integer = MenuItem::nextId() end
+      @Attribute handler: (Object) -> Element          end
+      @Attribute predicate: (Object) -> Boolean = @Operation(o:Object):Boolean true end end
+      @Constructor(name,handler) ! end
+      @Constructor(name,predicate,handler) end
+      @Operation toJMenu()
+        XEditor::getMLeaf(name,id)
+      end
+      @Operation getItem(id:Integer):MenuItem
+        if self.id = id
+        then self
+        else null
+        end
+      end
+      @Operation perform(object)
+        handler(object)
+      end
+      @Operation check(o:Object):Boolean
+        predicate(o)
+      end
+    end
+
+    @Class Menu extends MenuItem
+      @Attribute name:String end
+      @Attribute menuItems:[MenuItem] end
+      @Constructor(name,menuItems) ! end
+      @Operation check(o:Object):Boolean
+        menuItems->forAll(i | i.check(o))
+      end
+      @Operation toJMenu()
+        XEditor::getMenu(name,menuItems->collect(i | i.toJMenu()))
+      end
+      @Operation getItem(id:Integer):MenuItem
+        @Find(item,menuItems)
+          when item.getItem(id) <> null
+          do item.getItem(id)
+          else null
+        end
+      end
+    end
+    
+    @Class BrowserMenuHandler
+      @Attribute type:Classifier end
+      @Attribute menu:MenuItem end
+      @Constructor(type,menu) ! end
+      @Operation check(o:Object):Boolean
+        menu.check(o)
+      end
+      @Operation toJMenu() 
+        menu.toJMenu()
+      end
+      @Operation getItem(id:Integer):MenuItem
+        menu.getItem(id)
+      end
+    end
+
+    @Operation getBrowserTree(object:Object)
+    
+      // Returns a tree of the form [Label,Integer,String,tree...] where
+      // Label is the node label.
+      // Integer is the XMF object handle for the tree element.
+      // String is an image (or null).
+      // tree... are the children.
+      // NB the browser tree is partial - there are missing children.
+      // The tree will be populated when the nodes are selected in the GUI.
+      
+      let handle = xmf.getHandle(object);
+          label = 
+            @TypeCase(object)
+              Null do 
+                "null" 
+              end
+              ForeignOperation do
+                object.name()
+              end
+              Operation do
+                object.name() + "(" + object.paramNames()->separateWith(",") + ")"
+              end
+              Attribute do
+                object.name() + ":" + object.type.toString()
+              end
+              else object.toString()
+            end;
+          children = 
+            @TypeCase(object)
+              Null do [] end
+              Container do 
+                let children = []
+                in @For child in object.contents() do
+                      @TypeCase(child)
+                        ForeignOperation do
+                          null
+                        end
+                        else children := Seq{ getBrowserTree(child) | children}  
+                      end
+                   end;
+                   children
+                end
+              end
+              else [] 
+            end
+      in [label,handle] + children
+      end
+    end
+
+    @Operation getMLeaf(label:String,id:Integer)
+      let MLeaf = xmf.javaClass("console.browser.MLeaf") 
+      in MLeaf(label,id)
+      end
+    end
+
+    @Operation getMenu(name:String,items:[Object])
+      let Menu = xmf.javaClass("console.browser.Menu") then
+          menu = Menu(name)
+      in @For item in items do
+           menu.add(item)
+         end;
+         menu
+      end
+    end
+
+    @Operation handleBrowserPopup(id:Integer,object:Object)
+      let handlers = browserMenuHandlers->select(h | object.isKindOf(h.type))
+      in @Find(handler,handlers)
+           when handler.getItem(id) <> null
+           do Root::handler := handler.getItem(id); handler.getItem(id).perform(object)
+           else throw Error("cannot find handler for " + id + " " + object)
+         end
+      end
+    end
+      
+    @Operation edit(file:String)
+      let Console = xmf.javaClass("console.Console")
+      in Console.CONSOLE.loadPath(file)
+      end
+    end
+
+    @Operation getMenuFor(value):[Object]
+      let handlers = browserMenuHandlers->select(h | value.isKindOf(h.type) and h.check(value))
+      in handlers->collect(h | h.toJMenu())
+      end
+    end
+
+    @Operation setCaretPosition(pos:Integer)
+      let Console = xmf.javaClass("console.Console")
+      in Console.CONSOLE.setCaretPosition(pos)
+      end
+    end
+
+    @Bind browserMenuHandlers = [
+      BrowserMenuHandler(Element,MenuLeaf("Set Global",
+        @Operation(value:Object):Element 
+         let name = xmf.getString("Global Name","name","tmp")
+         in if name <> null
+            then 
+              format(stdout,"~S := ~S~%",[name,value]);
+              Root.putElement(name,value)
+            end
+         end
+        end
+      )),
+      BrowserMenuHandler(Class,MenuLeaf("Edit",
+        @Operation(value:Object):Element 
+          xmf.javaClass("console.Console").CONSOLE.loadPath(value.resourceName)
+        end
+      )),
+      BrowserMenuHandler(CompiledOperation,MenuLeaf("Edit",
+        @Operation(value:Object):Element  
+          xmf.javaClass("console.Console").CONSOLE.loadPath(value.codeBox().resourceName())
+        end
+      )),
+      BrowserMenuHandler(Container,MenuLeaf("Refresh",
+        @Operation(value:Object):Element 
+          xmf.javaClass("console.Console").CONSOLE.refreshBrowserNode(xmf.getHandle(value))
+        end
+      )),
+      BrowserMenuHandler(Class,MenuLeaf("Instantiate",
+        @Operation(value:Object):Boolean
+          value.arity() = 0
+        end,
+        @Operation(class:Object):Element 
+          try 
+            let name = xmf.getString("Instantiate","Variable name","instance") then
+                instance = class()
+            in format(stdout,"Root::~S := ~S() (=> ~S)~%",[name,class,instance]);
+               Root.putElement(name,instance)
+            end
+          catch(x) 
+            x.printBacktrace()
+          end  
+        end
+      )),
+      BrowserMenuHandler(CompiledOperation,MenuLeaf("Invoke",
+        @Operation(value:Object):Boolean
+          value.arity() = 0
+        end,
+        @Operation(value:Object):Element 
+          try 
+            let name = xmf.getString("Invoke","Variable name","result") then
+                result = value()
+            in format(stdout,"Root::~S := ~S() (=> ~S)~%",[name,value,result]);
+               Root.putElement(name,result)
+            end
+          catch(x) 
+            x.printBacktrace()
+          end  
+        end
+      )),
+      BrowserMenuHandler(Element,MenuLeaf("Check Constraints",
+        @Operation(value:Object):Element  
+          let root = value.checkConstraints() in
+          @Letrec updateReport(report) = 
+                     let children = report.children;
+                         candidate = report.candidate;
+                         satisfied = report.satisfied then
+                         reason = if satisfied then "" else report.filterFailures().reportString() end;
+                         icon = if satisfied then null else "icons/warning.png" end
+                     in @For child in children do updateReport(child) end;
+                        xmf.javaClass("console.Console").CONSOLE.setBrowserElementImage(xmf.getHandle(candidate),icon);
+                        xmf.javaClass("console.Console").CONSOLE.setBrowserHoverText(xmf.getHandle(candidate),reason)
+                     end
+           in updateReport(root)
+           end
+           end
+        end
+      ))
+      ] 
+    end
+
+  end

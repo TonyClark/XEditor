@@ -1,0 +1,41 @@
+parserImport XOCL;
+
+import Models;
+import Shopping;
+
+context Shopping
+  @Class Customer
+
+    @Attribute name          : String        (<)     end
+    @Attribute transactions  : [Transaction] (<,!,+) end
+
+    @Constructor(name) ! end
+
+    @Operation mostRecentPurchase(productName:String):Purchase
+      @Letrec
+        return(ts:[Transaction]):Purchase =
+          if ts = []
+          then null
+          elseif ts->head.isKindOf(Return) andthen ts->head.getProduct().getName() = productName
+          then null
+          elseif ts->head.isKindOf(Purchase) andthen ts->head.getProduct().getName() = productName
+          then ts->head
+          else return(ts->tail)
+          end
+      in return(self.getTransactions())
+      end
+    end
+
+    @Operation return(productName:String):Boolean
+      let purchase = self.mostRecentPurchase(productName)
+      in if purchase = null
+         then false
+         else 
+           purchase.return();
+           self.setTransactions([Return(purchase)] + self.getTransactions());
+           true
+         end
+      end
+    end
+
+  end

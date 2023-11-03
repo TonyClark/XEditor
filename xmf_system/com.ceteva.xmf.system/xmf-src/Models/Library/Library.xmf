@@ -1,0 +1,168 @@
+parserImport XOCL;
+
+// This file contains a simple example of a model and some associated OCL code.
+// Interesting things to note are given by comments in the rest of the file...
+
+import Models;
+import Lib;
+
+// Named definitions must be added to a name-space using 'context':
+context Lib
+
+  // Think of a class as a model element on M1 (but can live elsewhere as we shall see)...
+  @Class Library 
+    
+    // Attributes define fields in instances of the class...
+    @Attribute books     : {Book}    (<,!) end
+    @Attribute readers   : {Reader}  (<,!) end
+    @Attribute borrows   : {Borrows} (<,!) end
+    @Attribute idCounter : Integer   (<,!) end
+      
+    // A constructor works a bit like Java...
+    // Use a ! to indicate this is the printed representation (with named slots)...
+    @Constructor(books,readers,borrows,idCounter) ! end
+      
+    // Operations are like Java methods, but with much more functionality.
+    // The language of operation-bodies is XOCL which is OCL extended with
+    // useful features (including side effects!)...
+      
+    @Operation addBook(title:String)
+      @Doc
+        Adds a new book to the library with the supplied title.
+      end
+      // Look how slots are updated and instances are created...
+      self.setBooks(self.getBooks()->including(Book(title)))
+    end
+      
+    @Operation addReader(name:String)
+      @Doc 
+        Adds a new reader to the library with the supplied name.
+      end
+      // Note that use of 'self' to refer to the receiver.
+      // This cannot be elided for update and operation call 
+      // (but can be for slot reference)...
+      self.setReaders(self.getReaders()->including(Reader(name,self.newId())))
+    end
+      
+    @Operation newId():Integer
+      @Doc 
+        Allocated a unique identifier for a new reader.
+      end
+      // All operations return a value (that can be ignored)...
+      self.setIdCounter(self.getIdCounter() + 1);
+      idCounter
+    end
+      
+    // There are many OCL operations for making collection processing
+    // convenient. These include 'exists', 'select', 'forall' ...
+      
+    @Operation hasBook(title:String):Boolean
+      @Doc 
+        Returns true when the library has a book with the supplied title.
+      end
+      self.getBooks()->exists(b | b.getTitle() = title)
+    end
+      
+    @Operation getBook(title:String):Book
+      @Doc 
+        Returns a book with the supplied title. 
+        This operation assumes there is such a book.
+      end
+      self.getBooks()->select(b | b.getTitle() = title)->sel
+    end
+      
+    @Operation hasReader(name:String):Boolean 
+      @Doc 
+        Returns true when there is a registered reader with the supplied name.
+      end
+      self.getReaders()->exists(r | r.getName() = name)
+    end
+      
+    @Operation getReader(name:String):Reader
+      @Doc 
+        Returns the reader with the supplied name.
+        This operation assumes there is such a reader.
+      end
+      self.getReaders()->select(r | r.name = name)->sel
+    end
+      
+    @Operation borrow(name:String,title:String)
+      @Doc 
+        Assuming there is a reader and book with the supplied name and title,
+        this operation creates a borrowing record showing that the reader has
+        taken the book from the library. Both book and reader are retained in 
+        the library record system.
+      end
+      // Here we have conditionals and local variables...
+      if self.hasReader(name) and self.hasBook(title)
+      then 
+        let reader = self.getReader(name);
+            book = self.getBook(title) then
+            borrow = Borrows()
+        in self.setBorrows(borrows->including(borrow));
+           borrow.setReader(reader);
+           borrow.setBook(book)
+        end
+      else self.error(name + " cannot borrow " + title)
+      end
+    end
+      
+    @Operation isBorrowing(name:String,title:String):Boolean
+      @Doc 
+        Returns true when there is a borrowing record showing that the reader
+        with the supplied name is borrowing a book with the supplied title.
+      end
+      self.getBorrows()->exists(b | b.getReader().getName() = name and b.getBook().getTitle() = title)
+    end
+      
+    @Operation getBorrows(name:String,title:String):Borrows
+      @Doc 
+        Returns a borrowing record between the reader with the supplied 
+        name and the book with the supplied title. This operation assumes
+        that there is such a record.
+      end
+      self.getBorrows()->select(b | b.getReader().getName() = name and b.getBook().getTitle() = title)->sel
+    end
+
+    @Operation removeReader(name:String):Boolean
+      if self.getBorrows()->exists(b | b.getReader().getName() = name)
+      then false
+      else 
+        self.deleteFromReaders(self.getReader(name));
+        true
+      end
+    end
+      
+    @Operation return(name:String,title:String)
+      @Doc 
+        Returns the book with the supplied title that is borrowed by the reader
+        with the supplied name. The borrowing record is removed from the library
+        system.
+      end
+      if self.hasReader(name) and self.isBorrowing(name,title)
+      then 
+        let borrowing = self.getBorrows(name,title)
+        in self.setBorrows(self.getBorrows()->excluding(borrowing));
+           self.setBooks(self.getBooks()->including(borrowing.getBook()))
+        end
+      else self.error(name + " not borrowing " + title)
+      end
+    end
+      
+    // Constraints are invariants on instances of the class. The condition
+    // is expressed in XOCL and must be true for each instance to pass the 
+    // test. The constraints are used to generate reports...
+      
+    @Constraint AllReadersHaveUniqueNames
+      self.getReaders()->forAll(r1 |
+        self.getReaders()->forAll(r2 |
+          r1.getName() = r2.getName() implies r1 = r2))
+      fail readers->select(r | readers->select(rr | rr.getName() = r.getName())->size > 1).getName()->iterate(n s="not unique." | n + " " + s)
+    end
+      
+    @Constraint BorrowedBooksNotAvailable
+      borrows->collect(b | b.getBook())->intersection(self.getBooks())->isEmpty
+      fail "The following books should not be on the shelves: " + borrows.getBook()->intersection(self.getBooks())
+    end
+      
+  end

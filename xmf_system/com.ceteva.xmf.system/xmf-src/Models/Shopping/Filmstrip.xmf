@@ -1,0 +1,14 @@
+parserImport XOCL;
+parserImport Filmstrips;
+
+import Models;
+import Shopping;
+import Filmstrips;
+
+@Filmstrip shopFilmstrip
+   s = Shop()
+in
+   roots [[Shopping::Shop],[s]];
+   monitor [Shopping.classes,Shopping.classes->iterate(c os = {} | c.operations + os)];
+   start populateShop(s) 
+end; 

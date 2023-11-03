@@ -1,0 +1,19 @@
+parserImport XOCL;
+
+import Filmstrips;
+
+context Filmstrips
+
+  @Class Link
+  
+    @Attribute name:String      end
+    @Attribute source:Integer   end
+    @Attribute target:Integer   end
+    
+    @Constructor(name,source,target) ! end
+      
+    @Operation getDiagramLink():String
+      source + " ---> " + target + " : " + name + "\n"
+    end
+    
+  end

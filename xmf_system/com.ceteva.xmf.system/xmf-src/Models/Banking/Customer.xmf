@@ -1,0 +1,13 @@
+parserImport XOCL;
+
+import Models;
+
+context Banking
+
+  @Class Customer
+
+    @Attribute name:String (<) end
+
+    @Constructor(name) ! end
+
+  end

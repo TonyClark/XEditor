@@ -1,0 +1,18 @@
+parserImport XOCL;
+
+import Generics;
+
+context Generics
+
+    @Class Relation(T1:Class,T2:Class) extends NamedRelation(Self::mkName(T1),T1,Self::mkName(T2),T2)
+      
+      @Operation mkName[generic=true](C:Class):String 
+        C.name.toString().lowerCaseInitialLetter() 
+      end
+      
+      @Operation setGenericName[generic=true](args) 
+        // Ignore the supplied name and create one here....
+        self.setName("Relation(" + args->at(0).name + "," + args->at(1).name + ")")
+      end
+
+    end    

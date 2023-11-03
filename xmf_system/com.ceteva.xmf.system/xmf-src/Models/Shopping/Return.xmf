@@ -1,0 +1,17 @@
+parserImport XOCL;
+
+parserImport XOCL;
+
+import Models;
+import Shopping;
+
+context Shopping
+  @Class Return extends Transaction
+
+    @Attribute purchase:Purchase (<) end
+
+    @Constructor(purchase) ! 
+      self.setProduct(purchase.getProduct())
+    end
+
+  end

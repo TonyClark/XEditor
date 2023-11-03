@@ -1,0 +1,51 @@
+parserImport XOCL;
+parserImport XEditor;
+
+@EventHandler dropFieldName(handle:int,name:String,snapshot:String) 
+  // Create an instance of the type of the slot. Set or add the new
+  // instance to the slot and then edit the instance..
+   try 
+     if xmf.hasHandle(handle) 
+     then 
+       let object = xmf.getObjectWithHandle(handle) then
+           att = object.of().getAttribute(name)
+       in if att <> null
+          then
+            let type = att.type
+            in if type.inheritsFrom(Seq(Element))
+               then 
+                 let utype = att.underlyingType()
+                 in if utype.isKindOf(Class)
+                    then 
+                      let newObj = utype()
+                      in object.set(name,object.get(name) + [newObj]);
+                         newObj.edit(snapshot)
+                      end
+                    end
+                 end
+               elseif type.inheritsFrom(Set(Element))
+               then 
+                 let utype = att.underlyingType()
+                 in if utype.isKindOf(Class)
+                    then 
+                      let newObj = utype()
+                      in object.set(name,object.get(name)->including(newObj));
+                         newObj.edit(snapshot)
+                      end
+                    end
+                 end 
+               elseif type.isKindOf(Class)
+               then 
+                 let newObj = type()
+                 in object.set(name,newObj);
+                    newObj.edit(snapshot)
+                 end
+               end
+            end
+          end
+       end
+     end      
+    catch(exception)
+       Root::xmfException := exception
+    end
+  end;

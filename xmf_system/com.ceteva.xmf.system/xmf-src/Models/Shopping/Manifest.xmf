@@ -1,0 +1,15 @@
+parserImport Manifests;
+
+
+@Manifest Shopping
+
+  @File Shopping    end
+  @File Product     end
+  @File Transaction end
+  @File Purchase    end
+  @File Return      end
+  @File Customer    end
+  @File Shop        end
+  @File Filmstrip   end
+
+end;

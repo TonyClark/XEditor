@@ -1,0 +1,17 @@
+#!/bin/sh
+
+XMFHOME=$1
+XMFLIB="$XMFHOME:$XMFHOME/../../com.ceteva.xmf.machine/bin"
+PORT=10101
+EVALUATOR=$XMFHOME/../xmf-img/compiler.img
+HEAPSIZE=5000
+STACKSIZE=50
+FREEHEAP=20
+MAXJAVAHEAP="-Xmx200m"
+MAXJAVASTACK="-Xss5m"
+VERSION=$2
+JAVA=java
+LOCALE="-Duser.country=UK"
+USERNAME=`whoami`
+
+java $LOCALE $MAXJAVAHEAP -cp $XMFLIB xos.OperatingSystem -port $PORT -initFile $XMFHOME/Boot/Boot.o -heapSize $HEAPSIZE -arg version:$VERSION -arg home:$XMFHOME 

@@ -1,0 +1,93 @@
+parserImport XOCL;
+
+import AbstractSyntax;
+import OCL;
+
+context OCL
+
+  @Class CompilationUnit extends CompilationModuleElement, DefiniensSupplier
+     
+    // A compilation unit is produced by the parser when we load a file for
+    // compiling. Send the compilation unit a 'compile' message to compile
+    // the contents. If the compilation unit originated from a resource
+    // (e.g. a file) then the resource is named. The source code contained
+    // in the resource *may* be contained in the source slot of a unit.
+    // The imports are those packages that are imported at run-time and 
+    // are referenced by the program code. The expressions are evaluated 
+    // in the environment created by the imports.
+      
+    @Attribute parserImports : Seq(ParserImport) (?,!,+,-) end
+    @Attribute imports       : Seq(Import)       (?,!,+,-) end
+    @Attribute exps          : Seq(Performable)  (?,!,+,!) end
+    @Attribute source        : String            (?,!)     end
+    
+    @Constructor(resource) ! end
+    
+    @Constructor(imports,exps) end
+    
+    @Constructor(resource,imports,exps) end
+    
+    @Constructor(resource,imports,exps,source) end
+    
+    @Constructor(resource,imports,exps,source,parserImports) end
+      
+    @Operation foldExps(resourceName:String):Performable
+      // Create a single expression to compile. The expression is the
+      // result of folding up the imports and the body expressions.
+      let exps = self.transformExps(resourceName)
+      in exps->iterate(exp exps = self.foldImports() | [| <exps>; <exp> |])
+      end
+    end 
+      
+    @Operation foldImports()
+      // Create a single expression from the imports.
+      imports->iterate(iclause exps = [| 0 |] | [| <exps>; <iclause> |])
+    end
+
+    @Operation getSupplied():[DefiniensRecord]
+      @For e in exps do
+        if e.isKindOf(ContextDef)
+        then e.setSupplied(imports->iterate(i ns=[XCore,Root] | 
+               let n = i.getNameSpace(ns) in if n <> null then [n] + ns else ns end end))
+        end
+      end;
+      self.getSupplied(imports,[Root,XCore],[])
+    end
+
+    @Operation getSupplied(imports:[Import],nameSpaces:[NameSpace],records:[DefiniensRecord]):[DefiniensRecord]
+      if imports = []
+      then records
+      else 
+        let nameSpace = imports->head.getNameSpace(nameSpaces)
+        in if nameSpace <> null
+           then 
+             let nameSpaceRecords = nameSpace.names()->select(n | nameSpace.hasElement(n.toString()))->collect(n | DefiniensRecord(n.toString(),imports->head));
+                 importRecord = DefiniensRecord(nameSpace.name.toString(),imports->head)
+             in self.getSupplied(imports->tail,[nameSpace] + nameSpaces,records + [importRecord] + nameSpaceRecords)
+             end
+           else self.getSupplied(imports->tail,nameSpaces,records)
+           end
+        end
+      end
+    end
+    
+    @Operation pprint():String
+      let sout = IO::StringOutputChannel()
+      in self.pprint(sout,0);
+         sout.getString()
+      end
+    end
+    
+    @Operation pprint(out,indent)
+      @For i in imports do
+        i.pprint(out,indent);
+        if not isLast then format(out,"~%") end 
+      end;
+      format(out,"~%~%");
+      @For exp in exps do
+        exp.pprint(out,indent);
+        format(out,";~%~%")
+      end
+    end
+      
+  end    

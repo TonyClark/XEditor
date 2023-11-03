@@ -1,0 +1,13 @@
+parserImport XOCL;
+parserImport Manifests;
+
+import Projects;
+
+@Manifest TextEditor
+  @File ToolDeployment end
+  @File BrandingProperty end
+  @File DeployedToolDescriptor end
+  @File ToolDeployer end
+  @File DefaultToolDeployer end
+  @File ^None Boot end
+end;

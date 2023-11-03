@@ -1,0 +1,37 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import AbstractSyntax;
+import XEditor;
+
+@EventHandler topLevelColonColon(console,command,x,y) 
+
+  // A '::' was pressed in the console. Handle name resolution...
+  
+    try 
+      // The command parser will leave the largest expression left of the '::'
+      // in the global variable LEFT_OPERAND. Typing '::' causes an exception...
+      TopLevel::Console::LEFT_OPERAND := null;
+      TopLevel::Console.grammar.parseString(command,TopLevel::Console.grammar.startingSymbol,[]);
+      ""
+    catch(exception)
+      Root::xmfException := exception;
+      let exp = TopLevel::Console::LEFT_OPERAND
+      in if exp <> null
+         then 
+           // exp is the largest expression left of the '.' ...
+           try
+             // Get the names in the name space and hand them to a resolver...
+             let namespace = resolve(exp).eval(null,[],[XCore,Root]) 
+             in console.handleNameResolution(namespace.names())
+             end
+           catch(exception)
+             Root::xmfException := exception;
+             print(exception.toString());
+             null
+           end
+         else null
+         end
+      end
+    end
+  end;

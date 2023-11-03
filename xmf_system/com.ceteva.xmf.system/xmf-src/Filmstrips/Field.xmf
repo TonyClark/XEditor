@@ -1,0 +1,18 @@
+parserImport XOCL;
+
+import Filmstrips;
+
+context Filmstrips
+
+  @Class Field
+  
+    @Attribute name:String   end
+    @Attribute value:Element end
+    
+    @Constructor(name,value) end
+
+    @Operation getDiagramField() 
+      "  " + name + " = " + value.toString() + "\n"
+    end
+    
+  end

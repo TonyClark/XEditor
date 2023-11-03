@@ -1,0 +1,47 @@
+parserImport XOCL;
+
+// This file contains a simple example of a model and some associated OCL code.
+// Interesting things to note are given by comments in the rest of the file...
+
+import Models;
+
+// Named definitions must be added to a name-space using 'context':
+context Models
+
+  // Packages are name=spaces that contain traditional model-elements (+ other things too)...
+  @Package Lib
+
+   
+    @Operation populateLib(l:Lib)   
+  
+      // Create a library programmatically and then check its
+      // constraints. Generate a report and edit it. Once edited
+      // remove the offending book and re-run the constraint. That
+      // leaves two fred's. Rename one of them to bert and re-run
+      // the constraints...
+      let maxBooks = 1 in 
+      @For n in 0.to(maxBooks) do l.addBook("b" + n) end;
+      l.addReader("fred");
+      l.addReader("bert");
+      @For n in 0.to(maxBooks) do l.borrow("fred","b" + n) end;
+      @For n in 0.to(maxBooks) do l.return("fred","b" + n) end;
+      @For n in 0.to(maxBooks) do l.borrow("bert","b" + n) end;
+      @For n in 0.to(maxBooks) do l.return("bert","b" + n) end
+      end  
+    end      
+  
+    @Operation test1()
+  
+      // Create a library programmatically and then check its
+      // constraints. Generate a report and edit it. Once edited
+      // remove the offending book and re-run the constraint. That
+      // leaves two fred's. Rename one of them to bert and re-run
+      // the constraints...
+    
+      let l = Lib::Library()
+      in populateLib(l);
+         l.checkConstraints();
+         l
+      end
+    end
+  end

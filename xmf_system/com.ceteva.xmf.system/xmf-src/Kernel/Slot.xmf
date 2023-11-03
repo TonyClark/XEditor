@@ -1,0 +1,45 @@
+parserImport XOCL;
+
+/******************************************************************************
+ *                                                                            *
+ *                                    Slot                                    *
+ *                             --------------------                           *
+ *                                                                            *
+ *   All objects have slots. These are maintained in an implementation        *
+ *   specific way at the VM level. Object::slots() returns a list of          *
+ *   instances of Slot.                                                       *
+ *                                                                            *
+ ******************************************************************************/ 
+
+
+context XCore
+  @Class Slot
+    @Attribute name : Symbol end
+    @Attribute type : Attribute (?) end
+    @Attribute value : Element (?) end
+    @Constructor(name,type,value)
+      if name.isKindOf(String)
+      then name := Symbol(name)
+      end
+    end
+    @Operation setOwner(owner)
+      // Ignore this.
+      self
+    end
+    @Operation addTo(object)
+      let class = object.of()
+      in if class.isReallyKindOf(Class) 
+         then 
+           if class.allAttributes()->includes(type) 
+           then object.set(name,value)
+           else object
+           end
+         else object
+         end
+      end
+    end
+    @Operation toString() 
+      "Slot(" + name + "," + type.type + "," + value + ")"
+    end
+  end
+  

@@ -1,0 +1,7 @@
+
+
+AbstractSyntax::PUSH_DEFINIENS           := 0;
+AbstractSyntax::POP_DEFINIENS            := 1;
+AbstractSyntax::REGISTER_LOCATION        := 2;
+AbstractSyntax::REGISTER_DEFINIENDUM     := 3;
+AbstractSyntax::PUSH_DEFINIENS_REF       := 4;

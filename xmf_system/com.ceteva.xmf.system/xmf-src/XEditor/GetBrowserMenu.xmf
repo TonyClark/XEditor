@@ -1,0 +1,17 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import XEditor;
+
+@EventHandler getBrowserMenu(handle:Integer)
+
+  // Get the menu object for the supplied object...
+    try
+      let object = xmf.getObjectWithHandle(handle) 
+      in getMenuFor(object)
+      end
+    catch(exception)
+      Root::xmfException := exception;
+      exception.printBacktrace()
+    end
+  end;

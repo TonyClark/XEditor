@@ -1,0 +1,21 @@
+parserImport XOCL;
+
+import Clients;
+import Diagrams;
+import Menus;
+import ClassDiagrams;
+
+context ClassDiagrams
+
+  @Class DelegationEdge extends Edge
+  
+    @Constructor(source,target,xStart,yStart,xEnd,yEnd)  
+      self.init(Seq{source,target,Edge::whiteCircle,0,Color(),xStart,yStart,xEnd,yEnd})
+    end
+    
+    @Operation layoutId():String
+      "Delegation"
+    end
+
+  end
+  

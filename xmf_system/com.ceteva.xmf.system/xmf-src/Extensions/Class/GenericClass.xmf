@@ -1,0 +1,121 @@
+parserImport XOCL;
+
+import AbstractSyntax;
+import Exceptions;
+import OCL;
+import XOCL; 
+
+context XOCL 
+
+  @Class GenericClass extends Class, Definiens, DefiniensContainer
+
+    @Attribute args:[ClassArg] end
+
+    @Constructor(name,args,parents,args,metaClass,isAbstract,parents,defs) end
+
+    @Operation addParents():Performable
+      parents->iterate(p exp=[| null |] | [| <exp>; self.addParent(<p>) |])
+    end
+
+    @Operation bindArgs(arglist:performable,body:Performable):Performable
+      0.to(args->size-1)->iterate(i body=body |
+        [| let <args->at(i).name> = <arglist> ->at(<i.lift()>) in <body> end |])
+    end
+    
+    @Operation compile(env,frame,isLast,saveSource)
+      self.desugar().compile(env,frame,isLast,saveSource)
+    end
+
+    @Operation checkArgs(arglist:Performable):Performable
+      0.to(args->size-1)->iterate(i code = [| null |] |
+        [| XOCL::GenericClass::typeCheck(<args->at(i).name.lift()>,<arglist> ->at(<i.lift()>),<args->at(i).type.toExp()>); <code> |])
+    end
+
+    @Operation desugar():Performable
+      let exp =
+      [| let Self = XCore::GenericClass(<name.lift()>)
+         in Self.addParent(XCore::Class);
+            Self.setFormalNames(<args->iterate(a l=[| [] |] | [| <l> + [ <a.name.lift()> ] |] ) >);
+            Self.add(@Operation getDiagram(actions:(String,String) -> String,shown:[String],selected:[String],includeXCore:Boolean,packages:[Package]):String
+              Self.getDiagram(self,actions,shown,selected,includeXCore,packages)
+            end);
+            Self.add(@Operation setGenericName(args) XCore::GenericClass::setGenericName(self,args) end);
+            <self.getGenericDefs()->iterate(d e = [| null |] | [| Self.add(<d>); <e> |])>;
+            Self.add(
+              @Operation init(args) 
+                if args->size <> <args->size.lift()>
+                then throw Exceptions::Error(<name.lift()> + " expects " + <args->size.lift()> + " args but was supplied with " + args)
+                else 
+                  <self.checkArgs([|args|])>;
+                  <self.bindArgs([| args |],
+                    [| <self.addParents()>;
+                       let Self = self 
+                       in <self.getNonGenericDefs()->iterate(def body = [| null |] | [| <body>; self.add(<self.updateTypeExp(def)>) |])> 
+                       end |])>;
+                  Self.add(self);
+                  self.setGenericName(args);
+                  self.init()
+                end
+              end);
+            Self
+         end 
+       |]
+       in //format(stdout,"~S~%",[exp.pprint()]); 
+          exp 
+       end     
+    end 
+
+    @Operation getDefiniens():[Definiens]
+      args + [(Var("Self").charStart := charStart).charEnd := charEnd]
+    end
+
+    @Operation getGenericDefs():[Def]
+      // Get those definitions that have property [generic=true]
+      defs->select(d | self.isGenericDef(d))
+    end
+
+    @Operation getNonGenericDefs():[Def]
+      // Get those definitions that do not have property [generic=true]
+      defs->reject(d | self.isGenericDef(d))
+    end
+
+    @Operation isGenericDef(d:Performable):Boolean
+      // A generic def is an attribute or operation with the property 'generic'.
+      // Careful to capture those cases where desugaring has changed an operation
+      // into a Send(op,"setProperty:,["generic",...]) expression.
+      @TypeCase(d)
+        XOCL::Attribute do
+          d.properties->exists(p | p->head.toString() = "generic")
+        end
+        OCL::Operation do
+          d.properties->exists(p | p->head.toString() = "generic")
+        end
+        Send do 
+          (d.message.toString() = "setProperty") andthen
+          (d.args->head.isKindOf(StrExp)) andthen
+          (d.args->head.value = "generic")
+        end
+        else false
+      end
+    end
+
+    @Operation translatePlantUMLName(name:String):String
+      name.toString().subst("_","(",true).subst("_",")",true).subst("_",",",true).subst("_","<",true).subst("_",">",true).subst("_"," ",true).subst("_",":",true)
+    end   
+
+    @Operation typeCheck(name,value,type) 
+      if not(value.isKindOf(type))
+      then throw Exceptions::Error("argument " + name + " is expected to be of type " + type.path() + " but supplied " + value + " is of type " + value.of().path())
+      end
+    end
+
+    @Operation updateTypeExp(def:Def):Def
+      @TypeCase(def)
+        XOCL::Attribute do
+          [| let d = <def> in d.type := <def.type> end |]
+        end
+        else def
+      end
+    end
+
+  end

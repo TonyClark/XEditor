@@ -1,0 +1,25 @@
+parserImport XOCL;
+parserImport XEditor;
+
+@EventHandler invokeThenEdit(target:Integer,message:String,args:[Element],snapshot:String)
+
+  // The supplied target is a java handle on an XMF object.
+  
+  try
+    if xmf.hasHandle(target)
+    then 
+      let object = xmf.getObjectWithHandle(target)
+      in let result = object.send(message,args)
+         in if result <> null 
+            then result.edit(snapshot)
+            end
+         end
+      end
+    else throw Error("no object with handle " + target)
+    end
+  catch(exception)
+     Root::xmfException := exception;
+     format(stdout,"~S~%",[exception]);
+     null
+   end
+end;

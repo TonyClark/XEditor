@@ -1,0 +1,19 @@
+parserImport XOCL;
+
+import Models;
+import Shopping;
+
+context Shopping
+  @Class Product
+
+    @Attribute name     : String  (<)   end
+    @Attribute quantity : Integer (<,!) end
+    @Attribute price    : Integer (<)   end
+
+    @Constructor(name,quantity,price) ! end
+
+    @Operation sellOneUnit()
+      self.setQuantity(self.getQuantity() - 1)
+    end
+
+  end

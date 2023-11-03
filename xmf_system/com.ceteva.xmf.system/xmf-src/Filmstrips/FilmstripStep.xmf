@@ -1,0 +1,28 @@
+parserImport XOCL;
+
+import Filmstrips;
+
+context Filmstrips
+  @Class FilmstripStep
+    @Attribute pre:Snapshot          end
+    @Attribute target:Object         end
+    @Attribute message:String        end
+    @Attribute doc    :String        end
+    @Attribute args:[Element]        end
+    @Attribute value:Element         end
+    @Attribute steps:[FilmstripStep] end
+    @Attribute post:Snapshot         end
+    @Constructor(pre,target,message,doc,args,value,post) end
+
+    @Operation addStep(step:FilmstripStep) 
+      self.steps := steps + [step]
+    end
+
+    @Operation asJavaStep(colours:ColourMap):[Element]
+      // Returns the filmstrip as a Java object
+      let Step = xmf.javaClass("diagrams.filmstrips.Step");
+          label = target.toString() + "." + message + "(" + args->collect(a | a.toString())->separateWith(",") + ")"
+      in Step(pre.asJavaSnapshot(colours),label,doc,value.toString(),steps->collect(a | a.asJavaStep(colours)),post.asJavaSnapshot(colours))
+      end
+    end
+  end

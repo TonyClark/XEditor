@@ -1,0 +1,27 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import AbstractSyntax;
+
+@EventHandler compileAndLoadText(text,language)
+
+  // Invoked when a file is to be loaded. It ensures that the binary is up to date
+  // and then loads the binary...
+  
+  
+    try
+      let grammar = language.lookupPath(Root).grammar then
+          fun =  Compiler::compileFileTextToFunUsingLanguage(text,true,true,grammar,grammar.startingSymbol)
+      in fun()
+      end
+    catch(exception)
+       @TypeCase(exception)
+         Parser::ParseError do Root::xmfException := exception;
+           exception.printBacktrace()
+         end
+        Object do Root::xmfException := exception;
+           exception.printBacktrace()
+        end
+       end
+     end
+  end;

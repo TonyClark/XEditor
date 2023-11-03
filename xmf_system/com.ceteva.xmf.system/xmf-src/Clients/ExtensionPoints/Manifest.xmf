@@ -1,0 +1,18 @@
+parserImport XOCL;
+parserImport Manifests;
+
+import Projects;
+
+@Manifest ExtensionPoints
+  ExtensionPoints = @File ExtensionPoints end
+  @File ExtensionPointListener end
+  @File Contribution end
+  @File TypeLessContribution end
+  @File StringContribution end
+  @File ExtensionPoint end
+  @File InheritanceExtensionPoint end
+  @File MultipleExtensionPoint end
+  @File TypeLessExtensionPoint end
+  @File ^None Boot end
+do Project(ExtensionPoints,dir,self)
+end;

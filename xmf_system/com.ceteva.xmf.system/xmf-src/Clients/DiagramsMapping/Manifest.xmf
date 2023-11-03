@@ -1,0 +1,23 @@
+parserImport XOCL;
+parserImport Manifests;
+
+import Projects;
+
+@Manifest DiagramsMapping
+  DiagramsMapping =
+    @File DiagramsMapping      end
+    @File ElementChangedEvent  end
+    @File DiagramStub          end
+    @File DiagramContribution  end
+    @File ElementMap           end
+    @File ThemableMap          end
+    @File ElementXEdge         end
+    @File ElementXNode         end
+    @File ElementXDiagram      end
+    @File Theme                end
+    @File DiagramMappingClient end
+    @File DiagramManager       end
+    @File Extensions           end
+    @File ^None Boot           end
+do Project(DiagramsMapping,dir,self)
+end;

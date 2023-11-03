@@ -1,0 +1,139 @@
+parserImport XOCL;
+
+context XCore
+
+  @Class GenericClass extends Class
+
+    @Attribute cache        : [Object]           end // [[args,genericClassInstance],...]
+    @Attribute formalNames  : [String]     (<,!) end
+    @Attribute formalTypes  : [Classifier] (<,!) end
+
+    @Operation getArgs(class:Class):[Element]
+      @Find(pair,cache)
+        when pair->at(1) = class
+        do pair->at(0)
+        else null
+      end
+    end
+    
+    @Operation getDiagram(class:Class,actions:(String,String) -> String,shown:[String],selected:[String],includeXCore:Boolean,packages:[Package]):String
+      let label = self.getGenericName(class)
+      in if ((shown <> []) and not(shown->includes(label))) or NameSpace::VISITED->contains(label) or (not(includeXCore) and XCore.contents()->contains(self))
+         then ""
+         else NameSpace::VISITED := NameSpace::VISITED + [label]; 
+              self.generateDiagram(class,label,actions,shown,selected,includeXCore,packages)
+         end
+      end
+    end
+
+    @Operation generateDiagram(class:Class,label:String,actions:(String,String) -> String,shown:[String],selected:[String],includeXCore:Boolean,packages:[Package]):String
+      let args = @Find(pair,cache) when pair->at(1) = class do pair->at(0) else formalNames->collect( x | "?") end;
+          formals = "<" + formalNames->separateWith(",") + ">" then
+          startClass = "class \"" + name + formals + "\" as " + label + " #line.dashed:blue {\n";
+          argValues = 
+            formalNames.zip(args)->iterate(pair s="-- <size:12> <color:#DarkGreen> Parameters --\n" |
+              let name = pair->head; value = pair->tail
+              in if value.of().isKindOf(DataType)
+                 then s + "<size:12><color:#DarkGreen>" + pair->head + "=<color:#DarkGreen>" + pair->tail.toString() + "\n"
+                 else s
+                 end
+              end);
+          slots = 
+            class.attributes->iterate(a s="-- <size:12> <color:#DarkGreen> Attributes --\n" |
+             if [String,Boolean,Integer,Float,Symbol]->contains(a.type)
+             then s + "<size:12><color:#DarkGreen>" + a.name + ":<color:#Blue>" + a.type.name + "\n"
+             else s
+             end);
+          operations = 
+            class.operations->iterate(o s="-- <size:12>  <color:#DarkGreen> Operations --\n" | 
+             let type = o.type() then
+                 range = if type <> Element then ":<color:#Blue>" + type.name else "" end;
+                 params = o.paramNames()->collect(n | "<color:#Black>" + n)->separateWith(",")
+             in s + "<size:12><color:#DarkGreen>" + o.name + "(" + params + ")" + range + "\n"
+             end);
+          doc = if documentation <> null then "note left of " + name + "\n" + documentation.doc.subst(" ","\n",true) + "\nend note\n" else "" end;
+          associations =
+            class.attributes->iterate(a s="" |
+             let type = a.underlyingType()
+             in if not([String,Boolean,Integer,Float,Symbol]->contains(type)) and ((shown = []) or shown->contains(type.name.toString())) and (not(XCore.contents()->contains(type)) or includeXCore) 
+                then 
+                  s + 
+                  type.getDiagram(actions,shown,selected,includeXCore,packages) + 
+                  if type.of().isKindOf(GenericClass)
+                  then label + " --> \"" + self.decorateName(a) + "\" " + type.of().getGenericName(type) + "\n"
+                  else label + " --> \"" + self.decorateName(a) + "\" " + type.name + "\n"
+                  end
+                else s
+                end
+             end);
+           slotAssociations =
+            formalNames.zip(args)->iterate(pair s="" |
+              let name = pair->head; value = pair->tail
+              in if value.isKindOf(Class)
+                 then s + label + " -[#green,dashed,thickness=2]-> \"" + name + "\" " + self.getGenericName(value) + "\n" +
+                      value.getDiagram(actions,shown,selected,includeXCore,packages)
+                 else s
+                 end
+              end);
+           parents = 
+             class.parents->iterate(p s="" |
+               if p <> Object and ((shown = []) or (shown->contains(p.name.toString()))) and (not(XCore.contents()->contains(p)) or includeXCore)
+               then s + p.getDiagram(actions,shown,selected,includeXCore,packages) + label + " --|> " + self.getGenericName(p) + "\n" 
+               else s
+               end);
+           endClass = "}\n"
+
+      in startClass       +
+           argValues      + 
+           slots          + 
+           operations     +
+           doc            +
+         endClass         +
+         associations     +
+         slotAssociations +
+         parents        
+      end
+    end
+
+    @Operation getGenericName(c:Class):String
+      if c.of().isKindOf(XCore::GenericClass)
+      then c.of().name() + c.of().position(c)
+      else c.name()
+      end
+    end
+
+    @Operation invoke(target:Object,args:[Element])
+
+      // When a generic class is instantiated it must be applied to
+      // arguments. The generic class instance (itself a class) and 
+      // the arguments are saved in the cache...
+      
+      @Find(pair,cache) 
+        when pair->at(0).equals(args) 
+        do pair->at(1) 
+        else 
+          let class = super(target,args)
+          in self.cache := [[args,class]] + self.cache;
+             class
+          end
+      end
+    end
+
+    @Operation position(c:Class)
+      cache->collect(pair | pair->at(1))->indexOf(c)
+    end
+
+    @Operation setGenericName(genericClass:Class,args:[Element])
+      // Set the name of the generic class based on the arguments.
+      genericClass.setName(name + "(" + args->collect(arg | arg.toString())->separateWith(",") + ")")
+    end
+
+    @Operation toString() 
+      @Find(pair,cache)
+        when pair->at(1) = self
+        do self.of().name + "(" + pair->at(0)->collect(a | a.toString())->separateWith(",") + ")"
+        else super()
+      end
+    end
+
+  end

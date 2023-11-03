@@ -1,0 +1,16 @@
+parserImport Manifests;
+
+/******************************************************************************
+ *                                                                            *
+ *                         Abstract Syntax Manifest                           *
+ *                              ---------------                               *
+ *                                                                            *
+ *         Classes that support the construction and processing of AST.       *
+ *                                                                            *
+ ******************************************************************************/ 
+
+@Manifest AbstractSyntax
+  @File AbstractSyntax    end
+  @File LocationManager   end
+  @File DefinitionManager end
+end;

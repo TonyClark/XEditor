@@ -1,0 +1,14 @@
+parserImport XOCL;
+parserImport Filmstrips;
+
+import Models;
+import Lib;
+import Filmstrips;
+
+@Filmstrip libraryFilmstrip
+  l = Library()
+in
+  roots [[Lib::Library],[l]];
+  monitor [Lib.classes,Lib.classes->iterate(c os = {} | c.operations + os)];
+  start populateLib(l) 
+end;

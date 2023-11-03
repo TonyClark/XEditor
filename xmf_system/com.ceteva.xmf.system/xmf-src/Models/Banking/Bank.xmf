@@ -1,0 +1,39 @@
+parserImport XOCL;
+
+import Models;
+import Banking;
+
+context Banking
+
+  @Class Bank
+
+    @Attribute customers:[Customer] (<,+,-) end
+    @Attribute accounts :[Account]  (<,+,-) end
+
+    @Operation accountsFor(name:String):[Account]
+      accounts->select(a | a.getCustomer() = self.getCustomer(name))
+    end
+
+    @Operation openAccount(name:String,funds:Integer)
+      if not(self.hasCustomer(name))
+      then self.addToCustomers(Customer(name))
+      end;
+      self.addToAccounts(Account(self.getCustomer(name),funds))
+    end
+
+    @Operation closeAccounts(name:String)
+      @For account in self.accountsFor(name) do
+        self.deleteFromAccounts(account)
+      end;
+      self.deleteFromCustomers(self.getCustomer(name))
+    end
+
+    @Operation getCustomer(name:String):Customer
+      @Find(c,customers) when c.getName() = name do c else null end
+    end
+
+    @Operation hasCustomer(name:String):Boolean
+      customers->exists(c | c.getName() = name)
+    end
+
+  end

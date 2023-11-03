@@ -1,0 +1,10 @@
+parserImport XOCL;
+
+import Models;
+
+context Lib
+  @Class Reader 
+    @Attribute name : String  (<) end
+    @Attribute id   : Integer (<) end
+    @Constructor(name,id) ! end
+  end

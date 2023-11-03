@@ -1,0 +1,116 @@
+parserImport XOCL;
+
+import Generics;
+
+context Generics
+  
+
+      @Class Transaction(r:Class,c:Class)
+        extends 
+          NamedRelation("resource",Unique(r),"customer",Unique(c))
+        @Attribute name : String end
+       end
+
+context Generics
+
+    @Class TransactionSystem(r:Class,c:Class) 
+      extends 
+        NamedContainer("resources","getResources","addResource","removeResource",Unique(r)), 
+        NamedContainer("customers","getCustomers","addCustomer","removeCustomer",Unique(c)), 
+        NamedContainer("Xactions","getXactions","addXaction","removeXaction",Transaction(r,c))
+
+      @Class XactionHandler
+        @Attribute name : String end
+        @Attribute guard:Operation end
+        @Attribute action:Operation end
+        @Constructor(name,guard,action) ! end
+      end
+      
+      @Class XactionFail extends Transaction(r,c)
+      end
+
+      @Class XactionSuccess extends Transaction(r,c)
+        @Attribute result : Element end
+      end
+
+      @Attribute XactionHandlers:[Self::XactionHandler] end
+
+      @Operation registerHandler(name:String,guard:Operation,action:Operation)
+        self.XactionHandlers := XactionHandlers + [Self::XactionHandler(name,guard,action)]
+      end
+
+      @Operation getHandler(name:String):XactionHandler
+        @Find(handler,XactionHandlers)
+          when handler.name = name
+          do handler
+          else null
+        end
+      end
+
+      @Operation getCustomer(id:Integer):r
+        @Find(customer,customers)
+          when customer.id = id
+          do customer
+          else null
+        end
+      end
+
+      @Operation getResource(id:Integer):r
+        @Find(resource,resources)
+          when resource.id = id
+          do resource
+          else null
+        end
+      end
+
+      @Operation setGenericName[generic=true](args) 
+        self.setName("XactionSystem(" + args->at(0).name + "," + args->at(1).name + ")")
+      end
+      
+      @Operation addCustomer() 
+        let C = Unique(c)
+        in self.addCustomer(C())
+        end
+      end
+
+      @Operation addResource() 
+        let R = Unique(r)
+        in self.addResource(R())
+        end
+      end 
+
+      @Operation mostRecentResourceTransaction(id:Integer):Self::Transaction
+        @Find(t,Xactions)
+          when t.resource.id = id
+          do t
+          else null
+        end
+      end
+
+      @Operation mostRecentCustomerTransaction(id:Integer):Self::Transaction
+        @Find(t,Xactions)
+          when t.customer.id = id
+          do t
+          else null
+        end
+      end
+
+      @Operation perform(name:String,cId:Integer,rId:Integer)
+        let handler = self.getHandler(name);
+            customer = self.getCustomer(cId);
+            resource = self.getResource(rId)
+        in if (handler.guard)(self,customer,resource)
+           then let value = (handler.action)(self,customer,resource) then
+                    Xaction = Self::XactionSuccess(resource,customer)
+                in Xaction.result := value;
+                   Xaction.name := name;
+                   self.addXaction(Xaction)
+                end
+           else let Xaction = Self::XactionFail(resource,customer)
+                in Xaction.name := name;
+                   self.addXaction(Xaction)
+                end
+           end
+        end
+      end
+    end 

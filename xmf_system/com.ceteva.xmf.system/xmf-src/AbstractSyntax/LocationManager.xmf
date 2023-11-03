@@ -1,0 +1,28 @@
+parserImport XOCL;
+
+import AbstractSyntax;
+
+context AbstractSyntax 
+  @Class LocationManager
+    @Doc
+      A Location manager processes AST nodes that are instances of the classes
+      Located, Definiens and Defini$ndum. The manager expects to be provided with
+      an editor that implements the appropriate operations. The manager will perform
+      a walk over the supplied object and register location information for the
+      components of the object with the editor using the interface.
+    end
+    @Operation registerLocations(o,editor) 
+      editor.startActivity("Checking Free Vars");
+      let w = FVWalker(editor)
+      in w.walk(o,FVEnv([Root,XCore],[])) 
+      end;
+      editor.updateErrorStrip(); 
+      editor.endActivity("Checking Free Vars");
+      editor.startActivity("Registering Locations");
+      let w = LocationWalker()
+      in w.walk(o,editor);
+         editor.performActions(w.actions)
+      end;
+      editor.endActivity("Registering Locations")
+    end
+  end

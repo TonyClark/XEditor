@@ -1,0 +1,72 @@
+parserImport XOCL;
+
+import Generics;
+
+context Generics
+ 
+    @Class Container (C:Class) 
+   
+      @Doc
+        A class Container(Type) is a container of elements of type Type.
+        The contents are maintained in a slot named 'types' with access and
+        update operations getTypes, addType and removeType. All containers
+        that are instances of Container(Type) are maintained on a class
+        slot called allContainers.
+      end
+
+      // A slot of the container type. Note the use of generic to indicate
+      // that the attribute is owned by Container(Type) not its instances.
+      // Note the use of Self to refer to Container(Type)...
+      
+      @Attribute allContainers[generic=true]:[Self] end 
+      
+      @Operation mkName[generic=true](C:Class):String 
+
+        // A utility operation that returns a name to be used 
+        // in the creation of attributes and associated slot access.
+        
+        C.name.toString().lowerCaseInitialLetter() 
+      end
+      
+      // A slot of the container that is used to manage the contents...
+      @Attribute <self.mkName(C) + "s"> :[C] end 
+      
+      @Operation <"get" + C.name + "s">():[C] 
+      
+        // Return all the contained items. Note the use of Self to
+        // refer to the container type and thereby invoke the utility
+        // function...
+        
+        self.<Self.mkName(C) + "s"> 
+      end
+      
+      @Operation <"add" + C.name>(c:C) 
+
+        // An operation to add an element of the type. Note the mixed use of
+        // Self and self to refer to the container type and the container
+        // respectively...
+        
+        self.<Self.mkName(C) + "s"> := self.<Self.mkName(C) + "s"> + [c] 
+      end
+
+      
+      @Operation <"remove" + C.name>(c:C) 
+
+        // An operation to remove an element from the contents...
+        
+        self.<Self.mkName(C) + "s"> := self.<Self.mkName(C) + "s"> ->excluding(c) 
+      end
+      
+      @Operation init(args)
+
+        // Init is called when the container type is instantiated. Note
+        // the mixed use of Self and self to refer to the container type 
+        // and the container...
+        
+        Self.allContainers := Self.allContainers + [self];
+
+        // Call super to ensure that all other initialisation happens...
+        
+        super(args)
+      end
+    end 

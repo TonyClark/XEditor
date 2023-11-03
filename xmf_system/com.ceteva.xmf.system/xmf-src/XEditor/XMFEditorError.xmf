@@ -1,0 +1,10 @@
+parserImport XOCL;
+
+context Exceptions 
+  // An exception that is raised due to a parse error...
+  @Class XMFEditorError extends Exception
+    @Attribute message:String end
+    @Attribute charStart:Integer end
+    @Attribute charEnd:Integer end
+    @Constructor(message,charStart,charEnd) ! end
+  end

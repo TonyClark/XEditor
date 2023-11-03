@@ -1,0 +1,21 @@
+parserImport XOCL;
+parserImport XEditor;
+
+@EventHandler send(target:Integer,message:String,args:[Element])
+
+  // The supplied target is a java handle on an XMF object.
+  
+  try
+    if xmf.hasHandle(target)
+    then 
+      let object = xmf.getObjectWithHandle(target)
+      in object.send(message,args)
+      end
+    else throw Error("no object with handle " + target)
+    end
+  catch(exception)
+     Root::xmfException := exception;
+     format(stdout,"~S~%",[exception]);
+     null
+   end
+end;
