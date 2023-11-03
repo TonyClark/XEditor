@@ -1,0 +1,4 @@
+parserImport XOCL;
+
+context Root @Enum Mult (One) end
+context Root @Enum Direction (Right) end

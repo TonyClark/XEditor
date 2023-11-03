@@ -1,0 +1,16 @@
+package A {
+    class C {
+      a:A
+      C() 
+    }   
+    class B {
+      a:C
+      C() 
+      f(x:C) = 10
+    }    
+    class A {
+      a:C
+      A() 
+      f(x:C,b:B,c:C) = 10
+    }   
+}

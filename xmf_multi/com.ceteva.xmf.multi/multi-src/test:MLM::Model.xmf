@@ -1,0 +1,227 @@
+// This file describes how filmstrips and
+// snapshots can be specified by processes.
+// A filmstrip is a sequence of snapshots,
+// where each snapshot contains objects, 
+// links and clabjects.
+
+multilevelmodel test;
+
+partition transactions -----------------------  
+
+class TransactionType[2] { }
+
+class RoleType[2] { }
+
+class OutcomeType[2] { }
+
+process Transact[0](t:TransactionType,rt1:RoleType,rt2:RoleType,r1:Role1,r2:Role2,ot:OutcomeType,o:Outcome) {
+  r1.transaction = t and
+  r1.role = rt1 and
+  r2.transaction = t and
+  r2.role = rt2 and
+  eventually {
+    o.transaction = t and
+    o.outcome = ot
+  }
+}
+
+association Role1 {
+  transaction[0]: single TransactionType;
+  ->
+  role[0]: single RoleType;
+}
+
+association Role2 {
+  transaction[0]: single TransactionType;
+  ->
+  role[0]: single RoleType;
+}
+
+association Outcome {
+  transaction[0]: single TransactionType;
+  ->
+  outcome[0]: single OutcomeType;
+}
+
+
+partition roles -------------------
+
+class Customer[1]:RoleType { }
+
+class Employee[1]:RoleType { }
+
+partition creditCheck -------------------
+
+class CreditCheck[1]:TransactionType { }
+
+class CreditCheckResult[1]:OutcomeType {
+}
+
+association CustomerCreditCheckParticipation:Role1 {
+  transaction[0]: single CreditCheck;
+  ->
+  role[0]: single Customer;
+}
+
+association EmployeeCreditCheckParticipation:Role2 {
+  transaction[0]: single CreditCheck;
+  ->
+  role[0]: single Employee;
+}
+
+association CreditCheckOutcome:Outcome {
+  transaction[0]: single CreditCheck;
+  ->
+  outcome[0]: single CreditCheckResult;
+}
+
+partition purchases -------------------
+
+class Purchase[1]:TransactionType { }
+
+class PurchaseOutcome[1]:OutcomeType {
+}
+
+association CustomerPurchaseParticipation:Role1 {
+  transaction[0]: single Purchase;
+  ->
+  role[0]: single Customer;
+}
+
+association EmployeePurchaseParticipation:Role2 {
+  transaction[0]: single Purchase;
+  ->
+  role[0]: single Employee;
+}
+
+partition queries -----------------------  
+
+class Query[1]:TransactionType { }
+
+class QueryOutcome[1]:OutcomeType {
+}
+
+association CustomerQueryParticipation:Role1 {
+  transaction[0]: single Query;
+  ->
+  role[0]: single Customer;
+}
+
+association EmployeeQueryParticipation:Role2 {
+  transaction[0]: single Query;
+  ->
+  role[0]: single Employee;
+}
+
+filmstrip MakeAQuery {
+  snapshot StartQuery {
+    op start()
+    obj fred:Customer {
+    }
+    obj sally:Employee {
+    }
+    obj query:Query {
+    }
+    link l1:CustomerQueryParticipation {
+      transaction = query;
+      role = fred;
+    }
+    link l2:EmployeeQueryParticipation {
+      transaction = query;
+      role = sally;
+    }
+  }
+  snapshot EndQuery {
+    op setOutcome()
+    obj fred:Customer {
+    }
+    obj sally:Employee {
+    }
+    obj query:Query {
+    }
+    link l1:CustomerQueryParticipation {
+      transaction = query;
+      role = fred;
+    }
+    link l2:EmployeeQueryParticipation {
+      transaction = query;
+      role = sally;
+    }
+    obj outcome:QueryOutcome {
+    }
+    link l3:Outcome {
+      transaction = query;
+      outcome = outcome;
+    }
+  }
+}
+
+filmstrip ProductPurchase {
+  snapshot StartQuery {
+    op startQuery(fred,sally)
+    obj fred:Customer {
+    }
+    obj sally:Employee {
+    }
+    obj purchase:Purchase {
+    }
+    link l1:CustomerPurchaseParticipation {
+      transaction = purchase;
+      role = fred;
+    } 
+    link l2:EmployeePurchaseParticipation {
+      transaction = purchase;
+      role = sally;
+    }
+  }
+  snapshot PerformCreditCheck {
+    op creditCheck(fred,sally,l1,l2)
+    obj fred:Customer {
+    }
+    obj sally:Employee {
+    }
+    obj purchase:Purchase {
+    }
+    obj check:CreditCheck {
+    }
+    link l1:CustomerPurchaseParticipation {
+      transaction = purchase;
+      role = fred;
+    } 
+    link l2:EmployeePurchaseParticipation {
+      transaction = purchase;
+      role = sally;
+    }
+    link l3:CustomerCreditCheckParticipation {
+      check = check;
+      role = fred;
+    } 
+    link l4:EmployeeCreditCheckParticipation {
+      check = check;
+      role = sally;
+    }
+  }
+  snapshot EndPurchase {
+    op makePurchase(fred,sally,l1,l2)
+    obj fred:Customer {
+    }
+    obj sally:Employee {
+    }
+    obj purchase:Purchase {
+    }
+    obj outcome:PurchaseOutcome {
+    }
+    link l1:CustomerPurchaseParticipation {
+      transaction = purchase;
+      role = fred;
+    } 
+    link l2:EmployeePurchaseParticipation {
+      transaction = purchase;
+      role = sally;
+    }
+    link l3:Outcome {
+      transaction = purchase;
+      outcome = outcome;
+    }
+  }
+}

@@ -1,0 +1,169 @@
+// This file contains an example multi-level model which demonstrates
+// language and editor features including:
+// 
+// (1) Classes that specify their level.
+// (2) Class properties that specify their levels.
+// (3) Properties at levels > 1 become slots of classes.
+// (4) Objects at level 0 that have slots defined by level-0 properties.
+// (5) Associations between classes. Association ends define level numbers.
+// (6) Links are instances of associations.
+// (7) Link-ends hold between instances at levels defined by the association-ends.
+// (8) Syntax-checking.
+// (9) Type-checking of expressions.
+// (10) Language semantics checks.
+// (11) Constraints and constraint checking over objects.
+// (12) Diagrams.
+// (13) Definiens-Definiendum editor linking.
+// (14) Partitions used as a structuring mechanism.
+// (15) AST structure highlighting in the editor.
+
+multilevelmodel Simple;
+
+partition metaTypes -----------------------  
+
+class ProductType[4] { 
+  amountInStore[1]:Integer;
+  manufacturerProvidesWarranty[2]:Boolean; 
+  price[1]:Integer;
+  partNo[0]:String; 
+} 
+
+constraint {
+  forall productType3 in instances(ProductType) { 
+    forall productType2 in instances(productType3) {
+      forall productType1 in instances(productType2) {
+        forall product in instances(productType1) {
+          product.partNo != ""
+        } 
+      }
+    }
+  }
+}
+        
+class CustomerType[2] {  
+  name[0]:String;
+  discount[1]:Integer;
+} 
+
+association Purchase {
+  product[0]: single ProductType;
+  ->
+  customer[0]: single CustomerType;
+}
+
+association Preference {
+  customer[0]: single CustomerType;
+  ->
+  productType[1]: single ProductType;
+}
+
+constraint { 
+  forall customer in instances(CustomerType) {
+    customer.discount > 10 
+  }
+}
+
+process Buy[0](c:CustomerType,p:ProductType) {
+  100
+}
+ 
+partition customerTypes -----------------------
+
+class GeneralCustomer[1]:CustomerType { 
+  discount = 30; 
+}
+
+class PreferredCustomer[1]:CustomerType {
+  discount = 100;
+} 
+
+partition productTypes -----------------------
+
+class PrinterType[3]:ProductType {
+  availableOnTheHighStreet[2]:Boolean;
+} 
+
+partition printerTypes -----------------------
+
+class EpsonPrinter[2]:PrinterType {
+  manufacturerProvidesWarranty = true;
+  availableOnTheHighStreet = true;
+}
+
+class HPPrinter[2]:PrinterType {
+  hpSuppliers[1]:[String];
+  manufacturerProvidesWarranty = true;
+  availableOnTheHighStreet = false;
+}
+
+constraint {
+  forall x in instances(HPPrinter) {
+    x.hpSuppliers != [] 
+  }
+}
+
+partition specificTypesOfPrinter -----------------------
+ 
+class HP202[1]:HPPrinter {
+  hpDesignId[0]:String;
+  amountInStore=100;
+  hpSuppliers = ["LondonPrinterSupplies","ScottishPrinterSupplies"];
+  price=100; 
+}
+ 
+class Ep202[1]:EpsonPrinter {
+  amountInStore=1000;
+  price=100;
+}
+partition printers ------------------------
+
+link l1:Purchase {
+  product = p1;
+  customer = c1;
+}
+
+link l2:Purchase { 
+  product = p1;
+  customer = c2;
+}
+
+obj p1:HP202 { 
+  partNo = "p10";
+  hpDesignId = "100.2"; 
+}
+
+obj c1:GeneralCustomer {
+  name = "c1";
+}
+ 
+obj c2:PreferredCustomer { 
+  name = "c2";
+}
+ 
+link l3:Preference {
+  customer = c1;
+  productType = HP202;
+}
+
+filmstrip exampleFilmstrip {
+  snapshot s1 {
+    op start()
+    obj o1:GeneralCustomer {
+      name = "Henry";
+    }
+    link l1:Preference { 
+      customer = o1;
+      productType=HP202;
+    }
+  } 
+  snapshot s2 {
+    op setPreference(HP202)
+    obj o1:GeneralCustomer {
+      name = "Henry";
+    }
+    link l1:Preference {
+      customer = o1;
+      productType=HP202;
+    }
+  }
+}

@@ -1,0 +1,103 @@
+parserImport XOCL;
+parserImport Parser::BNF;
+
+import AbstractSyntax;
+ 
+context MLM::Model
+
+  @Grammar
+
+    NameDef ::= n = Name { NameDef(n) }.
+
+    Model ::= 'multilevelmodel' n=Name ';' es = ModelElement* EOF ps = { filterPartitions(es) } fs = { filterFilmstrips(es) } { checkPartitions(ps); MLM::Model(n,ps,fs).setDefiniens(Root::Env::NullEnv()) }.
+
+    ModelElement ::= <<Partition>> | <<Filmstrip>>.
+   
+    Partition ::= 
+      'partition' n = <<NameDef>> t=Token state=pState { state.nextToken() } 
+        vs = PartitionElement* 
+        ls = { filterLinks(vs) } 
+        as = { filterAssociations(vs) } 
+        cs = { filterClasses(vs) } 
+        os = { filterObjects(vs) } 
+        ks = { filterConstraints(vs) } 
+        ps = { filterProcesses(vs) } 
+      { MLM::MLMPartition(n,as,ls,cs,os,ks,ps) }.
+
+    PartitionElement ::= <<Class>> | <<Object>> | <<Assoc>> | <<Link>> | <<Constraint>> | <<Process>>.
+ 
+    Process ::= 'process' n = <<NameDef>> '[' l=Int ']' '(' as=Args ')' ps = Extends '{' e = <<Exp>> '}' { MLM::Process(n,l,as,ps,e) }.
+
+    Args ::= a = <<Arg>> as = (',' <<Arg>>)* { Seq{a|as} } | { [] }.
+
+    Arg ::= n = <<NameDef>> ':' t = Type { MLM::Arg(n,t) }.
+    
+    Extends ::= 'extends' n = <<NameRef>> { n } | { NameRef("Process") }.
+    
+    Filmstrip ::= 'filmstrip' n = <<NameDef>> '{' snaps = <<Snapshot>> * '}' { MLM::MLMFilmstrip(n,snaps) }.
+
+    Snapshot ::= 'snapshot' n = <<NameDef>> '{' 'op' o=Call es = SnapshotElement* '}' cs = { filterClasses(es) } os = { filterObjects(es) } ls = { filterLinks(es) } { MLM::MLMSnapshot(n,o,cs,os,ls) } .
+
+    SnapshotElement ::= <<Object>> | <<Link>> | <<Class>>.
+
+    Constraint ::= 'constraint' '{' e = <<Exp>> '}' { MLM::MLMConstraint(e) }.
+
+    Link ::= 'link' n = <<NameDef>> ':' t = <<TypeRef>> '{' end1 = <<NameRef>> '=' val1 = <<NameRef>> ';' end2 = <<NameRef>> '=' val2 = <<NameRef>> ';' '}' { MLM::MLMLink(n,t,end1,val1,end2,val2) }.
+
+    TypeRef ::= n = Name { MLM::TypeRef(n) }.
+    
+    NameRef ::= n = Name { NameRef(n) }.
+    
+    Assoc ::= 'association' n = <<NameDef>> m=Meta '{' e1 = <<End>> ';' d = Direction e2 = <<End>> ';' '}' { MLM::MLMAssoc(n,m,e1,d,e2) }.
+
+    End ::= n = <<NameDef>> '[' l = Int ']' ':' m = Mult t = <<TypeRef>> { MLM::End(n,l,m,t) }.
+    
+    Mult ::= 'single' { Mult::One }.
+    
+    Direction ::= '->' { Direction::Right }.
+    
+    Object ::= 'obj' n = <<NameDef>> ':' t = <<TypeRef>> '{' ss = <<Slot>> * '}' { MLM::MLMObj(n,t,ss) }.
+    
+    Class ::= 'class' n = <<NameDef>> '[' l=Int ']' m=Meta '{' ps = <<Property>> * ss = <<Slot>> * '}' { MLM::MLMClass(n,l,m,ps,ss) } .
+
+    Meta ::= ':' <<TypeRef>> | << { MLM::TypeRef("MetaClass") } >>.
+
+    Property ::= n = <<NameDef>> '[' l=Int ']' ':' t= <<Type>> ';' { MLM::MLMProp(n,l,t) }.
+
+    Type ::= n= <<TypeRef>> { MLM::NamedType(n) } | '[' t=Type ']' { MLM::ListType(t) }.
+
+    Slot ::= n = <<NameRef>> '=' e= <<Exp>> ';' { MLM::MLMSlot(n,e) }.
+
+    Exp ::= l= <<Atom>> ExpTail^(l).
+    
+    ExpTail(l) ::= 
+      o=Op ! r = <<Exp>> e = { MLM::MLMBinExp(l,o,r) } ExpTail^(e)
+    | '.' ! n = <<NameRef>> e = { MLM::MLMDot(l,n) } ExpTail^(e)
+    | { l }.
+
+    Op ::= '+' { "+" } | '-' { "-" } | '*' { "*" } | '/' { "/" } | '=' { "=" } | '<' { "<" } | '>' { ">" } | '!=' { "!=" } | 'and' { "and" } | 'or' { "or" }.
+    
+    Atom ::= Const | Forall | Exists | Call | Instances | List | Next | Eventually.
+
+    Next ::= 'next' '{' e = <<Exp>> '}' { MLM::MLMNext(e) }.
+
+    Eventually ::= 'eventually' '{' e = <<Exp>> '}' { MLM::MLMEventually(e) }.
+
+    Forall ::= 'forall' n = <<NameDef>> 'in' l = <<Exp>> '{' b = <<Exp>> '}' { MLM::MLMForall(n,l,b) }.
+
+    Exists ::= 'exists' n = <<NameDef>> 'in' l = <<Exp>> '{' b = <<Exp>> '}' { MLM::MLMExists(n,l,b) }.
+
+    Exps ::= e = <<Exp>> es = (',' <<Exp>>)* { Seq{e | es } } | { [] }.
+
+    Call ::= n = <<NameRef>> ( '(' es=Exps ')' { MLM::MLMCall(n,es) } | { MLM::MLMVar(n) }).
+
+    Instances ::= 'instances' '(' e = <<Exp>> ')' { MLM::MLMInstances(e) }.
+
+    List ::= '[' es=Exps ']' { MLM::MLMList(es) }.
+
+    Const ::= i = Int { MLM::MLMConst(i) } 
+          |   'true' { MLM::MLMConst(true) }
+          |   'false' { MLM::MLMConst(false) }
+          |   s = Str { MLM::MLMConst(s) }.
+    
+  end

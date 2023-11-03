@@ -1,0 +1,347 @@
+parserImport XOCL;
+parserImport Parser::BNF;
+
+import Compiler;
+import Env;
+
+context Root
+  @Operation getDefiniens(name:String,env:Env):Definiens
+    if env.binds(name)
+    then env.lookup(name)
+    else null 
+    end
+  end
+
+context Root
+  @Operation expsToListExp(exps:[Performable]):Performable
+    exps ->iterate(x e = [| [] |] | [| Seq{<x> | <e> } |]) 
+  end
+  
+context Root
+  @Operation checkAssociation(a:MLM::MLMAssoc,defs:[MLM::MLMClass],as:[MLM::MLMAssoc])
+    checkAssocMeta(a,defs,as);
+    checkEnd(a.end1,defs);
+    checkEnd(a.end2,defs)
+  end 
+
+context Root
+  @Operation checkEnd(e:MLM::End,defs:[MLM::MLMClass])
+    if not(defs->exists(c | c.name.name = e.type.name))
+    then throw Exceptions::XMFEditorError("cannot find end type named " + e.type.name,e.type.charStart,e.type.charEnd)
+    end
+  end
+
+context Root
+  @Operation checkClass(def:MLM::MLMClass,defs:[MLM::MLMClass])
+    checkClassMeta(def,defs);
+    checkClassLevel(def,defs);
+    checkSlots(def,defs);
+    @For p in def.properties do
+      checkProperty(p,def,defs)
+    end
+  end
+ 
+context Root
+  @Operation checkSlots(def:MLM::MLMClass,defs:[MLM::MLMClass])
+    @For s in def.slots do
+      checkSlot(s,def,defs)
+    end;
+    @For p in getAllProperties(def.meta.name,defs) do
+      if p.level = def.level
+      then if not(def.slots->exists(s | s.name.name = p.name.name))
+           then throw Exceptions::XMFEditorError("a slot named " + p.name.name + " is missing",def.charStart,def.charEnd)
+           end
+      end
+    end 
+  end
+
+context Root
+  @Operation getAllProperties(className:String,defs:[MLM::MLMClass])
+    @Find(c,defs) when c.name.name = className do
+      c.properties + getAllProperties(c.meta.name,defs)
+    else []
+    end 
+  end
+
+context Root
+  @Operation checkSlot(s:MLM::MLMSlot,def:MLM::MLMClass,defs:[MLM::MLMClass])
+    let classLevel = def.level;
+        p = getProperty(s.name.name,def,defs)
+    in if (p = null) 
+       then throw Exceptions::XMFEditorError("cannot find property named " + s.name.name,s.charStart,s.charEnd)
+       else 
+         if (p.level <> classLevel)
+         then throw Exceptions::XMFEditorError(p.name + " is declared at level " + p.level + " but used in a class at level " + classLevel,s.charStart,s.charEnd)
+         else 
+           if not compareTypes(getType(s.value,defs),p.type)
+           then throw Exceptions::XMFEditorError(p.name + " is declared to have type " + p.type.ppType() + " but the value is of type " +  getType(s.value,defs).ppType(),s.charStart,s.charEnd)
+           end
+         end
+       end
+    end
+  end 
+
+context Root
+  @Operation compareTypes(t1:MLM::Type,t2:MLM::Type):Boolean
+    @Case t1,t2 of
+      MLM::NamedType(MLM::TypeRef(n1)),MLM::NamedType(MLM::TypeRef(n2)) do n1 = n2 end
+      MLM::ListType(MLM::NamedType(any)),MLM::ListType(MLM::NamedType(MLM::TypeRef("?"))) do true end
+      MLM::ListType(MLM::NamedType(MLM::TypeRef("?"))),MLM::ListType(MLM::NamedType(any)) do true end
+      MLM::ListType(tt1),MLM::ListType(tt2) do compareTypes(tt1,tt2) end
+      else false
+    end
+  end
+
+context Root
+  @Operation getType(exp:MLM::MLMExp,defs:[MLM::MLMClass]):MLM::Type
+    @Case exp of
+      MLM::MLMConst(c) when c.isKindOf(Integer) do MLM::NamedType(MLM::TypeRef("Integer")) end
+      MLM::MLMConst(c) when c.isKindOf(Boolean) do MLM::NamedType(MLM::TypeRef("Boolean")) end
+      MLM::MLMConst(c) when c.isKindOf(String) do MLM::NamedType(MLM::TypeRef("String")) end
+      MLM::MLMList(vs) when vs <> [] do 
+        if compareTypes(MLM::ListType(getType(vs->head,defs)),getType(MLM::MLMList(vs->tail),defs))
+        then MLM::ListType(getType(vs->head,defs))
+        else throw Exceptions::XMFEditorError("incompatible list elements: " + MLM::ListType(getType(vs->head,defs)).ppType() + " and " + getType(MLM::MLMList(vs->tail),defs).ppType() ,exp.charStart,exp.charEnd)
+        end
+      end
+      MLM::MLMList(Seq{}) do MLM::ListType(MLM::NamedType(MLM::TypeRef("?"))) end
+      else throw Exceptions::XMFEditorError("unknown type of expression: " + exp,exp.charStart,exp.charEnd)
+    end
+  end
+
+context Root
+  @Operation getProperty(name:String,c:MLM::MLMClass,defs:[MLM::MLMClass])
+    @Find(p,c.properties) when p.name.name = name do
+      p
+    else 
+      @Find(mc,defs) when mc.name.name = c.meta.name do
+        getProperty(name,mc,defs)
+      else null
+      end
+    end
+  end
+  
+Root::BUILTIN_TYPES := ["Integer","Boolean","String","Real"];
+
+context Root
+  @Operation checkProperty(p:MLM::MLMProperty,c:MLM::MLMClass,ds:[MLM::MLMClass])
+    checkPropertyType(p,ds);
+    checkPropertyLevel(p,c)
+  end
+
+context Root
+  @Operation checkPropertyType(p:MLM::MLMProperty,ds:[MLM::MLMClass])
+    if not(checkType(p.type,ds))
+    then throw Exceptions::XMFEditorError("cannot find type: " + (p.type.ppType()),p.type.charStart,p.type.charEnd)
+    end
+  end
+
+context Root
+  @Operation checkPropertyLevel(p:MLM::MLMProperty,c:MLM::MLMClass)
+    if p.level >= c.level
+    then throw Exceptions::XMFEditorError("property level must be < " + c.level,p.charStart,p.charEnd)
+    end
+  end
+
+context Root
+  @Operation checkType(t:MLM::Type,ds:[MLM::MLMClass]):Boolean
+    @Case t of
+      MLM::NamedType(MLM::TypeRef(n)) do
+        if not(BUILTIN_TYPES->includes(n) or ds->exists(d | d.name = n))
+        then false 
+        else true
+        end
+      end
+      MLM::ListType(tt) do
+        checkType(tt,ds)
+      end
+    end
+  end
+    
+
+context Root
+  @Operation checkClassMeta(c:MLM::MLMClass,ds:[MLM::MLMClass])
+    if c.meta.name <> "MetaClass" and not ds->exists(d | d.name.name = c.meta.name)
+    then throw Exceptions::XMFEditorError("cannot find meta-type: " + c.meta.name,c.meta.charStart,c.meta.charEnd)
+    end
+  end
+  
+context Root
+  @Operation checkAssocMeta(a:MLM::MLMClass,cs:[MLM::MLMClass],as:[MLM::MLMAssoc])
+    if a.meta.name <> "MetaClass" and not as->exists(d | d.name.name = a.meta.name)
+    then throw Exceptions::XMFEditorError("cannot find meta-type: " + a.meta.name,a.meta.charStart,a.meta.charEnd)
+    else 
+      @Find(m,as) when m.name.name = a.meta.name do
+        checkAssocInstance(a,m,cs)
+      end
+    end
+  end
+  
+context Root
+  @Operation checkAssocInstance(i:MLM::MLMAssoc,c:MLM::MLMAssoc,cs:[MLM::MLMClass])
+    // The names of the ends must match and i.endX.type must be an instance of c.endX.type...
+    if i.end1.name.name <> c.end1.name.name
+    then throw Exceptions::XMFEditorError("end names do not match: " + i.end1.name.name,i.end1.charStart,i.end1.charEnd)
+    else 
+      if i.end2.name.name <> c.end2.name.name
+      then throw Exceptions::XMFEditorError("end names do not match: " + i.end2.name.name,i.end2.charStart,i.end2.charEnd)
+      // else check the types match...
+      end
+    end
+  end
+ 
+context Root
+  @Operation checkClassLevel(c:MLM::MLMClass,ds:[MLM::MLMClass])
+    @Find(d,ds) when d.name = c.meta.name do
+      if d.level <= c.level
+      then throw Exceptions::XMFEditorError("level incompatible must be < " + d.level,c.charStart,c.charEnd)
+      end
+    end
+  end
+
+context Root
+  @Operation checkClassesUnique(cs:[MLM::MLMClass])
+    @Find(c1,cs) when cs->exists(c2 | (c1.name.name = c2.name.name) and c1 <> c2) do
+       throw Exceptions::XMFEditorError("classes must have different names: " + c1.name.name,c1.charStart,c1.charEnd)
+    end
+  end
+
+context Root
+  @Operation checkPartitionsUnique(ps:[MLM::MLMPartition])
+    @Find(p1,ps) when ps->exists(p2 | (p1.name = p2.name) and p1 <> p2) do
+       throw Exceptions::XMFEditorError("partitions must have different names: " + p1.name,p1.charStart,p1.charEnd)
+    end
+  end
+
+context Root
+  @Operation checkClasses(cs:[MLM::MLMClass])
+    checkClassesUnique(cs);
+    @For def in cs do
+       checkClass(def,cs)
+     end
+  end
+
+context Root
+  @Operation checkObjectsUnique(os:[MLM::MLMObj])
+    @Find(o1,os) when os->exists(o2 | (o1.name.name = o2.name.name) and o1 <> o2) do
+       throw Exceptions::XMFEditorError("objects must have different names: " + o1.name.name,o1.charStart,o1.charEnd)
+    end
+  end
+
+context Root
+  @Operation checkAssociationsUnique(as:[MLM::MLMAssoc])
+    @Find(a1,as) when as->exists(a2 | (a1.name.name = a2.name.name) and a1 <> a2) do
+       throw Exceptions::XMFEditorError("associations in a partition must have different names: " + a1.name.name,a1.charStart,a1.charEnd)
+    end
+  end
+
+context Root
+  @Operation checkLinksUnique(ls:[MLM::MLMLink])
+    @Find(l1,ls) when ls->exists(l2 | (l1.name.name = l2.name.name) and l1 <> l2) do
+       throw Exceptions::XMFEditorError("links in a partition must have different names: " + l1.name.name,l1.charStart,l1.charEnd)
+    end
+  end
+
+context Root
+  @Operation checkObj(o:MLM::MLMObj,cs:[MLM::MLMClass])
+    @Find(c,cs) when o.type.name = c.name.name do
+      if c.level <> 1
+      then 
+        throw Exceptions::XMFEditorError("objects must exist at level 0, but " + c.name.name + " is at level " + c.level,o.charStart,o.charEnd)
+      else
+        let ps = getAllProperties(c.name.name,cs)->select(p | p.level = 0)
+        in @For s in o.slots do
+             if not(ps->exists(p | p.name.name = s.name.name))
+             then throw Exceptions::XMFEditorError("slot " + s.name.name + " is not declared at level 0",s.charStart,s.charEnd)
+             end
+           end;
+           @For p in ps do
+             @Find(s,o.slots) when p.name.name = s.name.name do
+               if not(compareTypes(p.type,getType(s.value,cs)))
+               then throw Exceptions::XMFEditorError("property " + p.name.name + " has type " + p.type.ppType() + " but the value is of type " + getType(s.value,cs).ppType(),o.charStart,o.charEnd)
+               end
+             else throw Exceptions::XMFEditorError("cannot find a slot named " + p.name.name,o.charStart,o.charEnd)
+             end
+           end
+         end
+      end
+    else 
+      throw Exceptions::XMFEditorError("cannot find type: " + o.type,o.charStart,o.charEnd)
+    end
+  end
+
+context Root
+  @Operation checkLink(l:MLM::MLMLink,as:[MLM::MLMAssoc],cs:[MLM::MLMClass],os:[MLM::MLMObj])
+    @Find(a,as) when a.name.name = l.type.name do
+      checkLinkEnd(l,a.end1,l.end1.name,l.val1.name,cs,os);
+      checkLinkEnd(l,a.end2,l.end2.name,l.val2.name,cs,os)
+    else throw Exceptions::XMFEditorError("cannot find association: " + l.type,l.charStart,l.charEnd)
+    end 
+  end
+
+context Root
+  @Operation checkLinkEnd(l:MLM::MLMLink,e:MLM::End,name:String,value:String,cs:[MLM::MLMClass],os:[MLM::MLMObj])
+    if e.name.name = name
+    then 
+      if e.level = 0
+      then
+        @Find(o,os) when o.name.name = value do
+          if not (o.hasMetaType(e.type.name,cs))
+          then throw Exceptions::XMFEditorError(value + " is of the wrong type or level",l.charStart,l.charEnd)
+          end
+        else throw Exceptions::XMFEditorError("cannot find object called " + value,l.charStart,l.charEnd)
+        end
+      else 
+        if not(cs->exists(c | (c.name.name = value) and (c.hasMetaType(e.type.name,cs)) and (c.level = e.level)))
+        then throw Exceptions::XMFEditorError("cannot find class called " + value + " at level " + e.level,l.charStart,l.charEnd)
+        end
+      end
+    else throw Exceptions::XMFEditorError("link end name declared " + e.name.name + " but defined " + name,l.charStart,l.charEnd)
+    end
+  end
+
+context Root
+  @Operation checkPartitions(ps:[MLM::MLMPartition])
+    checkPartitionsUnique(ps);
+    @For p in ps do
+      checkAssociationsUnique(p.associations);
+      checkLinksUnique(p.links);
+      @For c in p.constraints do
+        checkConstraint(c,[ a | p <- ps, a <- p.associations ],[ c | p <- ps, c <- p.classes ],[o | p <- ps, o <- p.objects])
+      end;
+      @For a in p.associations do
+        checkAssociation(a,[ c | p <- ps, c <- p.classes ],[ a | p <- ps, a <- p.associations])
+      end;
+      @For l in p.links do
+        checkLink(l,[ a | p <- ps, a <- p.associations ],[ c | p <- ps, c <- p.classes ],p.objects)
+      end;
+      @For c in p.classes do
+        checkClass(c,[ c | p <- ps, c <- p.classes ])
+      end;
+      checkObjectsUnique(p.objects);
+      @For o in p.objects do
+        checkObj(o,[ c | p <- ps, c <- p.classes ])
+      end
+    end
+  end
+
+context Root 
+  @Operation checkConstraint(c:MLM::MLMConstraint,as:[MLM::MLMAssoc],cs:[MLM::MLMClass],os:[MLM::MLMObj])
+    let env = (as+cs)->iterate(nd e=Root::Env::NullEnv() | e.bind(nd.name.name,nd)) then
+        env = env.bind("Integer",Integer).bind("String",String).bind("Boolean",Boolean) then
+        env = env.bind("$classes",cs).bind("$objects",os)
+    in c.exp.typeCheck(env);
+       if not(c.exp.eval(env))
+       then throw Exceptions::XMFEditorError("constraint fails",c.charStart,c.charEnd)
+       end
+    end
+  end
+  
+context Root @Operation filterClasses(vs) vs->select(o | o.isKindOf(MLM::MLMClass)) end
+context Root @Operation filterObjects(vs) vs->select(o | o.isKindOf(MLM::MLMObj)) end
+context Root @Operation filterAssociations(vs) vs->select(o | o.isKindOf(MLM::MLMAssoc)) end
+context Root @Operation filterLinks(vs) vs->select(o | o.isKindOf(MLM::MLMLink)) end
+context Root @Operation filterConstraints(vs) vs->select(o | o.isKindOf(MLM::MLMConstraint)) end
+context Root @Operation filterPartitions(vs) vs->select(o | o.isKindOf(MLM::MLMPartition)) end
+context Root @Operation filterFilmstrips(vs) vs->select(o | o.isKindOf(MLM::MLMFilmstrip)) end
+context Root @Operation filterProcesses(vs) vs->select(o | o.isKindOf(MLM::Process)) end

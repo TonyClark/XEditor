@@ -1,0 +1,9 @@
+parserImport XOCL;
+parserImport Manifests;
+
+@Manifest Compiler
+  @File Syntax end
+  @File MLM end
+  @File MLMAux end
+  @File MLMGrammar end
+end; 

@@ -1,0 +1,787 @@
+parserImport XOCL;
+parserImport Parser::BNF;
+
+import Compiler;
+import Env;
+import AbstractSyntax;
+
+context Root
+  @Package MLM
+       
+    @Class Model extends XOCL::Sugar 
+      @Doc
+        A multi-level model consists of named partitions and filmstrips.
+        The partitions contain the static parts of the model and the
+        filmstrips are example executions of operations over the data
+        defined by the model.
+      end
+      @Attribute name:String               end
+      @Attribute partitions:[MLMPartition] end
+      @Attribute filmstrips:[MLMFilmstrip] end
+      @Constructor(name,partitions,filmstrips) end
+      @Operation desugar():Performable
+        let ps = partitions.lift();
+            es = filmstrips.lift()
+        in OCL::CompilationUnit("",[],[ [| 
+             Root::model := MLM::Model(<name.lift()>,<ps>,<es>) 
+           |] ],"",[])
+        end
+      end
+      
+      @Operation addDefiniens(env:Env::Env):Element 
+        partitions->iterate(p e = env.bind("$associations",partitions->iterate(p as = [] | as + p.associations)).bind("$classes",partitions->iterate(p cs = [] | cs + p.classes)) |
+          (p.associations + 
+            p.classes + 
+              p.links + 
+                p.objects +
+                  filmstrips)->iterate(definiens e = e |
+                    e.bind(definiens.name.name,definiens)))
+      end
+      @Operation setDefiniens(env:Env)
+        @For p in partitions do
+          p.setDefiniens(self.addDefiniens(env))
+        end;
+        @For f in filmstrips do
+          f.setDefiniens(self.addDefiniens(env))
+        end;
+        self
+      end
+      @Operation getDiagramLabel():String
+        name
+      end
+    end
+
+    @Class LevelNamed extends Definiens
+      @Doc
+        A named item ina  multi-level model has properties
+        for the name and the level number.
+      end
+      @Attribute level:Integer end
+      @Attribute name:NameDef end
+      @Operation getName():String
+        name.name
+      end
+    end 
+
+    @Class TypeRef extends Definiendum
+      @Doc
+        A reference to a typed model element. The reference is
+        modelled to allow the editor to display a link.
+      end
+      @Attribute name:String end
+      @Constructor(name) ! end
+      @Operation getName():String name end
+    end
+
+    @Class MLMConstraint extends Located
+      @Doc
+        A multi-level constraint is a boolean expression in the
+        context of model element. The constraint must hold for any
+        instance of the model element.
+      end
+      @Attribute exp:MLMExp end
+      @Constructor(exp) ! end
+      @Operation setDefiniens(env:Env::Env)
+        exp.setDefiniens(env)
+      end
+    end
+
+    @Class MLMFilmstrip extends Definiens, FilmstripSupplier
+      @Doc
+        A filmstrip is a sequence of snapshots describing the execution
+        of an operation that is associated with model element.
+      end
+      @Attribute name:NameDef end
+      @Attribute snapshots:[MLMSnapshot] end
+      @Constructor(name,snapshots) ! end  
+      @Operation getName():String
+        name.name
+      end
+      @Operation addSnapshotStates(index:Integer,links:Table):String
+        if index = snapshots->size
+        then ""
+        else 
+          snapshots->at(index).getDiagram(name.name,links) +
+          self.addSnapshotStates(index+1,links)
+        end
+      end
+      @Operation addSnapshotTransitions(index:Integer):String
+        if index >= snapshots->size -1
+        then ""
+        else name.name + "_" + snapshots->at(index).name.name + " ---> " + name.name + "_" + snapshots->at(index+1).name.name + "\n" + self.addSnapshotTransitions(index+1)
+        end
+      end
+      @Operation getFilmstripLabel():String
+        name.name
+      end
+      @Operation getFilmstrip(links:Table):[String]
+        snapshots->collect(s | s.getDiagram(name.name,links)) 
+      end
+      @Operation setDefiniens(env) 
+        @For s in snapshots do
+          s.setDefiniens(env)
+        end
+      end
+    end
+
+    @Class MLMSnapshot extends Definiens
+      @Doc
+        A snapshot is a collection of multi-level instances at a particular
+        instant in time. Since the model is multi-level, a snapshot may contain
+        both classes and objects. Snapshots may contain links between instances.
+        A link is an instance of an association.
+      end
+      @Attribute name:NameDef end
+      @Attribute op:MLMCall end
+      @Attribute classes:[MLMClass] end
+      @Attribute objects:[MLMObj] end
+      @Attribute links:[MLMLink] end
+      @Constructor(name,op,classes,objects,links) ! end
+      @Operation getName():String
+        name.name
+      end
+      @Operation getDiagram(filmstripName:String,linksMap:Table):String
+        "\@startuml\n" + "top to bottom direction\n" + "allowmixing\n" + 
+          "package " + filmstripName + "_" + name.name + " as \"" + name.name + "\" {\n" +
+              "note \"" + op.pprint(0) + "\" as " + name.name + "Diagram\n" + 
+              classes->iterate(c s="" | s + c.getSnapshotDiagramElement(filmstripName + self.name.name,linksMap)) +
+              objects->iterate(o s="" | s + o.getSnapshotDiagramElement(filmstripName + self.name.name,linksMap)) + 
+              links->iterate(l s="" | s + l.getSnapshotDiagramElement(filmstripName + self.name.name,linksMap)) +
+            "}\n" +
+         "\@enduml\n"
+      end
+      @Operation setDefiniens(env)
+        let env = (objects + links)->iterate(d e=env | e.bind(d.name.name,d))
+        in
+          @For c in classes do
+            c.setDefiniens(env)
+          end;
+          @For o in objects do
+            o.setDefiniens(env)
+          end;
+          @For l in links do
+            l.setDefiniens(env)
+          end
+        end
+      end
+    end
+
+    @Class MLMPartition extends Definiens, DiagramSupplier 
+      @Doc
+        A partition is a container of multi-level modelling elements.
+        It does not have any particular semantics other than being a
+        convenient way of grouping and naming elements.
+      end
+      @Attribute name:NameRef end
+      @Operation getName():String
+        name.name
+      end 
+      @Operation getDiagramLabel():String
+        name.name
+      end 
+      @Attribute associations:[MLMAssoc] end
+      @Attribute links:[MLMLink] end
+      @Attribute classes:[MLMClass] end
+      @Attribute objects:[MLMObj] end
+      @Attribute constraints:[MLMConstraint] end
+      @Attribute processes:[Process] end
+      @Constructor(name,associations,links,classes,objects,constraints,processes) ! end
+      @Operation setDefiniens(env:Env)
+        @For a in associations do
+          a.setDefiniens(env)
+        end;
+        @For l in links do
+          l.setDefiniens(env)
+        end;
+        @For c in classes do
+          c.setDefiniens(env)
+        end;
+        @For o in objects do
+          o.setDefiniens(env)
+        end;
+        @For c in constraints do
+          c.setDefiniens(env)
+        end
+      end
+      @Operation getDiagram(linkTable:Table):String
+        let diagram =
+              "\@startuml\n" + "top to bottom direction\n" + "allowmixing\n" + 
+                  "package " + name.name + " <<Folder>> {\n" +
+                     (classes + objects + associations + links)->iterate(c s="" | s + c.getDiagram(linkTable)) +
+                  "}\n" +
+                  if constraints->isEmpty
+                  then ""
+                  else "note \"" + constraints->collect(c | c.exp.pprint())->separateWith("\\n\\n") + "\" as " + name.name + "Constraint\n" + name.name + "Constraint .. " + name.name + "\n"
+                  end +
+               "\@enduml\n"
+        in diagram
+        end
+      end
+    end
+
+    @Class Process extends Definiens 
+      @Doc
+        A multi-level process specification is a condition that is satisfied by
+        a set of filmstrips.
+      end
+      @Attribute name : NameDef end
+      @Attribute level : Integer end
+      @Attribute args : [Arg] end
+      @Attribute parent : TypeRef end
+      @Attribute condition : MLMExp end
+      @Constructor(name,level,args,parent,condition) ! end
+      @Operation getName():String
+        name.name
+      end
+    end
+
+    @Class Arg extends Definiens
+      @Attribute name : NameDef end
+      @Attribute type : Type end
+      @Constructor(name,type) ! end
+      @Operation getName():String
+        name.name
+      end
+    end
+
+    @Class MLMLink extends Definiens
+      @Doc
+        A link is an instance of a multi-level association. Each en_d of the link has
+        a name that matches the names of the association en_d. The link must hold
+        between instances of the types at the en_ds of the corresponding association.
+      end
+      @Attribute name : NameDef end
+      @Attribute type:TypeRef end
+      @Attribute end1:NameRef end
+      @Attribute val1:NameRef end
+      @Attribute end2:NameRef end
+      @Attribute val2:NameRef end
+      @Constructor(name,type,end1,val1,end2,val2) ! end
+      @Operation getName():String
+        name.name
+      end
+      @Operation setDefiniens(env:Env)
+        type.definiens := env.lookup(type.name);
+        let a = env.lookup(type.name) 
+        in end1.definiens := a.end1;
+           end2.definiens := a.end2;
+           val1.definiens := env.lookup(val1.name);
+           val2.definiens := env.lookup(val2.name)
+        end
+      end
+      @Operation getSnapshotDiagramElement(snapshotName:String,links:Table):String
+        snapshotName + "_" + val1.name + " \"" + end1.name + "\"" + 
+        " --> " + 
+        "\"" + end2.name + "\" " + snapshotName + "_" + val2.name + " : " + type.name + "\n"
+      end
+      @Operation getDiagram(links:Table):String
+        self.getDiagramLeft() + " ---> " + self.getDiagramRight() + " : " + type.name + "\n"
+      end
+      @Operation getDiagramLeft():String
+        val1.name + " \"" + end1.name + "\""
+      end
+      @Operation getDiagramRight():String
+        "\"" + end2.name + "\" " + val2.name 
+      end
+    end
+      
+    @Class MLMAssoc extends Definiens
+      @Doc
+        A multi-level association holds between classes. The instances of
+        an association are links.
+      end
+      @Attribute name : NameDef end
+      @Attribute meta:TypeRef end
+      @Attribute end1:End end
+      @Attribute direction:Direction end
+      @Attribute end2:End end
+      @Constructor(name,meta,end1,direction,end2) ! end
+      @Operation getName():String
+        name.name
+      end
+      @Operation setDefiniens(env:Env)
+        meta.definiens := getDefiniens(meta.name,env);
+        end1.setDefiniens(env);
+        end2.setDefiniens(env)
+      end
+      @Operation getDiagram(links:Table):String
+        "circle " + name.name + "\n" + 
+        if direction = Direction::Right
+        then self.getDiagramLeft(end1) +  self.getDiagramRight(end2) + "\n"
+        else ""
+        end +
+        if meta.name = "MetaClass"
+        then ""
+        else name.name + " ..|> " + meta.name + "\n"
+        end
+      end
+      @Operation getDiagramLeft(e:End):String
+        e.type.name + " \"" + self.getMultDiagram(e.mult) + "[" + e.level + "]" + e.name.name + "\" -- " + name.name + "\n"
+      end
+      @Operation getDiagramRight(e:End):String
+        name.name + " --> \"" + self.getMultDiagram(e.mult) + " " + "[" + e.level + "]" + e.name.name + "\" " + e.type.name + "\n"
+      end
+      @Operation getMultDiagram(mult:Mult):String
+        if mult = Mult::One 
+        then ""
+        else ""
+        end
+      end
+    end
+
+    @Class End extends LevelNamed, Definiens
+      @Attribute mult:Mult end
+      @Attribute type:TypeRef end
+      @Constructor(name,level,mult,type) ! end
+      @Operation setDefiniens(env:Env)
+        type.definiens := env.lookup(type.name)
+      end
+    end
+
+    @Class MLMClass extends LevelNamed
+      @Doc
+        A multi-level class is defined to have a level. A multi-level
+        class has a meta-class which must occur at the next higher
+        level. A class at level 1 will have objects as instances at level 0.
+        The class specifies properties, each of which has a level number
+        indicating when they become slots in (potentially indirect) 
+        instances of the class.
+      end
+      @Attribute meta:TypeRef end
+      @Attribute properties:[MLMProp] end
+      @Attribute operations:[MLMOp] end
+      @Attribute slots:[MLMSlot] end
+      @Constructor(name,level,meta,properties,slots) ! end
+      @Operation hasMetaType(name:String,cs:[MLMClass]):Boolean
+        if meta.name = name
+        then true
+        else
+          @Find(c,cs) when c.name.name = meta.name do
+            c.hasMetaType(name,cs)
+          else false
+          end
+        end
+      end
+      @Operation setDefiniens(env:Env)
+        meta.definiens := getDefiniens(meta.name,env);
+        @For p in properties do
+          p.setDefiniens(env)
+        end;
+        @For s in slots do
+          let ps = getAllProperties(meta.name,env.lookup("$classes"))
+          in s.setDefiniens(ps->iterate(p e = env | e.bind(p.name.name,p)))
+          end
+        end
+      end
+      @Operation getDiagram(links:Table):String
+        "class \"[" + level + "] " + name.name + "\" as " + name.name + "<<" + meta.name + ">> {\n" + 
+          properties->iterate(p s="" | s + "  " + p.getDiagram(links)) + 
+          "  --\n" +
+          slots->iterate(s x="" | x + s.getDiagram(links)) +
+        "}\n"
+      end
+      @Operation getSnapshotDiagramElement(snapshotName:String,links:Table):String
+        "class \"" + name.name + "\" as " + snapshotName + "_" + name.name + " {\n" +
+            slots->iterate(s x="" | x + s.getDiagram(links)) + 
+        "}\n"
+      end
+    end
+
+    @Class MLMProp extends LevelNamed
+      @Attribute type:Type end
+      @Constructor(name,level,type) ! end
+      @Operation setDefiniens(env:Env)
+        type.setDefiniens(env)
+      end
+      @Operation getDiagram(links:Table):String
+        "{field} [" + level + "] " + name.name + " : " + type.ppType() + "\n"
+      end
+    end
+
+    @Class Type extends Located end
+
+    @Class NamedType extends Type
+      @Attribute name:TypeRef end
+      @Operation ppType():String name.name end
+      @Constructor(name) ! end
+      @Operation getName():String
+        name.name
+      end
+      @Operation setDefiniens(env:Env)
+        name.definiens := getDefiniens(name.name,env)
+      end
+    end
+
+    @Class ListType extends Type
+      @Attribute type:Type end
+      @Constructor(type) ! end
+      @Operation ppType():String "Seq(" + type.ppType() + ")" end
+      @Operation setDefiniens(env:Env)
+        type.setDefiniens(env)
+      end
+    end
+ 
+    @Class MLMOp extends LevelNamed
+      @Constructor(name,level) ! end
+    end
+
+    @Class MLMSlot extends Located
+      @Doc
+        A slot occurs when a property is associated with an object or a class
+        at the level designated by the property definition. For example a
+        property defined with level number 2 will become a slot in a class
+        at level 2. A property defined with level 0 will always become a slot
+        in an object (since objects only exist at level 0).
+      end
+      @Attribute name:NameRef end
+      @Attribute value:MLMExp end
+      @Constructor(name,value) ! end
+      @Operation setDefiniens(env:Env)
+        value.setDefiniens(env);
+        name.definiens := env.lookup(name.name)
+      end
+      @Operation getDiagram(links:Table) 
+        "  " + name.name + " = " + value.pprint() + "\n"
+      end
+      @Operation getName():String
+        name.name
+      end
+    end
+
+    @Class MLMObj extends Definiens 
+      @Doc
+        An object is an instance of a class. An object is always at level
+        0 and has slots that correspond to properties whose level numbers
+        are 0.
+      end
+      @Attribute name:NameDef end
+      @Attribute type:TypeRef end
+      @Attribute slots:[MLMSlot] end
+      @Constructor(name,type,slots) ! end
+      @Operation getName():String
+        name.name
+      end
+      @Operation hasMetaType(name:String,cs:[MLMClass]):Boolean
+        if type.name = name
+        then true
+        else 
+          @Find(c,cs) when c.name.name = type.name do
+            c.hasMetaType(name,cs)
+          else false
+          end
+        end
+      end
+      @Operation setDefiniens(env:Env)
+        type.definiens := env.lookup(type.name);
+        @For s in slots do
+          let ps = getAllProperties(type.name,env.lookup("$classes"))
+          in s.setDefiniens(ps->iterate(p e = env | e.bind(p.name.name,p)))
+          end
+        end
+      end
+      @Operation getDiagram(links:Table):String
+        "object \"" + name.name + ":" + type.name + "\" as " + name.name + " {\n" +
+          slots->iterate(s x="" | x + s.getDiagram(links)) + 
+        "\}\n"
+      end
+      @Operation getSnapshotDiagramElement(snapshotName:String,links:Table):String
+        "object \"<u>" + name.name + ":" + type.name + "</u>\" as " + snapshotName + "_" + name.name + " {\n" +
+          slots->iterate(s x="" | x + s.getDiagram(links)) + 
+        "}\n"
+      end
+    end
+
+    @Class MLMExp extends Located 
+      @AbstractOp setDefiniens(env:Env) end
+      @AbstractOp pprint(indent:Integer):String end
+      @AbstractOp typeCheck(e:Env::Env):String end
+      @AbstractOp eval(e:Env::Env):Element end
+      @Operation pprint():String self.pprint(0) end
+    end
+
+    @Class MLMNext extends MLMExp
+      @Attribute exp : MLMExp end
+      @Constructor(exp) ! end
+      @Operation pprint(indent:Integer):String
+        "next {" + formats("~%~V",[indent+2]) + exp.pprint(indent+2) + formats("~%~V~%",[indent]) 
+      end
+      @Operation typeCheck(e:Env::Env):String e.typecheck(env) end
+      @Operation eval(e:Env::Env):Element
+        exp.eval(e)
+      end
+      @Operation setDefiniens(env:Env::Env) exp.setDefiniens(env) end
+    end
+
+    @Class MLMEventually extends MLMExp
+      @Attribute exp : MLMExp end
+      @Constructor(exp) ! end
+      @Operation pprint(indent:Integer):String
+        "eventually {" + formats("~%~V",[indent+2]) + exp.pprint(indent+2) + formats("~%~V~%",[indent]) 
+      end
+      @Operation typeCheck(e:Env::Env):String e.typecheck(env) end
+      @Operation eval(e:Env::Env):Element
+        exp.eval(e)
+      end
+      @Operation setDefiniens(env:Env::Env) exp.setDefiniens(env) end
+    end
+
+    @Class MLMConst extends MLMExp
+      @Attribute value:Element end
+      @Constructor(value) ! end
+      @Operation pprint(indent:Integer):String
+        ""+value
+      end
+      @Operation typeCheck(env:Env::Env):String
+        value.of().name.toString()
+      end
+      @Operation eval(env:Env::Env):Element
+        value
+      end
+      @Operation setDefiniens(env:Env::Env) null end
+    end
+
+    @Class MLMList extends MLMExp
+      @Attribute exps:[MLMExp] end
+      @Constructor(exps) ! end
+      @Operation pprint(indent:Integer):String
+        "[" + exps->collect(e | e.pprint(indent))->separateWith(",") + "]"
+      end
+      @Operation typeCheck(env:Env::Env):String
+        if exps->isEmpty
+        then "Seq(Element)"
+        else "Seq(" + exps->head.typeCheck(env) + ")"
+        end
+      end
+      @Operation eval(env:Env::Env):Element
+        [ e.eval(env) | e <- exps ]
+      end
+      @Operation setDefiniens(env:Env::Env) 
+        @For exp in exps do
+          exp.setDefiniens(env)
+        end 
+      end
+    end
+
+    @Class MLMForall extends MLMExp
+      @Attribute var:NameDef end
+      @Attribute list:MLMExp end
+      @Attribute body:MLMExp end
+      @Constructor(var,list,body) ! end
+      @Operation pprint(indent:Integer):String
+        "<b>forall</b> " + var.name + " <b>in</b> " + list.pprint(indent) + " {\\n" + formats("~V",[indent+2]) + body.pprint(indent+2) + "\\n" + formats("~V",[indent]) + "}"
+      end
+      @Operation typeCheck(env:Env::Env):String
+        let listType = list.typeCheck(env)
+        in if listType.hasPrefix("Seq(")
+           then 
+             let elementType = listType.drop(4)->reverse.drop(1)->reverse
+             in if env.binds(elementType)
+                then 
+                  body.typeCheck(env.bind(var.name,env.lookup(elementType)));
+                  "Boolean"
+                else throw Exceptions::XMFEditorError("cannot find type: " + elementType,list.charStart,list.charEnd)
+                end
+             end
+           else throw Exceptions::XMFEditorError("expecting a list type: " + listType,list.charStart,list.charEnd)
+           end
+        end
+      end
+      @Operation eval(env:Env::Env):Element
+        list.eval(env)->forAll(x | body.eval(env.bind(var.name,x)))
+      end
+      @Operation setDefiniens(env:Env::Env) 
+         list.setDefiniens(env);
+         body.setDefiniens(env.bind(var.name,var))
+       end
+    end
+
+    @Class MLMExists extends MLMExp
+      @Attribute var:NameDef end
+      @Attribute list:MLMExp end
+      @Attribute body:MLMExp end
+      @Constructor(var,list,body) ! end
+      @Operation pprint(indent:Integer):String
+        "<b>exists</b> " + var.name + " <b>in</b> " + list.pprint(indent) + " {\\n" + formats("~V",[indent+2]) + body.pprint(indent+2) + "\\n" + formats("~V",[indent]) + "}"
+      end
+      @Operation typeCheck(env:Env::Env):String
+        let listType = list.typeCheck(env)
+        in if listType.hasPrefix("Seq(")
+           then 
+             let elementType = listType.drop(4)->reverse.drop(1)->reverse
+             in if env.binds(elementType)
+                then 
+                  body.typeCheck(env.bind(var.name,env.lookup(elementType)));
+                  "Boolean"
+                else throw Exceptions::XMFEditorError("cannot find type: " + elementType,list.charStart,list.charEnd)
+                end
+             end
+           else throw Exceptions::XMFEditorError("expecting a list type: " + listType,list.charStart,list.charEnd)
+           end
+        end
+      end
+      @Operation eval(env:Env::Env):Element
+        list.eval(env)->exists(x | body.eval(env.bind(var.name,x)))
+      end
+      @Operation setDefiniens(env:Env::Env) 
+         list.setDefiniens(env);
+         body.setDefiniens(env.bind(var.name,var))
+       end
+    end
+
+    @Class MLMBinExp extends MLMExp
+      @Attribute left:MLMExp end
+      @Attribute op:String end
+      @Attribute right:MLMExp end
+      @Constructor(left,op,right) ! end
+      @Operation pprint(indent:Integer):String
+        left.pprint(indent) + " " + op + " " + right.pprint(indent)
+      end
+      @Operation typeCheck(env:Env::Env):String
+        let leftType = left.typeCheck(env);
+            rightType = right.typeCheck(env)
+        in @Case op of
+             "+" do
+               if leftType = "Integer" and rightType = "Integer"
+               then "Integer"
+               else throw Exceptions::XMFEditorError("+ expects integers: " + leftType + " and " + rightType,charStart,charEnd)
+               end
+             end
+             ">" do
+               if leftType = "Integer" and rightType = "Integer"
+               then "Boolean"
+               else throw Exceptions::XMFEditorError("> expects integers: " + leftType + " and " + rightType,charStart,charEnd)
+               end
+             end
+             "=" do "Boolean" end
+             "!=" do "Boolean" end
+             else throw Exceptions::XMFEditorError("unknown op: " + op,charStart,charEnd)
+           end
+         end
+      end
+      @Operation eval(env:Env::Env):Element
+        let leftVal = left.eval(env);
+            rightVal = right.eval(env)
+        in @Case op of
+             "+" do leftVal + rightVal end
+             "*" do leftVal * rightVal end
+             "/" do leftVal / rightVal end
+             "-" do leftVal - rightVal end
+             ">" do leftVal > rightVal end
+             "<" do leftVal < rightVal end
+             "=" do leftVal = rightVal end
+             "!=" do leftVal <> rightVal end
+           end
+        end
+      end
+      @Operation setDefiniens(env:Env::Env) 
+         left.setDefiniens(env);
+         right.setDefiniens(env)
+       end
+    end
+
+    @Class MLMVar extends MLMExp, Definiendum
+      @Attribute name:NameRef end
+      @Constructor(name) ! end
+      @Operation getName():String
+        name.name
+      end
+      @Operation pprint(indent:Integer):String
+        name.name
+      end
+      @Operation typeCheck(env:Env::Env):String
+        if env.binds(name.name)
+        then 
+          if env.lookup(name.name).isKindOf(DataType)
+          then env.lookup(name.name).name.toString()
+          else env.lookup(name.name).name.name
+          end
+        else throw Exceptions::XMFEditorError("unbound var: " + name.name,name.charStart,name.charEnd)
+        end
+      end
+      @Operation eval(env:Env::Env):Element
+        env.lookup(name.name)
+      end
+      @Operation setDefiniens(env:Env::Env) 
+         if env.binds(name.name)
+         then name.definiens := env.lookup(name.name)
+         end
+       end
+    end
+
+    @Class MLMCall extends MLMExp
+      @Attribute name:NameRef end
+      @Attribute args:[MLMExp] end
+      @Constructor(name,args) end
+      @Operation pprint(indent:Integer):String
+        name.name + "(" + args->collect(arg | arg.pprint(indent))->separateWith(",") + ")"
+      end
+    end
+
+    @Class MLMDot extends MLMExp
+      @Attribute obj:MLMExp end
+      @Attribute name:NameRef end
+      @Constructor(obj,name) ! end
+      @Operation pprint(indent:Integer):String
+        obj.pprint(indent) + "." + name.name
+      end
+      @Operation typeCheck(env:Env::Env):String
+        let objType = obj.typeCheck(env)
+        in if env.binds(objType)
+           then
+             let type = env.lookup(objType)
+             in if type.isKindOf(MLM::MLMClass)
+                then 
+                  @Find(s,getAllProperties(type.name.name,env.lookup("$classes"))) when s.name.name = name.name do
+                    name.definiens := s;
+                    s.type.ppType()
+                  else throw Exceptions::XMFEditorError("cannot find property named " + name.name + " in " + objType,charStart,charEnd)
+                  end
+                else throw Exceptions::XMFEditorError("expecting a class: " + objType,obj.charStart,obj.charEnd)
+                end
+             end
+           else throw Exceptions::XMFEditorError("cannot find " + objType,obj.charStart,obj.charEnd)
+           end
+        end
+      end
+      @Operation eval(env:Env::Env):Element
+        let o = obj.eval(env)
+        in if o.isKindOf(MLM::MLMObj) or o.isKindOf(MLM::MLMClass)
+           then 
+             @Find(s,o.slots) when s.name.name = name.name do s.value.eval(env)
+             else throw Exceptions::XMFEditorError("cannot find slot " + name.name,charStart,charEnd)
+             end
+           else throw Exceptions::XMFEditorError("expecting something with slots " + o,charStart,charEnd)
+           end
+        end
+      end
+      @Operation setDefiniens(env:Env::Env) 
+         obj.setDefiniens(env)
+       end
+    end
+
+    @Class MLMInstances extends MLMExp
+      @Attribute name:MLMExp end
+      @Constructor(name) ! end
+      @Operation pprint(indent:Integer):String
+        "<b>instances</b>(" + name.pprint(indent) + ")"
+      end
+      @Operation typeCheck(env:Env::Env):String
+        let className = name.typeCheck(env)
+        in if env.binds(className) andthen env.lookup(className).isKindOf(MLM::MLMClass)
+           then "Seq(" + className + ")"
+           else throw Exceptions::XMFEditorError("expecting a class: " + className,name.charStart,name.charEnd)
+           end
+        end
+      end
+      @Operation eval(env:Env::Env):Element
+        let c = name.eval(env)
+        in env.lookup("$objects")->select(o | o.type.name = c.name.name) +
+           env.lookup("$classes")->select(co | co.meta.name = c.name.name)
+        end
+      end
+      @Operation setDefiniens(env:Env::Env) 
+         name.setDefiniens(env) 
+       end
+    end
+    
+   end 
