@@ -13,7 +13,7 @@ The XEditor consists of a file browser, file editor, menu bar, and an interactiv
 
 ### File Browser
 
-![File Browser](images/file_browser.png =100x200)
+<img src="images/file_browser.png" width="200" height="400"> 
 
 The XEditor file browser (shown on the left) which provides access to the files from a supplied collection of root folders. The XEditor is supplied with its own source code contained within the folder xmf-src. Normally the XEditor source folder will be one of the folders in the file browser. With the file browser you can:
 
@@ -26,7 +26,7 @@ Files called Manifest.xmf are treated specially. They contain manifests that ref
 
 ### Editor Panel
 
-![Editor Panel](images/editor_panel.png =100x200)
+<img src="images/editor_panel.png" width="300" height="250"> 
 
 The XEditor editor panel is shown to the right of the file browser and contains the currently selected file. The editor will be configured to understand the language of the file contents and to provide suitable functionality. Normally this is the XOCL language. With the editor panel you can:
 
@@ -195,7 +195,7 @@ occur on a single line and are terminated by return rather than ';'.
 
 ## The XMF Menu
 
-![The XMF Menu](images/XMF_menu.png =100x200)
+<img src="images/XMF_menu.png" width="200" height="400"> 
 
 The XMF Menu provides access to system-level functionality:
 
@@ -239,11 +239,13 @@ The named element (for example a class or an operation) is added to the name spa
 
 There are example models in xmf-src/models:
 
-  * A library model  ![Library](images/lib.png =100x200)
+  * A library model  <img src="images/lib.png" width="400" height="800"> 
+
 
     Try running ```Models::Lib::test1()```
 
-  * A shopping model ![Shopping](images/shopping.png =100x200)
+  * A shopping model <img src="images/shopping.png" width="600" height="1000"> 
+
 
 
 ## Snippets of Useful Information
