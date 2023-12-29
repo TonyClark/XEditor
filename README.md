@@ -1,5 +1,5 @@
 
-# XEditor ![Alt](images/x_up_right.png =40x40)
+# XEditor ![Alt](./images/x_up_right.png =40x40)
 *Language Oriented Text Editing Powered by XMF and XOCL*
 
 ## Overview
