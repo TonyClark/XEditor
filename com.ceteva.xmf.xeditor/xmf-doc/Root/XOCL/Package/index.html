@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Package
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Package</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      A package definition is represented as an instance of this class.
+      When the instance is performed it creates a new kernel package.
+    
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/XOCL/index.html">XOCL</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/AbstractSyntax/DefiniensContainer/index.html">DefiniensContainer</A>
+,<A HREF="../../../Root/AbstractSyntax/Definiens/index.html">Definiens</A>
+,<A HREF="../../../Root/XOCL/Def/index.html">Def</A>
+<BR><HR>
+<B>Subclasses</B>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+<TR><TD>Package(name,meta,metaPackage,parents,defImports,defs)</TD><TD> No Documentation </TD></TR>
+<TR><TD>Package(name,meta,metaPackage,parents,defs)</TD><TD> No Documentation </TD></TR>
+<TR><TD>Package(name,meta,parents,defs)</TD><TD> No Documentation </TD></TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR><TD><B>defImports</B></TD><TD><A HREF="../../../Root/XCore/Performable/index.html">Seq(Performable)<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>defs</B></TD><TD><A HREF="../../../Root/XCore/Performable/index.html">Seq(Performable)<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>meta</B></TD><TD><A HREF="../../../Root/XCore/Performable/index.html">Performable<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>metaPackage</B></TD><TD><A HREF="../../../Root/XCore/Performable/index.html">Performable<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>parents</B></TD><TD><A HREF="../../../Root/XCore/Performable/index.html">Seq(Performable)<A></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XOCL/Def/index.html">Def</A>: name. <BR><B>From</B> <A HREF="../../../Root/XCore/Performable/index.html">Performable</A>: endLine, line. <BR><B>From</B> <A HREF="../../../Root/XCore/Located/index.html">Located</A>: charEnd, charStart. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>compile(env:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,frame:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,isLast:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,saveSource:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugar():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>desugarDefinedImports(body:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>eval(target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,env:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,imports:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getDefiniens():<A HREF="../../../Root/AbstractSyntax/Definiens/index.html">Seq(Definiens)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>maxLocals():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>metaExp():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>metaPackageExp():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>newPackageExp():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>pprint(out:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,indent:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/AbstractSyntax/DefiniensContainer/index.html">DefiniensContainer</A>: getDefiniens. <BR><B>From</B> <A HREF="../../../Root/XOCL/Def/index.html">Def</A>: getName. <BR><B>From</B> <A HREF="../../../Root/AbstractSyntax/Definiens/index.html">Definiens</A>: getName. <BR><B>From</B> <A HREF="../../../Root/XCore/Performable/index.html">Performable</A>: FV, compile, endLine, eval, line, maxLocals, pprint, pprint, pprint, setEndLine, setLine. <BR><B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=1><FONT SIZE="+2">
+<B>Grammar</B></FONT></TD>
+</TR>
+<TD><PRE>
+@Grammar extends OCL::OCL.grammar
+  
+    Package ::= 
+    
+      name = AName 
+      
+      meta = MetaClass
+      
+      metaPackage = MetaPackage 
+      
+      parents = Parents 
+      
+      imports = PImports
+      
+      defs = Defs 
+      
+      'end'
+      
+      { Package(name,meta,metaPackage,parents,imports,defs) }.
+    
+    MetaPackage ::= 'metapackage' <<Exp>> | { null }.
+    
+    MetaClass ::= 'metaclass' <<Exp>> | { null }.
+    
+    Parents ::= 'extends' p = <<Exp>> ps = (',' <<Exp>>)* { Seq{p|ps} } | { Seq{} }.
+    
+    PImports ::= 'import' p = <<Exp>> ps = (',' <<Exp>>)* { Seq{p|ps} } | { Seq{} }.
+    
+    Defs ::= 
+    
+      <<Exp>> * | 
+      
+      '<*' e = <<Exp>> '*>' { Drop(e) } | 
+      
+      '<*|' p = <<Pattern>> '|*>' { DropPattern(p) }.
+   
+  end
+</PRE></TD>
+</TABLE>
+</HTML>

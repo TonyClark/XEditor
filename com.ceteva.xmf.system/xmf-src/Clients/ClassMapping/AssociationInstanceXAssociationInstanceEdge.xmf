@@ -1,0 +1,92 @@
+parserImport XOCL;
+parserImport XMap;
+
+import Clients;
+import Diagrams;
+import DiagramsMapping;
+import ClassDiagrams;
+import ClassMapping;
+import Menus;
+
+context ClassMapping
+
+  @Class AssociationInstanceXAssociationInstanceEdge extends ElementXEdge, RightClickableProxy
+  
+//    @Attribute slot1 : Slot end
+//    @Attribute slot2 : Slot end
+//    @Attribute class1 : Class end
+//    @Attribute class2 : Class end
+//    @Attribute name1 : String end
+//    @Attribute name2 : String end
+    @Attribute associationInstance      : Associations::AssociationInstance (?) end
+    @Attribute edge        : AssociationInstanceEdge (?) end
+    
+//    @Constructor(slot1,slot2,edge) ! 
+//      self.setHotLoad(true);
+//      self.checkDaemons()
+//    end
+
+//    @Constructor(class1,class2,name1,name2,edge) ! 
+    @Constructor(associationInstance,edge) !     
+      self.setHotLoad(true);
+      self.checkDaemons()
+    end
+
+//End changed daemon
+
+/*    @Operation end1Changed_classDiagramDaemon(association,slot,newSlot1,oldSlot1)
+      if not class1.of().getAttribute(name1).type.isKindOf(Set) and newSlot1 <> oldSlot1 and newSlot1 <> null
+      then  if class2.of().getAttribute(name2).type.isKindOf(Set) 
+	        then class2.set(name2,class2.get(name2)->excluding(class1))
+     	    else class2.set(name2,null)
+	        end;
+      		edge.delete()//;
+//        	self.owner.remove(self);
+//        	self.removeFromOwner()
+      end
+    end
+    
+    @Operation end2Changed_classDiagramDaemon(association,slot,newSlot2,oldSlot2)
+      if not association.class2.of().getAttribute(association.name2).type.isKindOf(Set) and newSlot2 <> oldSlot2 and newSlot2 <> null
+      then  if association.class1.of().getAttribute(association.name1).type.isKindOf(Set) 
+	        then association.class1.set(association.name1,association.class1.get(association.name1)->excluding(association.class2))
+     	    else association.class1.set(association.name1,null)
+	        end;
+      		edge.delete()//;
+//        	self.owner.remove(self);
+//        	self.removeFromOwner()
+      end
+    end 
+    
+    @Operation checkAssociationDaemons()
+      @SlotValueChanged multi once AssociationInstanceXAssociationInstanceEdge::end1Changed_classDiagramDaemon(association.class1,association.name1) end;
+      @SlotValueChanged multi once AssociationInstanceXAssociationInstanceEdge::end2Changed_classDiagramDaemon(association.class2,association.name2) end
+    end */
+
+    @Operation checkDaemons()
+      super()//;
+//      self.checkAssociationDaemons()
+    end
+    
+    @Operation hotLoaded()
+      self.checkDaemons()
+    end
+    
+    @Operation removeDaemons()
+    
+      // Called when this mapping is no longer valid.
+      
+      super();
+      edge.removeDaemonsWithTarget(self,true);
+	  associationInstance.removeDaemonsWithTarget(self,true);
+	  associationInstance.class1.removeDaemonsWithTarget(associationInstance,true);
+	  associationInstance.class2.removeDaemonsWithTarget(associationInstance,true)//;
+//      class1.removeDaemonsWithTarget(self,true);
+//      class2.removeDaemonsWithTarget(self,true)
+    end
+   
+    @Operation element()
+      associationInstance
+    end
+      
+  end

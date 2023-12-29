@@ -1,0 +1,18 @@
+parserImport XOCL;
+
+import Languages;
+import Activities;
+
+context Activities
+
+  @Class Goto extends ActivityElement
+
+    @Attribute label:String end
+
+    @Constructor(label) ! end
+
+    @Operation getDiagramElement():String 
+      "goto " + label + "\n"
+    end
+
+  end

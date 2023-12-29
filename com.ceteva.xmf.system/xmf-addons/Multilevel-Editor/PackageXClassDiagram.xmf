@@ -1,0 +1,531 @@
+parserImport XOCL;
+parserImport XMap; 
+
+import Clients;
+import Diagrams;
+import DiagramsMapping;
+import ClassDiagrams;
+import ClassMapping;
+import Menus;
+import IO;
+
+Clients::ClassMapping::PackageXClassDiagram.add(Attribute("paletteList",Seq(String)));    
+    
+PackageXClassDiagram.removeOperation(PackageXClassDiagram.getOperation("addClass")); 
+
+context ClassMapping::PackageXClassDiagram    
+    @Operation addClass(class)
+      let package = 
+            if package.classes->includes(class) 
+            then "" 
+            else "(from " + class.owner.path() + ")"
+            end;
+          x = diagram.selectedX() + 100;
+          y = diagram.selectedY() + 100 then
+        node = ClassNode(class.name.toString(),package,class.isAbstract,class.of().pathSeq(),x,y,diagram.showAttributes(),diagram.showOperations(),diagram.showMetaslots()) then
+        map = ClassXNode(class,node,self)
+      in 
+        @WithoutRendering(self.diagram)
+          self.addClassMap(map);
+          diagram.addNode(node);
+          node.new(diagram);
+          if class.isAbstract then
+            node.setIsAbstract(true)
+          end;
+          if node.showAttributes then
+            map.generateAttributes()
+          end;
+          if node.showOperations then
+            map.generateOperations()
+          end;
+          if node.showMetaslots then
+            map.generateMetaslots()
+          end;
+          if node.showOperationValues then
+            map.generateOperationValues()
+          end;
+          if class.level = 0
+          then
+          	node.showMetaslots(true);
+          	node.showAttributes(false)
+          end;
+          node
+        end
+      end
+    end
+    
+PackageXClassDiagram.removeOperation(PackageXClassDiagram.getOperation("generateNodes")); 
+
+context ClassMapping::PackageXClassDiagram  
+    
+    @Operation generateNodes()
+      if self.total()
+      then
+        @For class in package.classes do
+          self.classAdded(class);
+          @For attribute in class.attributes do
+            let type = attribute.underlyingType()
+            in if not type.isKindOf(DataType) andthen 
+                  not package.classes->includes(type)
+               then self.add(type)
+               end
+            end
+          end/*;
+          @For parent in class.parents do
+            if not class.defaultParents()->includes(parent) andthen
+               not package.classes->includes(parent)
+             then self.add(parent)
+           end
+          end*/
+        end;
+        @For package in package.packages do
+          self.packageAdded(package);
+          @For parent in package.parents do
+            if parent.isReallyKindOf(XCore::Package)
+            then self.add(parent)
+            end
+          end
+        end
+      end
+    end
+
+context ClassMapping::PackageXClassDiagram  
+    
+    @Operation addMetaClass(metaclass,group)
+	  PackageXClassDiagram::instantiationHandlerDispatcher(metaclass,package,diagram,self)
+    end
+
+context ClassMapping::PackageXClassDiagram  
+    
+    @Operation updateToolGroup(groupname)
+    	//let groupname = self.getMetaToolGroupName(group)
+		//in
+			if self.paletteList->contains(groupname)
+			then
+				false
+			else
+				self.paletteList := self.paletteList->including(groupname);
+				diagram.defineToolGroup(groupname)
+			end
+		//end
+    end
+
+context ClassMapping::PackageXClassDiagram  
+	
+	@Operation getMetaToolGroupName(group)
+		@Case group of
+				[ "X" ] do
+					"Top Level"
+				end
+				else 
+					if group.isKindOf(Integer) 
+					then "M" + group
+					else group
+					end	
+			    end
+	end
+    
+context ClassMapping::PackageXClassDiagram  
+	
+	@Operation getElementIcon(group)
+		/*@Case group of
+				[ "X" ] do
+					"XCore/Class.gif"
+				end
+				[ "0" ] do
+					//"XCore/Object.gif"
+					"XCore/Class.gif"
+           		end
+				[ "1" ] do
+					//"XCore/Object.gif"
+					"XCore/Class.gif"
+           		end
+				[ "2" ] do
+					"XCore/Class.gif"
+           		end
+				[ "3" ] do
+					"XCore/Class.gif"
+           		end
+				[ "4" ] do
+					"XCore/Class.gif"
+           		end
+				[ "5" ] do
+					"XCore/Class.gif"
+           		end
+				else */"XCore/Class.gif"/*
+			end*/
+	end
+
+context ClassMapping::PackageXClassDiagram  
+	
+	@Operation instantiationHandlerDispatcher(metaclass,thePackage,theDiagram,theMapping)
+		if metaclass.level > 1
+		then
+			theMapping.instantiationHandlerClass(metaclass,thePackage,theDiagram,theMapping)
+		else
+			theMapping.instantiationHandlerObject(metaclass,thePackage,theDiagram,theMapping)
+		end
+	end
+
+context ClassMapping::PackageXClassDiagram  
+	
+	@Operation instantiationHandlerClass(
+        metaclass,  //:MetaAdaptor,
+        thePackage, //:Package,
+        theDiagram, //:MappingDiagram,
+        theMapping //:PackageXMappingDiagram
+        )
+        
+		let group = if metaclass = FMML::MetaClass 
+					then "X"
+					else metaclass.level
+					end
+		in
+			theMapping.updateToolGroup(theMapping.getMetaToolGroupName(group));
+			theDiagram.defineNewHandler(
+				theMapping.getMetaToolGroupName(group),	
+				metaclass.name.toString(),
+				false,
+				theMapping.getElementIcon(group),//"XCore/Class.gif",
+				@Operation(x,y)
+                    let name = xmf.getString("Name","Type the name of the meta type:",thePackage.newName(metaclass.name.toString()))
+                    in
+                        if not name = null
+                        then
+                            if not name.isValidName() 
+                              then xmf.warning(
+    						    "Cannot use name \"" + name + "\" as the name is illegal. "
+        						+ "A valid name must start with a letter, followed by letters, numbers or an underscore.")
+                            elseif thePackage.hasElement(name)
+                              then xmf.warning(
+								"Cannot use name \"" + name + "\" as an element "
+         						+ "already exists in " + thePackage.toString() + " with the same name.")
+                            else 
+                            	let class = metaclass(name)
+                            	in
+                                    //class.addParent(FMML::MetaClass);
+                                	thePackage.add(class);
+                                	theMapping.instantiationHandlerDispatcher(class,thePackage,theDiagram,theMapping);
+                                	@Find(map,theMapping.classMaps) when map.class = class do
+                                	    map.node.move(x,y)
+                                	end//;
+                                	//class.checkForNeededConstraints()
+                            	end
+                            end
+                        end
+                    end 
+                end	
+			)
+		end
+	end
+
+context ClassMapping::PackageXClassDiagram  
+	
+@Operation instantiationHandlerObject(metaclass,thePackage,theDiagram,theMapping)
+	theMapping.updateToolGroup(theMapping.getMetaToolGroupName(metaclass.level));
+	
+    theDiagram.defineNewHandler(
+	  theMapping.getMetaToolGroupName(metaclass.level),
+	  metaclass.name.toString(),
+	  false,
+	  theMapping.getElementIcon((metaclass.level).toString()),//"XCore/Object.gif",		
+	  @Operation(x,y)
+		let name = xmf.getString("Name","Type the name of the meta type:",thePackage.newName(metaclass.name.toString()))
+      in
+          if not name = null
+        then
+            if not name.isValidName() 
+              then xmf.warning(
+    			"Cannot use name \"" + name + "\" as the name is illegal. "
+        		+ "A valid name must start with a letter, followed by letters, numbers or an underscore.")
+            elseif thePackage.hasElement(name)
+              then xmf.warning(
+				"Cannot use name \"" + name + "\" as an element "
+         		+ "already exists in " + thePackage.toString() + " with the same name.")
+            else
+              let class = metaclass(name)
+            in
+              class.addParent(FMML::MetaClass);
+              thePackage.add(class);
+              @Find(map,theMapping.classMaps) when map.class = class do
+                map.node.move(x,y);
+                map.node.showMetaslots(true);
+                map.node.showAttributes(false)
+              end // @Find(
+            end // let class = metaclass(name)             
+            end // if not name.isValidName() / thePackage.hasElement(name)
+        end // if not name = null
+      end // name = xmf.getString...
+	  end // @Operation(x,y)...
+	) // defineNewHandler(...
+end // @Operation instantiationHandlerObject(...
+	
+/*    @Operation domainTypeHandler(metaclass,thePackage,theDiagram,theMapping)
+		@Operation(x,y)
+			// Create a new instance of the meta-class and make it inherit 
+			// from Class (actually this should be selectable). Then get
+			// the node and move it...
+			let class = metaclass(xmf.getString("Name","Type the name of the meta type:",thePackage.newName(metaclass.name.toString()))) then
+				handler = 
+					@Operation(x,y) 
+						let domainType = class(thePackage.newName(class.name.toString())) then
+							innerhandler =	@Operation(x,y)
+												theMapping.dropInstanceOf(domainType,x,y)
+											end
+						in 
+							thePackage.add(domainType);
+//                   		theDiagram.defineToolGroup(theMapping.getMetaToolGroupName(0));
+							theMapping.updateToolGroup(theMapping.getMetaToolGroupName(0));
+							theDiagram.defineNewHandler(
+								theMapping.getMetaToolGroupName(0),
+								domainType.name.toString(),
+								false,
+								"XCore/Object.gif",
+								innerhandler);
+							@Find(map,theMapping.classMaps)
+								when map.class = domainType	
+								do 
+//                      			map.node.name.setFillColor(Color(125,205,124));
+									map.node.showMetaslots(true)
+								else 
+									"No Map Found".println()
+							end
+						end
+					end//;
+//            		isMeta = xmf.question("Will instances of " + class + " be new domain types?")
+//			  		if class.level >	
+			in class.addParent(FMML::MetaClass);
+				thePackage.add(class);
+				@Find(map,theMapping.classMaps)
+					when map.class = class 
+					do 
+//                		map.node.name.setFillColor(Color(255 - (class.metaLevel() * 30),165,79 + (class.metaLevel() * 30)))
+						map.node.showMetaslots(true)
+					else 
+						"No Map Found".println()
+				end; 				
+//		   		theDiagram.defineToolGroup(theMapping.getMetaToolGroupName(class.level - 1));
+				theMapping.updateToolGroup(theMapping.getMetaToolGroupName(class.level - 1));
+				theDiagram.defineNewHandler(
+//             	if isMeta then "Meta Types" else "Domain Types" end,
+					theMapping.getMetaToolGroupName(class.level - 1),	
+					class.name.toString(),
+					false,
+					"XCore/Class.gif",
+					if class.level > 2 
+						then 
+							theMapping.domainTypeHandler(class,thePackage,theDiagram,theMapping) 
+						else 
+							handler 
+					end )
+			end
+		end
+    end */
+
+PackageXClassDiagram.removeOperation(PackageXClassDiagram.getOperation("toolGroups")); 
+
+context ClassMapping::PackageXClassDiagram 
+	
+    @Operation toolGroups()
+    
+      // Add tool groups for the sub-classes of the key elements
+      // on a class diagram. Calculate all the sub-classes of
+      // class diagram element classes defined by the meta-package
+      // of the package controlled by the diagram. Each sub-class
+      // corresponds to a stereotype that creates a standard class
+      // diagram component tagged with the << and >> labels.
+      
+      let languageName = package.metaPackage().name.toString();
+      
+          // allContents returns a set; iterating over a large set is *very* expensive.
+          // The following code has been changed to the equivalent loop with side effects.
+          
+          //allContents = package.metaPackage().allContents() then
+          //classes = 
+          //  allContents
+          //    ->select(c | c.isKindOf(XCore::Class))
+          //    ->excluding(null)
+          //    ->reject(c | c.owner() = XCore or c.isAbstract) then
+          //dependencyToolGroups = classes->select(c | c.inheritsFrom(XCore::Dependency));
+          //classToolGroups = classes->select(c | c.inheritsFrom(XCore::Class) and not c.inheritsFrom(XCore::Package));
+          //packageToolGroups = classes->select(c | c.inheritsFrom(XCore::Package));
+          //attributeToolGroups = classes->select(c | c.inheritsFrom(XCore::Attribute)) then
+          //otherToolGroups = classes - (dependencyToolGroups + classToolGroups + packageToolGroups + attributeToolGroups)
+          
+          dependencyToolGroups = Seq{};
+          classToolGroups = Seq{};
+          packageToolGroups = Seq{};
+          attributeToolGroups = Seq{};
+          otherToolGroups = Seq{}
+      in 
+         @For e inTableValues package.metaPackage().contents do
+           if e.isReallyKindOf(XCore::Class) andthen (e.owner() <> XCore and not e.isAbstract)
+           then 
+             if e.inheritsFrom(XCore::Dependency)
+             then dependencyToolGroups := Seq{e | dependencyToolGroups}
+             elseif e.inheritsFrom(XCore::Class) and not e.inheritsFrom(XCore::Package)
+             then classToolGroups := Seq{e | classToolGroups}
+             elseif e.inheritsFrom(XCore::Package)
+             then packageToolGroups := Seq{e | packageToolGroups}
+             elseif e.inheritsFrom(XCore::Attribute)
+             then attributeToolGroups := Seq{e | attributeToolGroups}
+             else otherToolGroups := Seq{e | otherToolGroups}
+             end
+           end
+         end;
+
+		 self.addMetaTray();
+         
+         // Assume that all class diagrams have an XCore tray and add in the default
+         // tools that come with that language...
+         
+         self.XCoreToolGroups();
+      
+         // Any toggles that need access to the mapping...
+         
+         self.defineToggles();
+         
+         // Any actions that require access to the mapping...
+         
+         self.defineActions();
+		 
+         // If the package is a meta-package then we want to allow instances of
+         // the meta-classes to be created on the diagam...
+		 
+         if package.isMetaPackage()
+         then 
+//			diagram.defineToolGroup("Top Level");
+			self.paletteList := Seq{};
+			self.addMetaClass(FMML::MetaClass, "Top Level");
+			package.classes->iterate(c tmp = null | 
+				if c.level > 0
+				then 
+					self.addMetaClass(c,"M"+(c.level - 1))
+				end
+			)
+//           let parents = package.allParents() then
+//               contents = parents->iterate(p O=Set{} | O + p.contents()) then
+//               classes = contents->select(o | o <> null and o.isKindOf(Class)) then
+//               classes = classes->reject(c | c.owner = XCore)->including(Class) then 
+//               metaclasses = classes->select(c | c.isMetaClass());
+//               thePackage = package;
+//               theDiagram = diagram;
+//               theMapping = self
+//           in diagram.defineToolGroup("Meta Types");
+//              diagram.defineToolGroup("Domain Types");
+//              diagram.defineToolGroup("Domain Classes");
+//              @For metaclass in metaclasses do
+//                self.addMetaClass(metaclass)
+//              end
+//           end
+         end;
+         
+     
+         // If there are any sub-classes of the standard model elements for a class
+         // diagram then we need a stereotypes node group to create them...
+      
+         if not (dependencyToolGroups->isEmpty and
+                 packageToolGroups->isEmpty and 
+                 classToolGroups->isEmpty and 
+                 attributeToolGroups->isEmpty)
+         then 
+           diagram.defineToolGroup(languageName)
+         end;
+
+         self.addImportTrays();
+		 
+         // Add in a catch all element creator that will offer all model element
+         // types in the meta-package via a selection list.
+         
+         if xmf.preference("EnableMeta")
+         then
+           diagram.defineNewHandler(
+             "XCore",
+             "Object",
+             false,
+             "XCore/Other.gif",
+             let 
+               p = self.package;
+               m = self
+             in
+               @Operation(x,y)
+                   m.dropOtherNode( x,y,p.metaPackage().allClasses()
+                   ->select(c | not c.isAbstract)
+                   - Set{// the following cannot be created by raw instantiation
+                         // or cannot supported by class diagrams...
+                         BasicArray,Bind,Buffer,Classifier,CodeBox,Collection,
+                         CompiledOperation,Constructor,Daemon,Doc,Exception,
+                         ForeignOperation,InitialisedAttribute,InterpretedOperation,
+                         MachineException,Operation,Parameter,Seq,Set,Snapshot } )
+               end
+             end)
+         end;
+
+         // Add in the stereotype creation buttons...
+         
+         @For c in packageToolGroups do
+           let handler = 
+                 @Operation(x,y) 
+                   self.newPackageNode(x,y,c.pathSeq())
+                 end
+           in diagram.defineNewHandler(
+                languageName,
+                c.name.toString(),
+                false,
+                "XCore/Package.gif",
+                handler)
+           end
+         end;
+         @For c in classToolGroups do
+           let handler(x,y) = self.newClassNode(x,y,c.pathSeq())
+           in diagram.defineNewHandler(
+                languageName,
+                c.name.toString(),
+                false,
+                "XCore/Class.gif",
+                handler)
+           end
+         end;
+         @For c in attributeToolGroups do
+           let handler(sourcePort,targetPort) = self.newAttributeEdge(sourcePort,targetPort,c.pathSeq());
+		       selfHandler(x,y) = self.newSelfAttributeEdge(x,y,c.pathSeq())
+           in diagram.defineNewHandler(
+                languageName,
+                c.name.toString(),
+                true,
+                "XCore/Attribute.gif",
+                handler);
+              diagram.defineNewHandler(
+                languageName,
+                c.name.toString() + " (self)",
+                false,
+                "XCore/Attribute.gif",
+                handler) 
+           end
+         end;
+         @For c in dependencyToolGroups do
+           let handler(sourcePort,targetPort) = self.newDependencyEdgeCommand(sourcePort,targetPort,c.pathSeq())
+           in diagram.defineNewHandler(
+                languageName,
+                c.name.toString(),
+                true,
+                "XCore/Dependency.gif",
+                handler)
+           end
+         end;
+         @For c in otherToolGroups do
+           let p = self.package;
+               m = self then
+               handler = self.instantiateClassHandler(c,p,m)
+           in diagram.defineNewHandler(
+                languageName,
+                c.name.toString(),
+                false,
+                "XCore/Object.gif",
+                handler)
+           end
+         end
+       end
+    end
+
+    

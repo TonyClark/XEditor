@@ -1,0 +1,16 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import AbstractSyntax;
+
+@EventHandler languageAction(path, editor)
+
+  // TBC...
+  
+  
+    try
+      editor.insertText(path)
+    catch(exception)
+      editor.displayError(exception.toString())
+    end
+  end;

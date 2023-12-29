@@ -1,0 +1,1039 @@
+parserImport XOCL;
+
+import Clients;
+import Diagrams;
+import Menus;
+import ClassDiagrams;
+import IO;
+
+context ClassDiagrams
+ 
+  @Class ClassDiagram extends SyncableDiagram, ThemableDiagram
+  
+    @Bind classWidth = 70 end   // A uniform box width.
+    
+    @Attribute classNodes         : Seq(ClassNode)       end
+    @Attribute elementNodes       : Seq(ElementNode)     end
+    @Attribute objectNodes 	      : Seq(ObjectNode)      end
+    @Attribute packageNodes       : Seq(PackageNode)     end
+    @Attribute noteNodes          : Seq(NoteNode)	     end
+    @Attribute inheritanceEdges   : Seq(InheritanceEdge) end
+    @Attribute delegationEdges    : Seq(DelegationEdge)  end
+    @Attribute attributeEdges     : Seq(AttributeEdge)   end
+    @Attribute containsEdges      : Seq(ContainsEdge)    end
+    @Attribute dependencyEdges    : Seq(DependencyEdge)  end
+    @Attribute associationEdges   : Seq(AssociationEdge) end
+    @Attribute associationInstanceEdges   : Seq(AssociationInstanceEdge) end
+    @Attribute intrinsicAssociationConstraintEdges   : Seq(IntrinsicAssociationConstraintEdge) end
+    @Attribute showAttributes     : Boolean = true (?)   end
+    @Attribute showOperations     : Boolean = false (?)  end
+    @Attribute showMetaslots      : Boolean = false (?)  end
+    @Attribute showAttributeEdges : Boolean = true       end
+    @Attribute showAssociationEdges : Boolean = true     end
+    @Attribute showInheritanceEdges : Boolean = true     end
+    @Attribute showMultiplicity   : Boolean = true       end
+    @Attribute showInstantiationLevel : Boolean = true   end
+    
+    @Operation addEdge(edge)
+      @TypeCase(edge)
+        AssociationEdge do
+          self.addAssociationEdge(edge);
+          super(edge)
+        end
+		IntrinsicAssociationConstraintEdge do
+          self.addIntrinsicAssociationConstraintEdge(edge);
+          super(edge)
+        end
+        AssociationInstanceEdge do
+          self.addAssociationInstanceEdge(edge);
+          super(edge)
+        end
+        InheritanceEdge do
+          self.addInheritanceEdge(edge);
+          super(edge)
+        end
+        AttributeEdge do
+          self.addAttributeEdge(edge);
+          super(edge)
+        end
+        ContainsEdge do
+          self.addContainsEdge(edge);
+          super(edge)
+        end
+        DependencyEdge do
+          self.addDependencyEdge(edge);
+          super(edge)
+        end
+        DelegationEdge do
+          self.addDelegationEdge(edge);
+          super(edge)
+        end
+        else self.error("I don't know how to add " + edge.toString() + " to a class diagram.")
+      end
+    end
+    
+    @Operation addNode(node)
+      @TypeCase(node)
+        ClassNode do
+          self.addClassNode(node);
+          super(node)
+        end
+        PackageNode do
+          self.addPackageNode(node);
+          super(node)
+        end
+        NoteNode do
+          self.addNoteNode(node);
+          super(node)
+        end
+        ElementNode do
+          self.addElementNode(node);
+          super(node)
+        end
+        ObjectNode do
+          self.addElementNode(node);
+          super(node)
+        end
+        DiagramNode do
+          self.addDiagramNode(node);
+          super(node)
+        end
+        else self.error("I don't know how to add " + node.toString() + " to a class diagram.")
+      end
+    end
+    
+    @Operation addAssociationEdge(associationEdge) 
+      self.associationEdges := associationEdges->prepend(associationEdge)
+    end
+
+    @Operation addIntrinsicAssociationConstraintEdge(intrinsicAssociationConstraintEdge) 
+      self.intrinsicAssociationConstraintEdges := intrinsicAssociationConstraintEdges->prepend(intrinsicAssociationConstraintEdge)
+    end
+
+    @Operation addAssociationInstanceEdge(associationInstanceEdge) 
+      self.associationInstanceEdges := associationInstanceEdges->prepend(associationInstanceEdge)
+    end
+            
+    @Operation addAttributeEdge(attributeEdge) 
+      self.attributeEdges := attributeEdges->prepend(attributeEdge)
+    end
+    
+    @Operation addClassNode(classNode)
+      self.classNodes := classNodes->prepend(classNode)
+    end
+    
+    @Operation addContainsEdge(containsEdge)
+      self.containsEdges := containsEdges->prepend(containsEdge)
+    end
+    
+    @Operation addDependencyEdge(dependencyEdge)
+      self.dependencyEdges := dependencyEdges->prepend(dependencyEdge)
+    end
+    
+    @Operation addElementNode(elementNode)
+      self.elementNodes := elementNodes->prepend(elementNode)
+    end
+    
+    @Operation addInheritanceEdge(inheritanceEdge)
+      self.inheritanceEdges := inheritanceEdges->prepend(inheritanceEdge)
+    end    
+    
+    @Operation addDelegationEdge(delegationEdge)
+      self.delegationEdges := delegationEdges->prepend(delegationEdge)
+    end
+    
+    @Operation addNoteNode(noteNode)
+      self.noteNodes := self.noteNodes->prepend(noteNode)
+    end
+    
+    @Operation addObjectNode(objectNode)
+      self.objectNodes := self.objectNodes->prepend(objectNode)
+    end
+    
+    @Operation addPackageNode(packageNode)
+      self.packageNodes := packageNodes->prepend(packageNode)
+    end
+
+    @Operation buildGlobalMenu()
+      let globalMenu = super();
+          target = RightClickable::selfTarget;
+          hideMenu = MenuItems("Hide All");
+          showMenu = MenuItems("Show All");
+          fontMenu = MenuItems("Fonts")
+      in
+        globalMenu.add(hideMenu);
+        globalMenu.add(showMenu);
+        globalMenu.add(fontMenu);
+        hideMenu.add(MenuAction("Attributes",target,Seq{true},ClassDiagram::hideAttributes));
+        hideMenu.add(MenuAction("Operations",target,Seq{true},ClassDiagram::hideOperations));
+        hideMenu.add(MenuAction("Slot Values",target,Seq{true},ClassDiagram::hideMetaslots));
+        showMenu.add(MenuAction("Attributes",target,Seq{false},ClassDiagram::hideAttributes));
+        showMenu.add(MenuAction("Operations",target,Seq{false},ClassDiagram::hideOperations));
+        showMenu.add(MenuAction("Slot Values",target,Seq{false},ClassDiagram::hideMetaslots));
+        fontMenu.add(MenuAction("Set Diagram Font",target,Seq{},ClassDiagram::setDiagramFont));
+        globalMenu
+      end
+    end
+    
+    @Operation defaultAssociationEdgeCommand(sourcePort,targetPort,x1,y1,x2,y2) 
+      let edge_new = self.newAssociationEdgeCommand(sourcePort,targetPort,Associations::Association.pathSeq(),x1,y1,x2,y2)
+      in
+      	@Find(asso, self.owner.associationMaps)
+      	when asso.edge = edge_new
+      	do
+    		self.owner.updateToolGroup("Edges");
+      		self.defineNewHandler("Edges",asso.association.name.toString(),true,"XCore/Association.gif", self.generateAssociationInstanceEdgeCreationMethod(sourcePort,targetPort,asso) );
+      		self.owner.updateToolGroup("IntrinsicConstraintEdges");
+			self.defineNewHandler("IntrinsicConstraintEdges",asso.association.name.toString()+ " Constraints",true,"XCore/Association.gif", self.generateIntrinsicAssociationConstraintEdgeCreationMethod(asso.association.end1,asso.association.end2,asso) )      
+		end
+      end
+    end
+    
+    @Operation generateIntrinsicAssociationConstraintEdgeCreationMethod(end1, end2,asso)
+    	@Operation createIntrinsicAssociationConstraintEdge(sourcePort,targetPort,xStart,yStart,xEnd,yEnd)
+    		@Find(source, self.owner.classMaps)
+	    	when source.node = sourcePort.owner do
+      			@Find(target, self.owner.classMaps)
+      			when target.node = targetPort.owner do
+					if	( end1.type = end2.owner or end1.type.isKindOf(Collection) andthen end1.type.elementType = end2.owner ) and
+            			( end2.type = end1.owner or end2.type.isKindOf(Collection) andthen end2.type.elementType = end1.owner ) and
+      					( ( source.class.hasAttribute(end1.name) and source.class.isDescendentOf(end1.owner) and // and source.class.level = end1.instLevel + 1 and 
+      						target.class.hasAttribute(end2.name) and target.class.isDescendentOf(end2.owner) ) or // and target.class.level = end2.instLevel + 1 ) or
+      					  ( source.class.hasAttribute(end2.name) and source.class.isDescendentOf(end2.owner) and // and target.class.level = end1.instLevel + 1 and 
+      						target.class.hasAttribute(end1.name) and target.class.isDescendentOf(end1.owner) ) ) //and source.class.level = end2.instLevel + 1 ) )
+      					
+					then		
+							if(source.class.hasAttribute(end1.name))
+							then
+//								source.class.newIntrinsicAssociationConstraint(end1, target.class);
+//								target.class.newIntrinsicAssociationConstraint(end2, source.class);
+//								source.class.createIntrinsicAssociationEdge(source.class, target.class,end1.association )
+								self.newIntrinsicAssociationConstraintEdgeCommand(sourcePort,targetPort,asso.association.pathSeq())
+							else
+//								source.class.newIntrinsicAssociationConstraint(end2, target.class);
+//								target.class.newIntrinsicAssociationConstraint(end1, source.class);
+//								target.class.createIntrinsicAssociationEdge(target.class, source.class,end1.association )
+								self.newIntrinsicAssociationConstraintEdgeCommand(targetPort,sourcePort,asso.association.pathSeq())
+							end
+	   				else
+    					xmf.warning("Fehler: Constraint konnte nicht erzeugt werden")
+    				end
+    			end
+    		end
+    	end
+    end
+    
+    @Operation generateAssociationInstanceEdgeCreationMethod(sourcePort,targetPort,asso)
+       	@Find(source, self.owner.classMaps)
+	    when source.node = sourcePort.owner do
+      		@Find(target, self.owner.classMaps)
+      		when target.node = targetPort.owner do
+      			let sc = source.class;
+    				tc = target.class;
+	    			mappings = self.owner
+    			in	
+	    			@Operation createAssociationInstanceEdge(sourceInstancePort,targetInstancePort,xStart,yStart,xEnd,yEnd)
+    						@Find(sourceInstance, mappings.classMaps)
+//    						@Find(sourceInstance, self.owner.classMaps)
+	     					when sourceInstance.node = sourceInstancePort.owner do
+        	 					@Find(targetInstance, mappings.classMaps)
+//        	 					@Find(targetInstance, self.owner.classMaps)
+		     					when targetInstance.node = targetInstancePort.owner do
+									
+									let class1 = null;
+										slot1 = null;
+										class2 = null;
+										slot2 = null
+									in
+										@Find(sourceSlot, sourceInstance.class.slots())
+			    						when sourceSlot.type.type = tc or ( sourceSlot.type.type.isKindOf(Set) andthen sourceSlot.type.type.elementType = tc ) 
+										do
+											@Find(targetSlot, targetInstance.class.slots())
+    										when targetSlot.type.type = sc or ( targetSlot.type.type.isKindOf(Set) andthen targetSlot.type.type.elementType = sc )
+	    									do
+												class1 := sourceInstance;
+												slot1 := sourceSlot;
+												class2 := targetInstance;
+												slot2 := targetSlot
+											else
+    											xmf.warning("not successful: target instance does not have an association to the source instance")
+											end 
+										else
+											//reverse Search
+											@Find(sourceSlot, sourceInstance.class.slots())
+		    								when sourceSlot.type.type = sc or ( sourceSlot.type.type.isKindOf(Set) andthen sourceSlot.type.type.elementType = sc ) 
+											do
+    											@Find(targetSlot, targetInstance.class.slots())
+    											when targetSlot.type.type = tc or ( targetSlot.type.type.isKindOf(Set) andthen targetSlot.type.type.elementType = tc )
+	    										do 										
+													class1 := targetInstance;
+													slot1 := targetSlot;
+													class2 := sourceInstance;
+													slot2 := sourceSlot
+												else
+    												xmf.warning("not successful: target instance does not have an association to the source instance")
+												end
+											else
+												 xmf.warning("not successful: source instance does not have an association to the target instance")
+											end
+										end;
+										if slot1 <> null and slot2 <> null 
+										then 
+
+
+    
+       								//@Find(sourceSlot, sourceInstance.class.slots())
+		    						//when sourceSlot.type.type = tc or ( sourceSlot.type.type.isKindOf(Set) andthen sourceSlot.type.type.elementType = tc ) do
+    								//	@Find(targetSlot, targetInstance.class.slots())
+    								//	when targetSlot.type.type = sc or ( targetSlot.type.type.isKindOf(Set) andthen targetSlot.type.type.elementType = sc )
+	    							//	do  
+											let css = Seq{sc};
+												iss = Seq{}
+											in	
+												if slot2.type.isIntrinsic//targetSlot.type.isIntrinsic
+												then
+													@While not css.isEmpty() andthen css.head().level > slot2.type.instLevel do //targetSlot.type.instLevel do
+														iss := css->iterate(e col = Seq{} | col + e.allDirectInstances().asSeq());
+														css := iss;
+														iss := Seq{}
+													end
+												else 
+													iss := css.head().allDirectInstances().asSeq();
+													css := iss
+												end;
+												//if css.contains(sourceInstance.class)
+												if css.contains(class1.class)
+												then
+													let cst = Seq{tc};
+														ist = Seq{}
+													in	
+														if slot1.type.isIntrinsic//sourceSlot.type.isIntrinsic
+														then
+															@While not cst.isEmpty() andthen cst.head().level > slot1.type.instLevel do//sourceSlot.type.instLevel do
+																ist := cst->iterate(e col = Seq{} | col + e.allDirectInstances().asSeq());
+																cst := ist;
+																ist := Seq{}
+															end
+														else 
+															ist := cst.head().allDirectInstances().asSeq();
+															cst := ist
+														end;
+														//if cst.contains(targetInstance.class)
+														if cst.contains(class2.class)
+														then
+      														let slotvalue1 = class1.class.get(slot1.name);
+														        slotvalue2 = class2.class.get(slot2.name)
+															in
+																@WithoutDaemons(class1.class)
+																	if slot1.type.type.isKindOf(Set)//sourceSlot.type.type.isKindOf(Set)
+																	then
+																		class1.class.set(slot1.name,slot1.value.including(class2.class))
+																	else
+																		class1.class.set(slot1.name,class2.class)
+																	end
+																end;
+																@WithoutDaemons(class2.class)
+																	if slot2.type.type.isKindOf(Set)//targetSlot.type.type.isKindOf(Set)
+																	then
+   																		//targetInstance.class.set(targetSlot.name,targetSlot.value.including(sourceInstance.class))
+   																		class2.class.set(slot2.name,slot2.value.including(class1.class))
+																	else
+ 																		//targetInstance.class.set(targetSlot.name,sourceInstance.class)
+    																	class2.class.set(slot2.name,class1.class)
+																	end 
+																end;
+																let constrains1 = class1.class.of().constraints->iterate(a t=Seq{} | 
+      																				if a.name.hasPrefix(slot1.name) and a.name.toString().size() > slot1.name.toString().size() 
+					      															then t := t.including(a) 
+      																				else t end ) then
+      																result1 = constrains1->iterate(a t = true | t := t and a.body().invoke(class1.class,Seq{null})) then
+      																constrains2 = class2.class.of().constraints->iterate(a t=Seq{} | 
+      																				if a.name.hasPrefix(slot2.name) and a.name.toString().size() > slot2.name.toString().size() 
+					      															then t := t.including(a) 
+      																				else t end ) then
+      																result2 = constrains2->iterate(a t = true | t := t and a.body().invoke(class2.class,Seq{null}))
+																in	
+																	@WithoutDaemons(class1.class)
+																		class1.class.set(slot1.name,slotvalue1)
+																	end;
+																	@WithoutDaemons(class2.class)
+																		class2.class.set(slot2.name,slotvalue2)														
+																	end;
+																	if result1 and result2 
+																		then 
+																		if slot1.type.type.isKindOf(Set)//sourceSlot.type.type.isKindOf(Set)
+																		then
+																			class1.class.set(slot1.name,slot1.value.including(class2.class))
+																		else
+																			class1.class.set(slot1.name,class2.class)
+																		end;
+																		if slot2.type.type.isKindOf(Set)//targetSlot.type.type.isKindOf(Set)
+																		then
+   																			class2.class.set(slot2.name,slot2.value.including(class1.class))
+																		else
+    																		class2.class.set(slot2.name,class1.class)
+																		end; 		
+//																		self.owner.associationInstanceAdded(class1.class,class2.class,slot1.name,slot2.name,sourceInstancePort,targetInstancePort,asso);
+																		self.newAssociationInstanceEdgeCommand(sourceInstancePort,targetInstancePort,asso.association.pathSeq(),xStart,yStart,xEnd,yEnd);
+    																	xmf.message("Association has been created successfully")
+    																else
+    																	xmf.warning("not successful: constraints are not satisfied!")
+																	end
+																end
+															end
+    													else
+    														xmf.warning("not successful: target instance does not match target class")
+    													end
+    												end
+    											else
+    												xmf.warning("not successful: source instance does not match source class")
+    											end
+    										end
+										end		
+    								end    
+	    								//else
+    									//	xmf.warning("not successful: target instance does not have an association to the source instance")
+    									//end
+									//else
+									//    xmf.warning("not successful: source instance does not have an association to the target instance")
+    								//end
+	   							else
+								   	xmf.warning("not successful: target instance could not be found")
+								end
+							else
+								xmf.warning("not successful: source instance could not be found")
+    						end
+	      				end
+	
+	end
+	end
+	end
+	end
+
+    
+    @Operation defaultAttributeEdge(sourcePort,targetPort,x1,y1,x2,y2)
+      self.newAttributeEdge(sourcePort,targetPort,XCore::Attribute.pathSeq(),x1,y1,x2,y2)
+    end
+    
+    @Operation defaultClassNode(x,y)
+      self.newClassNode(x,y,XCore::Class.pathSeq()) 
+    end
+     
+    @Operation defaultDependencyEdgeCommand(sourcePort,targetPort,x1,y1,x2,y2)
+       self.newDependencyEdgeCommand(sourcePort,targetPort,XCore::Dependency.pathSeq(),x1,y1,x2,y2)
+    end
+     
+//    @Operation defaultDelegationEdgeCommand(sourcePort,targetPort)
+//       self.newDelegationEdgeCommand(sourcePort,targetPort)
+//    end
+    
+    @Operation defaultPackageNode(x,y)
+       self.newPackageNode(x,y,XCore::Package.pathSeq()) 
+    end
+    
+    @Operation defaultNote(x,y)
+       self.newNote(x,y,true)
+    end
+    
+    @Operation defaultSubDiagram(x,y)
+      self.newSubDiagram(x,y)
+    end
+    
+    @Operation defaultSelfAttribute(x,y)
+      self.newSelfAttributeEdge(x,y,XCore::Attribute.pathSeq())
+    end
+    
+    @Operation defaultSelfAssociation(x,y)
+      self.newSelfAssociationEdge(x,y,Associations::Association.pathSeq())
+    end
+   
+    @Operation defineEdgeToolGroups()
+      self.defineNewHandler("XCore","Association",true,"XCore/Association.gif",ClassDiagram::defaultAssociationEdgeCommand);
+      self.defineNewHandler("XCore","Attribute",true,"XCore/Attribute.gif",ClassDiagram::defaultAttributeEdge);
+      self.defineNewHandler("XCore","Association (self)",false,"XCore/Association.gif",ClassDiagram::defaultSelfAssociation);
+      self.defineNewHandler("XCore","Attribute (self)",false,"XCore/Attribute.gif",ClassDiagram::defaultSelfAttribute);
+      self.defineNewHandler("XCore","Inheritance",true,"XCore/Generalization.gif",ClassDiagram::newInheritanceEdge);
+      self.defineNewHandler("XCore","Dependency",true,"XCore/Dependency.gif",ClassDiagram::defaultDependencyEdgeCommand);
+      self.defineNewHandler("XCore","Delegation",true,"XCore/Delegation.png",ClassDiagram::newDelegationEdge);
+      if xmf.preference("EnableMeta")
+      then self.defineNewHandler("XCore","Slot Value",true,"XCore/Contains.gif",ClassDiagram::newContainsEdgeCommand)
+      end
+    end
+    
+    @Operation defineNodeToolGroups()
+      // self.defineNewHandler("XCore","Sub Diagram",false,"XCore/Package.gif",ClassDiagram::defaultSubDiagram);
+      self.defineNewHandler("XCore","Class",false,"XCore/Class.gif",ClassDiagram::defaultClassNode);
+      self.defineNewHandler("XCore","Package",false,"XCore/Package.gif",ClassDiagram::defaultPackageNode);
+      self.defineNewHandler("XCore","Note",false,"XCore/Note.gif",ClassDiagram::defaultNote)
+    end
+    
+    @Operation defineToggles() 
+      self.defineToolGroup("Toggles");
+      super();
+      self.defineToggleHandler("Toggles","Show Attributes",          "foo1",showAttributeEdges,     "Tools/Ghost1.png","Tools/Ghost0.png",ClassDiagram::setShowAttributeEdges);
+      self.defineToggleHandler("Toggles","Show Associations",        "foo3",showAssociationEdges,   "Tools/Ghost3.png","Tools/Ghost0.png",ClassDiagram::setShowAssociationEdges);
+      self.defineToggleHandler("Toggles","Show Inheritance",         "foo5",showInheritanceEdges,   "Tools/Ghost5.png","Tools/Ghost0.png",ClassDiagram::setShowInheritanceEdges);
+      self.defineToggleHandler("Toggles","Show Multiplicity",        "foo2",showMultiplicity,       "Tools/Ghost2.png","Tools/Ghost0.png",ClassDiagram::setShowMultiplicity);
+      self.defineToggleHandler("Toggles","Show Instantiation Level", "foo4",showInstantiationLevel, "Tools/Ghost4.png","Tools/Ghost0.png",ClassDiagram::setShowInstantiationLevel)
+    end
+    
+    @Operation defineToolGroupTypes()
+      self.defineToolGroup("XCore")
+    end
+    
+    @Operation deleteInheritance(sourceNode,targetNode)
+      @Find(edge,self.edges())
+        when edge.isKindOf(InheritanceEdge) and
+             edge.sourceNode() = sourceNode and
+             edge.targetNode() = targetNode
+        do edge.delete()
+      end
+    end
+
+    @Operation hideAttributes(hidden:Boolean)
+      @WithoutRendering(self)
+        @For edge in attributeEdges do
+          if hidden
+          then edge.hide()
+          else edge.show()
+          end
+        end;
+        @For node in self.nodes() do
+          self.showAttributes := not hidden;
+          if node.isKindOf(ClassNode) 
+          then node.showAttributes(not hidden)
+          end
+        end
+      end
+    end
+    
+    @Operation hideOperations(hidden:Boolean)
+      @WithoutRendering(self)
+        self.showOperations := not hidden;
+          @For node in self.nodes() do
+            if node.isKindOf(ClassNode) 
+            then node.showOperations(not hidden)
+            end
+          end
+      end
+    end
+    
+    @Operation hideMetaslots(hidden:Boolean)
+      self.showMetaslots := not hidden;
+        @For node in self.nodes() do
+          if node.isKindOf(ClassNode) 
+          then node.showMetaslots(not hidden)
+          end
+        end
+    end
+    
+    @Operation inheritanceLayout(nodes,placed,dx,dy,mx,fail)
+      if nodes->isEmpty
+      then
+        @For place in placed do
+          let node = place->at(0);
+              x = place->at(1);
+              y = place->at(2)
+              in node.move(x,y)
+          end
+        end;
+        @For edge in inheritanceEdges do
+          let source = edge.sourceNode();
+              target = edge.targetNode() then
+              //y = (source.y - target.y).abs().div(2) + target.y
+              y = source.y.min(target.y) + dy.div(2)
+          in edge.newWayPoint(0,source.x + source.width.div(2),y);
+             edge.newWayPoint(1,target.x + target.width.div(2),y)
+          end
+        end
+      else
+        let node = self.inheritanceRoot(nodes) then
+            minx = self.inheritanceMinx(node,placed,dx,mx);
+            miny = self.inheritanceMiny(node,placed,dy)
+        in self.inheritancePlaceNode(node,minx,miny,placed,nodes.delete(node),dx,dy,mx,fail)
+        end
+      end
+    end
+    
+    @Operation inheritanceMinx(node,placed,dx,mx)
+      let siblings = placed->select(place | inheritanceEdges->exists(e1 | e1.sourceNode() = place->head and inheritanceEdges->exists(e2 | e2.sourceNode() = node and e1.targetNode() = e2.targetNode()))) then
+          maxy = siblings->collect(place | place->at(2))->iterate(y max = 0 | max.max(y)) then
+          siblingXs = siblings->select(place | place->at(2) = maxy)->collect(place | place->at(1))
+      in (siblingXs->iterate(x maxx = 0 | maxx.max(x)) + dx).min(mx)
+      end
+    end 
+     
+    @Operation inheritanceMiny(node,placed,dy)
+      let parentYs = placed->select(place | inheritanceEdges->exists(e | e.sourceNode() = node and e.targetNode() = place->head))->collect(place | place->at(2));
+          siblingYs = placed->select(place | inheritanceEdges->exists(e1 | e1.sourceNode() = place->head and inheritanceEdges->exists(e2 | e2.sourceNode() = node and e1.targetNode() = e2.targetNode())))->collect(place | place->at(2))
+      in (parentYs->iterate(y maxy = 0 | maxy.max(y)) + dy).max(siblingYs->iterate(y maxy = 0 | maxy.max(y)))
+      end
+    end
+    
+    @Operation inheritancePlaceNode(node,x,y,placed,nodes,dx,dy,mx,fail)
+      if x > mx
+      then self.inheritancePlaceNode(node,0,y+dy,placed,nodes,dx,dy,mx,fail)
+      else 
+        let newPlaced = placed + Set{Seq{node,x,y}}
+        in format(stdout,"~S (~S,~S)~%",Seq{node.name(),x,y});
+           if self.legalInheritanceLayout(newPlaced)
+           then 
+             let fail =
+               @Operation()
+                 self.inheritancePlaceNode(node,x+dx,y,placed,nodes,dx,dy,mx,fail)
+               end
+             in self.inheritanceLayout(nodes,newPlaced,dx,dy,mx,fail)
+             end
+           else self.inheritancePlaceNode(node,x+dx,y,placed,nodes,dx,dy,mx,fail)
+           end
+        end
+      end
+    end
+    
+    @Operation inheritanceRoot(nodes)
+      @Find(node,nodes)
+        when not inheritanceEdges->exists(e | e.sourceNode() = node and nodes->includes(e.targetNode()))
+      end
+    end
+    
+    @Operation legalInheritanceLayout(placed)
+    
+      // No nodes on top of each other...
+      
+      not @Find(place1,placed)
+            when 
+              @Find(place2,placed)
+                when
+                  place1->at(0) <> place2->at(0) and
+                  place1->at(1) = place2->at(1) and
+                  place1->at(2) = place2->at(2)
+                do true
+                else false
+              end
+            do true
+            else false
+          end
+      
+      and            
+      
+      //not placed->exists(place1 |
+      //  placed->exists(place2 |
+      //    place1->at(0) <> place2->at(0) and
+      //    place1->at(1) = place2->at(1) and
+      //    place1->at(2) = place2->at(2))) and
+          
+      // No downward inheritance...
+      
+      not @Find(edge,inheritanceEdges)
+            when
+              @Find(place1,placed)
+                when
+                  edge.sourceNode() = place1->head and
+                  @Find(place2,placed)
+                    when
+                      edge.targetNode() = place2->head and
+                      place1->at(2) <= place2->at(2)
+                    do true
+                    else false
+                  end
+                do true
+                else false
+              end
+            do true
+            else false
+          end
+      
+      //not inheritanceEdges->exists(e |
+      //  placed->exists(p1 | p1->head = e.sourceNode() and
+      //    placed->exists(p2 | p2->head = e.targetNode() and
+      //      p1->at(2) <= p2->at(2)))) 
+            
+    end
+    
+    @Operation makeAttribute(sourceNode,targetNode,typePath)
+      self.makeAttributeEdge(sourceNode.ports->sel,targetNode.ports->sel,typePath)
+    end
+
+    @Operation makeInheritance(sourceNode,targetNode)
+      self.makeInheritanceEdge(sourceNode.ports->sel,targetNode.ports->sel)
+    end
+
+    @Operation makeAssociation(name,end1,end2,sourceNode,targetNode,typePath)
+      self.makeAssociationEdge(name,end1,end2,sourceNode.ports->sel,targetNode.ports->sel,typePath)
+    end
+
+    @Operation newAssociationEdgeCommand(sourcePort,targetPort,typePath,xStart,yStart,xEnd,yEnd)
+      let
+      	assoName = xmf.getString("Association Name", "Please enter the association name", owner.package.newName("A"))
+      in
+		if assoName <> null
+      	then
+    	 	if self.owner.package.hasElement(assoName)
+        	then xmf.warning("Cannot use name \"" + assoName + "\" as an element "
+         						+ "already exists in " + self.owner.package.toString() + " with the same name.")
+      		else
+    	  		let  // Calculate positions of end labels and create ends    
+	          		southbound = targetPort.owner.y > sourcePort.owner.y;
+		        	  eastbound  = targetPort.owner.x > sourcePort.owner.x 
+    			    then
+	          		starty = if southbound then 25 else -45 end;
+		        	startx = if eastbound then 0 else 0 end;
+     
+    	      		endy = if southbound then -45 else 25 end;
+	          		endx = if eastbound then 0 else 0 end;
+          	
+        	  		yDiff = if southbound then 25 else -25 end
+    	    		then
+	          		instLevel1 = InstLevelLabel(" ", "start", 10, (2*yDiff)+(1*starty), Color(0,0,0), true);
+		        	instLevel2 = InstLevelLabel(" ", "end",   10, (-2*yDiff)+(1*endy), Color(0,0,0), true);
+    			    varName1 = Label("e1","start",startx,starty,true);
+	          		varName2 = Label("e2","end",endx,endy,true);
+        	  		displayName1 = Label(assoName,"center",0,-16,true, Color(0,0,0),0+1);
+    	      		displayName2 = Label(assoName,"center",0, 16,true, Color(0,0,0),0-1) 
+	        		then
+        	  		end1 = AssociationEnd(varName1,displayName1,
+    	          		Multiplicity("start",10, (yDiff)+(1*starty)), instLevel1);
+	          		end2 = AssociationEnd(varName2,displayName2,
+            	  		Multiplicity("end",  10, (-yDiff)+(1*endy)), instLevel2) 
+        			then
+    	      		edge = AssociationEdge(assoName,end1,end2,sourcePort,targetPort,typePath,xStart,yStart,xEnd,yEnd)
+	      		in edge.new(self,false);
+	    			self.addEdge(edge);
+					edge.end2.displayName.hide();
+					edge.end1.name.hide();
+					edge.end2.name.hide();
+					edge
+	      		end
+	      	end
+		end
+      end
+    end
+    
+    @Operation newAssociationInstanceEdgeCommand(sourcePort,targetPort,typePath,x1,y1,x2,y2)
+    	let metaclass = typePath->ref([Root,self.owner.package]) then
+    		name_label = Label("instance of " + metaclass.name,"center",0,-16,true, Color(120,120,120),0+1) then
+			edge = AssociationInstanceEdge(name_label, sourcePort,targetPort,typePath,x1,y1,x2,y2)
+        in 
+           edge.new(self,false);
+           self.addEdge(edge);
+           edge
+        end
+    end
+    
+    @Operation newAttributeEdge(sourcePort,targetPort,typePath,x1,y1,x2,y2):AttributeEdge
+      let sourceNode = sourcePort.owner;
+          targetNode = targetPort.owner
+      in if sourceNode.isKindOf(ClassifierNode) and targetNode.isKindOf(ClassifierNode)
+         then let edge = AttributeEdge("att",sourcePort,targetPort,typePath,x1,y1,x2,y2)
+              in edge.new(self,false);
+                 self.addEdge(edge);
+                 edge
+              end
+         else null
+         end
+      end
+    end
+    
+    @Operation newContainsEdgeCommand(sourcePort,targetPort,x1,y1,x2,y2)
+      let edge = ContainsEdge(sourcePort,targetPort,x1,y1,x2,y2)
+      in 
+        edge.new(self,false);
+        self.addEdge(edge)
+      end
+    end
+    
+    @Operation newDependencyEdgeCommand(sourcePort,targetPort,typePath,x1,y1,x2,y2)
+      let edge = DependencyEdge(sourcePort,targetPort,typePath,x1,y1,x2,y2)
+      in 
+        edge.new(self,false);
+        self.addEdge(edge)
+      end
+    end
+    
+    @Operation newDelegationEdge(sourcePort,targetPort,x1,y1,x2,y2)
+      let sourceNode = sourcePort.owner;
+          targetNode = targetPort.owner
+      in if sourceNode.isKindOf(ClassifierNode) and targetNode.isKindOf(ClassifierNode)
+               and sourceNode.of() = targetNode.of()
+               and sourceNode <> targetNode
+         then 
+           let edge = DelegationEdge(sourcePort,targetPort,x1,y1,x2,y2)
+           in edge.new(self,false);
+              self.addEdge(edge);
+              edge
+           end
+         end
+      end
+    end
+    
+    @Operation newIntrinsicAssociationConstraintEdgeCommand(sourcePort,targetPort,typePath,x1,y1,x2,y2)
+    	let metaclass = typePath->ref([Root,self.owner.package]) then
+    		name_label = Label(metaclass.name,"center",0,-16,true, Color(120,120,120),0-1) then
+			edge = IntrinsicAssociationConstraintEdge(name_label, sourcePort,targetPort,typePath,x1,y1,x2,y2)
+        in 
+           edge.new(self,false);
+           self.addEdge(edge);
+           edge
+        end
+    end
+    
+    @Operation newSelfAttributeEdge(x,y,path:Seq(String))
+      @Find(node,classNodes) when node.contains(x,y) do
+        let port = node.ports->head
+        in self.newAttributeEdge(port,port,path,x,y,x,y)
+        end
+      end
+    end
+    
+    @Operation newSelfAssociationEdge(x,y,path:Seq(String))
+      @Find(node,classNodes) when node.contains(x,y) do
+        let port = node.ports->head
+        in self.newAssociationEdgeCommand(port,port,path,x,y,x,y)
+        end
+      end
+    end
+    
+    @Operation makeAttributeEdge(sourcePort,targetPort,typePath)
+      let sourceNode = sourcePort.owner;
+          targetNode = targetPort.owner
+      in if sourceNode.isKindOf(ClassifierNode) and targetNode.isKindOf(ClassifierNode)
+         then 
+           let edge = AttributeEdge("att",sourcePort,targetPort,typePath,
+             sourceNode.x+(sourceNode.width()/2).floor(),
+             sourceNode.y+(sourceNode.height()/2).floor(),
+             targetNode.x+(targetNode.width()/2).floor(),
+             targetNode.y+(targetNode.height()/2).floor())
+           in edge.new(self);
+              edge
+           end
+         end
+      end
+    end
+
+    @Operation makeInheritanceEdge(sourcePort,targetPort)
+      let sourceNode = sourcePort.owner;
+          targetNode = targetPort.owner
+      in if sourceNode.isKindOf(ClassifierNode) and targetNode.isKindOf(ClassifierNode)
+               and sourceNode.of() = targetNode.of()
+               and sourceNode <> targetNode
+         then 
+           let edge = InheritanceEdge(sourcePort,targetPort,
+             sourceNode.x+(sourceNode.width()/2).floor(),
+             sourceNode.y+(sourceNode.height()/2).floor(),
+             targetNode.x+(targetNode.width()/2).floor(),
+             targetNode.y+(targetNode.height()/2).floor())
+           in  edge.new(self);
+              edge
+           end
+         end
+      end
+    end
+
+    @Operation makeAssociationEdge(name,end1,end2,sourcePort,targetPort,typePath)
+      let sourceNode = sourcePort.owner;
+          targetNode = targetPort.owner
+      in if sourceNode.isKindOf(ClassifierNode) and targetNode.isKindOf(ClassifierNode)
+         then 
+           let edge = AssociationEdge(name,end1,end2,sourcePort,targetPort,typePath,
+             sourceNode.x+(sourceNode.width()/2).floor(),
+             sourceNode.y+(sourceNode.height()/2).floor(),
+             targetNode.x+(targetNode.width()/2).floor(),
+             targetNode.y+(targetNode.height()/2).floor())
+           in
+           	edge.new(self);
+              edge
+           end
+         end
+      end
+    end
+
+    @Operation newClassNode(x,y,typePath:Seq(String))
+      let class = typePath.lookup();
+          extensionPoint = xmf.registry().getExtensionPoint("com.ceteva.diagrams.class.node") then
+          handler = extensionPoint.find(class).values->head
+      in handler(x,y,typePath,self)
+      end
+    end
+    
+    @Operation newInheritance(sourceNode,targetNode,x1,y1,x2,y2)
+      let sourcePort = sourceNode.ports()->sel;
+          targetPort = targetNode.ports()->sel
+      in self.newInheritanceEdge(sourcePort,targetPort,x1,y1,x2,y2)
+      end
+    end
+    
+    @Operation newInheritanceEdge(sourcePort,targetPort,x1,y1,x2,y2)
+      let sourceNode = sourcePort.owner;
+          targetNode = targetPort.owner
+      in if sourceNode.isKindOf(ClassifierNode) and targetNode.isKindOf(ClassifierNode)
+               and sourceNode.of() = targetNode.of()
+               and sourceNode <> targetNode
+         then 
+           let edge = InheritanceEdge(sourcePort,targetPort,x1,y1,x2,y2)
+           in edge.new(self,false);
+              self.addEdge(edge);
+              edge
+           end
+         end
+      end
+    end
+    
+    @Operation newNote(x,y,editable)
+      @WithoutRendering(self)
+        let note = NoteNode(x,y,editable)
+        in note.new(self,true);
+           self.addNode(note)
+        end
+      end
+    end
+
+    @Operation newPackageNode(x,y,typePath)
+      @WithoutRendering(self)
+        let node = PackageNode("A Package",typePath,x,y)
+        in node.new(self,false);
+           self.addNode(node)
+        end
+      end
+    end
+    
+    @Operation newSubDiagram(x,y)
+      @WithoutRendering(self)
+        let node = DiagramNode("A diagram",x,y)
+        in node.new(self,false);
+           self.addNode(node)
+        end
+      end
+    end
+    
+    @Operation removeAssociationEdge(associationEdge)
+      self.associationEdges := associationEdges.excluding(associationEdge)
+    end
+
+    @Operation removeAssociationInstanceEdge(associationInstanceEdge)
+      self.associationInstanceEdges := associationInstanceEdges.excluding(associationInstanceEdge)
+    end
+            
+    @Operation removeAttributeEdge(attributeEdge)
+      self.attributeEdges := attributeEdges.excluding(attributeEdge)
+    end
+    
+    @Operation removeClassNode(classNode)
+      self.classNodes := classNodes.excluding(classNode)
+    end
+    
+    @Operation removeElementNode(elementNode)
+      self.elementNodes := elementNodes.excluding(elementNode)
+    end
+    
+    @Operation removeContainsEdge(containsEdge)
+      self.containsEdges := containsEdges.excluding(containsEdge)
+    end
+    
+    @Operation removeInheritanceEdge(inheritanceEdge)
+      self.inheritanceEdges := inheritanceEdges.excluding(inheritanceEdge)
+    end
+    
+    @Operation removeDependencyEdge(dependencyEdge)
+      self.dependencyEdges := dependencyEdges.excluding(dependencyEdge)
+    end
+    
+    @Operation removeDelegationEdge(delegationEdge)
+      self.delegationEdges := delegationEdges.excluding(delegationEdge)
+    end
+    
+    @Operation removeObjectNode(objectNode)
+      self.objectNodes := self.objectNodes->excluding(objectNode)
+    end
+    
+    @Operation removePackageNode(packageNode)
+      self.packageNodes := packageNodes.excluding(packageNode)
+    end 
+    
+    @Operation removeNode(node)
+      super(node);
+      @TypeCase(node)
+        ClassNode   do self.removeClassNode(node)   end
+        PackageNode do self.removePackageNode(node) end
+        ElementNode do self.removeElementNode(node) end
+        ObjectNode  do self.removeObjectNode(node)  end
+        else self
+      end
+    end
+    
+    @Operation removeEdge(edge)
+      super(edge);
+      @TypeCase(edge)
+        InheritanceEdge do self.removeInheritanceEdge(edge)   end
+        AssociationEdge do self.removeAssociationEdge(edge)   end
+        AssociationInstanceEdge do self.removeAssociationInstanceEdge(edge)   end
+        AttributeEdge   do self.removeAttributeEdge(edge)     end
+        ContainsEdge    do self.removeContainsEdge(edge)      end
+        DependencyEdge  do self.removeDependencyEdge(edge)    end
+        DelegationEdge  do self.removeDelegationEdge(edge)    end
+        else self
+      end
+    end
+    
+    @Operation setDiagramFont()
+      let font = xmf.chooseFont()
+      in @For node in graph.nodes() do
+           node.setFont(font)
+         end
+      end
+    end
+    
+    @Operation fix()
+      @For node in classNodes do
+        if node.metaslotsBox.isKindOf(Null) then
+          let mb = MetaslotBox(0,node.attBox.y + node.attBox.height + node.opsBox.height,100) in
+            node.metaslotsBox := mb;
+            node.nodeBox.add(mb);
+            mb.owner := node.nodeBox
+          end
+        end
+      end
+    end
+    
+
+    
+    @Operation setShowAttributeEdges(state:Boolean)
+      if showAttributeEdges <> state
+      then
+        self.showAttributeEdges := state;
+        @Command(self) setShowAttributeEdges(self,state) end
+      end
+    end   
+     
+    @Operation setShowAssociationEdges(state:Boolean)
+      if showAssociationEdges <> state
+      then
+        self.showAssociationEdges := state;
+        @Command(self) setShowAssociationEdges(self,state) end
+      end
+    end   
+     
+    @Operation setShowInheritanceEdges(state:Boolean)
+      if showInheritanceEdges <> state
+      then
+        self.showInheritanceEdges := state;
+        @Command(self) setShowInheritanceEdges(self,state) end
+      end
+    end  
+      
+    @Operation setShowMultiplicity(state:Boolean)
+      if showMultiplicity <> state
+      then
+        self.showMultiplicity := state;
+        @Command(self) setShowMultiplicity(self,state) end
+      end
+    end    
+      
+    @Operation setShowInstantiationLevel(state:Boolean)
+      if showInstantiationLevel <> state
+      then
+        self.showInstantiationLevel := state;
+        @Command(self) setShowInstantiationLevel(self,state) end
+      end
+    end
+
+  end

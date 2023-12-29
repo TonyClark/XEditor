@@ -1,0 +1,117 @@
+parserImport XOCL;
+parserImport XMap;
+
+import Clients;
+import Diagrams;
+import DiagramsMapping;
+import ClassDiagrams;
+import ClassMapping;
+import Menus;
+import IO;
+import SnapshotDiagrams;
+
+context ClassXNode
+ @Operation setColor(level:Integer)
+    if self.class.isKindOf(FMML::MetaClass)
+    then
+    if level >= 5
+    then node.name.name.setColor(white); 
+    node.name.setFillColor(Color::makeHSV(0.44-((level*2.0)/(1.0+(5.0.sqrt()))), (4.0/level), 1.0-(2.5/level)))
+    elseif level = 4
+    then node.name.name.setColor(white); node.name.setFillColor(red); if node.name.stereotypeText <> null  then node.name.stereotypeText.setColor(grey) end
+    elseif level = 3
+    then node.name.name.setColor(white); node.name.setFillColor(blue); if node.name.stereotypeText <> null  then node.name.stereotypeText.setColor(grey) end
+    elseif level = 2
+    then node.name.name.setColor(white); node.name.setFillColor(black); if node.name.stereotypeText <> null  then node.name.stereotypeText.setColor(grey) end
+    elseif level = 1
+    then node.name.name.setColor(black); node.name.setFillColor(white); if node.name.stereotypeText <> null  then node.name.stereotypeText.setColor(grey) end
+    elseif level = 0
+    then node.name.name.setColor(black); node.name.setFillColor(grey); if node.name.stereotypeText <> null  then node.name.stereotypeText.setColor(white) end
+    else 
+         node.name.name.setColor(black); node.name.setFillColor(white); if node.name.stereotypeText <> null  then node.name.stereotypeText.setColor(grey) end
+    end
+    end
+  end 
+  
+
+context ClassXNode
+  @Operation levelChanged(obj,slot,new,old)
+      self.setColor(class.level)
+  end
+
+context ClassXNode
+  @Operation init(args)
+    super(args);
+    node.showMetaslots := true;
+    self.setColor(class.level);
+    @SlotValueChanged multi once ClassXNode::levelChanged(class,"level") end;
+    self
+  end
+  
+context ClassXNode	
+  // overwrite existing operation to avoid creation of slots on too high meta levels, and to exclude MetaAdaptor's attributes from slot creation 
+    
+  @Operation generateMetaslots()
+    @For metaAttribute in class.of().allAttributes() do
+      if (metaAttribute.underlyingType().isKindOf(DataType) 
+          or metaAttribute.underlyingType().isKindOf(AuxiliaryClasses::Unit) 
+          or metaAttribute.underlyingType().isKindOf(AuxiliaryClasses::ComposedType) ) 
+      and (not Root::Extensions::MetaAdaptor.allAttributes().contains(metaAttribute)) 
+      and not (metaAttribute.hasProperty("visibility") andthen metaAttribute.getProperty("visibility") = null)
+      and ( (not metaAttribute.isIntrinsic) 
+          or (metaAttribute.instLevel.asInt() >= class.level.asInt())) then
+        @WithoutRendering(node.owner)
+          self.metaslotAdded(metaAttribute)
+        end
+      end
+    end
+  end   
+  
+context ClassXNode
+  @Operation nameChanged_classDiagramDaemon(obj,slot,newName,oldName) // model -> diagram
+    if node.name() <> newName.toString()
+    then 
+      node.setName(newName.toString());
+      self.daemon_changeButtonInToolbar();
+      self.daemon_changeOfFieldInstances(newName)
+    end
+  end   
+  
+context ClassXNode
+  /* If the name of a class changes, 
+       1) the button in the toolbar must be updated, 
+       2) the existing objects' of-label must be changed */
+  @Operation nameChangedDaemon(text,slot,newName,oldName) // diagram -> model
+    if class.name.toString() <> newName
+    then 
+      class.setName(newName);
+      self.daemon_changeButtonInToolbar(newName,oldName);
+      self.daemon_changeOfFieldInstances(newName)
+    end
+  end  
+  
+context ClassXNode
+  @Operation daemon_changeButtonInToolbar(newName,oldName)
+    if class.isMetaClass() 
+      andthen class.level > 0 
+        then 
+        owner.diagram.renameAnyHandler(newName,oldName,true)
+    end
+  end  
+  
+context ClassXNode
+  @Operation daemon_changeOfFieldInstances(newName)
+    let diagramMapping = self.owner in 
+      @For classMap in diagramMapping.classMaps do
+        if classMap.class.of() = self.class
+        then
+          classMap.node.name.setStereotypeText(newName)
+        end
+      end
+    end
+  end
+  
+  
+  
+  
+  

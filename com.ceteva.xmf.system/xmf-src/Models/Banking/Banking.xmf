@@ -1,0 +1,21 @@
+parserImport XOCL;
+
+context Models
+
+  @Package Banking
+
+    @Operation test()
+      populateBank(Bank())
+    end
+
+    @Operation populateBank(b:Bank)
+      b.openAccount("Fred",100);
+      b.openAccount("Fred",200);
+      b.openAccount("Bert",100);
+      b.openAccount("Bert",300);
+      b.closeAccounts("Fred");
+      b
+    end
+    
+
+  end

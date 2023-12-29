@@ -1,0 +1,23 @@
+parserImport XOCL;
+
+import Generics;
+
+context Generics
+  
+    @Class NamedRelation(n1:String,T1:Class,n2:String,T2:Class)
+
+      @Attribute <n1> :[T1] end 
+      @Attribute <n2> :[T2] end 
+
+      @Operation setGenericName[generic=true](args) 
+        // Ignore the supplied name and create one here....
+        self.setName("Relation(" + args->at(0) + ":" + args->at(1).name + "," + 
+                                   args->at(2) + ":" + args->at(3).name + ")")
+      end
+
+      @Operation init(args)
+        self.<n1> := args->at(0);
+        self.<n2> := args->at(1)
+      end
+
+    end 

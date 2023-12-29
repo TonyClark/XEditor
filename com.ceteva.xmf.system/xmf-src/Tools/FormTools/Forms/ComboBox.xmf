@@ -1,0 +1,69 @@
+parserImport XOCL;
+parserImport XMap;
+
+import Tools;
+import FormTools;
+import Forms;
+
+context Forms
+
+  @Class ComboBox extends Clients::Forms::FormComboBox, FormElement
+  
+    @Attribute selectedHandler : Operation (?,!) end
+  
+    @Constructor() 
+      "Constructor:0".println();
+      self.addDaemon()
+    end
+    
+    @Constructor(contents) 
+      ("Constructor:1" + contents).println();
+      self.addDaemon()
+    end
+    
+    @Constructor(a,b) 
+      "Constructor:2".println();
+      self.addDaemon()
+    end
+    
+    @Constructor(a,b,c) 
+      "Constructor:3".println();
+      self.addDaemon()
+    end
+    
+    @Constructor(x,y,width,height) 
+      "Constructor:4".println();
+      self.addDaemon()
+    end
+    
+    @Constructor(id,x,y,width,height) 
+      "Constructor:5".println();
+      self.addDaemon()
+    end
+  
+    @Operation actualHeight():Integer
+      if not(self.hasCommandInterpreter()) or contents->isEmpty
+      then 50
+      else self.getTextDimension(contents->at(0))->at(1) + 5
+      end
+    end
+    
+    @Operation actualWidth():Integer
+      if not(self.hasCommandInterpreter()) or contents->isEmpty
+      then 100
+      else 
+        let SELECTOR = 20
+        in contents->collect(c | self.getTextDimension(c)->at(0)).max() + SELECTOR
+        end
+      end
+    end
+    
+    @Operation addDaemon()
+      @SlotValueChanged multi ComboBox::selectedEvent(self,"selected") end
+    end
+    
+    @Operation selectedEvent(box,slot,new,old)
+      selectedHandler(self,new,old)
+    end
+    
+  end

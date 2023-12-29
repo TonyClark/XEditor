@@ -1,0 +1,250 @@
+parserImport XOCL;
+parserImport Parser::BNF;
+
+import Walkers;
+import Filmstrips;
+import OCL;
+
+context Filmstrips
+
+  @Class Filmstrip
+
+    @Attribute name        :   String                       end  // Registered as a diagram provider.
+    @Attribute rootClasses :   [Class]                      end  // Instances (and reachable) are always shown on diagram.
+    @Attribute rootObjects :   [Object]                     end  // Always shown on diagram (and reachable).
+    @Attribute objects     :   [Object]                     end  // The monitored objects (may expand due to instantiation).
+    @Attribute classes     :   [Class]                      end  // The monitored classes (instantiation extends the objects).
+    @Attribute operations  :   [Operation]                  end  // The monitored operations. Calling creates filstrip steps.
+    @Attribute start       :   Operation                    end  // A 0-arity operation that starts the execution.
+    @Attribute step        :   FilmstripStep           (<)  end  // The root filstrip step.
+    @Attribute stack       :   [FilmstripStep]              end  // Used to nest steps. Head is always the current step.
+    @Attribute colours     :   ColourMap = ColourMap()      end  // Maps classes to colours.
+    @Attribute rules       :   XRules::Rules           (<)  end  // The rules used in the constraints.
+    @Attribute constraints :   [Element]                    end  // Filmstrip constraints.
+
+    @Grammar extends OCL::OCL.grammar
+      Filmstrip ::= name = Name
+      
+        bs = Bindings 'in' 
+        
+        'roots' '[' rootClasses = <<Exp>> ',' rootObjects = <<Exp>> ']' ';'
+
+        'monitor' '[' classes = <<Exp>> ',' operations = <<Exp>> ']' ';'
+
+        'start' start = <<Exp>>
+
+        rules = ('rules' <<Exp>> | { [| XRules::Rules() |] })
+
+        constraints =  ('check' <<Exp>> * | { [] })
+      
+      'end' { Let(bs, [| Filmstrip(<name.lift()>,<rootClasses> ->asSeq,<rootObjects> ->asSeq,<classes> ->asSeq,<operations> ->asSeq,@Operation() <start> end,<rules>,<Filmstrip::listExp(constraints)>) |]) }.
+    end
+    
+    @Constructor(name,rootClasses,rootObjects,classes,operations,start,rules,constraints) 
+      self.objects := rootObjects;
+      registeredFilmstrips.put(name,self)
+    end
+
+    @Operation addNewListener(listener:Operation)
+      @For class in classes do
+        listener.addNewListenerFor(class)
+      end
+    end
+
+    @Operation asJavaFilmstrip():[Element]
+      // Returns the filmstrip as a Java object
+      let Filmstrip = xmf.javaClass("diagrams.filmstrips.Filmstrip")
+      in colours.reset();
+         Filmstrip(step.asJavaStep(colours),self.check())
+      end
+    end
+
+    @Operation check()
+      constraints->collect(c | [c.getName(),c.check(self)])
+    end
+
+    @Operation currentStep():FilmstripStep
+      stack->head
+    end
+
+    @Operation instrumentOperations() 
+      @For operation in operations do
+        let untracedOperation = operation.copy()
+        in Kernel_funSetTraced(operation,self.createStep(self,untracedOperation))
+        end
+      end
+    end
+
+    @Operation isRoot(s:FilmstripStep):Boolean
+      step = s
+    end
+
+    @Operation createStep(filmstrip,untracedOperation)
+      @Operation(target,args,supers) 
+        let pre = Snapshot();
+            post = Snapshot();
+            doc = filmstrip.getDoc(untracedOperation) then
+            newStep = FilmstripStep(pre,Copy().walk(target,null),untracedOperation.name(),doc,args,null,post)
+        in pre.populate(filmstrip.garbageCollect(filmstrip.objects));
+           filmstrip.currentStep().addStep(newStep);
+           filmstrip.pushStep(newStep);
+           let value = untracedOperation.invoke(target,args,supers)
+           in post.populate(filmstrip.garbageCollect(filmstrip.objects));
+              newStep.value := Copy().walk(value,null);
+              filmstrip.popStep();
+              value
+           end
+        end
+      end
+    end
+
+    @Operation garbageCollect(objects:[Object]):[Object]
+      // Retain only those objects that are:
+      // (1) A member of rootObjects
+      // (2) An instance of a rootClass
+      // (3) Reachable from (1) or (2)
+      @Letrec 
+          isRoot(o) =  
+            rootObjects->includes(o) or 
+            rootClasses->exists(c | o.isKindOf(c));
+          isReachable(target,source,visited) =
+            if target=source
+            then true
+            else
+              if visited->includes(source)
+              then false
+              else 
+                source.slots()->exists(slot |
+                  if slot.value <> null
+                  then 
+                    let values = if slot.value.isKindOf(Seq(Element)) or slot.value.isKindOf(Set(Element)) then slot.value else [slot.value] end
+                    in values->exists(value |  
+                         objects->contains(value) andthen isReachable(target,value,[source] + visited)
+                       )
+                    end
+                  else false
+                  end
+                )
+              end
+            end  
+      in objects->select(o | isRoot(o) or objects->exists(r | isRoot(r) and isReachable(o,r,[])))
+      end
+    end
+
+    @Operation getAncestors(s:FilmstripStep):[FilmstripStep]
+      step.getAncestors(s)
+    end
+
+    @Operation getChildren(s:FilmstripStep):[FilmstripStep]
+      step.getChildren(s)
+    end
+
+    @Operation getDescendents(s:FilmstripStep):[FilmstripStep]
+      step.getDescendents(s)
+    end
+
+    @Operation getDoc(o:CompiledOperation):String
+      if o.doc() <> null
+      then o.doc().doc
+      else ""
+      end
+    end
+
+    @Operation getLeftNeighbour(s:FilmstripStep):FilmstripStep
+      step.getLeftNeighbour(s)
+    end
+
+    @Operation getLeftSiblings(s:FilmstripStep):[FilmstripStep]
+      step.getLeftSiblings(s)
+    end
+
+    @Operation getParent(s:FilmstripStep):FilmstripStep
+      step.getParent(s)
+    end
+
+    @Operation getRightNeighbour(s:FilmstripStep):FilmstripStep
+      step.getRightNeighbour(s)
+    end
+
+    @Operation getRightSiblings(s:FilmstripStep):[FilmstripStep]
+      step.getRightSiblings(s)
+    end
+
+    @Operation getSnapshot(index:Integer):Snapshot
+      // Remember that steps overlap...
+      step.getHistory().at(index)
+    end
+
+    @Operation listExp(exps:[Performable]):Performable
+      exps->iterate(e l = [| [] |] | [| <l> + [ <e> ] |] )
+    end
+        
+    @Operation pushStep(step:FilmstripStep) 
+      self.stack := [step] + stack
+    end
+
+    @Operation popStep() 
+      self.stack := stack->tail
+    end
+      
+    @Operation removeNewListener(listener:Operation)
+      @For class in classes do
+        listener.removeNewListenerFor(class)
+      end
+    end
+
+    @Operation resetOperations()
+      @For operation in operations do
+        operation.untrace()
+      end
+    end
+
+    @Operation run() 
+
+      // Filmstrips are initially created empty. They must be run to populate
+      // the filmstrip with steps...
+       
+      let newListener(o) = self.objects := objects + [o] // Keep the original indices for the object identifiers.
+      in try
+           self.addNewListener(newListener);
+           let pre = Snapshot();
+               post = Snapshot()
+           in pre.populate(objects);
+              self.step := FilmstripStep(pre,name,"run",null,[],null,post);
+              self.pushStep(step);
+              self.instrumentOperations();
+              let value = start()
+              in post.populate(self.garbageCollect(objects));
+                 step.value := Copy().walk(value,null)
+              end
+           end;
+           self.removeNewListener(newListener);
+           self.resetOperations();
+           self
+         catch(x)
+           self.removeNewListener(newListener);
+           self.resetOperations();
+           throw x
+         end
+      end
+    end
+
+    @Operation select(steps:[FilmstripStep],success:(FilmstripStep,()->Boolean)->Boolean,fail:()->Boolean):Boolean
+      if steps = []
+      then fail()
+      else success(steps->head,@Operation() self.select(steps->tail,success,fail) end)
+      end
+    end
+
+    @Operation selectAll(steps:[FilmstripStep],
+                        next:(FilmstripStep,(()->Boolean)->Boolean,()->Boolean)->Boolean,
+                        finally:(()->Boolean)->Boolean,
+                        fail:()->Boolean):Boolean
+      if steps = []
+      then finally(fail)
+      else next(steps->head,@Operation selectAllInternal(fail) self.selectAll(steps->tail,next,finally,fail) end,fail)
+      end
+    end
+      
+  end
+

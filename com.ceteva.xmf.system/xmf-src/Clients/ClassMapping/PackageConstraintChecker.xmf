@@ -1,0 +1,76 @@
+parserImport XOCL;
+
+import Clients;
+import Diagrams;
+
+context ClassMapping
+
+  @Class PackageConstraintChecker 
+  
+    // This class performs a check on the package against its constraints
+    // and then informs the diagram of any errors. The diagram can then
+    // display the errors attached to the appropriate element.
+    
+    @Attribute mapping:ClassMapping::PackageXClassDiagram end
+    
+    @Constructor(mapping) ! end
+    
+    @Operation checkConstraints() 
+      try
+        let report:ConstraintReport = mapping.package.checkConstraints()
+        in @Command(mapping.diagram) resetErrors(mapping.diagram) end;
+           self.processConstraints(report);
+           @For elementMap in mapping.elementMaps do
+             self.processConstraints(elementMap.element.checkConstraints())
+           end
+        end
+      catch(x)
+        ("PackageConstraintChecker::checkConstraints() " + x).println()
+      end
+    end
+    
+    @Operation processConstraints(report:ConstraintReport) 
+      if not(report.satisfied)
+      then 
+        if report.candidate = mapping.package
+        then @Command(mapping.diagram) error(mapping.diagram,report.reason) end
+        else 
+          let diagramElement = self.find(report.candidate)
+          in if diagramElement <> null
+             then @Command(diagramElement) error(diagramElement,report.reason) end
+             end
+          end
+        end;
+        @For child in report.children do
+          self.processConstraints(child)
+        end
+      end
+    end
+    
+    @Operation find(o:Object)
+      // See if there is a mapping for this object and return
+      // the diagram element. Otherwise return null...
+      let node = self.findNode(o)
+      in if node <> null
+         then node
+         else self.findEdge(o)
+         end
+      end
+    end
+    
+    @Operation findNode(o:Object)
+      @Find(map,mapping.classMaps) when map.class = o do 
+        map.node 
+      else 
+        @Find(map,mapping.elementMaps) when map.element = o do
+          map.node 
+        else null
+        end
+      end
+    end
+    
+    @Operation findEdge(o:Object)
+      @Find(map,mapping.attributeMaps) when map.attribute = o do map.edge else null end
+    end
+  
+  end

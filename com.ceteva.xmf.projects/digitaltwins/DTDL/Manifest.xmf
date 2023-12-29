@@ -1,0 +1,42 @@
+parserImport Manifests;
+
+
+@Manifest DTDL
+
+  @File DTDL                            end
+  @File Types                           end
+  @File Behaviour                       end
+  @File Maps                            end
+  @File Interfaces                      end
+  @File Elements                        end
+  @File Histories                       end
+  @File Schema                          end
+  @File PrimitiveSchema                 end
+  @File ComplexSchema                   end
+  @File Array                           end
+  @File EnumValue                       end
+  @File Enum                            end
+  @File MapKey                          end
+  @File MapValue                        end
+  @File Map                             end
+  @File Field                           end
+  @File Object                          end
+  @File InterfaceElement                end
+  @File Property                        end
+  @File Telemetry                       end
+  @File Interface                       end
+  @File Model                           end
+  @File Relationship                    end
+  @File Component                       end
+  @File CommandRequest                  end
+  @File CommandResponse                 end
+  @File Command                         end
+  @File Action                          end
+  @File DateTime                        end
+  @File HistoryEntry                    end
+  @File LifecycleEvent                  end
+  @File RelationshipLifecycleEvent      end
+  @File PropertyUpdate                  end
+  @File History                         end
+
+end;

@@ -1,0 +1,596 @@
+parserImport XOCL;
+parserImport Tools::Basic;
+parserImport Tools::Events;
+parserImport Tools::FormTools::Types;
+parserImport Tools::FormTools::Structure;
+parserImport Tools::Events;
+parserImport Tools::Menus;
+parserImport Snippets;
+
+import Tools;
+import FormTools;
+import Types;
+import Structure;
+import Events;
+import Graphs;
+
+@Snippet "A form tool for creating a critical path network.";
+
+// This file contains the definition of a form-tool for a CPM network.
+// The network is represented as a graph whose labels on the nodes and
+// edges are events and activities respectively. The source code for
+// this tool is based on the general purpose form-tool for creating
+// and editing graphs.
+
+context Root
+  @Class Event extends NamedElement
+    @Attribute earliest : Integer (?,!) end
+    @Attribute latest   : Integer (?,!) end
+    @Operation timing():String
+      "(" + earliest + "," + latest + ")"
+    end
+    @Operation toString() 
+      name + self.timing()
+    end
+  end
+  
+context Root
+  @Class Activity extends NamedElement
+    @Attribute duration : Integer (?,!) end
+    @Constructor(name,duration) ! end
+  end
+  
+@ToolDescriptor Graphs::GraphTool
+end;
+
+context Root
+  @Operation CPMForm(graph)
+  
+    // Supply the graph so that any form elements can be initialised.
+    // In particular, the use of @Delay ... end can refer to elements 
+    // of the graph when the delayed form element is dynamically created
+    // via a choice within an @Or ... end.
+    
+    @ToolType CPMForm(HORIZONTAL) 
+    
+      // The tool type defines a tree for the creation and selection of
+      // nodes and edges. When a node or edge is selected the property
+      // sheet is created for the tree element...
+      
+      @Tree Tree 
+         minWidth = 400
+         minHeight = 200
+         @TreeNode Events(readonly) "Events" 
+         
+           // A tree node is created within the tree and is used as the
+           // anchor of a menu for event creation...
+           
+           icon = "Exceptions/Exception.gif"
+           @Nodes Children
+           
+             // This is a container for a collection of nodes in the
+             // tree. Use Children as the anchor for adding new events...
+             
+             @TreeNode Event "EventName"
+             
+                // A node type that represents a graph-node. The menu
+                // on the tree node is used to delete it...
+                
+                icon = "Exceptions/Self.gif"
+                @Menu
+                  @MenuAction Delete self.delete() end
+                end
+              end
+           end
+           @Menu
+           
+             // The menu on the tree-node for all nodes is used to add
+             // an element to the container Children...
+             
+             @MenuAction NewEvent self.newNode("Children:Event") end
+           end
+         end
+         
+       @TreeNode Activities(readonly) "Activities" 
+       
+         // A tree-node that is used to contain tree-nodes that represent
+         // activities. This works the same as the graph nodes above...
+         
+         icon = "Exceptions/Exception.gif"
+         @Nodes Children
+            @TreeNode Activity "An Activity"
+              icon = "Exceptions/Self.gif"
+              @Menu
+                @MenuAction Delete self.delete() end
+              end
+            end
+         end
+         @Menu
+           @MenuAction NewActivity self.newNode("Children:Activity") end
+         end
+       end
+     end
+     @Box Properties(VERTICAL)
+     
+       // The properties box contains the properties of the currently
+       // selected item in the tree. The mechanism used for this is
+       // to create an @Or ... end element that contains the named
+       // alternative property sheets for the different types of 
+       // selectable tree element and to switch between them by name
+       // depending on what has been selected in the tree. The
+       // individual alternative elements are protected by a @Delay
+       /// ... end element that means thet are evaluated each time the
+       // they are selected. This allows dynamic form-element content...
+       
+       minWidth=200
+       
+       @Button Edit do tool.element.edit() end
+       
+       @Button Calculate do tool.performPasses() end
+       
+       @Or EventOrActivity 
+       
+         // Use nothing as the initial alternative. After that something
+         // should be selected and one of the other choices will be 
+         // used...
+         
+         @Box Nothing maxWidth=10 maxHeight=10 end
+         
+         @Box Event(HORIZONTAL)
+         
+           // This alternative is used if an event is selected.
+           
+           @Label name Name 
+             minWidth = 50 
+             minHeight = 30
+           end
+           
+           @TextField value EventName 
+             minWidth = 50 
+             minHeight = 30
+           end
+         end
+                
+         @Box Activity(VERTICAL)
+         
+           //This alternative is used if an activity is selected.
+           
+           @Box ActivityDuration (HORIZONTAL)
+           
+             @Label duration Duration 
+               minWidth = 60 
+               minHeight = 20
+             end
+           
+             @TextField activityDuration ActivityDuration
+             
+               // Enter a number for the duration for the activity.
+               
+               minWidth = 20 
+               minHeight = 20
+             end
+           end
+           
+           @Box ActivityName (HORIZONTAL)
+           
+             @Label name Name 
+               minWidth = 60 
+               minHeight = 20
+             end
+           
+             @TextField activityName Name
+             
+               // Enter a name.
+               
+               minWidth = 70 
+               minHeight = 20
+             end
+           end
+          
+           @Box ActivitySource(HORIZONTAL)
+           
+             // A labelled combo-box for the source of an activity.
+             // The idea is that when this is selected the combo-box
+             // is populated by all the names of the available events.
+             // In order to achieve this, the combo-box is wrapped
+             // in a @Delay ... end which means that it is re-generated
+             // each time the choice is selected...
+             
+             @Label source Source 
+               minWidth = 60 
+               minHeight = 20
+             end
+            
+             @Delay 
+               @ComboBox sourceName  
+                 minWidth = 50 
+                 minHeight = 20
+                 graph.nodes()->asSeq->collect(n | n.data().nameString())
+               end
+             end
+           end
+                  
+           @Box ActivityTarget(HORIZONTAL)
+           
+             // Same idea as the activity-source box above.
+            
+             @Label target Target 
+               minWidth = 60 
+               minHeight = 20
+             end
+             
+             @Delay 
+               @ComboBox targetName  
+                 minWidth = 50 
+                 minHeight = 20
+                 graph.nodes()->asSeq->collect(n | n.data().nameString())
+               end
+             end
+           end
+         end
+       end
+     end   
+   end
+ end
+
+context Root
+  @ElementManager Graphs::GraphTool::CPMFormManager !
+  
+    // An element manager is used as a name-space for the 
+    // event handlers. Add the element manager to the tool
+    // manager called GraphTool so that it is registered.
+    
+    @EventHandler CPMForm_Tree_Events_Event_Selection_Changed()
+    
+      // This event occurs when a tree node selection has changed.
+      // The particular node is event.value and its selection status
+      // is either unselected when event.old is true or arriving
+      // when event.new is true...
+      
+      if event.new 
+      then 
+      
+        // Navigate to the root owner and select the properties sheet.
+        // This is an OR element whose status can be changed using the
+        // changeTo operation...
+        
+        @WithoutEvents(event.tool())
+          let propertyBox = event.value.owner().owner().owner().ref1(["Properties"]) then
+              eventBox = propertyBox.changeTo("EventOrActivity","Event")
+          in eventBox.ref1(["value"]).setText(find(event.value).data().nameString())
+          end
+        end
+      end
+    end
+    
+    @EventHandler CPMForm_Tree_Activities_Activity_Selection_Changed()
+    
+      // As above, if a tree-node representing an edge is selected
+      // then switch to the property sheet for the edge. The
+      // properties are a bit more involved since there are three
+      // and they need to be registered with the tool in order to
+      // allow the graph-edge to be changed when the property
+      // changes...
+     
+      if event.new 
+      then 
+        @WithoutEvents(event.tool())
+          let propertyBox = event.value.owner().owner().owner().ref1(["Properties"]) then
+              property = propertyBox.changeTo("EventOrActivity","Activity")
+          in register(property.ref1(["ActivitySource","sourceName"]),event.value);
+             register(property.ref1(["ActivityTarget","targetName"]),event.value);
+             register(property.ref1(["ActivityDuration","activityDuration"]),event.value);
+             register(property.ref1(["ActivityName","activityName"]),event.value);
+             let edge = find(event.value) then
+                 CPMActivity = edge.data();
+                 source = edge.source();
+                 target = edge.target()
+             in if source <> null then property.ref1(["ActivitySource","sourceName"]).setSelected(source.data().nameString()) end;
+                if target <> null then property.ref1(["ActivityTarget","targetName"]).setSelected(target.data().nameString()) end;
+                property.ref1(["ActivityDuration","activityDuration"]).setText(CPMActivity.duration().toString());
+                property.ref1(["ActivityName","activityName"]).setText(CPMActivity.name().toString())
+             end
+          end
+        end
+      end
+    end
+    
+    @EventHandler New_CPMForm_Tree_Events_Event()
+    
+      // A tree-node that represents a graph-node has been added.
+      // A graph-node must be added to the graph...
+      
+      let node = Graphs::Node(Root::Event("EventName"))
+      in event.tool().element().add(node);
+         register(node,event.value);
+         register(event.value,node);
+         register(node.data(),event.value);
+         node.observeBy(event.tool());
+         node.data().observeBy(event.tool())
+      end
+    end
+    
+    @EventHandler Delete_CPMForm_Tree_Events_Event()
+    
+      // A tree-node that represents a graph-node has been deleted.
+      // A graph-node must be deleted from the graph...
+      
+      let node = find(event.value)
+      in event.tool().element().remove(node)
+      end
+    end
+    
+    @EventHandler Delete_CPMForm_Tree_Activities_Activity()
+    
+      // A tree-node that represents a graph-edge has been deleted.
+      // A graph-edge must be deleted from the graph...
+      
+      let edge = find(event.value)
+      in event.tool().element().remove(edge)
+      end
+    end
+           
+    @EventHandler CPMForm_Properties_Event_value_Changed()
+    
+      // The property sheet associated with a tree-node for a
+      // graph-node has changed. Update the assosiated graph-node
+      // which is found by selecting the graph-node whose data is
+      // the old value supplied with the event...
+      
+      let old = event.old;
+          new = event.new
+      in @Find (node,event.tool().element().nodes) 
+           when node.data().nameString() = old 
+           do node.data().setName(new); ("SET NAME " + new).println()
+           else format(stdout, "No event named ~S in ~S~%",Seq{old,event.tool().element().nodes->collect(n | n.data())})  
+         end
+      end
+    end
+    
+    @EventHandler CPMForm_Properties_Activity_ActivitySource_sourceName_Changed()
+    
+      // The combo-box associated with the edge source has been changed.
+      // Update the graph-edge...
+      
+      let edge = find(find(event.value));
+          sourceNode = @Find(node,event.tool().element().nodes()) when node.data().nameString() = event.new end
+      in edge.setSource(sourceNode)
+      end
+    end
+    
+    @EventHandler CPMForm_Properties_Activity_ActivityTarget_targetName_Changed()
+    
+      // The combo-box associated with the edge target has been changed.
+      // Update the graph-edge...
+      
+      let edge = find(find(event.value));
+           targetNode = @Find(node,event.tool().element().nodes()) when node.data().nameString() = event.new end
+      in edge.setTarget(targetNode)
+      end
+    end
+    
+    @EventHandler New_CPMForm_Tree_Activities_Activity()
+    
+      // An tree-node representing a graph-edge has been created...
+      
+      let edge = Graphs::Edge(Activity("An Activity",0),null,null)
+      in event.tool().element().add(edge);
+         register(edge,event.value);
+         register(edge.data(),edge);
+         register(event.value,edge);
+         edge.observeBy(event.tool());
+         edge.data().observeBy(event.tool())
+      end
+    end
+    
+    @EventHandler CPMForm_Properties_Activity_ActivityDuration_activityDuration_Changed()
+    
+      // The text-field for the property representing the duration of an edge
+      // has been changed. Update the data on the associated graph-edge...
+      
+      let edge = find(find(event.value));
+          value = event.new.asInt()
+      in edge.data().setDuration(value)
+      end
+    end
+    
+    @EventHandler CPMForm_Properties_Activity_ActivityName_activityName_Changed()
+    
+      let edge = find(find(event.value))
+      in edge.data().setName(event.new)
+      end
+    end
+  end 
+         
+@Observer Graphs::GraphTool::CPMFormManager(Root::Event) name ! 
+
+  // Change the label on the node in the tree...
+  
+  @WithoutEvents(tool)
+    let CPMEvent = find(find(object)).data()
+    in find(object).setText(CPMEvent.name + "[" + CPMEvent.earliest() + "," + CPMEvent.latest() + "]");
+      // Refresh the edges...
+      @For edge in tool.element().edges() do
+        edge.setSource(edge.source());
+        edge.setTarget(edge.target())
+      end
+    end
+  end
+end;
+         
+@Observer Graphs::GraphTool::CPMFormManager(Root::Event) earliest ! 
+
+  // Change the label on the node in the tree...
+  
+  @WithoutEvents(tool)
+    let CPMEvent = find(find(object)).data()
+    in find(object).setText(CPMEvent.name + "[" + CPMEvent.earliest() + "," + CPMEvent.latest() + "]")
+    end
+  end
+end;
+         
+@Observer Graphs::GraphTool::CPMFormManager(Root::Event) latest ! 
+
+  // Change the label on the node in the tree...
+  
+  @WithoutEvents(tool)
+    let CPMEvent = find(find(object)).data()
+    in find(object).setText(CPMEvent.name + "[" + CPMEvent.earliest() + "," + CPMEvent.latest() + "]")
+    end
+  end
+end;
+         
+@Observer Graphs::GraphTool::CPMFormManager(Activity) duration !
+
+  // Change the label on the node in the tree...
+  
+  @WithoutEvents(tool) 
+    let edge = find(object) then
+        source = if edge.source() = null then "?" else edge.source().data().nameString() end;
+        target = if edge.target() = null then "?" else edge.target().data().nameString() end
+    in find(edge).setText(source + "-(" + object.nameString() + "," + object.duration() + ")->" + target)
+    end
+  end
+end;
+         
+@Observer Graphs::GraphTool::CPMFormManager(Activity) name !
+
+  // Change the label on the node in the tree...
+  
+  @WithoutEvents(tool) 
+    let edge = find(object) then
+        source = if edge.source() = null then "?" else edge.source().data().nameString() end;
+        target = if edge.target() = null then "?" else edge.target().data().nameString() end
+    in find(edge).setText(source + "-(" + object.nameString() + "," + object.duration() + ")->" + target)
+    end
+  end
+end;
+         
+@Observer Graphs::GraphTool::CPMFormManager(Graphs::Edge) source !
+
+  // Change the label on the node in the tree...
+  
+  @WithoutEvents(tool)
+    let source = if object.source() = null then "?" else object.source().data().nameString() end;
+        target = if object.target() = null then "?" else object.target().data().nameString() end
+    in find(object).setText(source + "-(" + object.data().name() + "," + object.data().duration() + ")->" + target)
+    end
+  end
+end;
+         
+@Observer Graphs::GraphTool::CPMFormManager(Graphs::Edge) target !
+
+  // Change the label on the node in the tree...
+  
+  @WithoutEvents(tool)
+    let source = if object.source() = null then "?" else object.source().data().nameString() end;
+        target = if object.target() = null then "?" else object.target().data().nameString() end
+    in find(object).setText(source + "-(" + object.data().name() + "," + object.data().duration() + ")->" + target)
+    end
+  end
+end;
+
+
+
+context Root
+  @Class CPMTool extends Tool
+  
+    // Create an extension of the basic diagram tool that implements the
+    // critical path calculation functionality...
+    
+    @Operation resetEdges()
+      null
+    end
+    
+    @Operation performPasses()
+      self.resetEdges();
+      self.forwardPass();
+      self.backwardPass();
+      self.showCriticalPath()
+    end
+    
+    @Operation forwardPass()
+      let graph = self.element() then
+          roots = graph.roots() then
+          visited = roots
+      in @While visited <> graph.nodes() do
+           @For node in graph.nodes() do
+             if graph.predecessors(node)->forAll(n | visited->includes(n)) and not visited->includes(node)
+             then 
+               let preds = graph.predecessors(node);
+                   earliest = 0
+               in @For pred in preds do
+                    @For edge in graph.edgesBetween(pred,node) do
+                      earliest := earliest.max(pred.data().earliest() + edge.data().duration())
+                    end
+                  end;
+                  node.data().setEarliest(earliest);
+                  visited := visited->including(node)
+               end
+             end
+           end
+         end
+      end
+    end
+    
+    @Operation backwardPass()
+      let graph = self.element() then
+          terminals = graph.terminals() then
+          visited = terminals
+      in if terminals->size <> 1
+         then self.error("A CPM network must have 1 terminal event.")
+         else terminals->sel.data().setLatest(terminals->sel.data().earliest())
+         end;
+         @While visited <> graph.nodes() do
+           @For node in graph.nodes() do
+             if graph.successors(node)->forAll(n | visited->includes(n)) and not visited->includes(node)
+             then 
+               let succs = graph.successors(node);
+                   latest = 9999
+               in @For succ in succs do
+                    @For edge in graph.edgesBetween(node,succ) do
+                      latest := latest.min(succ.data().latest() - edge.data().duration())
+                    end
+                  end;
+                  node.data().setLatest(latest);
+                  visited := visited->including(node)
+               end
+             end
+           end
+         end
+      end
+    end 
+    
+    @Operation showCriticalPath()
+      let graph = self.element() then
+          root = graph.roots()->sel then
+          paths = graph.paths(root)->select(p | graph.terminals()->includes(p->last)) then
+          criticalPath = paths->select(p | p->forAll(n | n.data().latest() - n.data().earliest() = 0))->sel
+      in @Letrec showPath =
+           @Operation(path)
+             if not (path->isEmpty orelse path->tail->isEmpty)
+             then 
+               let source = path->head;
+                   target = path->tail->head then
+                   edges = graph.edgesBetween(source,target)
+               in // do something here to identify the activity between source and target.
+                  showPath(path->tail)
+               end
+             end
+           end
+         in showPath(criticalPath)
+         end
+       end
+     end
+           
+  end
+  
+context Root
+  @Operation test()
+    let graph = Graph() then
+        tool = CPMTool(CPMForm(graph),"CPM Form",CPMFormManager,graph)
+    in tool.showForm();
+       tool.form().layout(0,0);
+       tool
+    end
+  end

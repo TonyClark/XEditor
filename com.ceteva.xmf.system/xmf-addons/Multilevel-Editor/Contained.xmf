@@ -1,0 +1,52 @@
+parserImport XOCL;
+parserImport XMap;
+
+Contained.removeOperation(Contained.getOperation("deleteRecursive"));
+        
+context Contained		
+@Operation deleteRecursive():XCore::Element
+      if self.owner.isReallyKindOf(Container)
+      then
+        //if self.isKindOf(Attribute) andthen self.isIntrinsic
+        //then
+        //  self.owner.removeAttribute(self);
+        //  self.owner.contents.remove(self.name());
+        //  self.removeFromOwner()
+        //else
+          self.owner.remove(self)
+        //end
+      else
+        false
+      end;
+      self
+    end
+
+Contained.removeOperation(Contained.getOperation("delete_client_check"));    
+    
+ context Contained
+  @Operation delete_client_check()
+    let name = if self.isKindOf(NamedElement) then self.name() else self.toString() end
+    in
+    	if self.isKindOf(Attribute) 
+    	then 
+    		if self.isIntrinsic
+    		then
+    			true
+    		else
+    			xmf.question("Are you sure you want to delete " + name + "?")
+    		end
+    	elseif self.isKindOf(Constraint) or self.isKindOf(Operation) or self.isKindOf(Associations::Association) then
+    		xmf.question("Are you sure you want to delete " + name + "?")
+    	else
+			let ret = self.allInstances()
+			in
+				if ret <> Set{} and ret <> Seq{} 
+				then
+					xmf.question("Are you sure you want to delete " + name + "? All instances will be deleted, too")
+				else
+					xmf.question("Are you sure you want to delete " + name + "?")
+				end
+			end
+    	end	
+    end
+  end

@@ -1,0 +1,17 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import XEditor;
+
+@EventHandler browserPopupMenuSelected(menuItemId:Integer,elementId:Integer) 
+
+  // The element with the supplied id needs to be refreshed in the
+  // element browser...
+  try 
+    let object = xmf.getObjectWithHandle(elementId)
+    in handleBrowserPopup(menuItemId,object)
+    end
+  catch(exception)
+    Root::xmfException := exception
+  end
+end;

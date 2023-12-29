@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+IndexedContainer
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>IndexedContainer</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      An indexed container is a class that manages a hashtable associating
+      keys with values. The Container::add/1 operation is implemented by
+      IndexedContainer to add the argument as both an index and a value. The
+      class IndexedContainer provides a 2-place operation for 'add' that
+      allows the index to be different from the value. Note that 'remove/1'
+      expects to be supplied with the index.
+    
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/XCore/index.html">XCore</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/XCore/Container/index.html">Container</A>
+<BR><HR>
+<B>Subclasses</B>
+<A HREF="../../../Root/XCore/NameSpace/index.html">NameSpace</A>
+,<A HREF="../../../Root/Manifests/ManifestManager/index.html">ManifestManager</A>
+,<A HREF="../../../Root/Projects/Project/index.html">Project</A>
+,<A HREF="../../../Root/Aspects/Semantics/Aspect/index.html">Aspect</A>
+,<A HREF="../../../Root/Aspects/Semantics/Aspect/index.html">Aspect</A>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR><TD><B>contents</B></TD><TD><A HREF="../../../Root/XCore/Table/index.html">Table<A></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+</FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>add(index:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Container/index.html">Container<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>add(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Container/index.html">Container<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>addContentDaemon(actionSource:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,daemon:<A HREF="../../../Root/XCore/Operation/index.html">Operation<A>):<A HREF="../../../Root/XCore/Container/index.html">Container<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>contentDaemons():<A HREF="../../../Root/XCore/Operation/index.html">Seq(Operation)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>contents():<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>index(key:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>indices():<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>init():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>initContents():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>remove(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Container/index.html">Container<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>removeContentDaemon(daemon:<A HREF="../../../Root/XCore/Operation/index.html">Operation<A>):<A HREF="../../../Root/XCore/Container/index.html">Container<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Container/index.html">Container</A>: add, addContentDaemon, allContents, allContentsOf, allContentsThat, checkConstraints, checkConstraints, contentDaemons, contents, contentsOf, contentsThat, deleteRecursive, includes, init, initContents, remove, removeContentDaemon, traceAll, untraceAll. <BR><B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+</HTML>

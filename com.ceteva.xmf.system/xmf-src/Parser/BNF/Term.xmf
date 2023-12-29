@@ -1,0 +1,38 @@
+parserImport XOCL;
+
+/******************************************************************************
+ *                                                                            *
+ *                                  Terminals                                 *
+ *                               ---------------                              *
+ *                                                                            *
+ *  XBNF terminal definitions occur within ' and '. This is a distinguished   *
+ *  token type and is represented by the builtin non-terminal Term. When the  *
+ *  parsing machine successfully processes a term (i.e. a ' then chars then   *
+ *  another ') it returns the name of the terminal as a string.               *
+ *                                                                            *
+ ******************************************************************************/
+
+import Parser::BNF;
+import OCL;
+
+context Parser::BNF
+
+  @Class Term extends (Root::Parser::BNF.getElement("Str"))
+    
+    @Operation first(grammar)
+      Set{"Builtin(Term)"}
+    end
+    
+    @Operation last(g:Grammar,called:[String]):{String}
+      {}
+    end
+  
+    @Operation nullable(grammar):Boolean
+       false
+    end
+    
+    @Operation toExp(FV:Set(String))
+      [| (Root::Parser::BNF.getElement("Term"))() |]
+    end
+    
+  end 

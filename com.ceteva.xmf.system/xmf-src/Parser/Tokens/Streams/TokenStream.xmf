@@ -1,0 +1,16 @@
+parserImport XOCL;
+
+import Parser;
+import Tokens;
+
+context Streams
+
+  @Class TokenStream isabstract
+
+    // Used to create a lazy sequence of tokens...
+
+    @AbstractOp asSeq():[Token] end
+
+    @AbstractOp force() end
+
+  end

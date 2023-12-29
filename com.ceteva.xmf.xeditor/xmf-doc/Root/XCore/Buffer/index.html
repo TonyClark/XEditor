@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Buffer
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Buffer</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+No Documentation Specified
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/XCore/index.html">XCore</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/XCore/Element/index.html">Element</A>
+<BR><HR>
+<B>Subclasses</B>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+</FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>add(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD> 
+      Add the element at the next available index.
+    </TD></TR>
+<TR><TD><B>append(elements:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD> 
+      Appen-d a sequence of elements. The argument
+      should be a sequence, buffer, vector or string.
+      The elements in the argument are added to the
+      receiver in order.
+    </TD></TR>
+<TR><TD><B>asSeq():<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Converts a buffer into a sequence.
+    </TD></TR>
+<TR><TD><B>asString():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true when the buffer is treated as a string.
+    </TD></TR>
+<TR><TD><B>at(index:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>contains(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>daemons():<A HREF="../../../Root/XCore/Daemon/index.html">Seq(Daemon)<A></B></TD><TD>
+      Returns the daemons that are monitoring the buffer.
+    </TD></TR>
+<TR><TD><B>daemonsActive():<A HREF="../../../Root/XCore/Daemon/index.html">Seq(Daemon)<A></B></TD><TD>
+      Returns whether or not daemons dire then the buffer is updated.
+    </TD></TR>
+<TR><TD><B>hasSuffix(s:<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>increment():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      The amount of storage that the buffer grows by each time
+      it is expanded.
+    </TD></TR>
+<TR><TD><B>init(args:<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>put(index:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,value:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Put the element value into a buffer at position index.
+    </TD></TR>
+<TR><TD><B>ref(index:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns the value at position index in a buffer.
+    </TD></TR>
+<TR><TD><B>setSize(size:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Sets the size of the buffer providing that size
+      is smaller than the current contents.
+    </TD></TR>
+<TR><TD><B>size():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      The number of elements currently in the buffer.
+    </TD></TR>
+<TR><TD><B>storage():<A HREF="../../../Root/XCore/Vector/index.html">Seq(Vector)<A></B></TD><TD>
+      Returns the sequence of vectors used as the underlying
+      storage for the buffer.
+    </TD></TR>
+<TR><TD><B>stringEqual(string:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true when the supplied string contains the same chars
+      as the buffer.
+    </TD></TR>
+<TR><TD><B>subString(firstChar:<A HREF="../../../Root/XCore/String/index.html">String<A>,pastLastChar:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Uses indices to chop up a string. The first
+      index is the starting character and the second index is 
+      1+ the final character.
+    </TD></TR>
+<TR><TD><B>toString():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+</HTML>

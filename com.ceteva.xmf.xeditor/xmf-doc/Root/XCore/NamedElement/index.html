@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+NamedElement
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>NamedElement</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      A named element is an owned element with a name. The name may be a 
+      string or a symbol. typically we use symbols where the lookup of the name
+      needs to be efficient.
+    
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/XCore/index.html">XCore</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/XCore/Contained/index.html">Contained</A>
+<BR><HR>
+<B>Subclasses</B>
+<A HREF="../../../Root/XCore/Bind/index.html">Bind</A>
+,<A HREF="../../../Root/XCore/NameSpace/index.html">NameSpace</A>
+,<A HREF="../../../Root/XCore/DependencyName/index.html">DependencyName</A>
+,<A HREF="../../../Root/Manifests/Manifest/index.html">Manifest</A>
+,<A HREF="../../../Root/Preference/index.html">Preference</A>
+,<A HREF="../../../Root/XCore/Constraint/index.html">Constraint</A>
+,<A HREF="../../../Root/IO/File/index.html">File</A>
+,<A HREF="../../../Root/Parser/BNF/Clause/index.html">Clause</A>
+,<A HREF="../../../Root/XCore/EnumChoice/index.html">EnumChoice</A>
+,<A HREF="../../../Root/XCore/TypedElement/index.html">TypedElement</A>
+,<A HREF="../../../Parser/Grammar/index.html">Grammar</A>
+,<A HREF="../../../Root/Projects/Project/index.html">Project</A>
+,<A HREF="../../../Root/Projects/ProjectStub/index.html">ProjectStub</A>
+,<A HREF="../../../Root/Compiler/Symbol/index.html">Symbol</A>
+,<A HREF="../../../Root/XRules/Rules/index.html">Rules</A>
+,<A HREF="../../../Parser/Clause/index.html">Clause</A>
+,<A HREF="../../../Root/XMap/Clause/index.html">Clause</A>
+,<A HREF="../../../Root/Compiler/Var/index.html">Var</A>
+,<A HREF="../../../Root/Languages/MicroJava/Structure/MethodNamedElement/index.html">MethodNamedElement</A>
+,<A HREF="../../../Root/Languages/MicroJava/Structure/FieldNamedElement/index.html">FieldNamedElement</A>
+,<A HREF="../../../Root/Aspects/Semantics/Aspect/index.html">Aspect</A>
+,<A HREF="../../../Root/Aspects/Semantics/Aspect/index.html">Aspect</A>
+,<A HREF="../../../Root/XML/Parser/Grammar/index.html">Grammar</A>
+,<A HREF="../../../Root/XML/Parser/Clause/index.html">Clause</A>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+<TR><TD>NamedElement(name)</TD><TD> No Documentation </TD></TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR><TD><B>name</B></TD><TD><A HREF="../../../Root/XCore/String/index.html">String<A></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Contained/index.html">Contained</A>: owner. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>getNamedElement(namedElements:<A HREF="../../../Root/XCore/NamedElement/index.html">Set(NamedElement)<A>,name:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/NamedElement/index.html">NamedElement<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>href(currentPath:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+        Returns the path used in an href to the receiver. It assumes
+        that we are relative to a root that contains the root name space.
+      </TD></TR>
+<TR><TD><B>name():<A HREF="../../../Root/XCore/Symbol/index.html">Symbol<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>path():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>pathSeq():<A HREF="../../../Root/XCore/String/index.html">Seq(String)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>repopulate(other:<A HREF="../../../Root/XCore/NamedElement/index.html">NamedElement<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setName(name:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>toString():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Contained/index.html">Contained</A>: addTo, allOwners, deleteRecursive, owner, removeFromOwner, setOwner. <BR><B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+</HTML>

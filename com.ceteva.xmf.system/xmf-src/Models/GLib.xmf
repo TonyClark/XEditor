@@ -1,0 +1,66 @@
+parserImport XOCL;
+parserImport Filmstrips;
+
+import Generics;
+import Filmstrips;
+import Models;
+
+context Models
+
+  @Package GLib
+  
+    @Class AReader end
+    @Class ABook end
+
+    @Class Library extends TransactionSystem(ABook,AReader) 
+
+      @Operation init(args)  
+        super(args);  
+        self.registerHandler("borrow", 
+           @Operation(system,book,reader)  
+             let transaction = system.mostRecentResourceTransaction(book.id)
+             in transaction = null orelse not(transaction.name = "borrow") 
+             end        
+           end,  
+           @Operation(system,book,reader)   
+             true   
+           end);  
+         self.registerHandler("return",
+           @Operation(system,book,reader) 
+             let transaction = system.mostRecentResourceTransaction(book.id)
+             in transaction <> null andthen (transaction.name = "borrow" and transaction.customer = reader) 
+             end
+           end,
+           @Operation(system,book,reader) true end)
+
+       end 
+
+     end
+
+     @Operation populateLib(s:Library)
+         s.addCustomer();
+         s.addResource();  
+         s.addCustomer();
+         s.addResource();
+         s.perform("borrow",1,1);
+         s.perform("borrow",2,2);
+         s.perform("return",2,2);
+         s.perform("borrow",2,2); 
+         s
+     end
+  
+     @Operation test()
+       let s = Library()
+       in populateLib(s)
+      end 
+    end
+  end
+
+@Filmstrip gbankFilmstrip
+   b = GLib::Library()
+in
+   roots [[GLib::Library],[b]];
+   //monitor [GLib.classes->asSeq + GenericClGLib.classes->aass.allInstances()->iterate(gc os = [] | os + gc.allInstances()),GenericClass.allInstances()->iterate(gc os = {} | gc.allInstances().operations->asSet + os)];
+   monitor [GenericClass.allInstances()->iterate(gc cs=[] | cs + [gc] + gc.allInstances()),GenericClass.allInstances()->iterate(gc os = {} | gc.allInstances().operations->asSet + os)];
+   start GLib::populateLib(b) 
+end; 

@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Table
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Table</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      A table associates keys with values. Any element can be used as a key.
+      A table has an initial size and can support any number of values. Use 'hasKey/1'
+      to determine whether a table contains a key. Use 'get/1' to access a table
+      via a key and 'put/2' to update a table given a key and a value. Use 'keys/0'
+      to access the set of keys for a table.
+    
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/XCore/index.html">XCore</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/XCore/Element/index.html">Element</A>
+<BR><HR>
+<B>Subclasses</B>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+</FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>addDaemon(d:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      All tables have a collection of daemons. A daemon is an operation that is
+      invoked whenever a table is updated. The operation is any invokable value 
+      (either an operation or an object that implements the 'invoke/2' operation. 
+      The invocation occurs after the table has been updated and is supplied with 
+      the index, the new bucket and the old bucket that has changed.
+    </TD></TR>
+<TR><TD><B>addKeyRemovedDaemon(d:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,actionSource:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Use this operation to add a daemon that monitors the removal of
+      keys from a table. The args of the daemon are the key that is removed
+      and its value in the table.
+    </TD></TR>
+<TR><TD><B>addKeyRemovedDaemon(d:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Use this operation to add a daemon that monitors the removal of
+      keys from a table. The args of the daemon are the key that is removed
+      and its value in the table.
+    </TD></TR>
+<TR><TD><B>addKeyValueChangedDaemon(d:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,actionSource:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Use this operation to add a daemon that monitors changes in key
+      values. This will not fire when the key is added or when the
+      key is removed. The args for the daemon are the key, the new value
+      and the old value.
+    </TD></TR>
+<TR><TD><B>addKeyValueChangedDaemon(d:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Use this operation to add a daemon that monitors changes in key
+      values. This will not fire when the key is added or when the
+      key is removed. The args for the daemon are the key, the new value
+      and the old value.
+    </TD></TR>
+<TR><TD><B>addNewKeyDaemon(d:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Use this operation to add a daemon that monitors the addition of
+      new keys to a table. The args for the daemon are the new key
+      and its value.
+    </TD></TR>
+<TR><TD><B>addNewKeyDaemon(d:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,actionSource:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Use this operation to add a daemon that monitors the addition of
+      new keys to a table. The args for the daemon are the new key
+      and its value.
+    </TD></TR>
+<TR><TD><B>asVector():<A HREF="../../../Root/XCore/Vector/index.html">Vector<A></B></TD><TD>
+      Returns the receiver as a vector. This is essentially
+      just changing the type of the receiver from table to
+      vector.
+    </TD></TR>
+<TR><TD><B>clear():<A HREF="../../../Root/XCore/Table/index.html">Table<A></B></TD><TD>
+      Clears the table. Fires any daemons defined for the table.
+    </TD></TR>
+<TR><TD><B>daemonNamed(name:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>daemons():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Get the current daemons for the table.
+    </TD></TR>
+<TR><TD><B>destroyDaemon(d:<A HREF="../../../Root/XCore/Daemon/index.html">Daemon<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>entries():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      Returns the number of entries in the table.
+    </TD></TR>
+<TR><TD><B>fire(index:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,newBucket:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,oldBucket:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      When a table is updated, its daemons are fired by calling this operation. 
+      The operation is supplied with the bucket index, the old state of the changed 
+      bucket and the new state of the changed bucket. The index is supplied to make
+      the daemon mechanism compatible with that for arrays. In most cases the index
+      will be of no value. The table specific daemon definition operations
+      hide away the index.
+    </TD></TR>
+<TR><TD><B>get(key:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Return the valueof the supplied key in the table.
+      If the key does not exist then an exception is
+      raised. Use 'hasKey/1' to check if the key exists.
+    </TD></TR>
+<TR><TD><B>hasDaemonNamed(name:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>hasKey(key:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Tests whether the table has a key or not.
+    </TD></TR>
+<TR><TD><B>hasValue(value:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Tests whether the table has a value or not.
+    </TD></TR>
+<TR><TD><B>init(args:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>isEmpty():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>keys():<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Returns all the keys in the table.
+    </TD></TR>
+<TR><TD><B>pprint():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      This operation prints out all the entries in a table.
+    </TD></TR>
+<TR><TD><B>put(key:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,value:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Add an association between the supplied key and value.
+      Any existing association for the key is removed.
+    </TD></TR>
+<TR><TD><B>ref(index:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>rehash():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>remove(key:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+     Remove the supplied key from the table. This succeeds whether
+     the key exists in the tabel or not. Any daemons defined for the
+     table are performed. The table is returned.
+   </TD></TR>
+<TR><TD><B>removeDaemon(d:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>removeDaemonNamed(name:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>set(index:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>,value:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setDaemons(daemons:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>size():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      Returns the size of a table.
+    </TD></TR>
+<TR><TD><B>toString():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Returns a string representation of a table.
+    </TD></TR>
+<TR><TD><B>values():<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>
+       Returns all elements in the table as a set. 
+     </TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+</HTML>

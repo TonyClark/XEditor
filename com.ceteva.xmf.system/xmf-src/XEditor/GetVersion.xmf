@@ -1,0 +1,11 @@
+parserImport XOCL;
+parserImport XEditor;
+
+@EventHandler getVersion()
+    try
+      xmf.getSystemHeaderProperty("Version")
+    catch(exception)
+      Root::xmfException := exception;
+      exception.printBacktrace()
+    end
+  end;

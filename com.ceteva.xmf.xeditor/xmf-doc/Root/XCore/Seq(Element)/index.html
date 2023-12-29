@@ -1,0 +1,273 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Seq(Element)
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Seq(Element)</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      An instance of Seq where the element type is Element. This is the super-type
+      of all sequence data types.
+    
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>append(s:<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD> 
+    Appe-nd two sequences.
+    </TD></TR>
+<TR><TD><B>asProperSeq():<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>asSeq():<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Turns a sequence into a sequence.
+    </TD></TR>
+<TR><TD><B>asSet():<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>
+      Turn a sequence into a set.
+    </TD></TR>
+<TR><TD><B>asString():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Turns a sequence of integers into a string.
+    </TD></TR>
+<TR><TD><B>asVector():<A HREF="../../../Root/XCore/Vector/index.html">Vector<A></B></TD><TD>
+      Turns a sequence into a vector.
+    </TD></TR>
+<TR><TD><B>assoc(key:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Receiver must be an a-list. Returns a-list headed
+      by pair whose head is the key or null.
+    </TD></TR>
+<TR><TD><B>at(n:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD> 
+      Returns the nth element of a sequence starting from 0.
+    </TD></TR>
+<TR><TD><B>bind(key:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,value:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Binds a key with a value and adds it to the
+      head of the sequence.
+    </TD></TR>
+<TR><TD><B>binds(key:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true of a sequence contains
+      a binding that matches the key.
+    </TD></TR>
+<TR><TD><B>butLast():<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Returns all elements but the last element.
+    </TD></TR>
+<TR><TD><B>collect(filter:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>contains(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if the sequence contains the element.
+    </TD></TR>
+<TR><TD><B>default():<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD> 
+      Returns the default sequence: an empty sequence.
+    </TD></TR>
+<TR><TD><B>delete(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>delete(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,multiple:<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Deletes the element by side effect from the receiver
+      and returns the receiver. The second argument controls
+      whether or not multiple occurrences are deleted.
+    </TD></TR>
+<TR><TD><B>dom():<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>
+      Returns the keys in an environment
+    </TD></TR>
+<TR><TD><B>dot(name:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Returns the result of iterating over a 
+      sequence and performing dot on each element.
+    </TD></TR>
+<TR><TD><B>drop(n:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Drops the first n elements from a sequence.
+    </TD></TR>
+<TR><TD><B>dropWhile(pred:<A HREF="../../../Root/XCore/Operation/index.html">Operation<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Drop elements until pred is not satisfied.
+    </TD></TR>
+<TR><TD><B>equals(other:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if a sequence equals another sequence.
+      To be equal they must both be sequences and their
+      elements should be equal and in the same order. 
+    </TD></TR>
+<TR><TD><B>excluding(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>exists(pred:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD> 
+       Returns true when one element of the sequence
+       satisfies the predicate otherwise it returns false.
+    </TD></TR>
+<TR><TD><B>flatten():<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Turns a sequence of sequences of X into a sequence of X.
+    </TD></TR>
+<TR><TD><B>forAll(pred:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if all elements of the sequence
+      satisfy the predicate otherwise returns false.
+    </TD></TR>
+<TR><TD><B>get(name:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>hasPrefix(prefix:<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if a sequence is prefixed by the
+      sequence prefix.
+    </TD></TR>
+<TR><TD><B>hasSuffix(suffix:<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD> 
+      Returns true if a sequence is suffixed by
+      the sequence suffix
+    </TD></TR>
+<TR><TD><B>head():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD> 
+      Returns the head of a sequence.
+    </TD></TR>
+<TR><TD><B>includes(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if a sequence contains element.
+    </TD></TR>
+<TR><TD><B>includesAll(c:<A HREF="../../../Root/XCore/Collection(Element)/index.html">Collection(Element)<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if a sequence includes all the elements
+      in the collection c.
+    </TD></TR>
+<TR><TD><B>including(e:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Returns the result of including the element e in
+      a sequence. The element is added to the head of 
+      the sequence.
+    </TD></TR>
+<TR><TD><B>indexOf(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      Returns the first index of the element in a sequence. If
+      it is not found, returns -1.
+    </TD></TR>
+<TR><TD><B>insertAt(e:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,i:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Inserts an element e at position i in a sequence.
+    </TD></TR>
+<TR><TD><B>intersection(s:<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A>):<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>
+      Returns common elements.
+    </TD></TR>
+<TR><TD><B>isDefinedPath():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>isEmpty():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if a sequence is empty.
+    </TD></TR>
+<TR><TD><B>isEnv():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      An environment is implement by a sequence when the
+      sequence is a proper sequence of pairs.
+    </TD></TR>
+<TR><TD><B>isKindOf(type:<A HREF="../../../Root/XCore/Classifier/index.html">Classifier<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if all elements in a sequence are
+      instances of type. 
+    </TD></TR>
+<TR><TD><B>isPath():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>isProperSequence():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if the last tail is
+      a valid sequence.
+    </TD></TR>
+<TR><TD><B>iter(iterator:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,value:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Iterates through a sequence, returning a sequence.
+    </TD></TR>
+<TR><TD><B>last():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns the last element of a non-empty sequence.
+    </TD></TR>
+<TR><TD><B>linkAt(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,index:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Inserts an element into a sequence at the index.
+    </TD></TR>
+<TR><TD><B>lookup(key:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Looks up a pair in a sequence using the key.
+      Returns an error if the key cannot be found.
+    </TD></TR>
+<TR><TD><B>lookup():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+       Lookup is a message which when sent to a sequence of
+       strings will lookup the element at the path given by the
+       strings in order. If no element exists then an error
+       is raised.
+    </TD></TR>
+<TR><TD><B>makeTree(children:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>map(message:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,args:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>max():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      Returns the maximum valued element in the sequence.
+    </TD></TR>
+<TR><TD><B>mul(s:<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Generates a sequence containing all combinations of 
+      elements in the two sequences.
+    </TD></TR>
+<TR><TD><B>prefixes():<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Returns all possible prefixes of a sequence including
+      the empty sequence.
+    </TD></TR>
+<TR><TD><B>prepend(e:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Prepe-nd adds an element to the head of a sequence and
+      returns a new sequence.
+    </TD></TR>
+<TR><TD><B>qsort(pred:<A HREF="../../../Root/XCore/Operation/index.html">Operation<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Quicksorts the elements in the sequence. Is 
+      supplied with an operation of the form @Operation(x,y)
+      predicate en-d where x and y will be elements in the
+      sequence. An example predicate might be x < y.
+    </TD></TR>
+<TR><TD><B>ref(nameSpaces:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Looks up a namespace path represented as a sequence of strings
+      to the element found at the path. The operation takes a sequence 
+      of namespaces as an argument; the namespace arguments are used 
+      as the basis for the lookup.
+    </TD></TR>
+<TR><TD><B>reject(pred:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>removeAt(index:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Removes element at speicified index.
+    </TD></TR>
+<TR><TD><B>replaceAt(index:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>,new:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD> 
+      Replace the element at the supplied index.
+    </TD></TR>
+<TR><TD><B>reverse():<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Reverses a sequence.
+    </TD></TR>
+<TR><TD><B>sel():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns one element from a sequence.
+    </TD></TR>
+<TR><TD><B>select(predicate:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Applies a filter to a sequence of elements.
+    </TD></TR>
+<TR><TD><B>separateWith(sep:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Constructs a string by concatenating the elements of
+      a sequence together, separated by sep.
+    </TD></TR>
+<TR><TD><B>set(key:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,value:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Sets the value of a binding in a sequence indexed by key. Creates
+      a binding if one does not exist.
+    </TD></TR>
+<TR><TD><B>setTail(newTail:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Sets the tail of a non-empty sequence to be
+      the supplied new tail.
+    </TD></TR>
+<TR><TD><B>size():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      Returns the size of a sequence.
+    </TD></TR>
+<TR><TD><B>sort(pred:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Sorts a sequence using a comparison predicate of the
+      form @Operation(x,y) predicate en-d. The predicate
+      must be a comparison expression, e.g. x < y.
+    </TD></TR>
+<TR><TD><B>sortNamedElements(caseDependent:<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A>):<A HREF="../../../Root/XCore/NamedElement/index.html">Seq(NamedElement)<A></B></TD><TD>
+      Sorts a sequence of names. This operation is
+      implemented in the kernel as is therefore very
+      fast.
+    </TD></TR>
+<TR><TD><B>sortNamedElements():<A HREF="../../../Root/XCore/NamedElement/index.html">Seq(NamedElement)<A></B></TD><TD>
+      Default case depen-dent use of sortNamedElements(arg)
+    </TD></TR>
+<TR><TD><B>sortNamedElements_CaseIndependent():<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>sortNames():<A HREF="../../../Root/XCore/String/index.html">Seq(String)<A></B></TD><TD>
+      Sorts a sequence of names.
+    </TD></TR>
+<TR><TD><B>subSequence(starting:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,terminating:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Produces a subsequence given two indices.
+      The first index is inclusive and is the starting index.
+      The second index is exclusive and is the terminating
+      index.
+    </TD></TR>
+<TR><TD><B>subst(new:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,old:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,all:<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Substitutes old for new in a sequence. If all
+      is true, it will replace all elements, otherwise
+      it will replace the first element.
+    </TD></TR>
+<TR><TD><B>tail():<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Returns the tail of a sequence.
+    </TD></TR>
+<TR><TD><B>take(n:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Takes n elements from the tail of a
+      sequence.
+    </TD></TR>
+<TR><TD><B>takeWhile(pred:<A HREF="../../../Root/XCore/Operation/index.html">Operation<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>toString():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Produces a printed representation of a sequence.
+    </TD></TR>
+<TR><TD><B>unbind(key:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>zip(s:<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A>):<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Produces a sequences of pairs by matching the first element
+      of a sequence with the first element of s, and so on...
+    </TD></TR>
+</TABLE>
+</HTML>

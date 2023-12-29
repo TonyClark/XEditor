@@ -1,0 +1,12 @@
+parserImport Manifests;
+
+
+@Manifest Streams
+
+  @File Streams end
+  @File TokenStream end
+  @File TokenCons end
+  @File TokenNil end
+  @File Tokenizer end
+
+end;

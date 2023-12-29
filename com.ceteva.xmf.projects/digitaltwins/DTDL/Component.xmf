@@ -1,0 +1,30 @@
+parserImport XOCL;
+
+import DTDL;
+import Types;
+import Interfaces;
+import Elements;
+
+context Elements
+
+  @Class Component extends InterfaceElement
+
+    @Doc
+      Components enable Interfaces to be composed of 
+      other Interfaces. A Component is different from 
+      a Relationship because it describes contents 
+      that are directly part of the Interface, whereas 
+      a Relationship describes a link between two 
+      Interfaces. A Component describes the inclusion 
+      of an Interface into an Interface "by value". 
+      This means that cycles in Components are not 
+      allowed because the value of the Component 
+      would be infinitely big. In DTDL v3, a Component 
+      cannot contain another Component. 
+    end
+    
+    @Attribute schema : Schema (<,!) end
+    
+    @Constructor(name,schema) ! end
+
+  end

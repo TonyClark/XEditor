@@ -1,0 +1,23 @@
+parserImport XOCL;
+parserImport XEditor;
+
+@EventHandler toggle(systemParameter:String)
+
+  // Toggle system parameter...
+  
+  try
+    @Case systemParameter of
+      "ATTRIBUTES_ON_DIAGRAM" do
+        Doc::SHOW_ATTRIBUTES_ON_DIAGRAM := not(Doc::SHOW_ATTRIBUTES_ON_DIAGRAM)
+      end
+      "OPERATIONS_ON_DIAGRAM" do
+        Doc::SHOW_OPERATIONS_ON_DIAGRAM := not(Doc::SHOW_OPERATIONS_ON_DIAGRAM)
+      end
+      else throw Error("unknown system parameter: " + systemParameter)
+    end
+   catch(exception)
+     Root::xmfException := exception;
+     format(stdout,"~S~%",[exception]);
+     null
+   end
+end;

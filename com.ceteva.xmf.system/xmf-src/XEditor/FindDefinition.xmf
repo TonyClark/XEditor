@@ -1,0 +1,72 @@
+parserImport XOCL;
+
+import XEditor;
+
+context XEditor
+
+  @Class FindDefinition
+
+    @Attribute Finder : ForeignObject = xmf.javaClass("find.Finder") end
+
+    @Operation closed() null end
+
+    @Operation select(path:[String])
+      try
+        let definition = path.lookup()
+        in @TypeCase(definition)
+             CompiledOperation do
+               let resource = definition.codeBox().resourceName();
+                   charStart = definition.getProperty(Symbol("charStart"),null)
+               in if resource <> "" and resource <> null
+                  then 
+                    edit(resource);
+                    if charStart <> null then setCaretPosition(charStart) end
+                  end
+               end
+             end
+             Class do
+               let resource = definition.resourceName
+               in if resource <> "" and resource <> null
+                  then edit(resource)
+                  end
+               end
+             end
+             else format(stdout,"no editor for ~S~%",[definition])
+           end
+        end
+      catch(exception)
+        Root::xmfException := exception;
+        format(stdout,"~S~%",[exception])
+      end
+    end
+  
+    @Operation find()
+      let handler = xmf.getHandle(self) then
+          finder = Finder("Select items using search or double-click. Then double-click on a result to open the source file.",handler)
+      in self.populate(finder,Root,handler);
+         finder.setVisible(true)
+      end
+    end
+    
+    @Operation populate(finder,root,handler)
+      if root <> null
+      then
+        @TypeCase(root)
+          CompiledOperation do
+            let label = root.name + "(" + root.paramNames()->collect(p | p.toString())->separateWith(",") + ")"
+            in finder.openEntry("",root.name.toString(),label,handler,null);
+               finder.closeEntry()
+            end
+          end
+          NameSpace do
+            finder.openEntry("",root.name.toString(),root.name.toString(),handler,null);
+            @For o in root.contents() do
+              self.populate(finder,o,handler)
+            end;
+            finder.closeEntry()
+          end
+          else null
+        end
+      end
+    end
+  end

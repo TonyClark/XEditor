@@ -1,0 +1,24 @@
+parserImport XOCL;
+
+import DTDL;
+import Behaviour;
+import Interfaces;
+import Elements;
+
+context Elements
+
+  @Class Command extends InterfaceElement
+
+    @Doc
+      A Command describes a function or operation that 
+      can be performed on any digital twin.
+    end
+    
+    
+
+    @Attribute request      : CommandRequest    (<,!) end
+    @Attribute response     : CommandResponse   (<,!) end
+
+    @Constructor(name) ! end
+
+  end 

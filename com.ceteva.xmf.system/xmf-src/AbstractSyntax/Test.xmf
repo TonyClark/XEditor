@@ -1,0 +1,10 @@
+parserImport XOCL;
+parserImport AbstractSyntax;
+parserImport Parser::BNF;
+
+Root::X :=
+  @Language X 
+    @Grammar 
+    end
+  end;
+

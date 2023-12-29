@@ -1,0 +1,22 @@
+parserImport XOCL;
+
+/******************************************************************************
+ *                                                                            *
+ *                                Definitions                                 *
+ *                              ---------------                               *
+ *                                                                            *
+ *   A definition is a syntax construct with a name.                          *
+ *                                                                            *
+ ******************************************************************************/ 
+
+import AbstractSyntax;
+
+context XOCL
+
+  @Class Def isabstract extends Performable, Definiens
+     
+     @Attribute name : String end
+
+     @Operation getName():String name end
+     
+   end 

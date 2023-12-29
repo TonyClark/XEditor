@@ -1,0 +1,11 @@
+parserImport XOCL;
+
+import Models;
+import Lib;
+
+context Lib
+  @Class Borrows
+      @Attribute reader : Reader (<,!) end
+      @Attribute book   : Book   (<,!) end
+      @Constructor(reader,book) ! end
+    end

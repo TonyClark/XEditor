@@ -1,0 +1,105 @@
+parserImport XOCL;
+parserImport Parser::BNF;
+
+import XOCL;
+import Compiler;
+import AbstractSyntax;
+
+context Root
+  @Package OO
+    @Grammar extends OCL::OCL.grammar
+      OO ::= ps = <<Package>> * EOF {
+         OO::OOModel(ps).setDefinitions() 
+      }.
+      Package ::= 'package' n = <<NameDef>> '{' cs = <<Class>> * '}' { 
+        OO::OOPackage(n,cs)
+      }.
+      NameDef ::= n = Name { NameDef(n) }. 
+      NameRef ::= n = Name { NameRef(n) }.
+      Class ::= 'class' n = <<NameDef>> '{' 
+        as = <<Att>> *
+        c = <<Cnstr>> 
+        os = <<Fun>> * 
+      '}' { OO::OOClass(n,as,c,os) }.
+      Att ::= n = <<NameDef>> ':' t = <<Type>> { OO::OOAtt(n,t) }.
+      Type ::= BuiltinType | NamedType | ListType.
+      BuiltinType ::= 'Integer' { OO::OOBuiltinType("Integer") }.
+      NamedType ::= n = Name { OO::OONamedType(n) }.
+      ListType ::= '[' t = <<Type>> ']' { OO::OOListType(t) }.
+      Cnstr ::= n = <<NameRef>> '(' as = NameRefs ')' { OO::OOCnstr(n,as) }.
+      NameRefs ::= n = <<NameRef>> ns = (',' <<NameRef>>)* { Seq{n|ns} } | { [] }.
+      OOArgs ::= a = <<Arg>> as = (',' <<Arg>>)* { Seq{a|as} }.
+      Arg ::= n = <<NameDef>> ':' t = <<Type>> { OO::OOArg(n,t) }.
+      Fun ::= n = <<NameDef>> '(' as = OOArgs ')' e = ('=' <<Exp>> | <<Block>>) { OO::OOFun(n,as,e) }.
+      Block ::= '{' e = <<Exp>> '}' { e }.
+    end
+    @Class OOFun extends Definiens 
+      @Attribute name : NameDef end
+      @Attribute args:[OOArg] end
+      @Attribute body:Performable end
+      @Constructor(name,args,body) ! end
+      @Operation getName():String name.name end
+    end
+    @Class OOAtt extends Definiens 
+      @Attribute name : NameDef end
+      @Attribute type:OOType end
+      @Constructor(name,type) ! end
+      @Operation getName():String name.name end
+    end
+    @Class OOType extends Located end
+    @Class OOBuiltinType extends OOType
+      @Attribute name : String end
+      @Constructor(name) ! end
+    end
+    @Class OONamedType extends OOType, Definiendum
+      @Attribute name : String end
+      @Constructor(name) ! end
+      @Operation getName():String name end
+    end
+    @Class OOListType extends OOType
+      @Attribute type:OOType end
+      @Constructor(type) ! end
+    end
+    @Class OOCnstr extends Located 
+      @Attribute name:NameRef end
+      @Attribute args:[NameRef] end
+      @Constructor(name,args) ! end
+      @Operation getName():String name.name end
+    end
+    @Class OOArg extends Definiens
+      @Attribute name : NameDef end
+      @Attribute type:OOType end
+      @Constructor(name,type) ! end
+      @Operation getName():String name.name end
+    end
+    @Class OOModel extends Sugar
+      @Attribute packages:[OOPackage] end
+      @Constructor(packages) ! end
+      @Operation desugar() 
+        OCL::CompilationUnit("",[],[ [| 
+           Root::model := OO::OOModel(<packages.lift()>)
+        |] ],"",[])
+      end
+      @Operation setDefinitions()
+        let manager = DefinitionManager()
+        in manager.addHandler(OOPackage,"classes",@Operation(p,n,env) p.classes->iterate(c e=env | e.bind(c.getName(),c)) end);
+           manager.setDefinitions(self,Root::Env::NullEnv());
+           self
+        end
+      end
+    end
+    @Class OOPackage extends Definiens, AbstractSyntax::KeepSource
+      @Attribute name:NameDef end
+      @Attribute classes:[OOClass] end
+      @Constructor(name,classes) ! end
+      @Operation getName():String name.name end
+    end
+    @Class OOClass extends Definiens
+      @Attribute name:NameDef end
+      @Attribute atts:[OOAtt] end
+      @Attribute cnstr:OOCnstr end 
+      @Attribute funs:[OOFun] end
+      @Constructor(name,atts,cnstr,funs) ! end
+      @Operation getName():String name.name end
+    end
+  end

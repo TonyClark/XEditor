@@ -1,0 +1,8 @@
+parserImport Manifests;
+
+
+@Manifest MiniXCore
+
+  @File MiniXCore end
+
+end;

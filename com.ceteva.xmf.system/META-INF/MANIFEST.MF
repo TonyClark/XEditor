@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: XMF System Plug-in
+Bundle-SymbolicName: com.ceteva.xmf.system;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-ClassPath: system.jar
+Bundle-Vendor: Ceteva
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Eclipse-LazyStart: false

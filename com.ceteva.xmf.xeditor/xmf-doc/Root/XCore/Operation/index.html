@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Operation
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Operation</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      Operation is the abstract super-class of all operations in XMF. An operation
+      can be compiled or interpreted. All operations have parameters, a return type
+      and a body. The body must be performable. An operation is invoked using 
+      'invoke/2' where the first argument is the value of 'self' in the operation 
+      body and the second argument is a sequence of parameter values.
+    
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/XCore/index.html">XCore</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/XCore/BehaviouralFeature/index.html">BehaviouralFeature</A>
+<BR><HR>
+<B>Subclasses</B>
+<A HREF="../../../Root/XCore/CompiledOperation/index.html">CompiledOperation</A>
+,<A HREF="../../../Root/XCore/ForeignOperation/index.html">ForeignOperation</A>
+,<A HREF="../../../Root/XCore/InterpretedOperation/index.html">InterpretedOperation</A>
+,<A HREF="../../../InterpretedOperation/index.html">InterpretedOperation</A>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/TypedElement/index.html">TypedElement</A>: type. <BR><B>From</B> <A HREF="../../../Root/XCore/DocumentedElement/index.html">DocumentedElement</A>: documentation. <BR><B>From</B> <A HREF="../../../Root/XCore/NamedElement/index.html">NamedElement</A>: name. <BR><B>From</B> <A HREF="../../../Root/XCore/Contained/index.html">Contained</A>: owner. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>arity():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>break():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Adds a breakpoint to the receiver. When the receiver is
+      called, execution halts and allows the user to investigate
+      the current context.
+    </TD></TR>
+<TR><TD><B>breakFun(fun:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      This operation returns a function that can be invoked to
+      enter a break point. When the break point returns the
+      original operation is called.
+    </TD></TR>
+<TR><TD><B>deployJava(out:<A HREF="../../../Root/IO/OutputChannel/index.html">OutputChannel<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>dynamics():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      The dynamics of an operation are the imported name spaces.
+    </TD></TR>
+<TR><TD><B>fork(name:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>fork():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getDerivedValue(cache:<A HREF="../../../Root/XCore/Table/index.html">Table<A>,this:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,args:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>globals():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      The environment of freely referenced variables in the body
+      of the operation. 
+    </TD></TR>
+<TR><TD><B>invoke(target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,args:<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A>,supers:<A HREF="../../../Root/XCore/Operation/index.html">Seq(Operation)<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      An operation is performed by invoking it. The arguments are
+      given as the target (the value of self) and the sequence of
+      arguments required by the operation. Deal with var args here
+      by turning any extra arguments into a single argument that is
+      a sequence. The supers argument is used to supply the supers
+      value allowing the run-super mechanism to restart the lookup.
+    </TD></TR>
+<TR><TD><B>invoke(target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,args:<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      An operation is performed by invoking it. The arguments are
+      given as the target (the value of self) and the sequence of
+      arguments required by the operation. Deal with var args here
+      by turning any extra arguments into a single argument that is
+      a sequence.
+    </TD></TR>
+<TR><TD><B>invokes(target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,args:<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      This version of invoke calculates its supers from its owner which
+      is then passes as the argument to the 3 argument invoke.
+    </TD></TR>
+<TR><TD><B>isKindOf(c:<A HREF="../../../Root/XCore/Classifier/index.html">Classifier<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>javaTypeName(type:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>matchesId(id:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>matchesSignature(op:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>matchesTarget(object:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>name():<A HREF="../../../Root/XCore/Symbol/index.html">Symbol<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>paramNames():<A HREF="../../../Root/XCore/String/index.html">Seq(String)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setDynamics(dynamics:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setGlobals(globals:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Set the environment of freely reference variables.
+    </TD></TR>
+<TR><TD><B>setSupers(supers:<A HREF="../../../Root/XCore/Operation/index.html">Seq(Operation)<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setTarget(target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Set the value that will be used as 'self' in the evaluation
+      of the body of the operation.
+    </TD></TR>
+<TR><TD><B>sig():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns the signature of the receiver.
+    </TD></TR>
+<TR><TD><B>source():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>supers():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      The supers of an operation define where the search continues
+      when the body performs performs 'super'
+    </TD></TR>
+<TR><TD><B>target():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns the value of 'self' that was current when the operation
+      was created (unless the operation has been modified since).
+    </TD></TR>
+<TR><TD><B>toNamedElement():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>toType():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>trace():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Call this operation to trace an operation. When
+      the operation is called it will print out on
+      entry and exit.
+    </TD></TR>
+<TR><TD><B>traceFun(fun:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      This operation returns a function that can be invoked to
+      trace the operation fun.
+    </TD></TR>
+<TR><TD><B>traced():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true when the received is traced.
+    </TD></TR>
+<TR><TD><B>unbreak():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Call this operation to unbreak an operation.
+    </TD></TR>
+<TR><TD><B>untrace():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Call this operation to untrace an operation.
+    </TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/DocumentedElement/index.html">DocumentedElement</A>: doc, ensureDoc, setDoc. <BR><B>From</B> <A HREF="../../../Root/XCore/NamedElement/index.html">NamedElement</A>: getNamedElement, href, name, path, pathSeq, repopulate, setName, toString. <BR><B>From</B> <A HREF="../../../Root/XCore/Contained/index.html">Contained</A>: addTo, allOwners, deleteRecursive, owner, removeFromOwner, setOwner. <BR><B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=1><FONT SIZE="+2">
+<B>Grammar</B></FONT></TD>
+</TR>
+<TD><PRE>
+@Grammar extends OCL::OCL.grammar
+  
+    Operation ::= 
+    
+      // The name of an operation is optional. If
+      // specified it can be a dropped string...
+      
+      name = OpName 
+      
+      // Properties are optional in [ and ]...
+      
+      ps = Properties 
+      
+      // Args must be specified, but may have optional
+      // types and the optional multiple argument at the
+      // end after a '.' ...
+      
+      '(' args = OpArgs multi = OpMulti ')'
+      
+      // The return type of an operation is optional...
+      
+      type = <<ReturnType>>
+      
+      // The body of an operation is a sequence of 
+      // expressions...
+      
+      body = <<Exp>> + 
+      
+      'end'
+      
+      // Get the current parse state so that we can get 
+      // hold of the current imports...
+      
+      p = pState
+      
+      // Create the operation...
+      
+      { ps->iterate(p x = Operation(name,args + multi,type).add(body).setIsMultiArgs(not multi->isEmpty).setImports(p.imports->excluding(XCore)->excluding(Root)->map("pathSeq")).setProperties(ps) |
+            [| <x>.setProperty(<StrExp(p->at(0))>,<p->at(1)>) |]
+        )
+      }.
+      
+    OpName ::= 
+    
+      // An operation name is optional. It may be a
+      // dropped string or just a name. If a name is
+      // not specified then the name anonymous is used...
+    
+      name = AName { if name.isKindOf(String) then Symbol(name) else name end } 
+    | { Symbol("anonymous") }.
+    
+    OpArgs ::= 
+    
+      arg = OpArg args = (',' OpArg)* { Seq{arg | args } }   
+    | { Seq{} }.
+    
+    OpArg ::= 
+    
+      // Operation arguments are patterns. If you 
+      // want to drop a pattern in then it requires a ! in front...
+      
+      <<Pattern>>
+    | '!' Drop. 
+    
+    OpMulti ::= 
+    
+      // Multi-arg operations have the final argument after
+      // a '.'. At run-time the rest of the supplied arguments
+      // are supplied as a sequence...
+    
+      '.' multi = <<Pattern>> { Seq{multi} } 
+    | { Seq{} }.
+    
+    ReturnType ::= 
+    
+      ':' <<TypeExp>> 
+    | { NamedType() }.
+    
+    Properties ::= 
+    
+      '[' p = Property ps = (',' Property)* ']' { Seq{p|ps} } 
+    | { Seq{} }.
+    
+    Property ::= n = Name '=' e = <<Exp>> { [n,e] } | n = Name { [ n,[| true |] ] }.
+    
+  end
+</PRE></TD>
+</TABLE>
+</HTML>

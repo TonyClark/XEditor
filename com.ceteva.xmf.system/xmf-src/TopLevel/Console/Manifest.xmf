@@ -1,0 +1,6 @@
+parserImport XOCL;
+parserImport Manifests;
+ 
+@Manifest Console
+  @File Console  end
+end;

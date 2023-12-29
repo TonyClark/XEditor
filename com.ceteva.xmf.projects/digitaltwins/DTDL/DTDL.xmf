@@ -1,0 +1,21 @@
+parserImport XOCL;
+
+
+context Root
+
+  @Package DTDL
+
+    @Doc 
+      A model of the Azure DTDL that describes digital twins.
+    end
+
+    @Bind idCounter = 0 end
+
+    @Operation newId():String
+      let id = "id" + idCounter
+      in DTDL::idCounter := idCounter + 1;
+         id
+      end
+    end
+
+  end

@@ -1,0 +1,22 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import AbstractSyntax;
+
+@EventHandler compileXMF(home)
+
+  // Run though the manifest for the whole of XMF and compile all the files 
+  // that are out of date...
+  
+    try
+      let manifest = home + "/Manifest"
+      in 
+        Compiler::compileFile(manifest + ".xmf",true,true);
+        (manifest + ".o").loadBin(true).build(home);
+        true
+      end
+    catch(exception)
+      Root::xmfException := exception;
+      exception.printBacktrace()
+    end
+  end;

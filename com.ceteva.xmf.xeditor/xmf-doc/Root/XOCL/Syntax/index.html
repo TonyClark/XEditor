@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Syntax
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Syntax</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+ 
+      A syntax class defines a special type of performable element that
+      evaluates to itself instead of to a performable element whose semantics
+      is already known. The benefit of this is that the structure of the
+      syntax element is not lost when the language feature is evaluated. 
+      The consequence of desugaring to itself is that the element must specify 
+      its own semantics.
+    
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/XOCL/index.html">XOCL</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/XCore/Performable/index.html">Performable</A>
+<BR><HR>
+<B>Subclasses</B>
+<A HREF="../../../Root/Manifests/ManifestBinding/index.html">ManifestBinding</A>
+,<A HREF="../../../Parser/Grammar/index.html">Grammar</A>
+,<A HREF="../../../Root/Manifests/ManifestEntry/index.html">ManifestEntry</A>
+,<A HREF="../../../Root/XOCL/SyntaxConstant/index.html">SyntaxConstant</A>
+,<A HREF="../../../Parser/Pattern/index.html">Pattern</A>
+,<A HREF="../../../Parser/RepeatClause/index.html">RepeatClause</A>
+,<A HREF="../../../Root/XOCL/SyntaxNameSpace/index.html">SyntaxNameSpace</A>
+,<A HREF="../../../Parser/Command/index.html">Command</A>
+,<A HREF="../../../Parser/CommandArg/index.html">CommandArg</A>
+,<A HREF="../../../Parser/Case/index.html">Case</A>
+,<A HREF="../../../Parser/CaseClause/index.html">CaseClause</A>
+,<A HREF="../../../Parser/Clause/index.html">Clause</A>
+,<A HREF="../../../Parser/Ref/index.html">Ref</A>
+,<A HREF="../../../Parser/GuardExp/index.html">GuardExp</A>
+,<A HREF="../../../Parser/Guard/index.html">Guard</A>
+,<A HREF="../../../Root/XRules/Field/index.html">Field</A>
+,<A HREF="../../../Root/XRules/Rule/index.html">Rule</A>
+,<A HREF="../../../Root/XRules/Catch/index.html">Catch</A>
+,<A HREF="../../../Root/XRules/Action/index.html">Action</A>
+,<A HREF="../../../Parser/Attribute/index.html">Attribute</A>
+,<A HREF="../../../Root/XRules/Rules/index.html">Rules</A>
+,<A HREF="../../../Root/XRules/RuleDef/index.html">RuleDef</A>
+,<A HREF="../../../Root/XRules/Term/index.html">Term</A>
+,<A HREF="../../../Root/XRules/Clause/index.html">Clause</A>
+,<A HREF="../../../Root/XRules/Builtin/index.html">Builtin</A>
+,<A HREF="../../../Root/Languages/MicroJava/Structure/Package/index.html">Package</A>
+,<A HREF="../../../Root/Languages/MicroJava/Structure/CompilationUnit/index.html">CompilationUnit</A>
+,<A HREF="../../../Root/Languages/MicroJava/Structure/Feature/index.html">Feature</A>
+,<A HREF="../../../Root/Languages/MicroJava/Structure/Formal/index.html">Formal</A>
+,<A HREF="../../../Root/Languages/MicroJava/Structure/UnitDef/index.html">UnitDef</A>
+,<A HREF="../../../Root/Languages/MicroJava/Structure/Path/index.html">Path</A>
+,<A HREF="../../../Root/Languages/MicroJava/Statements/Statement/index.html">Statement</A>
+,<A HREF="../../../Root/Languages/MicroJava/Expressions/JExp/index.html">JExp</A>
+,<A HREF="../../../Root/Languages/MicroJava/Structure/Type/index.html">Type</A>
+,<A HREF="../../../Root/Languages/MicroJava/Structure/Modifiers/index.html">Modifiers</A>
+,<A HREF="../../../Root/Languages/MicroJava/Structure/Import/index.html">Import</A>
+,<A HREF="../../../Builtin/index.html">Builtin</A>
+,<A HREF="../../../Root/XML/Parser/Pattern/index.html">Pattern</A>
+,<A HREF="../../../Root/XML/Parser/RepeatClause/index.html">RepeatClause</A>
+,<A HREF="../../../Root/XML/Parser/Ref/index.html">Ref</A>
+,<A HREF="../../../Root/XML/Parser/Command/index.html">Command</A>
+,<A HREF="../../../Root/XML/Parser/CommandArg/index.html">CommandArg</A>
+,<A HREF="../../../Root/XML/Parser/Case/index.html">Case</A>
+,<A HREF="../../../Root/XML/Parser/CaseClause/index.html">CaseClause</A>
+,<A HREF="../../../Root/XML/Parser/Clause/index.html">Clause</A>
+,<A HREF="../../../Root/XML/Parser/Grammar/index.html">Grammar</A>
+,<A HREF="../../../Root/XML/Parser/GuardExp/index.html">GuardExp</A>
+,<A HREF="../../../Root/XML/Parser/Guard/index.html">Guard</A>
+,<A HREF="../../../Root/XML/Parser/Attribute/index.html">Attribute</A>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Performable/index.html">Performable</A>: endLine, line. <BR><B>From</B> <A HREF="../../../Root/XCore/Located/index.html">Located</A>: charEnd, charStart. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>compile(env:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,frame:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,isLast:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,saveSource:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>eval(target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,env:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,imports:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>lift():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>liftKeyArgs():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>liftValue(value:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>maxLocals():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>syntaxInit():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Performable/index.html">Performable</A>: FV, compile, endLine, eval, line, maxLocals, pprint, pprint, pprint, setEndLine, setLine. <BR><B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+</HTML>

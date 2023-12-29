@@ -1,0 +1,89 @@
+parserImport XOCL;
+
+import DTDL;
+import Interfaces;
+import Elements;
+import Types;
+
+context Root
+  @Snapshot HomeOffice(DTDL)
+
+    model = Model[
+      name = "House_Interface_Model";
+      interface = house
+    ]
+
+    house = Interface[
+      displayName = "House";
+      contents = [
+        Property[
+           name = "address",
+           schema = Object[
+             fields = [
+               Field[
+                 name = "street",
+                 schema = PrimitiveSchema("String")
+               ],
+               Field[
+                 name = "city",
+                 schema = PrimitiveSchema("String")
+               ],
+               Field[
+                 name = "postcode",
+                 schema = PrimitiveSchema("String")
+               ]
+             ]
+           ]
+        ],
+        Property[
+           name = "constructionYear",
+           schema = PrimitiveSchema("String")
+        ],
+        Property[
+           name = "owner",
+           schema = PrimitiveSchema("String")
+        ],
+        Relationship[
+          name = "floors",
+          target = floor
+        ]
+      ]
+    ]
+
+    floor = Interface[
+
+      displayName = "Floor";
+      contents = [
+        Property[
+           name = "name",
+           schema = PrimitiveSchema("String")
+        ],
+        Relationship[
+          name = "rooms",
+          target = room
+        ]
+      ]
+
+    ]
+
+    room = Interface[
+
+      displayName = "Room";
+      contents = [
+        Property[
+           name = "name",
+           schema = PrimitiveSchema("String")
+        ],
+        Telemetry[
+          name = "temperature",
+          schema = PrimitiveSchema("Double")
+        ],
+        Telemetry[
+          name = "humidity",
+          schema = PrimitiveSchema("Double")
+        ]
+      ]
+
+    ]
+
+  end

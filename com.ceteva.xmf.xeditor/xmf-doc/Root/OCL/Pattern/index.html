@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Pattern
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Pattern</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+No Documentation Specified
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/OCL/index.html">OCL</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/XCore/Located/index.html">Located</A>
+<BR><HR>
+<B>Subclasses</B>
+<A HREF="../../../Root/OCL/Objectp/index.html">Objectp</A>
+,<A HREF="../../../Root/OCL/Varp/index.html">Varp</A>
+,<A HREF="../../../Root/OCL/Consp/index.html">Consp</A>
+,<A HREF="../../../Root/OCL/Syntaxp/index.html">Syntaxp</A>
+,<A HREF="../../../Root/OCL/Constp/index.html">Constp</A>
+,<A HREF="../../../Root/OCL/Condp/index.html">Condp</A>
+,<A HREF="../../../Root/OCL/Keywordp/index.html">Keywordp</A>
+,<A HREF="../../../Root/OCL/Addp/index.html">Addp</A>
+,<A HREF="../../../Root/OCL/Includingp/index.html">Includingp</A>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Located/index.html">Located</A>: charEnd, charStart. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>getVars():<A HREF="../../../Root/OCL/Varp/index.html">Seq(Varp)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>lift():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>matchCode(value:<A HREF="../../../Root/XCore/Performable/index.html">Performable<A>,success:<A HREF="../../../Root/XCore/Performable/index.html">Performable<A>,fail:<A HREF="../../../Root/XCore/Performable/index.html">Performable<A>):<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>
+         Produces executable code that checks whether value matches the
+         receiver. The match may cause variables to be bound. If the
+         match succeeds then the success code is performed, otherwise
+         the fail code is performed.
+       </TD></TR>
+<TR><TD><B>needsBacktrack():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+         A pattern requires backtracking when it contains an including pattern.
+         Non-backtracking pattern matching is more efficient because operations
+         are not required to maintain the backtrack state during matching.
+       </TD></TR>
+<TR><TD><B>newParam():<A HREF="../../../Root/XCore/Parameter/index.html">Parameter<A></B></TD><TD>
+         By default a pattern will generate a new paremeter with a new var name.
+         The parameter is used to contain the value that is matched against the
+         pattern.
+       </TD></TR>
+<TR><TD><B>newVar():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>pprint():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>pprint(out:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>toSig():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>typeExp():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+</HTML>

@@ -1,0 +1,24 @@
+parserImport XOCL;
+
+import XCore;
+import Associations;
+import Clients::Menus;
+
+context Association
+  @Operation delete_client()
+    self.end1.deleteRecursive();
+    self.end2.deleteRecursive();
+//    self.deleteRecursive();
+    self.owner.remove(self)
+  end
+
+context Associations::End
+  @Operation delete_client()
+    self.association.delete_client();
+    self
+  end
+  
+context Association
+  @Operation toggleArrow_client()
+	"toggleArrow_client".println()
+end

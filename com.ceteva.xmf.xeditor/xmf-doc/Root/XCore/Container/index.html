@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Container
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Container</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      A container has a slot 'contents' that is a table. The table maintains the
+      contained elements indexed by keys. By default the leys for the elements in
+      the table are the elements themselves, but sub-classes of container will
+      modify this feature accordingly. Container provides operations for accessing
+      and managing its contents.
+    
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/XCore/index.html">XCore</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/XCore/Object/index.html">Object</A>
+<BR><HR>
+<B>Subclasses</B>
+<A HREF="../../../Root/XCore/UnorderedContainer/index.html">UnorderedContainer</A>
+,<A HREF="../../../Root/XCore/IndexedContainer/index.html">IndexedContainer</A>
+,<A HREF="../../../Root/XCore/OrderedContainer/index.html">OrderedContainer</A>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+</FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>add(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Container/index.html">Container<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>addContentDaemon(actionSource:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,daemon:<A HREF="../../../Root/XCore/Operation/index.html">Operation<A>):<A HREF="../../../Root/XCore/Container/index.html">Container<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>allContents():<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD> 
+      Returns all the contents of the receiver and all the contents of all
+      containers that it contains.
+    </TD></TR>
+<TR><TD><B>allContentsOf(type:<A HREF="../../../Root/XCore/Classifier/index.html">Classifier<A>):<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD> 
+      Returns all the contents of the receiver and all the contents of all
+      containers that it contains. The elements are filtered by the classifier
+      suppplied as an argument.
+    </TD></TR>
+<TR><TD><B>allContentsThat(predicate:<A HREF="../../../Root/XCore/Operation/index.html">Operation<A>):<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD> 
+      Returns all the contents of the receiver and all the contents of all
+      containers that it contains. The elements are filtered using the
+      supplied predicate.
+    </TD></TR>
+<TR><TD><B>checkConstraints(contents:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>checkConstraints():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>contentDaemons():<A HREF="../../../Root/XCore/Operation/index.html">Seq(Operation)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>contents():<A HREF="../../../Root/XCore/Collection(Element)/index.html">Collection(Element)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>contentsOf(type:<A HREF="../../../Root/XCore/Classifier/index.html">Classifier<A>):<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>
+      Returns a set of contained elements of the
+      supplied type.
+    </TD></TR>
+<TR><TD><B>contentsThat(predicate:<A HREF="../../../Root/XCore/Operation/index.html">Operation<A>):<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>
+      Returns a set of contained elements that satisfy the
+      supplied predicate.
+    </TD></TR>
+<TR><TD><B>deleteRecursive():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>includes(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>init():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>initContents():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>remove(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Container/index.html">Container<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>removeContentDaemon(daemon:<A HREF="../../../Root/XCore/Operation/index.html">Operation<A>):<A HREF="../../../Root/XCore/Container/index.html">Container<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>traceAll():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Causes all the operations transitively contained in the
+      receiver to be traced.
+    </TD></TR>
+<TR><TD><B>untraceAll():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Causes all the operations transitively contained in the
+      receiver to be untraced.
+    </TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+</HTML>

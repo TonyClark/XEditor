@@ -1,0 +1,334 @@
+parserImport XOCL;
+parserImport Parser::BNF;
+
+import Exceptions;
+import OCL;
+import Filmstrips;
+import Constraints;
+import AST;
+
+context Constraints
+
+  @Class Constraint
+
+    @Attribute op:(Filmstrip) -> Boolean (<) end
+
+    @Grammar extends XRules::Rule.grammar
+
+      Constraint ::= name = ConstraintName e = Logic 'end' {  
+        [| let logic_ = <e.lift()> then
+               vars_ = Filmstrips::Constraints::getVars(logic_,[]) then
+               lvars_ = vars_->iterate(v lvars = [] | Seq{Seq{v.name() | XRules::Var(v.name(),v.type())} | lvars})
+           in Filmstrips::Constraints::Constraint(
+                @Operation<name>(filmstrip_)
+                  <Constraint().expand(e)>(
+                    filmstrip_.getStep(),
+                    @Operation(step_,fail_,env_) true end,
+                    @Operation() false end,
+                    [])
+                end)
+           end
+        |] }.
+
+      ConstraintName ::= Name | Str.
+
+      Parent ::= '(''U'')' p=Logic { Parent(p) }
+             |   '(''L'')' p=Logic { LeftNeighbour(p) }
+             |   '(''R'')' p=Logic { RightNeighbour(p) }
+             |   '<''U''>' p=Logic { Ancestor(p) }
+             |   '<''L''>' p=Logic { LeftSibling(p) }
+             |   '<''R''>' p=Logic { RightSibling(p) }
+             |   '<''D''>' p=Logic { Child(p) }
+             |   '<''D''*>' p=Logic { Descendent(p) }
+             |   '[''U'']' p=Logic { AllAncestors(p) }
+             |   '[''L'']' p=Logic { AllLeftSiblings(p) }
+             |   '[''R'']' p=Logic { AllRightSiblings(p) }
+             |   '[''D'']' p=Logic { AllChildren(p) }
+             |   '[''D''*]' p=Logic { AllDescendents(p) }.
+             
+      Logic ::=  'not' e = Atomic { Neg(e) } | BinLogic.
+
+      BinLogic ::= l = Atomic (
+          'and' r = Logic { And(l,r) }
+        | 'or' r = Logic { Or(l,r) }
+        | 'implies' r = Logic { Implies(l,r) }
+        | { l }).
+      Atomic ::= Parent | 'true' { True } | 'false' { False } | Step | '(' p = Logic ')' { p }.
+      Step ::= '{' s=StepPattern '}' | '{' s=Show '}' { s }. 
+      StepPattern ::= 
+        p=pState v=Term 
+        '=' p=pState o=Term 
+        '.' p=pState m=Term 
+        '(' p=pState as=Term ')' 
+        '|-' p=pState src=Term 
+        '->' p=pState tgt=Term g = OptGuard {  Step(v,o,m,as,src,tgt,g) }.
+      Show ::= '<-' as=Action* { Show(as) }.
+
+      OptGuard ::= 'when' Action* | { [] }.
+
+    end 
+
+    @Constructor (op) ! end
+
+    @Operation test() 
+      Constraint.grammar.parseString("<D*> true end") 
+    end 
+
+    @Operation check(filmstrip:Filmstrip):Boolean
+      op(filmstrip)
+    end
+
+    @Operation expand(ast:AST):Performable
+      @Case ast of
+        AllAncestors(p) do
+          [| @Operation allAncestors(step_,success_,fail_,env_)
+               filmstrip_.selectAll(filmstrip_.getAncestors(step_),
+                 @Operation selectAllAncestors(step_,next_,fail_)
+                   <self.expand(p)>(step_,@Operation selectAllAncestorsNext(step_,fail_,ignore_) next_(fail_) end,fail_,env_)
+                 end,
+                 @Operation selectAllAncestorsFinally(fail_) success_(step_,fail_,env_) end,
+                 fail_)  
+             end
+          |]
+        end
+        AllChildren(p) do
+          [| @Operation allChildren(step_,success_,fail_,env_)
+               filmstrip_.selectAll(filmstrip_.getSteps(step_),
+                 @Operation selectAllChildren(step_,next_,fail_)
+                   <self.expand(p)>(step_,@Operation selectAllChildrenNext(step_,fail_,ignore_) next_(fail_) end,fail_,env_)
+                 end,
+                 @Operation selectAllChildrenFinally(fail_) success_(step_,fail_,env_) end,
+                 fail_)  
+             end
+          |]
+        end
+        AllDescendents(p) do
+          [| @Operation allDescendents(step_,success_,fail_,env_)
+               filmstrip_.selectAll(filmstrip_.getDescendents(step_),
+                 @Operation selectAllDescendents(step_,next_,fail_)
+                   <self.expand(p)>(step_,@Operation selectAllDescendentsNext(step_,fail_,ignore_) next_(fail_) end,fail_,env_)
+                 end,
+                 @Operation selectAllDescendentsFinally(fail_) success_(step_,fail_,env_) end,
+                 fail_)  
+             end
+          |]
+        end
+        AllLeftSiblings(p) do
+          [| @Operation allLeftSiblings(step_,success_,fail_,env_)
+               filmstrip_.selectAll(filmstrip_.getLeftSiblings(step_),
+                 @Operation selectAllLeftSiblings(step_,next_,fail_)
+                   <self.expand(p)>(step_,@Operation selectAllLeftSiblingsNext(step_,fail_,ignore_) next_(fail_) end,fail_,env_)
+                 end,
+                 @Operation selectAllLeftSiblingsFinally(fail_) success_(step_,fail_,env_) end,
+                 fail_)  
+             end
+          |]
+        end
+        AllRightSiblings(p) do
+          [| @Operation allRightSiblings(step_,success_,fail_,env_)
+               filmstrip_.selectAll(filmstrip_.getRightSiblings(step_),
+                 @Operation selectAllRightSiblings(step_,next_,fail_)
+                   <self.expand(p)>(step_,@Operation selectAllRightSiblingsNext(step_,fail_,ignore_) next_(fail_) end,fail_,env_)
+                 end,
+                 @Operation selectAllRightSiblingsFinally(fail_) success_(step_,fail_,env_) end,
+                 fail_)  
+             end
+          |]
+        end
+        And(l,r) do 
+          [| @Operation(step_,success_,fail_,env_)
+               <self.expand(l)>(step_,
+                 @Operation(ignore_,fail_,env_)
+                   <self.expand(r)>(step_,success_,fail_,env_)
+                 end,
+                 fail_,
+                 env_)
+             end |]
+        end
+        Implies(l,r) do 
+          [| @Operation(step_,success_,fail1_,env_)
+               <self.expand(l)>(step_,
+                 @Operation(ignore_,fail2_,env_)
+                   <self.expand(r)>(step_,success_,@Operation() false end,env_)
+                 end,
+                 @Operation() success_(step_,fail1_,env_) end,
+                 env_)
+             end |]
+        end
+        Ancestor(p) do
+          [| @Operation(step_,success_,fail_,env_)
+               if filmstrip_.isRoot(step_) 
+               then fail_() 
+               else 
+                 filmstrip_.select(filmstrip_.getAncestors(step_),
+                   @Operation(step_,fail_)
+                     <self.expand(p)>(step_,success_,fail_,env_)
+                   end,
+                   fail_)
+                end  
+             end
+          |]
+        end
+        Descendent(p) do
+          [| @Operation(step_,success_,fail_,env_)
+               filmstrip_.select(filmstrip_.getDescendents(step_),
+                 @Operation(step_,fail_)
+                   <self.expand(p)>(step_,success_,fail_,env_)
+                 end,
+                 fail_)
+             end  
+          |]
+        end
+        LeftNeighbour(p) do
+          [| @Operation(step_,success_,fail_,env_)
+               let step_ = filmstrip_.getLeftNeighbour(step_)
+               in if step_ = null
+                  then fail_()
+                  else <self.expand(p)>(step_,success_,fail_,env_)
+                  end
+               end
+             end  
+          |]
+        end
+        RightNeighbour(p) do
+          [| @Operation(step_,success_,fail_,env_)
+               let step_ = filmstrip_.getRightNeighbour(step_)
+               in if step_ = null
+                  then fail_()
+                  else <self.expand(p)>(step_,success_,fail_,env_)
+                  end
+               end
+             end  
+          |]
+        end
+        Parent(p) do
+          [| @Operation(step_,success_,fail_,env_)
+               if filmstrip_.isRoot(step_) 
+               then fail_() 
+               else 
+                 let step_ = filmstrip_.getParent(step_) 
+                 in <self.expand(p)>(step_,success_,fail_,env_)
+                 end 
+               end 
+             end
+          |]
+        end
+        Child(p) do
+          [| @Operation child(step_,success_,fail_,env_)
+               if step_.getSteps() = [] 
+               then fail_() 
+               else 
+                 filmstrip_.select(step_.getSteps(),
+                   @Operation childSelected(step_,fail_)
+                     <self.expand(p)>(step_,success_,fail_,env_)
+                   end,
+                   fail_)
+                end 
+             end
+          |]
+        end
+        LeftSibling(p) do
+          [| @Operation leftSibling(step_,success_,fail_,env_)
+                 filmstrip_.select(filmstrip_.getLeftSiblings(step_),
+                   @Operation leftSiblingSelected(step_,fail_)
+                     <self.expand(p)>(step_,success_,fail_,env_)
+                   end,
+                   fail_)
+             end
+          |]
+        end
+        RightSibling(p) do
+          [| @Operation rightSibling(step_,success_,fail_,env_)
+                 filmstrip_.select(filmstrip_.getRightSiblings(step_),
+                   @Operation rightSiblingSelected(step_,fail_)
+                     <self.expand(p)>(step_,success_,fail_,env_)
+                   end,
+                   fail_)
+             end
+          |]
+        end
+        [ False ] do
+          [| @Operation(step_,success_,fail_,env_)
+               fail_()
+             end
+          |]
+        end
+        [ True ] do
+          [| @Operation(step_,success_,fail_,env_)
+               success_(step_,fail_,env_)
+             end
+          |]
+        end
+        Neg(p) do
+          [| @Operation(step_,success_,fail_,env_)
+               <self.expand(p)>(step_,@Operation negSucc(ignore_,env_) fail_() end,@Operation negFail() success_(step_,fail_,env_) end,env_)
+             end
+          |]
+        end
+        Show(actions) do
+          [| @Operation(step_,success_,fail_,env_)
+               let actions_ = <actions->iterate(a e=[| [] |] | [| <e> + [ <a.lift()> ] |] ) >
+               in Filmstrips::Constraints::Constraint::checkActions(actions_,filmstrip_.getRules(),lvars_,0,env_,
+                    @Operation actionSucc(env_,ignore_)
+                      success_(step_,fail_,env_)
+                    end,
+                    fail_,
+                    fail_,
+                    null)
+               end
+             end
+          |]
+        end
+          
+        Step(result,target,message,args,sources,targets,actions) do 
+          // Turn the step into a transition and unify it with the term pattern...
+          [| @Operation(step_,success_,fail_,env_)
+               let record_ = XRules::Record(["Filmstrips","Transition"],[
+                              XRules::Field("result",<result>),
+                              XRules::Field("target",<target>),
+                              XRules::Field("message",<message>),
+                              XRules::Field("args",<args>),
+                              XRules::Field("sources",<sources>),
+                              XRules::Field("targets",<targets>)
+                             ]) then 
+                   term_ = record_.build(filmstrip_.getRules(),lvars_);
+                   actions_ = <actions->iterate(a e=[| [] |] | [| <e> + [ <a.lift()> ] |] ) >;
+                   transition_ = step_.toTransition() then
+                   env_ = XRules::unify(term_,transition_,env_)
+               in //format(stdout,"match ~S to ~S vars = ~S unify = ~S~%",[ transition_,term_,vars_,env_ ]);
+                  if env_ = null
+                  then fail_()
+                  else 
+                    Filmstrips::Constraints::Constraint::checkActions(actions_,filmstrip_.getRules(),lvars_,0,env_,
+                      @Operation actionSucc(env_,ignore_)
+                        success_(step_,fail_,env_)
+                      end,
+                      fail_,
+                      fail_,
+                      null)
+                  end
+               end
+             end
+          |]
+        end
+        else throw Error("unknown type of AST: " + ast)
+      end
+    end
+
+    @Operation checkActions(actions:[Action],rules:Rules,lvars:[Var],indent:Integer,env:[Var],succ,fail,cut,exception)
+      if actions->isEmpty
+      then succ(env,fail)
+      else 
+        actions->head.perform(rules,lvars,indent,env,
+          @Operation(env,fail) 
+            Filmstrips::Constraints::Constraint::checkActions(actions->tail,rules,lvars,indent,env,succ,fail,cut,exception) 
+          end,
+          fail,cut,exception)
+      end
+    end
+
+    @Operation getName():String
+      op.name().toString()
+    end
+
+  end

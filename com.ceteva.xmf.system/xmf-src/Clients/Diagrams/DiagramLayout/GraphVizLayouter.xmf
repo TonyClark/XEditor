@@ -1,0 +1,165 @@
+parserImport XOCL;
+
+import Clients;
+import Diagrams;
+
+context DiagramLayout
+
+@Class GraphVizLayouter 
+
+	@Operation classnameToArrowhead(classname)
+	  let
+	    c = classname.toString()
+	  in  
+	    if c = "InheritanceEdge" then
+			"empty"	    
+	    elseif c = "AttributeEdge" then
+			"dot"	    
+	    else
+	    	"normal"
+	    end
+	  end
+	end
+
+	@Operation performLayout() // self will contain diagram:Diagram
+	  let
+		tmpDir = XMF::getTmpDir();
+		dotExe = XMF::getConfigArg("graphviz");
+	    zoom = 150; // TODO find suitable conversion from dot's float coordinates to pixels,  maybe make configurable
+
+        rnd = (Float::random() * 1000000).round() then
+        tmpDotFile = tmpDir + "/tmp" + rnd + ".dot" then
+        tmpOutFile = tmpDotFile + ".plain";
+        tmpOutAvailable = false;
+        waitCounter = 0
+	  in
+	    if dotExe = null then
+	      xmf.message("Cannot perform auto-layout: the GraphViz executable is not configured, please provide the path of dot.exe in argument 'graphviz'")
+	    else
+		//print("Doing the layout for "+self.of()+ ", number of nodes "+self.graph.nodes->size+" from temp file "+tmpDotFile+" to "+tmpOutFile+"\n");
+		@WithOpenFile(fout -> tmpDotFile)
+			format(fout, "digraph g {\n");
+			@For node in self.graph.nodes do
+				format(fout, "node"+node.id+";\n")
+			end;			
+			@For edge in self.graph.edges do
+				format(fout, "node"+edge.source.owner.id+" -> node"+edge.target.owner.id+" [type=\""+edge.of().name+"\",arrowhead=\""+GraphVizLayouter::classnameToArrowhead(edge.of().name)+"\"];\n")
+			end;
+			format(fout, "}")
+		end;
+		
+		Kernel_exec(dotExe, Seq{"-O", "-Tplain", tmpDotFile}); // -O outputs *.plain file
+		
+		//print("Waiting for result...\n");
+		@While ( (not tmpOutAvailable) and (waitCounter <= 20) ) do
+          xmf.delay(50); // wait until file is there
+		  tmpOutAvailable := tmpOutFile.fileExists();
+		  if not tmpOutAvailable then
+		    waitCounter := waitCounter + 1;
+		    print("Waiting for layouter result, retrying ("+waitCounter+")...\n") 
+		  end
+		end; 
+		
+		if tmpOutAvailable then
+		
+		  //print("Parsing result...\n");
+		  let
+		    s = tmpOutFile.readFile() then
+		    lines = s.splitBy("\n",0,0) then
+		    line = lines->head() then // first line
+		    lines = lines->tail() then
+		    l = line.splitBy(" ",0,0) then
+		    line = lines->head() then // second line
+		    lines = lines->tail();
+		    scale = 1;
+		    width = 1;
+		    height = 1;
+		    name = null;
+		    x  = 0;
+		    y = 0
+		  in
+			if l->head() = "graph" then
+			  scale := l->at(1);
+			  width := l->at(2);
+			  height := l->at(3);
+
+			  l := line.splitBy(" ",0,0); // second line
+
+              @WithoutRendering(self)
+
+                1; // workaround, needed for correct compilation of @While inside @WithoutRendering
+              
+		        @While l->head() = "node" do
+				  name := l->at(1);
+				  x := l->at(2);
+				  y := l->at(3);
+		          line := lines->head();
+				  lines := lines->tail();
+				  l := line.splitBy(" ",0,0);
+				  
+				  @For node in self.graph.nodes do
+					if "node"+node.id = name then
+					  x := (x.asFloat() * zoom).round();
+					  y := (y.asFloat() * zoom).round();
+					  node.move(x,y)
+		              //print("* setting "+name+"("+x+","+y+")\n")
+		            //else
+		              //print("("+name+" != "+node.id+")\n")
+				    end
+				  end
+				
+		        end
+
+              end
+			
+			else
+		      print("Parse error: 'graph' expected in line 1.\n")
+			end
+
+		  end;
+		  tmpOutFile.deleteFile()
+		  //print("Done.")
+		  
+		else
+		  print("Error: temporary file "+tmpOutFile+" not available after 20 tries. Operation canceled.\n")
+	    end
+	    end
+	  end
+	end
+
+end
+
+/* example:
+digraph obj{
+        node[shape=record];
+        rankdir="BT";
+        
+        teacher [label = "{<f0> Teacher|<f1> \n  |<f2> \n   }"];
+        course [label = "{<f0> Course|<f1> \n  |<f2> \n   }"];
+        student [label = "{<f0> Student|<f1> \n  |<f2> \n   }"];
+        lesson [label = "{<f0> Lesson |<f1> \n  |<f2> \n   }"];
+        tutorial [label = "{<f0> Tutorial|<f1> \n  |<f2> \n   }"];
+        assessment[label = "{<f0> Assessment|<f1> \n  |<f2> \n   }"];
+        coursework [label = "{<f0> Coursework|<f1> \n  |<f2> \n   }"];
+        exam [label = "{<f0> Exam|<f1> \n  |<f2> \n   }"];
+
+        {rank=same; teacher course student}
+
+        teacher->course [dir="forward",arrowhead="none",arrowtail="normal",headlabel="1",taillabel="1.."];
+        student->course [dir="forward",arrowhead="none",arrowtail="normal",headlabel="1",taillabel="1.."];
+        lesson->course [dir="forward",arrowhead="diamond",arrowtail="normal"];
+        tutorial->course [dir="forward",arrowhead="diamond",arrowtail="normal"];
+        assessment->course [dir="forward",arrowhead="diamond",arrowtail="normal"];
+        coursework->assessment;
+        exam->assessment;
+
+}
+*/
+/*		    
+ There are four types of statements.
+
+ graph scale width height
+ node name x y width height label style shape color fillcolor
+ edge tail head n x1 y1 .. xn yn [label xl yl] style color
+ stop
+*/	    

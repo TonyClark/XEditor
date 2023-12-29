@@ -1,0 +1,39 @@
+parserImport XOCL;
+
+import Generics;
+
+context Generics 
+     
+    @Class NamedContainer (name:String,accessor:String,extender:String,reducer:String,C:Class) 
+    
+      @Doc
+        Like Container(C) but the names are supplied.
+      end
+      
+      // A slot of the container that is used to manage the contents...
+      
+      @Attribute <name> :[C] end 
+       
+      @Operation <accessor>():[C] 
+      
+        // Return all the contained items...
+        
+        self.<name> 
+      end
+      
+      @Operation <extender>(c:C) 
+
+        // An operation to add an element of the type...
+        
+        self.<name> := self.<name> + [c] 
+      end
+
+      
+      @Operation <reducer>(c:C) 
+
+        // An operation to remove an element from the contents...
+        
+        self.<name> := self.<name> ->excluding(c) 
+      end
+      
+    end

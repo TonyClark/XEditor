@@ -1,0 +1,13 @@
+parserImport XOCL;
+parserImport Manifests;
+
+import Projects;
+
+@Manifest TypeCheck
+  TypeCheck = @File TypeCheck end
+  @File ReportNode end
+  @File ReportTree end
+  @File Report end
+  @File ^None Boot end
+do Project(TypeCheck,dir,self)
+end;

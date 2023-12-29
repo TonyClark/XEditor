@@ -1,0 +1,10 @@
+parserImport Manifests;
+
+@Manifest Lib
+  @File Lib        end
+  @File Book       end
+  @File Reader     end
+  @File Borrows    end
+  @File Library    end
+  @File Filmstrip  end
+end;

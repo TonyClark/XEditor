@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+NameSpace
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>NameSpace</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      A name space is a container of named elements. A name space defines two
+      operations 'getElement/1' and 'hasElement/1' that are used to get an element
+      by name and check for an element by name. Typically a name space will contain
+      different categories of elements in which case the name space will place
+      the contained elements in its contents table and in a type specific collection.
+      For example, a class is a container for operations, attributes and constraints.
+      Each of these elements are placed in the contents table for the class and in
+      a slot containing a collection with the names 'operations', 'attributes';
+      and 'constraints' respectively. The special syntax '::' is used to invoke the
+      'getElement/1' operation on a name space.
+    
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/XCore/index.html">XCore</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/XCore/IndexedContainer/index.html">IndexedContainer</A>
+,<A HREF="../../../Root/XCore/NamedElement/index.html">NamedElement</A>
+,<A HREF="../../../Root/XCore/DocumentedElement/index.html">DocumentedElement</A>
+<BR><HR>
+<B>Subclasses</B>
+<A HREF="../../../Root/Parser/BNF/Grammar/index.html">Grammar</A>
+,<A HREF="../../../Root/PreferenceManager/index.html">PreferenceManager</A>
+,<A HREF="../../../Root/XCore/Dependency/index.html">Dependency</A>
+,<A HREF="../../../Root/XCore/Classifier/index.html">Classifier</A>
+,<A HREF="../../../Root/XCore/Snapshot/index.html">Snapshot</A>
+,<A HREF="../../../Root/IO/Directory/index.html">Directory</A>
+,<A HREF="../../../Parser/EventManager/index.html">EventManager</A>
+,<A HREF="../../../Root/Associations/AssociationInstance/index.html">AssociationInstance</A>
+,<A HREF="../../../Root/Projects/ProjectManager/index.html">ProjectManager</A>
+,<A HREF="../../../Root/Associations/Association/index.html">Association</A>
+,<A HREF="../../../Root/Associations/IntrinsicAssociationConstraint/index.html">IntrinsicAssociationConstraint</A>
+,<A HREF="../../../Root/XOCL/SyntaxNameSpace/index.html">SyntaxNameSpace</A>
+,<A HREF="../../../Root/Languages/MicroJava/Structure/PackageNameSpace/index.html">PackageNameSpace</A>
+,<A HREF="../../../Root/Languages/MicroJava/Structure/ClassNameSpace/index.html">ClassNameSpace</A>
+,<A HREF="../../../Root/XML/Parser/EventManager/index.html">EventManager</A>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR><TD><B>bindings</B></TD><TD><A HREF="../../../Root/XCore/Bind/index.html">[Bind]<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>imports</B></TD><TD><A HREF="../../../Root/XCore/NameSpace/index.html">[NameSpace]<A></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/IndexedContainer/index.html">IndexedContainer</A>: contents. <BR><B>From</B> <A HREF="../../../Root/XCore/NamedElement/index.html">NamedElement</A>: name. <BR><B>From</B> <A HREF="../../../Root/XCore/DocumentedElement/index.html">DocumentedElement</A>: documentation. <BR><B>From</B> <A HREF="../../../Root/XCore/Contained/index.html">Contained</A>: owner. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>add(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>addBinding(binding:<A HREF="../../../Root/XCore/Bind/index.html">Bind<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>addImport(n:<A HREF="../../../Root/XCore/NameSpace/index.html">NameSpace<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>allHTMLEntries():<A HREF="../../../Root/XCore/NamedElement/index.html">Seq(NamedElement)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>allHTMLPackages():<A HREF="../../../Root/XCore/NamedElement/index.html">Seq(NamedElement)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>allImports():<A HREF="../../../Root/XCore/NameSpace/index.html">Seq(NameSpace)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>allNames():<A HREF="../../../Root/XCore/String/index.html">Set(String)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>define(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,nameSpace:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,isForward:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getContents(name:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getDiagram():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getDiagram(actions:<A HREF="../../../(String,String) -> String/index.html">(String,String) -> String<A>,shown:<A HREF="../../../Root/XCore/String/index.html">Seq(String)<A>,selected:<A HREF="../../../Root/XCore/String/index.html">Seq(String)<A>,includeXCore:<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A>):<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getElement(name:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Contained/index.html">Contained<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getInstantiableClasses():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>hasBinding(name:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>hasElement(name:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>importedFrom(e:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/NameSpace/index.html">NameSpace<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>imports(e:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>init(args:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>init():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>initBindings():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>lift():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>lookupPath(path:<A HREF="../../../Root/XCore/String/index.html">Seq(String)<A>,default:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>nameChanged(namedElement:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,newName:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,oldName:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>names():<A HREF="../../../Root/XCore/String/index.html">Set(String)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>newName(root:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>putElement(name:<A HREF="../../../Root/XCore/String/index.html">String<A>,value:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>redefine(newElement:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>remove(element:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>removeBinding(name:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>removeImport(n:<A HREF="../../../Root/XCore/NameSpace/index.html">NameSpace<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>resolveNameClash(name:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,collection:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>syntaxClasses():<A HREF="../../../Root/XCore/Class/index.html">Set(Class)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>toHTML(root:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>toHTMLDoc(fout:<A HREF="../../../Root/IO/OutputChannel/index.html">OutputChannel<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>toType():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>writeEcore(path:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/IndexedContainer/index.html">IndexedContainer</A>: add, add, addContentDaemon, contentDaemons, contents, index, indices, init, initContents, remove, removeContentDaemon. <BR><B>From</B> <A HREF="../../../Root/XCore/NamedElement/index.html">NamedElement</A>: getNamedElement, href, name, path, pathSeq, repopulate, setName, toString. <BR><B>From</B> <A HREF="../../../Root/XCore/DocumentedElement/index.html">DocumentedElement</A>: doc, ensureDoc, setDoc. <BR><B>From</B> <A HREF="../../../Root/XCore/Container/index.html">Container</A>: add, addContentDaemon, allContents, allContentsOf, allContentsThat, checkConstraints, checkConstraints, contentDaemons, contents, contentsOf, contentsThat, deleteRecursive, includes, init, initContents, remove, removeContentDaemon, traceAll, untraceAll. <BR><B>From</B> <A HREF="../../../Root/XCore/Contained/index.html">Contained</A>: addTo, allOwners, deleteRecursive, owner, removeFromOwner, setOwner. <BR><B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+</HTML>

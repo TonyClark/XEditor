@@ -1,0 +1,342 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Object
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Object</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      Object is the super-class of all classes with structural features in XMF.
+      Object provides access to slots via the 'get/1' and 'set/2' operations.
+      Object is the default super-class for a class definition - if you do not specify
+      a super-class then Object is assumed.
+    
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/XCore/index.html">XCore</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/XCore/Element/index.html">Element</A>
+<BR><HR>
+<B>Subclasses</B>
+<A HREF="../../../Root/XCore/ForeignObject/index.html">ForeignObject</A>
+,<A HREF="../../../Root/XOCL/Include/index.html">Include</A>
+,<A HREF="../../../Root/XCore/Daemon/index.html">Daemon</A>
+,<A HREF="../../../Root/TopLevel/Loop/index.html">Loop</A>
+,<A HREF="../../../Root/Parser/Machine/Engine/index.html">Engine</A>
+,<A HREF="../../../Root/Parser/Tokens/Tokenizer/index.html">Tokenizer</A>
+,<A HREF="../../../Root/Time/index.html">Time</A>
+,<A HREF="../../../Root/AbstractSyntax/DefiniensRecord/index.html">DefiniensRecord</A>
+,<A HREF="../../../Root/IO/FormatContext/index.html">FormatContext</A>
+,<A HREF="../../../Root/XOCL/AttributeModifiers/index.html">AttributeModifiers</A>
+,<A HREF="../../../Root/Stacks/Stack/index.html">Stack</A>
+,<A HREF="../../../Root/AbstractSyntax/LocationManager/index.html">LocationManager</A>
+,<A HREF="../../../Root/IO/Format/index.html">Format</A>
+,<A HREF="../../../Root/AbstractSyntax/FVEnv/index.html">FVEnv</A>
+,<A HREF="../../../Root/XCore/DocumentedElement/index.html">DocumentedElement</A>
+,<A HREF="../../../Root/XCore/Resource/index.html">Resource</A>
+,<A HREF="../../../Root/XCore/Exception/index.html">Exception</A>
+,<A HREF="../../../Root/XCore/Contained/index.html">Contained</A>
+,<A HREF="../../../Root/XCore/Located/index.html">Located</A>
+,<A HREF="../../../Root/XCore/ConstraintReport/index.html">ConstraintReport</A>
+,<A HREF="../../../Root/XCore/Slot/index.html">Slot</A>
+,<A HREF="../../../Root/XCore/Container/index.html">Container</A>
+,<A HREF="../../../Root/XCore/BasicArray/index.html">BasicArray</A>
+,<A HREF="../../../Root/ObjectWithProperties/index.html">ObjectWithProperties</A>
+,<A HREF="../../../Root/IO/Position/index.html">Position</A>
+,<A HREF="../../../Root/IO/ObjectXMLFormatter/index.html">ObjectXMLFormatter</A>
+,<A HREF="../../../Root/IO/XMLData/index.html">XMLData</A>
+,<A HREF="../../../Root/IO/MessageChannel/index.html">MessageChannel</A>
+,<A HREF="../../../Root/IO/ZipFile/index.html">ZipFile</A>
+,<A HREF="../../../Root/XEditor/BrowserMenuHandler/index.html">BrowserMenuHandler</A>
+,<A HREF="../../../Root/IO/ObjectXMLInflater/index.html">ObjectXMLInflater</A>
+,<A HREF="../../../Root/IO/AbstractObjectFormatter/index.html">AbstractObjectFormatter</A>
+,<A HREF="../../../Root/AbstractSyntax/AbstractSyntaxElement/index.html">AbstractSyntaxElement</A>
+,<A HREF="../../../Root/WithDocEnv/index.html">WithDocEnv</A>
+,<A HREF="../../../Root/Sheet/index.html">Sheet</A>
+,<A HREF="../../../Root/XEditor/FindDefinition/index.html">FindDefinition</A>
+,<A HREF="../../../Root/Env/Env/index.html">Env</A>
+,<A HREF="../../../Root/Parser/Tokens/Token/index.html">Token</A>
+,<A HREF="../../../Root/IO/SAXAttribute/index.html">SAXAttribute</A>
+,<A HREF="../../../Root/IO/InputChannel/index.html">InputChannel</A>
+,<A HREF="../../../Root/Walkers/Walker/index.html">Walker</A>
+,<A HREF="../../../Root/IO/OutputChannel/index.html">OutputChannel</A>
+,<A HREF="../../../Root/Location/index.html">Location</A>
+,<A HREF="../../../Root/Java/JavaDescriptor/index.html">JavaDescriptor</A>
+,<A HREF="../../../Root/IO/ResourcePosition/index.html">ResourcePosition</A>
+,<A HREF="../../../Root/AbstractSyntax/DefinitionHandler/index.html">DefinitionHandler</A>
+,<A HREF="../../../Root/Generics/NamedContainer/GenericClass(resources,getResources,addResource,removeResource,Unique(Unique(ABook)))/index.html">GenericClass(resources,getResources,addResource,removeResource,Unique(Unique(ABook)))</A>
+,<A HREF="../../../Root/XEditor/MenuItem/index.html">MenuItem</A>
+,<A HREF="../../../Root/AbstractSyntax/DefinitionManager/index.html">DefinitionManager</A>
+,<A HREF="../../../Root/Generics/NamedRelation/Relation(resource:Unique(ABook),customer:Unique(AReader))/index.html">Relation(resource:Unique(ABook),customer:Unique(AReader))</A>
+,<A HREF="../../../Root/Generics/NamedContainer/GenericClass(customers,getCustomers,addCustomer,removeCustomer,Unique(Unique(AReader)))/index.html">GenericClass(customers,getCustomers,addCustomer,removeCustomer,Unique(Unique(AReader)))</A>
+,<A HREF="../../../Root/Generics/NamedContainer/GenericClass(Xactions,getXactions,addXaction,removeXaction,Transaction(GenericClass(Class(ABook),Class(AReader))))/index.html">GenericClass(Xactions,getXactions,addXaction,removeXaction,Transaction(GenericClass(Class(ABook),Class(AReader))))</A>
+,<A HREF="../../../Root/OCL/Keyp/index.html">Keyp</A>
+,<A HREF="../../../Root/Docs/Doc/index.html">Doc</A>
+,<A HREF="../../../Root/Filmstrips/Filmstrip/index.html">Filmstrip</A>
+,<A HREF="../../../Root/Filmstrips/ColourMap/index.html">ColourMap</A>
+,<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">FilmstripStep</A>
+,<A HREF="../../../Root/Filmstrips/Link/index.html">Link</A>
+,<A HREF="../../../Root/OCL/CompilationModuleElement/index.html">CompilationModuleElement</A>
+,<A HREF="../../../Parser/Handler/index.html">Handler</A>
+,<A HREF="../../../Root/Filmstrips/Record/index.html">Record</A>
+,<A HREF="../../../Root/Filmstrips/Field/index.html">Field</A>
+,<A HREF="../../../Root/Exceptions/Backtrace/index.html">Backtrace</A>
+,<A HREF="../../../Root/Exceptions/StackFrame/index.html">StackFrame</A>
+,<A HREF="../../../Root/Filmstrips/Constraint/index.html">Constraint</A>
+,<A HREF="../../../Root/Walkers/Handler/index.html">Handler</A>
+,<A HREF="../../../Root/Walkers/RefFinder/index.html">RefFinder</A>
+,<A HREF="../../../Root/Walkers/DispatchingObject/index.html">DispatchingObject</A>
+,<A HREF="../../../Root/Stacks/Queue/index.html">Queue</A>
+,<A HREF="../../../Root/Compiler/Operations/index.html">Operations</A>
+,<A HREF="../../../Root/Compiler/Env/index.html">Env</A>
+,<A HREF="../../../Root/Undo/UndoEngine/index.html">UndoEngine</A>
+,<A HREF="../../../Root/XOCL/Derived/index.html">Derived</A>
+,<A HREF="../../../Root/Compiler/CompilationError/index.html">CompilationError</A>
+,<A HREF="../../../Root/XRules/WithRules/index.html">WithRules</A>
+,<A HREF="../../../Root/Docs/Machine/index.html">Machine</A>
+,<A HREF="../../../Root/OCL/KeyArg/index.html">KeyArg</A>
+,<A HREF="../../../Root/XOCL/ExtendClass/index.html">ExtendClass</A>
+,<A HREF="../../../Root/XOCL/CaseIntValue/index.html">CaseIntValue</A>
+,<A HREF="../../../Root/XOCL/CaseIntClause/index.html">CaseIntClause</A>
+,<A HREF="../../../Root/XOCL/Snapshot/index.html">Snapshot</A>
+,<A HREF="../../../Root/XOCL/CaseObj/index.html">CaseObj</A>
+,<A HREF="../../../Root/Associations/Multiplicity/index.html">Multiplicity</A>
+,<A HREF="../../../Root/Walkers/TypeCheckReport/index.html">TypeCheckReport</A>
+,<A HREF="../../../Root/XOCL/TypeCaseArm/index.html">TypeCaseArm</A>
+,<A HREF="../../../Root/Signatures/Binding/index.html">Binding</A>
+,<A HREF="../../../Root/Comms/Server/index.html">Server</A>
+,<A HREF="../../../Root/Graphs/Graph/index.html">Graph</A>
+,<A HREF="../../../Root/JavaDeployer/PackageDeployer/index.html">PackageDeployer</A>
+,<A HREF="../../../Root/XMap/Mapping/index.html">Mapping</A>
+,<A HREF="../../../Root/XMap/SyncContainerAction/index.html">SyncContainerAction</A>
+,<A HREF="../../../Root/Models/GLib/AReader/index.html">AReader</A>
+,<A HREF="../../../Root/Signatures/Type/index.html">Type</A>
+,<A HREF="../../../Root/Comms/Client/index.html">Client</A>
+,<A HREF="../../../Root/Graphs/Edge/index.html">Edge</A>
+,<A HREF="../../../Root/JavaDeployer/ClassDeployer/index.html">ClassDeployer</A>
+,<A HREF="../../../Root/Models/Lib/Library/index.html">Library</A>
+,<A HREF="../../../Root/Models/Banking/Bank/index.html">Bank</A>
+,<A HREF="../../../Handler/index.html">Handler</A>
+,<A HREF="../../../Root/Evaluator/EvaluationUnit/index.html">EvaluationUnit</A>
+,<A HREF="../../../Root/Arrays/Simple2DArray/index.html">Simple2DArray</A>
+,<A HREF="../../../Root/DocTables/Properties/index.html">Properties</A>
+,<A HREF="../../../Root/Graphs/Node/index.html">Node</A>
+,<A HREF="../../../Root/JavaDeployer/OperationDeployer/index.html">OperationDeployer</A>
+,<A HREF="../../../Root/Models/Shopping/Shop/index.html">Shop</A>
+,<A HREF="../../../Root/Evaluator/Import/index.html">Import</A>
+,<A HREF="../../../Root/Undo/UndoStackListener/index.html">UndoStackListener</A>
+,<A HREF="../../../Root/JavaDeployer/TypeConverter/index.html">TypeConverter</A>
+,<A HREF="../../../Root/Debug/MonitorCalls/index.html">MonitorCalls</A>
+,<A HREF="../../../Root/Comprehensions/Clause/index.html">Clause</A>
+,<A HREF="../../../Root/Undo/UndoExecutionListener/index.html">UndoExecutionListener</A>
+,<A HREF="../../../Root/Models/Lib/Borrows/index.html">Borrows</A>
+,<A HREF="../../../Root/Models/Banking/Account/index.html">Account</A>
+,<A HREF="../../../Root/Instrs/Instr/index.html">Instr</A>
+,<A HREF="../../../Root/Debug/OperationReport/index.html">OperationReport</A>
+,<A HREF="../../../Root/CodeGen/Mapping/index.html">Mapping</A>
+,<A HREF="../../../Root/Models/Lib/Reader/index.html">Reader</A>
+,<A HREF="../../../Root/Models/Banking/Customer/index.html">Customer</A>
+,<A HREF="../../../Root/Models/Shopping/Customer/index.html">Customer</A>
+,<A HREF="../../../Root/Models/GLib/ABook/index.html">ABook</A>
+,<A HREF="../../../Root/Languages/MicroJava/Statements/Catch/index.html">Catch</A>
+,<A HREF="../../../Root/Languages/MicroJava/Java/index.html">Java</A>
+,<A HREF="../../../Root/Debug/CallMonitor/index.html">CallMonitor</A>
+,<A HREF="../../../Root/Walkers/Code/TypeChecker/TypeAnnotation/index.html">TypeAnnotation</A>
+,<A HREF="../../../Root/Models/Lib/Book/index.html">Book</A>
+,<A HREF="../../../Root/Languages/MiniXCore/Container/index.html">Container</A>
+,<A HREF="../../../Root/Import/Ecore/EcoreImporter/index.html">EcoreImporter</A>
+,<A HREF="../../../Root/CodeGen/Generator/index.html">Generator</A>
+,<A HREF="../../../Root/CodeGen/CodeElement/index.html">CodeElement</A>
+,<A HREF="../../../Root/CodeGen/Mapping/index.html">Mapping</A>
+,<A HREF="../../../Root/Languages/MiniXCore/Obj/index.html">Obj</A>
+,<A HREF="../../../Root/Languages/MiniXCore/Clause/index.html">Clause</A>
+,<A HREF="../../../Root/Languages/MiniXCore/List/index.html">List</A>
+,<A HREF="../../../Root/Languages/MiniXCore/Contained/index.html">Contained</A>
+,<A HREF="../../../Root/Languages/MiniXCore/Element/index.html">Element</A>
+,<A HREF="../../../Root/Languages/MiniXCore/Grammar/index.html">Grammar</A>
+,<A HREF="../../../Snapshot/index.html">Snapshot</A>
+,<A HREF="../../../Root/XML/Node/index.html">Node</A>
+,<A HREF="../../../Root/XML/Attribute/index.html">Attribute</A>
+,<A HREF="../../../Root/Generics/TransactionSystem/XactionSystem(ABook,AReader)/XactionHandler/index.html">XactionHandler</A>
+,<A HREF="../../../PrintXML/Node/index.html">Node</A>
+,<A HREF="../../../Root/Evaluator/Import/index.html">Import</A>
+,<A HREF="../../../Root/Models/Shopping/Product/index.html">Product</A>
+,<A HREF="../../../Root/Aspects/Semantics/Component/index.html">Component</A>
+,<A HREF="../../../Root/DocTables/Server/WebServer/index.html">WebServer</A>
+,<A HREF="../../../Root/DocTables/Basic/Entry/index.html">Entry</A>
+,<A HREF="../../../Root/Evaluator/EvaluationUnit/index.html">EvaluationUnit</A>
+,<A HREF="../../../Root/Models/Shopping/Transaction/index.html">Transaction</A>
+,<A HREF="../../../Root/DocTables/Forms/EventHandler/index.html">EventHandler</A>
+,<A HREF="../../../Root/DocTables/Server/Session/index.html">Session</A>
+,<A HREF="../../../CaseObj/index.html">CaseObj</A>
+,<A HREF="../../../Derived/index.html">Derived</A>
+,<A HREF="../../../ExtendClass/index.html">ExtendClass</A>
+,<A HREF="../../../Root/CodeGen/CodeElement/index.html">CodeElement</A>
+,<A HREF="../../../PrintXML/Attribute/index.html">Attribute</A>
+,<A HREF="../../../Root/Walkers/Code/CodeContext/Context/index.html">Context</A>
+,<A HREF="../../../Root/XML/Generator/IdTable/index.html">IdTable</A>
+,<A HREF="../../../Root/Aspects/Semantics/Component/index.html">Component</A>
+,<A HREF="../../../Root/DocTables/Basic/Page/index.html">Page</A>
+,<A HREF="../../../Root/CodeGen/Generator/index.html">Generator</A>
+,<A HREF="../../../Root/XML/PrintXML/Attribute/index.html">Attribute</A>
+,<A HREF="../../../Root/XML/PrintXML/Node/index.html">Node</A>
+,<A HREF="../../../Root/XML/Parser/Handler/index.html">Handler</A>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+</FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>addDaemon(d:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      All objects have a collection of daemons. A daemon is an operation that is
+      invoked whenever a slot of the object is updated. The operation is any
+      invokable value (either an operation or an object that implements the
+      'invoke/2' operation. The invocation occurs after the slot has been
+      updated and is supplied with 3 values as the second argument: the slot
+      (symbol) that has been updated, the new value and the old value.
+    </TD></TR>
+<TR><TD><B>addMultiDaemon(d:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      This operation facilitates the addition of daemons that support synchronisation
+      of multiple objects.
+    </TD></TR>
+<TR><TD><B>addPersistentDaemon(d:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>addStructuralFeature(name:<A HREF="../../../Root/XCore/String/index.html">String<A>,value:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Object/index.html">Object<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>allCompositeValues():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>allCompositeValuesAndSelf():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>allDaemonsWithId(id:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>allDaemonsWithTarget(target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>compositeValues():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>daemonNamed(name:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>daemonWithId(id:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>daemonWithIdAndTarget(id:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>daemons():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns the currently defined daemons for the receiver.
+      Daemons are fired when the object changes state and when
+      the objects daemons are active.
+    </TD></TR>
+<TR><TD><B>daemonsActive():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns whether or not the daemons of this object will be
+      fired when an update takes place.
+    </TD></TR>
+<TR><TD><B>destroyDaemon(d:<A HREF="../../../Root/XCore/Daemon/index.html">Daemon<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>edit():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>fire(slot:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,newValue:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,oldValue:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      When the slot of an object is updated, its daemons are fired by calling
+      this operation. The operation is supplied with 3 arguments: the name of
+      the slot that was changed (a symbol), the new value of the slot and the
+      old value of the slot.
+    </TD></TR>
+<TR><TD><B>get(name:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns the value of the named slot of the receiver.
+      The name may be a string or a symbol. An exception is
+      raised if the receiver has no slot with the given name.
+    </TD></TR>
+<TR><TD><B>getProperties():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getProperty(name:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getStructuralFeatureNames():<A HREF="../../../Root/XCore/String/index.html">Set(String)<A></B></TD><TD> 
+      Returns the slot names of the object.
+    </TD></TR>
+<TR><TD><B>hasDaemonNamed(name:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>hasDaemonWithId(id:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>hasDaemonWithIdAndTarget(id:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>hasDaemonWithTarget(target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>hasProperty(name:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>hasSlot(name:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true when the receiver has a slot with the given
+      name. The name may be a string or a symbol.
+    </TD></TR>
+<TR><TD><B>hasStructuralFeature(name:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>hotLoad():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Hot loading objects run the hotLoad operation when loaded by 
+      the loader. the default is false for this property.
+    </TD></TR>
+<TR><TD><B>hotLoaded():<A HREF="../../../Root/XCore/Object/index.html">Object<A></B></TD><TD>
+      This operation is run when the value loader loads an object 
+      that is tagged as being hot loading. By default this operation 
+      does nothing. Specialize this in sub-classes to perform
+      actions when an object is loaded.
+    </TD></TR>
+<TR><TD><B>init(args:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      When an object is initialised, by default we look for a constructor
+      that has the same arity as the supplied arguments. If we find one
+      then it is invoked. Note that we always invoke the 'init/0' operation
+      after slot initialisation.
+    </TD></TR>
+<TR><TD><B>initSlots():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Attributes have a slot 'init' that contains an operation or null.
+      If the value is an operation then invoking the operation with an
+      object as the target will return an initial value for that slot
+      of the object.
+    </TD></TR>
+<TR><TD><B>machineInit(args:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Called when the machine has detected initialization values defined
+      for one or more attributes. The machine relies on this operation to
+      perform the slot initialization and then call the init/1 operation.
+    </TD></TR>
+<TR><TD><B>removeDaemon(d:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD> 
+      Removes the supplied daemon. 
+    </TD></TR>
+<TR><TD><B>removeDaemonNamed(name:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>removeDaemonsWithId(id:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,destroy:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>removeDaemonsWithTarget(target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,destroy:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>removeStructuralFeature(name:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Object/index.html">Object<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>renameSlot(oldName:<A HREF="../../../Root/XCore/String/index.html">String<A>,newName:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>set(name:<A HREF="../../../Root/XCore/String/index.html">String<A>,value:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Sets the named slot to the supplied value in the receiver.
+      Raises an exception if the receiver has no slot with the
+      supplied name. The name may be a symbol or a string.
+    </TD></TR>
+<TR><TD><B>setDaemons(daemons:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setDaemonsActive(active:<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A>):<A HREF="../../../Root/XCore/Object/index.html">Object<A></B></TD><TD>
+      Sets whether or not the daemons of this receiver will be
+      fired when an update takes place.
+    </TD></TR>
+<TR><TD><B>setHotLoad(hotLoad:<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A>):<A HREF="../../../Root/XCore/Object/index.html">Object<A></B></TD><TD>
+      Sets the hot load status of the receiver.
+    </TD></TR>
+<TR><TD><B>setProperty(name:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,value:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>slotDenied(slot:<A HREF="../../../Root/XCore/Symbol/index.html">Symbol<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Called when an we request the slot of an object and the
+      slot is inaccesible for the se'nder.
+    </TD></TR>
+<TR><TD><B>slotMissing(slot:<A HREF="../../../Root/XCore/Symbol/index.html">Symbol<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Called when an we request the slot of an object and the
+      slot does not exist.
+    </TD></TR>
+<TR><TD><B>slotMissing(slot:<A HREF="../../../Root/XCore/Symbol/index.html">Symbol<A>,value:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Called when an we update the slot of an object and the
+      slot does not exist.
+    </TD></TR>
+<TR><TD><B>slots():<A HREF="../../../Root/XCore/Slot/index.html">Seq(Slot)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+</HTML>

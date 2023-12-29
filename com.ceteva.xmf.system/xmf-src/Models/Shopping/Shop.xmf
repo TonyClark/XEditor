@@ -1,0 +1,94 @@
+parserImport XOCL;
+
+import Models;
+import Shopping;
+
+context Shopping
+  @Class Shop
+
+    @Attribute customers : [Customer] (<,!,+,-) end
+    @Attribute products  : [Product]  (<,!,+,-) end
+
+    @Constructor() ! end
+
+    @Operation addCustomer(name:String)
+      @Doc
+        Create a new customer with the supplied name.
+      end
+      self.addToCustomers(Customer(name))
+    end
+
+    @Operation addProduct(name:String,quantity:Integer,price:Integer)
+      @Doc
+        Create a new product with the supplied name and amount.
+      end
+      self.addToProducts(Product(name,quantity,price))
+    end
+
+    @Operation calculatePrice(product:Product,customer:Customer):Integer
+      @Doc
+        The product price is discounted by 50% if the customer has made
+        more than 3 purchases. However, it is increased by 50% is it is
+        a scarce resource (less than 3 units).
+      end
+      if product.getQuantity() < 3
+      then product.getPrice() + (0.5 * product.getPrice()).floor()
+      else
+        let trans = customer.getTransactions() then
+            purchaseCount = trans->select(t | t.isKindOf(Purchase) andthen t.getProduct() = product)->size;
+            returnCount = trans->select(t | t.isKindOf(Return) andthen t.getProduct() = product)->size
+        in if (purchaseCount - returnCount) > 3
+           then product.getPrice() - (0.5 * product.getPrice()).floor()
+           else product.getPrice()
+           end
+        end
+      end
+    end
+
+    @Operation getProduct(name:String):Product
+      @Find(p,self.getProducts()) when p.getName() = name else null end
+    end
+
+    @Operation getCustomer(name:String):Product
+      @Find(c,self.getCustomers()) when c.getName() = name else null end
+    end
+
+    @Operation hasProduct(name:String):Boolean
+      self.getProducts()->exists(p | p.getName() = name)
+    end
+
+    @Operation hasPurchase(customerName:String,productName:String):Boolean
+      self.getCustomers()->exists(c |
+        (c.getName() = customerName) and
+        c.mostRecentPurchase(productName) <> null)
+    end
+
+    @Operation hasCustomer(name:String):Boolean
+      self.getCustomers()->exists(c | c.getName() = name)
+    end
+
+    @Operation purchase(customerName:String,productName:String):Boolean
+      if self.hasProduct(productName)
+      then 
+        let customer = self.getCustomer(customerName);
+            product = self.getProduct(productName) then
+            price = self.calculatePrice(product,customer)
+        in product.sellOneUnit();
+           customer.addToTransactions(Purchase(product,price));
+           true
+        end
+      else false
+      end
+    end
+
+    @Operation returnProduct(customerName:String,productName:String):Boolean
+      if self.hasPurchase(customerName,productName)
+      then 
+        let customer = self.getCustomer(customerName)
+        in customer.return(productName)
+        end
+      else false
+      end
+    end
+
+  end

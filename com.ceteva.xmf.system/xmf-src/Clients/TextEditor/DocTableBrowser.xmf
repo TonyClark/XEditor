@@ -1,0 +1,53 @@
+parserImport XOCL;
+parserImport Parser::BNF;
+
+import IO;
+import Clients;
+import TextEditor;
+import DocTables;
+import Basic;
+
+/******************************************************************************
+ *                                                                            *
+ *                              DocTable Browser                              *
+ *                            -------------------                             *
+ *                                                                            *
+ *  Creates an HTML browser from a DocTables page and subsequently            *
+ *  handles the events created by user interaction with the page.             *
+ *                                                                            *
+ ******************************************************************************/ 
+
+context DocTables::Server
+
+    @Class DocTableBrowser extends HTMLViewer 
+
+      @Attribute page : Page end
+    
+      @Constructor(page) ! end
+      
+      @Operation browse()
+        xmf.browseUsingInstance(page.title,page.html(),self)
+      end
+    
+      @Operation handle(args:Seq(Element))
+        let newPage = page.handle(args)
+        in if newPage.isKindOf(String)
+           then self.setURL(newPage)
+           else 
+             self.page := newPage;
+             self.setURL(self.page.html())
+           end
+        end
+      end
+    
+      @Operation requestURL(url:String)
+        if self.isURL(url)
+        then 
+          let handle = self.getPath(url);
+              args = self.getQueryArgs(url)
+          in self.handle(args)
+          end
+        else super(url)
+        end
+      end
+    end

@@ -1,0 +1,42 @@
+parserImport XOCL;
+
+import AbstractSyntax;
+import DTDL;
+import Interfaces;
+import Elements;
+
+context Interfaces
+
+  @Class Interface
+
+    @Doc
+      An Interface describes the contents (Commands, Components, Properties, 
+      Relationships, and Telemetries) of any digital twin. Interfaces are 
+      reusable and can be reused as the schema for Components in another 
+      Interface.
+    end
+
+    
+    @Attribute id             : String = newId()               (<)       end
+    @Attribute comment        : String = ""                    (<,!)     end
+    @Attribute description    : String = ""                    (<,!)     end
+    @Attribute displayName    : String = ""                    (<,!)     end
+    @Attribute context_       : String = "dtmi:dtdl:context;3" (<,!)     end
+    @Attribute extends        : [Interface]                    (<,!,+,-) end
+    @Attribute contents       : [InterfaceElement]             (<,!,+,-) end
+
+    @Constructor(id) ! end
+
+    @Operation addDiagram(package)
+      if package.getElement(displayName) = null
+        then 
+        let class = package.addClass(displayName)
+        in @For element in contents do
+             element.addDiagram(package,class)
+           end
+        end
+      end
+    end
+    
+
+  end

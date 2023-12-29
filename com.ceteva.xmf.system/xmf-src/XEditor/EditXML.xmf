@@ -1,0 +1,17 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import XEditor;
+import IO;
+import XML::Parser;
+
+@EventHandler editXML(xml:String,snapshot:String)
+    try
+      let value = ParserChannel(StringInputChannel(xml),Values).parse("Value")
+      in value.edit(snapshot)
+      end
+    catch(exception)
+      Root::xmfException := exception;
+      exception.printBacktrace()
+    end
+  end;

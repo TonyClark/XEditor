@@ -1,0 +1,34 @@
+parserImport XOCL;
+
+import AbstractSyntax;
+import DTDL;
+import Interfaces;
+import Elements;
+
+context Interfaces
+
+  @Class Model extends DiagramSupplier
+
+    @Doc
+      The root for the DTDL model.
+    end
+
+    @Attribute name      : String    (<) end
+    @Attribute interface : Interface (<) end
+
+    @Constructor(name,interface) ! end
+
+    @Operation getDiagramLabel():String
+      name
+    end
+
+    @Operation getDiagram(ignore:Table):String
+      let Model = xmf.javaClass("diagrams.model.Model") then
+          model = Model("",name) then
+          package = model.getPackage()
+      in interface.addDiagram(package);
+         model.getPlantUML()
+      end
+    end
+
+  end

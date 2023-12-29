@@ -1,0 +1,13 @@
+parserImport XOCL;
+
+
+context Root
+
+  @Package Generics
+
+    @Doc
+      A collection of general purpose generic classes.
+    end
+
+  end
+ 

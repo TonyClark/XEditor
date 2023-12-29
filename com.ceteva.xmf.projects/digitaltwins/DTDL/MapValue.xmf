@@ -1,0 +1,23 @@
+parserImport XOCL;
+
+import DTDL;
+import Types;
+
+context Maps
+
+  @Class MapValue
+
+    @Doc
+      A MapValue describes the values in a Map.
+    end
+    
+    @Attribute id             : String = newId()  (<)       end
+    @Attribute comment        : String = ""       (<,!)     end
+    @Attribute description    : String = ""       (<,!)     end
+    @Attribute displayName    : String = ""       (<,!)     end
+    @Attribute name           : String            (<,!)     end
+    @Attribute schema         : Schema            (<,!)     end
+
+    @Constructor(name,schema) ! end
+
+  end

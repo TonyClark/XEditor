@@ -1,0 +1,25 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import AbstractSyntax;
+
+@EventHandler terminals(path)
+
+  // Each language is assicuatred with a set of terminals which can be
+  // displayed in a different colour by the editor. This handler will register
+  // the terminals as strings with the editor. It should be caled once when the 
+  // file is first loaded...
+  
+  try
+    path.lookupPath(Root).grammar.terminals().asSeq()
+  catch(exception)
+     @TypeCase(exception)
+       Parser::ParseError do
+         []
+       end
+       Object do
+         []
+      end
+     end
+   end
+end;

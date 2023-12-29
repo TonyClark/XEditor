@@ -1,0 +1,253 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+String
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>String</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      The data type for strings. The default value is the empty string.
+    
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>asBool():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Converts a string into a Boolean provided it has 
+      the string value true or false. String can be lower
+      or upper case. An exception is raised if the string
+      is invalid.
+    </TD></TR>
+<TR><TD><B>asFloat():<A HREF="../../../Root/XCore/Float/index.html">Float<A></B></TD><TD>
+      Converts a string into a Float. It splits the string
+      on its decimal point, converts the two strings into
+      integers and passes them to the Float constructor.
+      An execption is raised if the result is not a Float.
+    </TD></TR>
+<TR><TD><B>asHTML():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+        Transforms a string literal to HTML replacing any illegal HTML
+        characters so that the string is faithfully printed.
+      </TD></TR>
+<TR><TD><B>asInt():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      Converts a string into an Integer. Raises an exception
+      if it cannot be converted.
+    </TD></TR>
+<TR><TD><B>asSeq():<A HREF="../../../Root/XCore/Integer/index.html">Seq(Integer)<A></B></TD><TD>
+      Converts a string into a sequence of 8-bit character codes.
+    </TD></TR>
+<TR><TD><B>asSet():<A HREF="../../../Root/XCore/Integer/index.html">Set(Integer)<A></B></TD><TD>
+      Converts a string into a set of character codes.
+    </TD></TR>
+<TR><TD><B>asSymbol():<A HREF="../../../Root/XCore/Symbol/index.html">Symbol<A></B></TD><TD>
+      Converts a string into a Symbol. In general, symbols
+      can be processed more efficiently than strings, e.g. 
+      as indexes in table lookups.
+    </TD></TR>
+<TR><TD><B>asXML():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>at(i:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      Returns the ith character in a string
+      starting from position 0.
+    </TD></TR>
+<TR><TD><B>copyFile(file:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Copies the contents of the file named by the receiver into
+      the file passed as an argument. The target file is created
+      if necessary.
+    </TD></TR>
+<TR><TD><B>default():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD> 
+      Returns the default value for a string: the empty string
+    </TD></TR>
+<TR><TD><B>deleteFile():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Deletes the file given by a string path. 
+      Raises an exception if the file does not exist
+      or cannot be deleted.
+    </TD></TR>
+<TR><TD><B>drop(n:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Removes the first i elements from a string.
+    </TD></TR>
+<TR><TD><B>exec(args:<A HREF="../../../Root/XCore/String/index.html">Seq(String)<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Currently not supported.
+    </TD></TR>
+<TR><TD><B>fileExists():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if the file given by a string
+      path exists, otherwise false.
+    </TD></TR>
+<TR><TD><B>fileSize():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      Returns the size of a file given by a string path.
+    </TD></TR>
+<TR><TD><B>getLastModified():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>greater(other:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if a string is greater than the
+      supplied string. The strings are compared alphabetically.
+    </TD></TR>
+<TR><TD><B>hasPrefix(prefix:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if a string is prefixed by
+      the string, prefix.
+    </TD></TR>
+<TR><TD><B>hasSuffix(suffix:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if a string has a suffix,
+      suffix.
+    </TD></TR>
+<TR><TD><B>indexOf(char:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      Returns the index of a character, char in a string.
+    </TD></TR>
+<TR><TD><B>indexOf(pattern:<A HREF="../../../Root/XCore/String/index.html">String<A>,start:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>isBool():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD> 
+      Returns true when the receiver is either true or false.
+    </TD></TR>
+<TR><TD><B>isBoundDynamic():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if the receiver is dynamically bound.
+    </TD></TR>
+<TR><TD><B>isDir():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true when the receiver is a directory.
+    </TD></TR>
+<TR><TD><B>isOlder(file:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Compares the last modified date of the file referenced by
+      a string path with file. Returns true if file is older.
+    </TD></TR>
+<TR><TD><B>isReadOnly():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true when the receiver is a read-only file.
+    </TD></TR>
+<TR><TD><B>isValidName():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD> 
+       Returns true if the name is valid, i.e. it only contains valid 
+       alpha and numeric characters (and underscore) and starts with a letter.
+     </TD></TR>
+<TR><TD><B>less(other:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true if a string is less than the
+      supplied string. The strings are compared alphabetically.
+    </TD></TR>
+<TR><TD><B>lift():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>loadBin(verbose:<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Load the binary for the file referenced by a string 
+      path. Displays loading information if verbose is true.
+      Raises an exception if it does not exist.
+    </TD></TR>
+<TR><TD><B>loadBin():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Load the binary for the file referenced by a string path. 
+      Raises an exception if it does not exist.
+    </TD></TR>
+<TR><TD><B>lookup():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns the value of the dynamic variable with the
+      name defined by self or raises an error otherwise.
+    </TD></TR>
+<TR><TD><B>lookupPath(nameSpace:<A HREF="../../../Root/XCore/NameSpace/index.html">NameSpace<A>):<A HREF="../../../Root/XCore/NamedElement/index.html">NamedElement<A></B></TD><TD>
+      Receiver should be a path X::Y::Z. Result is
+      the value of the path with respect to the
+      supplied name space or null.
+    </TD></TR>
+<TR><TD><B>lowerCase():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Returns the lower case equivalent of the string.
+    </TD></TR>
+<TR><TD><B>lowerCaseInitialLetter():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Makes the first letter of a string lower case.
+    </TD></TR>
+<TR><TD><B>mkDir():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Creates a directory. Returns true when the directory
+      already exists or is successfully created. Returns
+      false when the directory cannot be created.
+    </TD></TR>
+<TR><TD><B>normalizeFilename():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Returns a platform-specific internal representation of a filename.
+      (Unimplemented for now, may behave according to a 'platform' configuration parameter.)
+    </TD></TR>
+<TR><TD><B>padFrom(width:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>,char:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Pads ups to a string with additional character codes
+      up to width. 
+    </TD></TR>
+<TR><TD><B>padTo(width:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>,char:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Pads after a string with additional character codes
+      up to width. 
+    </TD></TR>
+<TR><TD><B>parentDir():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD> 
+      Returns the parent directory of the
+      file referenced by a string path. Returns an
+      exception if it cannot be found.
+    </TD></TR>
+<TR><TD><B>parseAndEval():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      The receiver should be a valid XOCL expression. It is
+      parsed and the result abstract syntax is evaluated.
+    </TD></TR>
+<TR><TD><B>readFile():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Reads the file referenced by a string path, provided 
+      that it exists.
+    </TD></TR>
+<TR><TD><B>renameFile(newName:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD> 
+      Renames a file referenced by a string path. A 
+      rename is only performed if the file exists and 
+      there doesnt exist a file with the new name.
+    </TD></TR>
+<TR><TD><B>repeat(n:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Duplicates a string the given
+     number of times.
+    </TD></TR>
+<TR><TD><B>replaceUnderscoresWithSpaces():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>reverse():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Reverses the characters in a string.
+    </TD></TR>
+<TR><TD><B>setFileLastModified(time:<A HREF="../../../Root/Time/index.html">Time<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Sets the last modified date of the file to the
+      supplied instance of Time. Returns true when
+      the update was successful.
+    </TD></TR>
+<TR><TD><B>size():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      Returns the size of a string.
+    </TD></TR>
+<TR><TD><B>splitBy(chars:<A HREF="../../../Root/XCore/String/index.html">String<A>,start:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>,last:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/String/index.html">Seq(String)<A></B></TD><TD>
+      Splits a string into a sequence of strings around some characters.
+      The variables start and last can be used to filter the returned string
+      by returning the characters from start to last. Setting start and
+      last to 0 will return the whole string.   
+    </TD></TR>
+<TR><TD><B>stripIllegalChars():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD> 
+        Strips all illegal characters from a string.
+      </TD></TR>
+<TR><TD><B>stripInvalidNameChars():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD> 
+       Returns the string resulting be removing all invalid name
+       characters, i.e. those that are not alpha-numeric
+       characters or the underscore character.
+     </TD></TR>
+<TR><TD><B>stripLeadingWhiteSpace():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Strips any leading whitespace from a string.
+    </TD></TR>
+<TR><TD><B>stripNonAlphaChars():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD> 
+        Strips all non-alphanumeric characters from a string.
+      </TD></TR>
+<TR><TD><B>stripTrailingWhiteSpace():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Strips any trailing whitespace from a string.
+    </TD></TR>
+<TR><TD><B>stripWhiteSpace():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Strips any leading and trailing whitespace from a string.
+    </TD></TR>
+<TR><TD><B>subString(firstChar:<A HREF="../../../Root/XCore/String/index.html">String<A>,pastLastChar:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Uses indices to chop up a string. The first
+      index is the starting character and the second index is 
+      1+ the final character.
+    </TD></TR>
+<TR><TD><B>subst(new:<A HREF="../../../Root/XCore/String/index.html">String<A>,old:<A HREF="../../../Root/XCore/String/index.html">String<A>,all:<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Substitutes the string old in a string with new. If all is
+      set to false, just replaces the first occurrence. If
+      true replaces them all.  
+    </TD></TR>
+<TR><TD><B>toFilePath(directory:<A HREF="../../../Root/IO/Directory/index.html">Directory<A>,path:<A HREF="../../../Root/XCore/String/index.html">Seq(String)<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>toFilePath():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>toLower():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Converts all characters in a string to lower case.
+    </TD></TR>
+<TR><TD><B>toString():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Translates the receiver into a string.
+    </TD></TR>
+<TR><TD><B>toUpper():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Converts all characters in a string to upper case.
+    </TD></TR>
+<TR><TD><B>truncate(width:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Truncates a string by width characters.
+    </TD></TR>
+<TR><TD><B>upperCaseInitialLetter():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD> 
+      Makes the first letter of a string upper case.
+    </TD></TR>
+</TABLE>
+</HTML>

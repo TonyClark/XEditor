@@ -1,0 +1,29 @@
+parserImport XOCL;
+
+import DTDL;
+import Types;
+
+context Types
+
+  @Class ComplexSchema extends Schema
+
+    @Doc
+      Complex schemas are designed for supporting complex 
+      data types made up of primitive data types. In DTDL 
+      v3, the complex schemas are Array, Enum, Map, and Object. 
+      A complex schema can be specified directly as the value 
+      of a schema property or described in the Interface 
+      schemas set and referenced in a schema property. Complex 
+      schema definitions are recursive. An Array's elementSchema 
+      may be Array, Enum, Map, Object, or any of the primitive 
+      schema types. The same is true for a Map's mapValue's 
+      schema and an Object's field's schema. For DTDL v3, the 
+      maximum depth of nested complex schemas is 5 levels.
+     end
+    
+    @Attribute id             : String = newId()  (<)       end
+    @Attribute comment        : String = ""       (<,!)     end
+    @Attribute description    : String = ""       (<,!)     end
+    @Attribute displayName    : String = ""       (<,!)     end
+
+  end

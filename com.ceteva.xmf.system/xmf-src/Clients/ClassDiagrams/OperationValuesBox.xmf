@@ -1,0 +1,84 @@
+parserImport XOCL;
+parserImport XMap;
+
+import Clients;
+import Diagrams;
+import ClassDiagrams;
+
+context ClassDiagrams
+
+  @Class OperationValuesBox extends Box
+  
+    @Constructor(x,y,width)
+      self.init(Seq{x,y,width,16,0,Color(),Color(255,255,255)})
+    end
+    
+    @Operation classNode()
+      owner.owner
+    end
+        
+    @Operation add(opGroup:OperationValuesGroup)
+      super(opGroup);
+      opGroup.pack()
+    end
+    
+    @Operation expand()
+      self.expandHeight();
+      self.expandWidth()
+    end
+    
+    @Operation expandHeight()
+      let height = 3
+      in
+        @For opValGroup in displays do
+          opValGroup.moveY(height);
+          height := height + opValGroup.value.maxHeight() + 3
+        end
+      end;
+      
+      super()
+    end
+    
+    @Operation maxHeight()
+      if not shown 
+      then 0
+      elseif displays->isEmpty
+      then 16
+      else super() + 4
+      end
+    end
+    
+    @Operation maxWidth()
+      if not shown
+      then 0
+      else super() + 4
+      end
+    end
+    
+    @Operation nextOperationValue(name,value,operation)
+      OperationValueGroup(name,value,operation,5,self.displays->size * 16)
+    end
+    
+    @Operation node()
+      owner.owner
+    end
+    
+    @Operation remove(operationText)
+      super(operationText);
+      @For display in displays do
+        if display.name.y > operationText.name.y
+        then display.moveDown()
+        end
+      end;
+      self.classNode().packHeight()
+    end
+    
+    @Operation refresh() 
+      @For display in displays do
+        if display.isKindOf(OperationValueGroup)
+        then display.refresh()
+        end
+      end
+    end
+    
+  end

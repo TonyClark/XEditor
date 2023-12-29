@@ -1,0 +1,49 @@
+parserImport XOCL;
+
+import Signatures;
+
+context Signatures
+
+  @Class Delayed extends Type 
+
+    @Attribute thunk : Operation (?,!) end
+    @Attribute value : Type (?,!) end
+    
+    @Constructor(thunk) ! end
+    
+    @Operation force():Type
+      if value = null
+      then self.value := thunk()
+      end;
+      value.force()
+    end
+    
+    @Operation pprint(out)
+      self.force().pprint(out)
+    end
+
+    @Operation getFieldNames():[String]
+      self.force().getFieldNames()
+    end
+    
+    @Operation getField(name:String):Type
+      self.force().getField(name)
+    end
+    
+    @Operation getFieldType(name:String):Type
+      self.force().getFieldType(name)
+    end
+    
+    @Operation getOp(name:String,arity:Integer):Type
+      self.force().getOp(name,arity)
+    end
+
+    @Operation getOpNames():[String]
+      self.force().getOpNames()
+    end
+
+    @Operation getOpArities(name:String):[Integer]
+      self.force().getOpArities(name)
+    end
+
+  end

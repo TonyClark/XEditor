@@ -1,0 +1,10 @@
+parserImport Manifests;
+ 
+@Manifest Class
+  @File ^None  Boot          end
+  @File        ClassArg      end
+  @File        Class         end
+  @File        GenericClass  end
+  @File        ClassGrammar  end
+end;
+    

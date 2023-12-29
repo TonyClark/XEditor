@@ -1,0 +1,13 @@
+parserImport XOCL;
+parserImport Manifests;
+
+import Projects;
+
+@Manifest ReportConstraint
+  ReportConstraint = @File ReportConstraint end
+  @File ReportNode end
+  @File ReportTree end
+  @File Report end
+  @File ^None Boot end
+do Project(ReportConstraint,dir,self)
+end;

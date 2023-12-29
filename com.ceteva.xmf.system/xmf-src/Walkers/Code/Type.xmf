@@ -1,0 +1,69 @@
+parserImport XOCL;
+
+import OCL;
+import Walkers;
+import Code;
+import Signatures;
+
+context Code
+
+  @Class Type extends OCLWalker
+
+    // A walker that performs walk(exp,env) and returns the type of
+    // the expression. Ignore any return value that is not a classifier...
+
+    @Attribute imports : [NameSpace]   end // In reverse order.
+    
+    @Constructor(imports) ! end
+    
+    @Operation walkBoolExp(line:Integer,charStart:Integer,charEnd:Integer,value:Boolean,env)
+      Boolean
+    end
+
+    @Operation walkConst(charStart:Integer,charEnd:Integer,value:Element,env)
+      value.of()
+    end
+
+    @Operation walkFloatExp(line:Integer,postPoint:String,prePoint:String,env)
+      Float
+    end
+
+    @Operation walkIntExp(line:Integer,charStart:Integer,charEnd:Integer,value:Integer,env)
+      Integer
+    end
+
+    @Operation walkLift(line:Integer,exp:OCL,env)
+      Performable
+    end
+    
+    @Operation walkDispatchObject(o:OCL,env)
+      let t = super(o,env)
+      in if not(t.isKindOf(Classifier))
+         then o.of()
+         else t
+         end
+      end
+    end
+
+    @Operation walkSetExp(charStart:Integer,charEnd:Integer,line:Integer,collType:String,elements:Seq(OCL),env)
+      let elementType = elements->collect(e | self.walk(e,env))->iterate(eType t=Element | if eType.inheritsFrom(t) then eType else t end)
+      in if collType = "Seq"
+         then Seq(elementType)
+         else Set(elementType)
+         end
+      end
+    end
+
+    @Operation walkVar(line:Integer,charStart:Integer,charEnd:Integer,name:String,env)
+      @Find(nameSpace,imports)
+        when nameSpace.hasElement(name)
+        do nameSpace.getElement(name).of()
+        else 
+          if env.binds(name)
+          then env.lookup(name)
+          else Element
+          end
+      end
+    end
+
+  end

@@ -1,0 +1,18 @@
+parserImport XOCL;
+
+import Languages;
+import Activities;
+
+context Activities
+
+  @Class Label extends ActivityElement
+
+    @Attribute name:String end
+
+    @Constructor(name) ! end
+
+    @Operation getDiagramElement():String 
+      "label " + name + "\n"
+    end
+
+  end

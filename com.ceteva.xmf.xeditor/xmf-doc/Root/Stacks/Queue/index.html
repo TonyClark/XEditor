@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Queue
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Queue</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+No Documentation Specified
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/Stacks/index.html">Stacks</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/XCore/Object/index.html">Object</A>
+<BR><HR>
+<B>Subclasses</B>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR><TD><B>elements</B></TD><TD><A HREF="../../../Root/XCore/Vector/index.html">Vector<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>first</B></TD><TD><A HREF="../../../Root/XCore/Integer/index.html">Integer<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>last</B></TD><TD><A HREF="../../../Root/XCore/Integer/index.html">Integer<A></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+</FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>asSeq():<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+        Returns the queue as a sequence.
+      </TD></TR>
+<TR><TD><B>empty():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+        Empties the queue.
+      </TD></TR>
+<TR><TD><B>expand():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+        Used to expand the internal storage of a queue.
+        Probably better to use a buffer for this.
+      </TD></TR>
+<TR><TD><B>indexOf(e:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+        Returns the index of the first occurrence of the supplied element 
+        in the queue or -1 if the element does not exist.
+      </TD></TR>
+<TR><TD><B>isEmpty():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+        Returns true when the receiver has no elements.
+      </TD></TR>
+<TR><TD><B>isFull():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+        Returns true when the queue is full.
+      </TD></TR>
+<TR><TD><B>pop():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+        Returns the head element in the queue or raises
+        an exception of type StackUnderflow. The element is
+        removed from the queue.
+      </TD></TR>
+<TR><TD><B>push(e:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD> 
+        Adds the supplied element to the en-d of the queue.
+        The queue storage is expanded as necessary.
+      </TD></TR>
+<TR><TD><B>put(index:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>,e:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+        Updates the queue element at the supplied index.
+      </TD></TR>
+<TR><TD><B>ref(index:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+        Indexes into the queue with the supplied index.
+      </TD></TR>
+<TR><TD><B>size():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+        Returns the current size of the queue storage.
+      </TD></TR>
+<TR><TD><B>top():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+        Returns the next element in the queue if it exists
+        without removing it. Raises an exception if the 
+        queue is empty.
+      </TD></TR>
+<TR><TD><B>topIndex():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+</HTML>

@@ -1,0 +1,4 @@
+
+
+./makexmf $1 $2
+./makeconsole $1 $2

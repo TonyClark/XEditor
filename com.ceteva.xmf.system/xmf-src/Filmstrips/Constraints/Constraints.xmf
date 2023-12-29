@@ -1,0 +1,67 @@
+parserImport XOCL;
+
+import XRules;
+import Exceptions;
+
+context Filmstrips
+
+  @Package Constraints
+
+    @Type AST
+
+      True
+    | False
+    | BinExp(AST,String,AST)
+    | And(AST,AST)
+    | Or(AST,AST)
+    | Implies(AST,AST)
+    | Neg(AST)
+    | Parent(AST)
+    | Ancestor(AST)
+    | Descendent(AST)
+    | Child(AST)
+    | LeftNeighbour(AST)
+    | RightNeighbour(AST)
+    | LeftSibling(AST)
+    | RightSibling(AST)
+    | AllLeftSiblings(AST)
+    | AllRightSiblings(AST)
+    | AllAncestors(AST)
+    | AllChildren(AST)
+    | AllDescendents(AST)
+    | Step(Term,Term,Term,Term,Term,Term,[Action])
+    | Show([Action])
+    | Descendent(AST)
+
+    end 
+
+    @Operation getVars(ast:AST,vars:[Var]):[Var]
+      import AST in 
+        @Case ast of
+          [ True ] do [] end
+          [ False ] do [] end
+          BinExp(l,o,r) do getVars(l,getVars(r,vars)) end
+          And(l,r) do getVars(l,getVars(r,vars)) end
+          Or(l,r) do getVars(l,getVars(r,vars)) end
+          Implies(l,r) do getVars(l,getVars(r,vars)) end
+          Neg(a) do getVars(a,vars) end
+          Parent(a) do getVars(a,vars) end
+          Ancestor(a) do getVars(a,vars) end
+          Child(a) do getVars(a,vars) end
+          Descendent(a) do getVars(a,vars) end
+          AllAncestors(a) do getVars(a,vars) end
+          AllLeftSiblings(a) do getVars(a,vars) end
+          AllRightSiblings(a) do getVars(a,vars) end
+          AllChildren(a) do getVars(a,vars) end
+          AllDescendents(a) do getVars(a,vars) end
+          LeftNeighbour(a) do getVars(a,vars) end
+          LeftSibling(a) do getVars(a,vars) end
+          RightNeighbour(a) do getVars(a,vars) end
+          RightSibling(a) do getVars(a,vars) end
+          Step(v,o,m,a,s,t,as) do v.vars(o.vars(m.vars(a.vars(s.vars(t.vars(as->iterate(a vars=vars | a.vars(vars)))))))) end
+          Show(as) do as->iterate(a vars=vars | a.vars(vars)) end
+          else throw Error("unknown type of ast: " + ast)
+        end   
+      end
+    end
+  end

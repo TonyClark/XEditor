@@ -1,0 +1,11 @@
+parserImport XOCL;
+parserImport Manifests;
+
+import Projects;
+
+@Manifest MicrosoftWord
+  @File MicrosoftWord end
+  @File Document end
+  @File Word end
+  @File ^None Boot end
+end;

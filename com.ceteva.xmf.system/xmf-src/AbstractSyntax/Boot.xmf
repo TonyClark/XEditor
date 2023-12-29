@@ -1,0 +1,3 @@
+("AbstractSyntax/AbstractSyntax.o").loadBin(true); 
+("AbstractSyntax/LocationManager.o").loadBin(true); 
+("AbstractSyntax/DefinitionManager.o").loadBin(true); 

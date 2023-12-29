@@ -1,0 +1,32 @@
+parserImport XOCL;
+
+context Root
+  @Package Plot
+    @Bind registeredPlots = [
+      @Operation memoryUsage()
+        let 
+          Value = xmf.javaClass("values.Value");
+          Plot = xmf.javaClass("diagrams.Plot") then
+          plot = Plot("Memory Usage",2000,500);
+          memory = xmf.memory()
+        in @For index in 0.to(memory->size-1)->reverse do
+             let record = memory.at(index) then
+                 time = record->head;
+                 used = record->tail->head;
+                 usageVector = record->tail->tail
+             in @For type in 0.to(usageVector->size-1) do
+                  if memory->exists(r | record->tail->tail->at(type) > 0)
+                  then
+                    let value = 1.0*usageVector->at(type)
+                    in plot.add(Value.typeName(type),1.0*index,value)
+                    end
+                  end
+                end
+             end
+           end;
+           plot.getSVG()
+        end
+      end
+    ] 
+    end
+  end

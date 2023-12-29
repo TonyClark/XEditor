@@ -1,0 +1,8 @@
+parserImport XOCL;
+
+import DTDL;
+import Histories;
+
+context Histories
+
+  @Enum Action(Create,Delete,Update) end

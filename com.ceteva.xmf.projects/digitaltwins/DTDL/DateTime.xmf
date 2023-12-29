@@ -1,0 +1,15 @@
+parserImport XOCL;
+
+import DTDL;
+import Histories;
+
+context Histories
+
+  @Class DateTime
+
+    @Attribute date : String (<,!) end
+    @Attribute time : Time   (<,!) end
+
+    @Constructor(date,time) ! end
+
+  end

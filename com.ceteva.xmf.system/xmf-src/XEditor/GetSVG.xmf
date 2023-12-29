@@ -1,0 +1,26 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import AbstractSyntax;
+
+@EventHandler getSVG(path,isSelecting,shown,selected,includeXCore)
+
+  // Generate the documentation for the whole of XMF. The documetation is represented
+  // as a tree of HTML files...
+  
+    try
+      format(stdout,"Generating SVG ...~%",[]);
+      NameSpace::VISITED := [];
+      let package = path.lookupPath(Root) then
+          actions = if isSelecting then @Operation(name,importPrefix) " \"[[SELECT:" + name + " " + importPrefix + name + "]]\" " end else @Operation(name,importPrefix) " \"" + importPrefix + name + "\" " end end then
+          t0 = Time() then
+          diagram = package.getDiagram(actions,shown,selected,includeXCore) then
+          t1 = Time()
+      in format(stdout,"Generated SVG ...~S~%",[t1 - t0]);
+         [xmf.javaClass("web.SVG").plantUML2SVG(diagram),NameSpace::VISITED]
+      end
+    catch(exception)
+      format(stdout,"Diagram generation error ~S.~%",[exception]);
+      Root::xmfException := exception
+    end
+  end;

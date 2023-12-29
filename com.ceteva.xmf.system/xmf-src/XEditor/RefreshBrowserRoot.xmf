@@ -1,0 +1,15 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import XEditor;
+
+@EventHandler refreshBrowserRoot()
+    try
+      let Console = xmf.javaClass("console.Console")
+      in Console.CONSOLE.setRoot(getBrowserTree(Root))
+      end
+    catch(exception)
+      Root::xmfException := exception;
+      exception.printBacktrace()
+    end
+  end;

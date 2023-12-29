@@ -1,0 +1,12 @@
+parserImport XOCL;
+
+import Models;
+import Shopping;
+
+context Shopping
+
+  @Class Transaction
+
+     @Attribute product:Product (<,!) end
+
+  end

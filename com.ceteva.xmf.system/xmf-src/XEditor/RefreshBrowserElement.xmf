@@ -1,0 +1,14 @@
+parserImport XOCL;
+parserImport XEditor;
+
+@EventHandler refreshBrowserElement(elementId) 
+
+  // The element with the supplied id needs to be refreshed in the
+  // element browser...
+  
+  try 
+    XEditor::addBrowserChildren(elementId)
+  catch(exception)
+    Root::xmfException := exception
+  end
+end;

@@ -1,0 +1,14 @@
+parserImport XOCL;
+
+import Languages;
+import Activities;
+
+context Activities
+
+  @Class Detach extends ActivityElement
+
+    @Operation getDiagramElement():String 
+      "detach\n"
+    end
+
+  end

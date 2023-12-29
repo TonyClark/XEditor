@@ -1,0 +1,11 @@
+parserImport XOCL;
+parserImport Manifests;
+
+import Projects;
+
+@Manifest XmfTextEditor
+  XmfTextEditor = @File XmfTextEditor end
+  @File FileEditor end
+  @File ^None Boot end
+do Project(XmfTextEditor,dir,self)
+end;

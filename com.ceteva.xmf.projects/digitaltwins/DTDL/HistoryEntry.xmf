@@ -1,0 +1,15 @@
+parserImport XOCL;
+
+import DTDL;
+import Histories;
+
+context Histories
+
+  @Class HistoryEntry
+
+    @Attribute modelId    : String   (<,!) end
+    @Attribute timeStamp  : DateTime (<,!) end
+    @Attribute action     : Action   (<,!) end
+    @Attribute serviceId  : String   (<,!) end
+
+  end

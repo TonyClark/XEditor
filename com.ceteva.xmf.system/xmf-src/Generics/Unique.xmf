@@ -1,0 +1,23 @@
+parserImport XOCL;
+
+import Generics;
+
+context Generics
+
+    @Class Unique(type:XCore::Class) extends type
+    
+      @Attribute counter[generic=true]:Integer = 0 end
+      
+      @Operation nextId[generic=true]():Integer 
+        self.counter := counter + 1;
+        counter
+      end
+
+      @Operation setGenericName[generic=true](args) 
+        // Ignore the supplied name and create one here....
+        self.name := "Unique(" + args->at(0).name + ")"
+      end
+      
+      @Attribute id:Integer = Self.nextId() end
+      
+    end 

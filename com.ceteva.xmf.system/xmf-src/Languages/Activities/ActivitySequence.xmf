@@ -1,0 +1,19 @@
+parserImport XOCL;
+
+import Languages;
+import Activities;
+import AbstractSyntax;
+
+context Activities
+
+  @Class ActivitySequence extends ActivityElement
+
+    @Attribute activities:[Activity] (<) end
+
+    @Constructor(activities) ! end
+
+    @Operation getDiagramElement():String
+      activities->iterate(a s="" | s + a.getDiagramElement())
+    end
+
+  end

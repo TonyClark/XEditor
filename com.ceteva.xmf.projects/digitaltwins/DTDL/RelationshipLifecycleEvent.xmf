@@ -1,0 +1,15 @@
+parserImport XOCL;
+
+import DTDL;
+import Histories;
+
+context Histories
+
+  @Class RelationshipLifecycleEvent extends HistoryEntry
+
+    @Attribute relationshipId : String (<,!) end
+    @Attribute name           : String (<,!) end
+    @Attribute source         : String (<,!) end
+    @Attribute target         : String (<,!) end
+    
+  end

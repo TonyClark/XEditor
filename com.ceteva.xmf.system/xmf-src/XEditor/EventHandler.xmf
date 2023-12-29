@@ -1,0 +1,40 @@
+parserImport Parser::BNF;
+parserImport XOCL;
+
+
+import OCL;
+import XOCL;
+import Parser::BNF;
+import XEditor;
+
+context XEditor
+
+  @Class EventHandler extends Sugar 
+
+    @Grammar extends OCL::OCL.grammar
+
+      EventHandler ::=     
+        name = Name 
+        args = ('(' (OpArgs | {[]}) ')')
+        body = <<Exp>>
+        'end'
+        { EventHandler(name,args,body) }.
+      OpArgs ::= arg = <<Pattern>> args = (',' <<Pattern>>)* { [arg] + args } | { [] }.
+
+    end
+    
+    @Attribute name : String       end
+    @Attribute args : [Pattern]    end
+    @Attribute body : Performable end
+   
+    @Constructor(name,args,body) end
+
+    @Operation addHandler(exp:Performable):Performable 
+      [| try <exp> catch(x) Root::xmfException := x; x.printBacktrace() end |]
+    end
+    
+    @Operation desugar() 
+      [| xmf.registerClientHandler(<name.lift()>,<Operation(Symbol(name),args,[| Element |],self.addHandler(body),[| "" |])>) |]
+    end
+
+  end

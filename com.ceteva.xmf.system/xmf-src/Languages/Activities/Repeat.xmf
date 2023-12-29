@@ -1,0 +1,23 @@
+parserImport XOCL;
+
+import Languages;
+import Activities;
+
+context Activities
+
+  @Class Repeat extends ActivityElement
+
+    @Attribute activities:[ActivityElement] end
+    @Attribute test:Operation end
+    @Attribute optionalBackwardActivity:Activity end
+
+    @Constructor(test,activities,optionalBackwardActivity) ! end
+
+    @Operation getDiagramElement():String 
+      "repeat\n" +
+      activities->collect(a | a.getDiagramElement())->separateWith("\n") +
+      if optionalBackwardActivity = null then "" else "backward" + optionalBackwardActivity.getDiagramElement() end + 
+      "repeat while (" + test.getProperty("label","?") + ") is (yes)\n"
+    end
+
+  end

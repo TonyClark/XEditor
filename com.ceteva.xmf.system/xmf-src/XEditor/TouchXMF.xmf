@@ -1,0 +1,21 @@
+parserImport XOCL;
+parserImport XEditor;
+
+@EventHandler touchXMF(home,binaries:Boolean)
+
+  // Run through all the source files for XMF and make the binary files out of date.
+  // Performing this handler followed by the compileXMF will ensure that the whole of 
+  // XMF is recompiled...
+  
+    try
+      let manifest = home + "/Manifest"
+      in 
+        Compiler::compileFile(manifest + ".xmf",true,true);
+        (manifest + ".o").loadBin(true).touch(home,binaries);
+        true
+      end
+    catch(exception)
+      Root::xmfException := exception;
+      exception.printBacktrace()
+    end
+  end;

@@ -1,0 +1,222 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+CompiledOperation
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>CompiledOperation</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+      CompiledOperation is the type of all XMF compiled operations. A compiled
+      operation can be invoked using 'invoke/2' or by applying it to its arguments.
+      A compiled operation consists of machine code instructions. A compiled
+      operation may be associated with its source code to aid debugging.
+    
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/XCore/index.html">XCore</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/XCore/Operation/index.html">Operation</A>
+<BR><HR>
+<B>Subclasses</B>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR><TD><B>arity</B></TD><TD><A HREF="../../../Root/XCore/Integer/index.html">Integer<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>codeBox</B></TD><TD><A HREF="../../../Root/XCore/Element/index.html">Element<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>dynamics</B></TD><TD><A HREF="../../../Root/XCore/Element/index.html">[Element]<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>globals</B></TD><TD><A HREF="../../../Root/XCore/Element/index.html">Element<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>isVarArgs</B></TD><TD><A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>properties</B></TD><TD><A HREF="../../../Root/XCore/Element/index.html">[Element]<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>sig</B></TD><TD><A HREF="../../../Root/XCore/Element/index.html">[Element]<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>supers</B></TD><TD><A HREF="../../../Root/XCore/Element/index.html">[Element]<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>target</B></TD><TD><A HREF="../../../Root/XCore/Element/index.html">Element<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>traced</B></TD><TD><A HREF="../../../Root/XCore/Element/index.html">Element<A></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/TypedElement/index.html">TypedElement</A>: type. <BR><B>From</B> <A HREF="../../../Root/XCore/DocumentedElement/index.html">DocumentedElement</A>: documentation. <BR><B>From</B> <A HREF="../../../Root/XCore/NamedElement/index.html">NamedElement</A>: name. <BR><B>From</B> <A HREF="../../../Root/XCore/Contained/index.html">Contained</A>: owner. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>addDaemon(daemon:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Add a daemon to the operation. Any state changes to
+      the operation causes the daemon to fire.
+    </TD></TR>
+<TR><TD><B>addNameChangedDaemon(d:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,actionSource:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Use this operation to add a daemon that monitors the name of
+      a compiled operation for changes. The args for the daemon are
+      the new name and the old name.
+    </TD></TR>
+<TR><TD><B>addNewListenerFor(class:<A HREF="../../../Root/XCore/Classifier/index.html">Classifier<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>arity():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      Returns the number of arguments expected by the operation.
+    </TD></TR>
+<TR><TD><B>break():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Causes the operation to enter a break-loop when it is called.
+    </TD></TR>
+<TR><TD><B>codeBox():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns the code-box for the operation. The code-box
+      contains the static part of the operation.
+    </TD></TR>
+<TR><TD><B>daemons():<A HREF="../../../Root/XCore/Operation/index.html">Seq(Operation)<A></B></TD><TD>
+      Return all the daemons for the operation.
+    </TD></TR>
+<TR><TD><B>dependencies():<A HREF="../../../Root/XCore/Element/index.html">Set(Element)<A></B></TD><TD>
+      Calculate the set of name-spaces tht this operation relies on.
+    </TD></TR>
+<TR><TD><B>deployXOCL(dir:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>disassemble(out:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,indent:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>disassemble():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>doc():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>dynamics():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns the imported name-spaces and gobl variables for this
+      operation. The dynamics are a sequence of pairs where the
+      head of each pair is a tag (1 or 2) and the tail is either 
+      a binding or a table of bindings. Usually, a table of bindings
+      will be the contents table of a name-space.
+    </TD></TR>
+<TR><TD><B>fire(slot:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,newValue:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,oldValue:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>get(name:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Handles access to the state of a compiled-operation as
+      though the operation is an object.
+    </TD></TR>
+<TR><TD><B>getProperty(name:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,default:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getStructuralFeatureNames():<A HREF="../../../Root/XCore/String/index.html">Set(String)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>globalValues():<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>globals():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns the closed-in variable storage for the operation.
+      The storage is a linked-list of vectors. The first vector
+      is local to the operation. The rest of the vectors are the
+      storage for lexically enclosing operations. The linked list
+      is implemented as vector pairs.
+    </TD></TR>
+<TR><TD><B>hasProperty(property:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>hasSlot(name:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>importNameSpace(n:<A HREF="../../../Root/XCore/NameSpace/index.html">NameSpace<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Imports the supplied name space and its contents to the
+      receiver. If the name space is already imported then no
+      change is made. Otherwise the name space is added as the
+      most specific imported name space.
+    </TD></TR>
+<TR><TD><B>importNameSpaces(N:<A HREF="../../../Root/XCore/NameSpace/index.html">Seq(NameSpace)<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Import all the supplied name-spaces into the
+      operation.
+    </TD></TR>
+<TR><TD><B>imports(n:<A HREF="../../../Root/XCore/NameSpace/index.html">NameSpace<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      Returns true when the receiver imports the supplied
+      name space.
+    </TD></TR>
+<TR><TD><B>imports():<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>
+      Returns all of the name-spaces that the operation
+      imports in most-specific to least-specific order.
+    </TD></TR>
+<TR><TD><B>init():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>isVarArgs():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>
+      If a compiled operation has variable arguments then it may
+      be supplied with more than the required positional args. The
+      rest of the arguments are processed by building a sequence
+      from them and supplying the sequence as the value of the 
+      last argument.
+    </TD></TR>
+<TR><TD><B>lift():<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>locals():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD> 
+      The number of locals required when the compiled operation
+      is called. Does not include the arguments.
+    </TD></TR>
+<TR><TD><B>name():<A HREF="../../../Root/XCore/Symbol/index.html">Symbol<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>owner():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>paramNames():<A HREF="../../../Root/XCore/String/index.html">Seq(String)<A></B></TD><TD>
+      Returns the sequence of parameter names for the
+      operation.
+    </TD></TR>
+<TR><TD><B>paramTypes():<A HREF="../../../Root/XCore/Classifier/index.html">Seq(Classifier)<A></B></TD><TD> 
+      Returns the sequence of parameter types that
+      were declared for the operation.
+    </TD></TR>
+<TR><TD><B>parserImports():<A HREF="../../../Root/XCore/NameSpace/index.html">Seq(NameSpace)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>properties():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Get the properties of the operation. The properties
+      are pairs of the form Seq{NAME | VALUE}.
+    </TD></TR>
+<TR><TD><B>property(property:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns the value of the supplied property or
+      null if no property is defined.
+    </TD></TR>
+<TR><TD><B>removeDaemon(daemon:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>removeNameSpace(n:<A HREF="../../../Root/XCore/NameSpace/index.html">NameSpace<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Removes the supplied name space from the receiver so that
+      it no longer imports all the names defined by the name
+      space.
+    </TD></TR>
+<TR><TD><B>removeNewListenerFor(class:<A HREF="../../../Root/XCore/Classifier/index.html">Classifier<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>set(name:<A HREF="../../../Root/XCore/String/index.html">String<A>,value:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Use set to treat the state of the compiled operation as
+      an object.
+    </TD></TR>
+<TR><TD><B>setArity(arity:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setCodeBox(codeBox:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setDaemons(daemons:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setDoc(doc:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setDynamics(dynamics:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setGlobals(globals:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setName(name:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setOwner(owner:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setProperties(properties:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setProperty(property:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,value:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Set the property value. The property is created if
+      necessary.
+    </TD></TR>
+<TR><TD><B>setSig(sig:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setSource(source:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setSupers(supers:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setTarget(target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setTraced(trace:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>sig():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Returns the signature of the operation. This is a
+      sequence of the parameters and the return type. The
+      parameters are encoded as pairs being the name and
+      the type. The signature types are encoded and can be
+      decoded by Classifier::mapType.
+    </TD></TR>
+<TR><TD><B>source():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>supers():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>target():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>toString():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>trace():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Sets the operation to be traced. The operation prints out
+      debugging information when it is entered and exited. Note
+      that tracing is implemented by setting the traced slot of
+      the operation to a special operation that the VM will call
+      as a proxy.
+    </TD></TR>
+<TR><TD><B>traced():<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>type():<A HREF="../../../Root/XCore/Classifier/index.html">Classifier<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>untrace():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Operation/index.html">Operation</A>: arity, break, breakFun, deployJava, dynamics, fork, fork, getDerivedValue, globals, invoke, invoke, invokes, isKindOf, javaTypeName, matchesId, matchesSignature, matchesTarget, name, paramNames, setDynamics, setGlobals, setSupers, setTarget, sig, source, supers, target, toNamedElement, toType, trace, traceFun, traced, unbreak, untrace. <BR><B>From</B> <A HREF="../../../Root/XCore/DocumentedElement/index.html">DocumentedElement</A>: doc, ensureDoc, setDoc. <BR><B>From</B> <A HREF="../../../Root/XCore/NamedElement/index.html">NamedElement</A>: getNamedElement, href, name, path, pathSeq, repopulate, setName, toString. <BR><B>From</B> <A HREF="../../../Root/XCore/Contained/index.html">Contained</A>: addTo, allOwners, deleteRecursive, owner, removeFromOwner, setOwner. <BR><B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+</HTML>

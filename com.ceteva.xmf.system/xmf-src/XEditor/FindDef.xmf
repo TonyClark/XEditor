@@ -1,0 +1,15 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import XEditor;
+
+@EventHandler findDef()
+
+  try
+    FindDefinition().find()
+  catch(exception)
+     Root::xmfException := exception;
+     format(stdout,"~S~%",[exception]);
+     null
+   end
+end;

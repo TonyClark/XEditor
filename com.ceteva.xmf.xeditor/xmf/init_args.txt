@@ -1,0 +1,6 @@
+List of root XMF source folders followed by the init file.
+
+First root folder must be XMF system source.
+
+
+../com.ceteva.xmf.system/xmf-src:/Users/tonyclark/Library/CloudStorage/Dropbox/Aston_Files/Research/XMF/xmf_projects/init:xmf /Users/tonyclark/Library/CloudStorage/Dropbox/Aston_Files/Research/XMF/xmf_projects/init/Manifest.o

@@ -1,0 +1,129 @@
+parserImport XOCL;
+
+Class.remove(Class.operations->select(c | c.name().toString() = "addAttribute")->asSeq->head);
+Class.remove(Class.operations->select(c | c.name().toString() = "remove")->asSeq->head);
+
+context Class
+@Operation addAttribute(a : Attribute):Classifier
+      self.resolveNameClash(a.name,attributes);
+      if(a.isIntrinsic andthen a.owner <> null andthen a.owner.level > self.level)
+	  then
+		false
+	  else
+		a.setOwner(self);
+		true
+	  end;
+      self.attributes := attributes->including(a);
+      self
+    end
+
+context Class
+@Operation remove(n : NamedElement):Classifier
+      if n.isKindOf(Attribute)
+      then
+        if not n.isKindOf(Associations::End) andthen n.isIntrinsic
+		then
+			let sd = xmf.javaClass("de.unidue.icb.xmf.multilevel.gui.SpecificDeletionDialog").showDialog(n.owner.level.asInt(),n.instLevel.asInt())
+			in
+				if sd <> null 
+				then
+					self.removeAttributeIntrinsic(n, sd.getDeletionUntilLayer(), sd.getInstantiationLayer());
+					if sd.getDeletionUntilLayer()  > sd.getInstantiationLayer()
+					then
+						self.addIntrinsicAttributeAtLevel(n,sd.getDeletionUntilLayer()-1)
+					end
+				else
+					xmf.message("Operation canceled by user")
+				end
+			end
+		else
+			self.removeAttribute(n);
+			super(n)
+		end	
+      else
+        if n.isKindOf(Constructor)
+        then
+          self.removeConstructor(n);
+          super(n)
+        else
+          super(n)
+        end
+      end
+    end
+
+context Class
+@Operation  addIntrinsicAttributeAtLevel(a: Attribute, addLevel : Integer)
+	if self.level > addLevel
+	then
+		self.allInstances()->iterate(c x=0 | c.addIntrinsicAttributeAtLevel(a,addLevel))
+	else
+		if self.level = addLevel
+		then
+			let newIntA = Attribute(a.name,a.type)
+			in
+				self.add(newIntA);
+				newIntA.isIntrinsic := a.isIntrinsic;
+				newIntA.instLevel := a.instLevel;
+				self.allInstances()->iterate(c x=0 | c.addIntrinsicAttributeAtLevel(newIntA,addLevel))
+			end
+		else
+			if self.level > a.instLevel.asInt()
+			then
+				self.add(a);
+				if self.level > 1 
+				then
+					self.allInstances()->iterate(c x=0 | c.addIntrinsicAttributeAtLevel(a,addLevel))
+				end
+			end
+		end
+	end
+end
+	
+context Class 
+@Operation removeAttributeIntrinsic(a: Attribute, deleteLevel : Integer, instLevel : Integer):XCore::Element
+	if self.level > instLevel
+	then
+		self.allInstances()->iterate(c x=0 | c.removeAttributeIntrinsic(a,deleteLevel,instLevel));
+		self.removeAttribute(a);
+		a.removeFromOwner();
+		contents.remove(a.name())
+	else
+		if instLevel = deleteLevel
+		then
+			self.deleteSlot(a)
+		end
+	end
+end	
+
+/* context Object
+@Operation removeAttributeIntrinsic(a: Attribute, deleteLevel : Integer, instLevel : Integer):XCore::Element
+	self.removeStructuralFeature(a.name.toString())
+end */
+	
+context Class
+@Operation deleteSlot(a: Attribute):XCore::Element
+	self.removeStructuralFeature(a.name.toString());	
+	@For daemon in self.daemons() do
+		//"daemonSchleife".println();
+		if not daemon.type = Daemon::ANY and daemon.slot.toString() = a.name.toString()
+		then
+			//"richtigerDaemon".println();
+			@For metaslotLabel in daemon.target.get(self) do
+				//"metaslot".println();	
+				@For metaAtt in self.of().attributes do
+					//"Attribute".println();			
+					if metaAtt.name.toString() = a.name.toString()
+					then
+						//"richtiges Attribut".println();
+						metaslotLabel.owner.metaslotRemoved(metaAtt)
+					else
+						false
+					end
+				end
+			end
+		else
+			false
+		end
+	end
+end
+

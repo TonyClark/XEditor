@@ -1,0 +1,34 @@
+parserImport XOCL;
+
+import DTDL;
+import Types;
+
+context Types
+
+  @Class Field
+
+    @Doc
+      A Field describes a field in an Object.
+    end
+    
+    @Attribute id             : String = newId()  (<)       end
+    @Attribute comment        : String = ""       (<,!)     end
+    @Attribute description    : String = ""       (<,!)     end
+    @Attribute displayName    : String = ""       (<,!)     end
+    @Attribute name           : String            (<,!)     end
+    @Attribute schema         : Schema            (<,!)     end
+
+    @Constructor(name,schema) ! end
+
+    @Operation addDiagram(class)
+      if schema.isKindOf(PrimitiveSchema)
+      then class.addField(name,schema.getModelType())
+      else
+        let className = name.upperCaseInitialLetter() + "Obj"
+        in schema.addSchemaClass(className,package);
+           package.addEdge(class,package.getElement(),name)
+        end
+      end
+    end
+
+  end

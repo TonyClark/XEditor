@@ -1,0 +1,21 @@
+parserImport XOCL;
+
+import DTDL;
+import Types;
+
+context Types
+
+  @Class Array extends ComplexSchema
+
+    @Doc
+      An Array describes an indexable data type 
+      where each element is of the same schema. 
+      The schema for an Array's element can itself 
+      be a primitive or complex schema.
+    end
+    
+    @Attribute elementSchema  : Schema            (<,!)     end
+
+    @Constructor(elementSchema) ! end
+
+  end

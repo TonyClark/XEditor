@@ -1,0 +1,59 @@
+parserImport XOCL;
+parserImport XMap;
+
+
+import Clients;
+import Diagrams;
+import ClassDiagrams;
+
+context ClassDiagrams
+
+  @Class InstLevelLabel extends Label
+  
+    @Attribute border : Boolean end
+    @Attribute borderColor : Color end
+      
+    @Constructor(text,attachedTo,relx,rely,borderColor,editable)
+      self.init(Seq{text,attachedTo,relx,rely,editable});
+      self.border := true;
+      self.checkDaemons()
+    end
+    
+    @Operation instLevel()
+      text
+    end
+    
+    @Operation hasBorder()
+      border
+    end
+    
+    @Operation setInstLevel(instLevel)
+      self.textChanged(instLevel)
+    end
+        
+    @Operation getBorderColor()
+      borderColor
+    end
+    
+    @Operation checkDaemons()
+  	@SlotValueChanged multi once Clients::ClassDiagrams::InstLevelLabel::valueChanged(self,"text") end		
+    end
+  		
+    @Operation valueChanged(obj, slot, new, old)
+             if old <> new then
+  		if new = " " or new = ""
+   			then
+   				@WithoutDaemons(obj)
+   					obj.text := " "//;
+   					//obj.renew(obj.owner)
+   				end;
+			   	obj.setFill(false);
+			    obj.setColor(Clients::Diagrams::Color(0,0,0))
+			else
+			    obj.setFill(true);
+				obj.setColor(Clients::Diagrams::Color(255,255,255))
+			end
+            end
+	  end
+    
+  end

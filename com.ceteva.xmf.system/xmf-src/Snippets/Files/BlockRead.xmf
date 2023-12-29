@@ -1,0 +1,12 @@
+parserImport XOCL;
+parserImport Snippets;
+
+@Snippet "Reading a file as a vector of characters.";
+
+@XOCL::WithOpenFile(fin <- xmf.homeDir() + "/xmf/init.xmf")
+  let size = (xmf.homeDir() + "/xmf/init.xmf").fileSize() then
+      chars = Vector(size)
+  in fin.read(chars);
+     chars.asString().println()
+  end
+end;

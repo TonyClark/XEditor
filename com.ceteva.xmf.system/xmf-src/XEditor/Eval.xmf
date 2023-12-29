@@ -1,0 +1,26 @@
+parserImport XOCL;
+parserImport XEditor;
+parserImport Parser::BNF;
+
+import AbstractSyntax;
+
+context AbstractSyntax
+  @Grammar extends OCL::OCL.grammar
+    AbstractSyntax ::= Def | Exp.
+  end
+     
+@EventHandler eval(text)
+
+  // Evaluate the expression in a string...
+ 
+    try
+      format(stdout,"Evaluating ...~%",[]);
+      let exp = AbstractSyntax.grammar.parseString(text,"AbstractSyntax",Seq{XOCL}) then
+          value = exp.eval(null,Env::NullEnv(),[XCore,Root])
+      in format(stdout,"~S~%=> ~S~%",[text,value])
+      end
+    catch(exception)
+      format(stdout,"Evaluation generation error ~S.~%",[exception]);
+      Root::xmfException := exception
+    end
+  end;

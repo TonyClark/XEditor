@@ -1,0 +1,9 @@
+parserImport XOCL;
+
+import Parser;
+
+context Tokens
+
+  @Package Streams
+
+  end

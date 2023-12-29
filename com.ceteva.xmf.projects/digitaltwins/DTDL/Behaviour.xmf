@@ -1,0 +1,8 @@
+parserImport XOCL;
+
+
+context DTDL
+
+  @Package Behaviour
+
+  end

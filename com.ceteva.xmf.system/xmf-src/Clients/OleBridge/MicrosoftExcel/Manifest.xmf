@@ -1,0 +1,13 @@
+parserImport XOCL;
+parserImport Manifests;
+
+import Projects;
+
+@Manifest MicrosoftExcel
+  @File MicrosoftExcel end
+  @File Range end
+  @File Worksheet end
+  @File Workbook end
+  @File Excel end
+  @File ^None Boot end
+end;

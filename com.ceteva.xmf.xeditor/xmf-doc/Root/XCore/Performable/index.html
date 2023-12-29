@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>
+Performable
+</TITLE>
+</HEAD>
+<FONT SIZE="+2"><B>Performable</B></FONT><BR><BR><HR>
+<FONT SIZE="+1"><B>Overview</B></FONT><BR>
+<P>
+
+     A performable element can be executed on the XMF VM. It must provide a
+     collection of operations that support its evaluation or its translation
+     into VM machine instructions. In particular it must support 'compile/4',
+     'FV/0', 'maxLocals/0' and 'eval/3'. Performable is the root class for
+     all extensions to executable XMF. For example OCL is a sub-class of
+     Performable. If you inte-nd to define your own languages in XMF then
+     they should exte-nd Performable.
+    
+<BR><HR>
+<B>Owner</B>
+<A HREF="../../../Root/XCore/index.html">XCore</A>
+<BR><HR>
+<B>Parents</B>
+<A HREF="../../../Root/XCore/Located/index.html">Located</A>
+<BR><HR>
+<B>Subclasses</B>
+<A HREF="../../../Root/Parser/BNF/Grammar/index.html">Grammar</A>
+,<A HREF="../../../Root/TopLevel/Command/index.html">Command</A>
+,<A HREF="../../../Root/XOCL/Syntax/index.html">Syntax</A>
+,<A HREF="../../../Root/XOCL/Def/index.html">Def</A>
+,<A HREF="../../../Root/XOCL/Sugar/index.html">Sugar</A>
+,<A HREF="../../../Root/OCL/OCL/index.html">OCL</A>
+,<A HREF="../../../Root/XOCL/CaseInt/index.html">CaseInt</A>
+,<A HREF="../../../Root/XOCL/While/index.html">While</A>
+,<A HREF="../../../Root/XOCL/WithoutLocalNames/index.html">WithoutLocalNames</A>
+,<A HREF="../../../Root/XOCL/Clause/index.html">Clause</A>
+,<A HREF="../../../Root/XOCL/WithoutSourcePos/index.html">WithoutSourcePos</A>
+,<A HREF="../../../Root/XOCL/WithoutDaemons/index.html">WithoutDaemons</A>
+,<A HREF="../../../WithoutLocalNames/index.html">WithoutLocalNames</A>
+,<A HREF="../../../WithoutDaemons/index.html">WithoutDaemons</A>
+,<A HREF="../../../WithoutSourcePos/index.html">WithoutSourcePos</A>
+,<A HREF="../../../CaseInt/index.html">CaseInt</A>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Constructors</B></FONT></TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=3><FONT SIZE="+2">
+<B>Attributes</B></FONT></TD>
+</TR>
+<TR><TD><B>endLine</B></TD><TD><A HREF="../../../Root/XCore/Integer/index.html">Integer<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>line</B></TD><TD><A HREF="../../../Root/XCore/Integer/index.html">Integer<A></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=3>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Located/index.html">Located</A>: charEnd, charStart. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+<BR><HR><BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="2" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Operations</B></FONT></TD>
+</TR>
+<TR><TD><B>FV():<A HREF="../../../Root/XCore/String/index.html">Set(String)<A></B></TD><TD>
+      All performable things contain variables. If the variables are not
+      bound then they are free. This returns the set of free variables
+      in a performable thing.
+    </TD></TR>
+<TR><TD><B>compile(env:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,frame:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,isLast:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,saveSource:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Every performable thing must be able to be compiled.
+      The arguments are as follows: env contains information about the context;
+      frame defines how statically nested inside binding contours we are;
+      isLast is a boolean determining whether we are the last performable thing;
+      saveSource controls whether or not source is dumped to the output.
+    </TD></TR>
+<TR><TD><B>endLine():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>eval(target:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,env:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,imports:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>
+      Every performable thing can be evaluated (as opposed to compiled and 
+      then performed).Evaluation occurs in a context that includes the value
+      of 'self' (i.e. the target of the evaluating message), an
+      environment of local variables and a sequence of imported name spaces.
+    </TD></TR>
+<TR><TD><B>line():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>maxLocals():<A HREF="../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD>
+      Any performable thing requires some local storage. This will
+      occur in the machine stack frame. It is possible to statically 
+      determine how much storage is required and this operation returns
+      the amount of storage needed.
+    </TD></TR>
+<TR><TD><B>pprint(out:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,indent:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Any performable thing can be turned into code. The default
+      behaviour is to produce a comment. All performable subclasses
+      should redefined this operation as appropriate.
+    </TD></TR>
+<TR><TD><B>pprint():<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Pretty prints the receiver to a string.
+    </TD></TR>
+<TR><TD><B>pprint(indent:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>
+      Pretty prints the receiver to a string.
+    </TD></TR>
+<TR><TD><B>setEndLine(endLine:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>setLine(line:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR>
+<TD COLSPAN=2>
+<FONT SIZE="-1">
+<B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+</TD>
+</TR>
+</TABLE>
+</HTML>
