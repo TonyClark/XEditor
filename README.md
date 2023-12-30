@@ -1,4 +1,4 @@
-﻿
+
 <p style="text-align: right;"><img src="images/x_up_right.png" width="100" height="100"></p>
 
 # XEditor 
@@ -15,7 +15,7 @@ __Why would anyone be interested in meta-programming?__ Many languages such as P
 
 __What is XEditor?__ XEditor provides a language-aware text editor for creating and interacting with XMF-based applications. XEditor provides access to XMF source files located in a folder structure, allows the files to be viewed and edited. The files can then be loaded into the XMF machine leading to new definitions or modifications to exiting definitions. The XEditor console provided interactive access to the current set of definitions.
 
-XEditor is the sibling platform of [XEditor](https://le4mm.org). Both platforms are based on XMF , XCore and XOCL. XEditor builds text-based tools using XMF (with some associated graphics tooling), XModeler builds (multi-level) diagram-based tools using XMF (with some associated text tooling).
+XEditor is the sibling platform of [XModeler](https://le4mm.org). Both platforms are based on XMF , XCore and XOCL. XEditor builds text-based tools using XMF (with some associated graphics tooling), XModeler builds (multi-level) diagram-based tools using XMF (with some associated text tooling).
 
 __What can I use XEditor for?__ The following types of application would be ideal for XEditor:
 
