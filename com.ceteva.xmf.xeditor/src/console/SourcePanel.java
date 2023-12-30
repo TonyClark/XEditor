@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.io.File;
 import java.util.List;
 import java.util.Vector;
+import java.util.function.Consumer;
 
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
@@ -34,8 +35,7 @@ public class SourcePanel extends JSplitPane {
 		repl    = new XMFREPL(console, editor);
 		setTopComponent(tabs);
 		addTab(editors.getCurrent());
-		BrowserPanel home = createBrowser("XEditor");
-		home.loadFile("doc/homepage.html");
+		BrowserPanel home = createBrowser("XEditor",(webBrowser) -> webBrowser.loadFile("doc/xeditor.html"));
 		setBottomComponent(repl);
 		setDividerLocation(Console.CONSOLE_HEIGHT - 300);
 	}
@@ -264,10 +264,10 @@ public class SourcePanel extends JSplitPane {
 		}
 	}
 
-	public BrowserPanel createBrowser(String label) {
+	public BrowserPanel createBrowser(String label, Consumer<BrowserPanel> init) {
 		int index = indexOfBrowser(label);
 		if (index == -1) {
-			BrowserPanel browser = new BrowserPanel();
+			BrowserPanel browser = new BrowserPanel(init);
 			tabs.addTab(label, browser);
 			TabLabel.LabelAction delete = () -> {
 				tabs.remove(indexOfBrowser(label));

@@ -1,11 +1,45 @@
+﻿
+<p style="text-align: right;"><img src="images/x_up_right.png" width="100" height="100"></p>
 
-# XEditor <img src="images/x_up_right.png" width="40" height="40"> 
+# XEditor 
+
 *Language Oriented Text Editing Powered by XMF and XOCL*
 
 ## Overview
 
+__What is XMF?__ XMF is a language platform for working with text-based languages. XMF provides a high-level language called XOCL that offers a large number of useful language constructs. The XOCL data model is called XCore, everything written in XOCL - including XOCL programs - are defined by the XOCL data model. Furthermore, XCore can be extended (or even changed) making the XMF platform ideal for meta-programming: defining new language constructs.
 
-XEditor provides a language-aware text editor for creating and interacting with XMF-based applications. XMF is an execution engine which runs the extensible language XOCL whose data model is defined by XCore types. The XEditor provides access to XMF source files located in a folder structure, allows the files to be viewed and edited. The files can then be loaded into the XMF machine leading to new definitions or modifications to exiting definitions. The XEditor console provided interactive access to the current set of definitions.
+__Why would anyone be interested in XOCL?__ Many languages such as Java and Python provide increasingly abstract programming constructs where implementation details are hidden from the programmer. This makes it easier to check the use of the constructs and makes the code easier to maintain. XOCL already has many such constructs and it is easy to add your own.
+
+__Why would anyone be interested in meta-programming?__ Many languages such as Python and Java increasingly provide access to the type-level and expose platform execution mechanisms. This makes it easier to create adaptive systems. Access to programs-as-data within a programming environment makes it easy to create Domin Specific Languages and to create applications that consist of components written in languages appropriate to a range of domain experts.
+
+__What is XEditor?__ XEditor provides a language-aware text editor for creating and interacting with XMF-based applications. XEditor provides access to XMF source files located in a folder structure, allows the files to be viewed and edited. The files can then be loaded into the XMF machine leading to new definitions or modifications to exiting definitions. The XEditor console provided interactive access to the current set of definitions.
+
+XEditor is the sibling platform of [XEditor](https://le4mm.org). Both platforms are based on XMF , XCore and XOCL. XEditor builds text-based tools using XMF (with some associated graphics tooling), XModeler builds (multi-level) diagram-based tools using XMF (with some associated text tooling).
+
+__What can I use XEditor for?__ The following types of application would be ideal for XEditor:
+
+  - Prototyping data-rich applications.
+  - Creating simulations.
+  - Programming language research.
+  - Reflective/Adaptive languages.
+  - Teaching executable modelling.
+  - Meta-modelling.
+  - Domain Specific Languages.
+  - Tooling for language support.
+
+## Installation
+
+Editor is open source and consists of several components, all of which can be downloaded from [This GitHub Repository](https://github.com/TonyClark/XEditor):
+
+- com.ceteva.xmf.machine: A virtual machine and associated libraries written in Java.
+- com.ceteva.xmf.system: The XMF system written in XOCL. XEditor provides access to the complete source code for the XMF system including its compiler and language processing systems. The XMF system can be modified by loading new definitions into a running system or by changing the source code and rebuilding a new image.
+- com.ceteva.xmf.xeditor: The Java libraries that support the editor and its toolset.
+- com.ceteva.xmf.projects: A collection of projects using Editor.
+
+The machine and editor downloads are Eclipse projects which can be loaded into Eclipse and run as a Java application using console.Console as the main class.
+
+Alternatively, the script xeditor in com.ceteva.xmf.xeditor can be used to start Editor from its parent folder.
 
 ## Editor Components
 
@@ -13,7 +47,7 @@ The XEditor consists of a file browser, file editor, menu bar, and an interactiv
 
 ### File Browser
 
-<img src="images/file_browser.png" width="200" height="400"> 
+<img src="images/file_browser.png" width="200" height="400">
 
 The XEditor file browser (shown on the left) which provides access to the files from a supplied collection of root folders. The XEditor is supplied with its own source code contained within the folder xmf-src. Normally the XEditor source folder will be one of the folders in the file browser. With the file browser you can:
 
@@ -26,7 +60,7 @@ Files called Manifest.xmf are treated specially. They contain manifests that ref
 
 ### Editor Panel
 
-<img src="images/editor_panel.png" width="300" height="250"> 
+<img src="images/editor_panel.png" width="300" height="250">
 
 The XEditor editor panel is shown to the right of the file browser and contains the currently selected file. The editor will be configured to understand the language of the file contents and to provide suitable functionality. Normally this is the XOCL language. With the editor panel you can:
 
@@ -195,7 +229,7 @@ occur on a single line and are terminated by return rather than ';'.
 
 ## The XMF Menu
 
-<img src="images/XMF_menu.png" width="200" height="400"> 
+<img src="images/XMF_menu.png" width="200" height="400">
 
 The XMF Menu provides access to system-level functionality:
 
@@ -239,18 +273,16 @@ The named element (for example a class or an operation) is added to the name spa
 
 There are example models in xmf-src/models:
 
-  * A library model  <img src="images/lib.png" width="400" height="800"> 
-
+  * A library model  <img src="images/lib.png" width="400" height="800">
 
     Try running ```Models::Lib::test1()```
 
-  * A shopping model <img src="images/shopping.png" width="600" height="1000"> 
-
+  * A shopping model <img src="images/shopping.png" width="600" height="1000">
 
 
 ## Snippets of Useful Information
 
-### Integers
+#### Integers
 ```
 // Some key integer operations. Browse XCore::Integer for more details.
 
@@ -295,7 +327,7 @@ space.isWhiteSpaceChar().println();
 Integer::random(10).println();
 ```
 
-### Floats
+#### Floats
 
 ```
 // Some key float operations. Browse XCore::Float for more details.
@@ -318,7 +350,7 @@ Integer::random(10).println();
 Float(10,5).println();
 ```
 
-### Booleans
+#### Booleans
 
 ```
 // Some key boolean operations. Browse XCore::Boolean for more details.
@@ -327,7 +359,7 @@ true.booland(false).println();
 false.boolor(true).println();
 ```
 
-### Strings
+#### Strings
 
 ```
 // Some key string operations. Browse XCore::String for more details.
@@ -371,7 +403,7 @@ xmf.homeDir().println();
 (xmf.homeDir() + "/xmf/init.xmf").parentDir().println();
 ```
 
-### Vectors
+#### Vectors
 
 ```
 Root::v := Vector(5);
@@ -391,7 +423,7 @@ v.size().println();
 v.asSeq().println();
 ```
 
-### Files
+#### Files
 
 ```
 // Get the contents of a file...
@@ -405,7 +437,7 @@ v.asSeq().println();
 end;
 ```
 
-### System Images
+#### System Images
 
 You can save the current state of the system as an image. The operation
 ```XMF::saveState``` takes a file and an operation of one argument. The operation is called with the command line arguments when the image restarts. XMF is in control of the Console application and therefore must start it up before the operation returns. The saved image must be used as the boot image at startup. Typically images are found in ```com.ceteva.xmf.system/xmf-img/...```

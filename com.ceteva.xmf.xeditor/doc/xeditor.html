@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>homepage</title>
+  <title>xeditor</title>
   <link rel="stylesheet" href="https://stackedit.io/style.css" />
 </head>
 
@@ -13,9 +13,10 @@
     <div class="stackedit__toc">
       
 <ul>
-<li><a href="#xeditor-img-srcimagesx_up_right.png-width40-height40">XEditor </a>
+<li><a href="#xeditor">XEditor</a>
 <ul>
 <li><a href="#overview">Overview</a></li>
+<li><a href="#installation">Installation</a></li>
 <li><a href="#editor-components">Editor Components</a>
 <ul>
 <li><a href="#file-browser">File Browser</a></li>
@@ -51,10 +52,36 @@
   </div>
   <div class="stackedit__right">
     <div class="stackedit__html">
-      <h1 id="xeditor-img-srcimagesx_up_right.png-width40-height40">XEditor <img src="images/x_up_right.png" width="40" height="40"></h1>
+      <p><img src="images/x_up_right.png" width="100" height="100"></p>
+<h1 id="xeditor">XEditor</h1>
 <p><em>Language Oriented Text Editing Powered by XMF and XOCL</em></p>
 <h2 id="overview">Overview</h2>
-<p>XEditor provides a language-aware text editor for creating and interacting with XMF-based applications. XMF is an execution engine which runs the extensible language XOCL whose data model is defined by XCore types. The XEditor provides access to XMF source files located in a folder structure, allows the files to be viewed and edited. The files can then be loaded into the XMF machine leading to new definitions or modifications to exiting definitions. The XEditor console provided interactive access to the current set of definitions.</p>
+<p><strong>What is XMF?</strong> XMF is a language platform for working with text-based languages. XMF provides a high-level language called XOCL that offers a large number of useful language constructs. The XOCL data model is called XCore, everything written in XOCL - including XOCL programs - are defined by the XOCL data model. Furthermore, XCore can be extended (or even changed) making the XMF platform ideal for meta-programming: defining new language constructs.</p>
+<p><strong>Why would anyone be interested in XOCL?</strong> Many languages such as Java and Python provide increasingly abstract programming constructs where implementation details are hidden from the programmer. This makes it easier to check the use of the constructs and makes the code easier to maintain. XOCL already has many such constructs and it is easy to add your own.</p>
+<p><strong>Why would anyone be interested in meta-programming?</strong> Many languages such as Python and Java increasingly provide access to the type-level and expose platform execution mechanisms. This makes it easier to create adaptive systems. Access to programs-as-data within a programming environment makes it easy to create Domin Specific Languages and to create applications that consist of components written in languages appropriate to a range of domain experts.</p>
+<p><strong>What is XEditor?</strong> XEditor provides a language-aware text editor for creating and interacting with XMF-based applications. XEditor provides access to XMF source files located in a folder structure, allows the files to be viewed and edited. The files can then be loaded into the XMF machine leading to new definitions or modifications to exiting definitions. The XEditor console provided interactive access to the current set of definitions.</p>
+<p>XEditor is the sibling platform of <a href="https://le4mm.org">XEditor</a>. Both platforms are based on XMF , XCore and XOCL. XEditor builds text-based tools using XMF (with some associated graphics tooling), XModeler builds (multi-level) diagram-based tools using XMF (with some associated text tooling).</p>
+<p><strong>What can I use XEditor for?</strong> The following types of application would be ideal for XEditor:</p>
+<ul>
+<li>Prototyping data-rich applications.</li>
+<li>Creating simulations.</li>
+<li>Programming language research.</li>
+<li>Reflective/Adaptive languages.</li>
+<li>Teaching executable modelling.</li>
+<li>Meta-modelling.</li>
+<li>Domain Specific Languages.</li>
+<li>Tooling for language support.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>Editor is open source and consists of several components, all of which can be downloaded from <a href="https://github.com/TonyClark/XEditor">This GitHub Repository</a>:</p>
+<ul>
+<li>com.ceteva.xmf.machine: A virtual machine and associated libraries written in Java.</li>
+<li>com.ceteva.xmf.system: The XMF system written in XOCL. XEditor provides access to the complete source code for the XMF system including its compiler and language processing systems. The XMF system can be modified by loading new definitions into a running system or by changing the source code and rebuilding a new image.</li>
+<li>com.ceteva.xmf.xeditor: The Java libraries that support the editor and its toolset.</li>
+<li>com.ceteva.xmf.projects: A collection of projects using Editor.</li>
+</ul>
+<p>The machine and editor downloads are Eclipse projects which can be loaded into Eclipse and run as a Java application using console.Console as the main class.</p>
+<p>Alternatively, the script xeditor in com.ceteva.xmf.xeditor can be used to start Editor from its parent folder.</p>
 <h2 id="editor-components">Editor Components</h2>
 <p>The XEditor consists of a file browser, file editor, menu bar, and an interactive console.</p>
 <h3 id="file-browser">File Browser</h3>

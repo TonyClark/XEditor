@@ -133,7 +133,7 @@ public class XMFPanel extends JSplitPane {
 	}
 
 	public void setDirty(XMFEditor editor, boolean dirty) {
-		sourcePanel.setDirty(editor,dirty);
+		sourcePanel.setDirty(editor, dirty);
 	}
 
 	public void setDirty(File file, boolean dirty) {
@@ -141,15 +141,16 @@ public class XMFPanel extends JSplitPane {
 	}
 
 	public void hasError(XMFEditor editor, boolean hasError) {
-		sourcePanel.hasError(editor,hasError);
+		sourcePanel.hasError(editor, hasError);
 	}
 
 	public void hasError(File file, boolean hasError) {
-		sourcePanel.hasError(file,hasError);
+		sourcePanel.hasError(file, hasError);
 	}
 
 	public BrowserPanel createBrowser(String label) {
-		return sourcePanel.createBrowser(label);
+		return sourcePanel.createBrowser(label, ignore -> {
+		});
 	}
 
 }

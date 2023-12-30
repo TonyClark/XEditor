@@ -1,6 +1,7 @@
 package web;
 
 import java.io.File;
+import java.util.function.Consumer;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -13,12 +14,12 @@ public class BrowserPanel extends JFXPanel {
 
 	private WebView webView;
 
-	public BrowserPanel() {
+	public BrowserPanel(Consumer<BrowserPanel> init) {
 		super();
 		Platform.runLater(() -> {
 			webView = new WebView();
 			Scene scene = new Scene(webView);
-			webView.getEngine().load("file://" + new File("doc/homepage.html").getAbsolutePath());
+			init.accept(this);
 			webView.getEngine().locationProperty().addListener(new ChangeListener<String>() {
 				@Override
 				public void changed(ObservableValue<? extends String> ov, final String oldLoc, final String loc) {
@@ -38,8 +39,14 @@ public class BrowserPanel extends JFXPanel {
 	}
 
 	public void loadFile(String file) {
-		if(webView != null) {
-			webView.getEngine().load("file://" + new File(file).getAbsolutePath());
+		if (webView != null) {
+			Platform.runLater(() -> {
+				try {
+					webView.getEngine().load("file://" + new File(file).getAbsolutePath());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			});
 		}
 	}
 
