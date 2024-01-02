@@ -1,6 +1,7 @@
 package console;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
@@ -21,6 +22,7 @@ import java.nio.file.attribute.FileTime;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Vector;
+import java.util.function.Consumer;
 
 import javax.swing.Box;
 import javax.swing.JFileChooser;
@@ -37,6 +39,7 @@ import org.fife.ui.rsyntaxtextarea.parser.Parser;
 
 import clients.ClientResult;
 import diagrams.DiagramFrame;
+import diagrams.model.Model;
 import files.FileNode;
 import files.FileSystem;
 import inspect.InspectorManager;
@@ -286,6 +289,12 @@ public class Console extends JFrame implements WindowListener {
 				JMenuItem generate = new JMenuItem("Generate");
 				generate.addActionListener((e) -> documentXMF());
 				document.add(generate);
+				JMenuItem homepage = new JMenuItem("Home");
+				document.add(homepage);
+				homepage.addActionListener((e) -> xmfPanel.browseHome());
+				JMenuItem superlanguages = new JMenuItem("Superlanguages");
+				document.add(superlanguages);
+				superlanguages.addActionListener((e) -> browseSuperlanguages());
 				addHTMLFiles(document, new File("./xmf-doc/Root"));
 				XMF.add(document);
 				JMenu build = new JMenu("Build");
@@ -297,7 +306,8 @@ public class Console extends JFrame implements WindowListener {
 				XMF.add(build);
 				build.add(buildCompiler);
 				JMenuItem diagrams = new JMenuItem("Diagrams");
-				diagrams.addActionListener((e) -> diagrams(diagrams.getX(), diagrams.getY()));
+				diagrams.addActionListener((e) -> diagrams(diagrams.getX(), diagrams.getY(), (d) -> {
+				}));
 				JMenu find = new JMenu("Find");
 				JMenuItem findDef = new JMenuItem("Definition");
 				XMF.add(find);
@@ -321,6 +331,15 @@ public class Console extends JFrame implements WindowListener {
 				setIconImage(Toolkit.getDefaultToolkit().getImage("icons/class.png"));
 			});
 		} catch (InvocationTargetException | InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void browseSuperlanguages() {
+		File htmlFile = new File("doc/superlanguages.pdf");
+		try {
+			Desktop.getDesktop().browse(htmlFile.toURI());
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -447,16 +466,19 @@ public class Console extends JFrame implements WindowListener {
 		});
 	}
 
-	private void diagrams(int x, int y) {
+	private void diagrams(int x, int y, Consumer<DiagramFrame> action) {
 		if (diagramFrame == null) {
 			SwingUtilities.invokeLater(() -> {
 				Point pt = new Point(x, y);
 				SwingUtilities.convertPointToScreen(pt, this);
 				diagramFrame = new DiagramFrame(this);
 				diagramFrame.setLocation(pt.x, pt.y - diagramFrame.getY());
+				action.accept(diagramFrame);
 			});
-		} else
+		} else {
 			diagramFrame.setVisible(true);
+			action.accept(diagramFrame);
+		}
 	}
 
 	private void documentXMF() {
@@ -677,9 +699,13 @@ public class Console extends JFrame implements WindowListener {
 		if (xmfPanel != null)
 			xmfPanel.hasError(file, hasError);
 	}
-	
+
 	public void createBrowser(String label) {
 		xmfPanel.createBrowser(label);
+	}
+
+	public void showDiagram(String label, Model model) {
+		diagrams(getX(), getY(), (d) -> d.showDiagram(label, model));
 	}
 
 }

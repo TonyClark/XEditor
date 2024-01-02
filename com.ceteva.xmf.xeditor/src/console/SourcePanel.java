@@ -35,9 +35,13 @@ public class SourcePanel extends JSplitPane {
 		repl    = new XMFREPL(console, editor);
 		setTopComponent(tabs);
 		addTab(editors.getCurrent());
-		BrowserPanel home = createBrowser("XEditor",(webBrowser) -> webBrowser.loadFile("doc/xeditor.html"));
+		browseHome();
 		setBottomComponent(repl);
 		setDividerLocation(Console.CONSOLE_HEIGHT - 300);
+	}
+
+	public void browseHome() {
+		createBrowser("XEditor",(webBrowser) -> webBrowser.loadFile("doc/xeditor.html"));
 	}
 
 	public void addLanguageMenuItems(String language) {

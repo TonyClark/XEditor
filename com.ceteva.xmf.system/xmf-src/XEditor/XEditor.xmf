@@ -169,7 +169,7 @@ context Root
     end
 
     @Operation getMenuFor(value):[Object]
-      let handlers = browserMenuHandlers->select(h | value.isKindOf(h.type) and h.check(value))
+      let handlers = browserMenuHandlers->select(h | value.isKindOf(h.type) andthen h.check(value))
       in handlers->collect(h | h.toJMenu())
       end
     end
@@ -200,6 +200,11 @@ context Root
       BrowserMenuHandler(CompiledOperation,MenuLeaf("Edit",
         @Operation(value:Object):Element  
           xmf.javaClass("console.Console").CONSOLE.loadPath(value.codeBox().resourceName())
+        end
+      )),
+      BrowserMenuHandler(Package,MenuLeaf("Diagram",
+        @Operation(package:Package):Element  
+          xmf.javaClass("console.Console").CONSOLE.showDiagram(package.name.toString(),Diagram::createModel(package))
         end
       )),
       BrowserMenuHandler(Container,MenuLeaf("Refresh",

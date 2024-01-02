@@ -153,4 +153,8 @@ public class XMFPanel extends JSplitPane {
 		});
 	}
 
+	public void browseHome() {
+		sourcePanel.browseHome();
+	}
+
 }

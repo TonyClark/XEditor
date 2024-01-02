@@ -87,27 +87,6 @@ public class DiagramFrame extends JFrame {
 		return tabs;
 	}
 
-	private void getDiagramOLD() {
-		Console.call("getPackageStructure", new Object[] {}, (packages) -> {
-			SwingUtilities.invokeLater(() -> {
-				String name = getPackagePath(button.getX(), button.getY(), (Vector<Object>) packages);
-				if (name != null) {
-					if (tabTable.containsKey(name)) {
-						tabs.setSelectedComponent(tabTable.get(name));
-					} else {
-						DiagramTab tab = new PackageDiagramTab(console, this, name);
-						TabLabel.LabelAction delete = () -> delete(name);
-						TabLabel.LabelAction select = () -> select(name);
-						TabLabel label = new TabLabel(name, name, delete, select);
-						tabTable.put(name, tab);
-						tabs.addTab(name, tab);
-						tabs.setTabComponentAt(tabs.indexOfTab(name), label);
-					}
-				}
-			});
-		});
-	}
-
 	private void getDiagram() {
 		Console.call("getPackageStructure", new Object[] {}, (packages) -> {
 			SwingUtilities.invokeLater(() -> {
@@ -117,13 +96,7 @@ public class DiagramFrame extends JFrame {
 						tabs.setSelectedComponent(tabTable.get(name));
 					} else {
 						Console.call("getPackageModel", new Object[] { name }, (model) -> {
-							DiagramTab tab = new ModelDiagramTab(console, this, (Model) model);
-							TabLabel.LabelAction delete = () -> delete(name);
-							TabLabel.LabelAction select = () -> select(name);
-							TabLabel label = new TabLabel(name, name, delete, select);
-							tabTable.put(name, tab);
-							tabs.addTab(name, tab);
-							tabs.setTabComponentAt(tabs.indexOfTab(name), label);
+							showDiagram(name, (Model) model);
 						});
 					}
 				}
@@ -222,5 +195,18 @@ public class DiagramFrame extends JFrame {
 		}
 		tabTable.put(title, tab);
 		tabs.addTab(title, tab);
+	}
+
+	public void showDiagram(String name, Model model) {
+		SwingUtilities.invokeLater(() -> {
+			DiagramTab tab = new ModelDiagramTab(console, this, model);
+			TabLabel.LabelAction delete = () -> delete(name);
+			TabLabel.LabelAction select = () -> select(name);
+			TabLabel label = new TabLabel(name, name, delete, select);
+			tabTable.put(name, tab);
+			tabs.addTab(name, tab);
+			tabs.setTabComponentAt(tabs.indexOfTab(name), label);
+			tabs.setSelectedIndex(tabs.indexOfTab(name));
+		});
 	}
 }
