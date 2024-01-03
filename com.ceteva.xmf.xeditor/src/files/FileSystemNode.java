@@ -21,19 +21,19 @@ public class FileSystemNode extends DefaultMutableTreeNode {
 
 	private static Hashtable<String, ImageIcon> images = new Hashtable<String, ImageIcon>();
 
-	private JTree                               tree;
-	private Console                             console;
-	private ImageIcon                           image  = null;
+	private JTree     tree;
+	private Console   console;
+	private ImageIcon image = null;
 
 	public FileSystemNode(Object data, Console console, JTree tree, String image) {
 		super(data);
-		this.tree = tree;
+		this.tree    = tree;
 		this.console = console;
-		this.image = createImage(image);
+		this.image   = createImage(image);
 	}
 
 	public DefaultMutableTreeNode clone() {
-		return new FileSystemNode(getUserObject(), console, tree, ""+image);
+		return new FileSystemNode(getUserObject(), console, tree, "" + image);
 	}
 
 	private ImageIcon createImage(String image) {
@@ -87,6 +87,10 @@ public class FileSystemNode extends DefaultMutableTreeNode {
 
 	public void browse() {
 		console.browse();
+	}
+
+	public FileSystemNode copyInto(DirectoryNode dirNode, boolean remove) {
+		return this;
 	}
 
 }

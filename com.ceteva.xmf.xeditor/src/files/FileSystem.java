@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DropMode;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -65,6 +66,9 @@ public class FileSystem extends JTree implements MouseListener, TreeCellRenderer
 		setRootVisible(false);
 		setCellRenderer(this);
 		setExpandsSelectedPaths(true);
+    setDragEnabled(true);
+    setDropMode(DropMode.ON_OR_INSERT);
+    setTransferHandler(new TreeTransferHandler());
 	}
 
 	public void add(DefaultMutableTreeNode child, DefaultMutableTreeNode parent) {

@@ -1,8 +1,11 @@
 package files;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTree;
@@ -21,13 +24,32 @@ public class FileNode extends FileSystemNode implements PopupHandler, Deletable,
 		this(file, console, tree, "icons/editor.gif");
 	}
 
+	public FileSystemNode copyInto(DirectoryNode dirNode, boolean remove) {
+		try {
+			if (!new File(dirNode.getDir(), file.getName()).exists()) {
+				if (remove) {
+					Files.move(file.toPath(), new File(dirNode.getDir(), file.getName()).toPath(), REPLACE_EXISTING);
+				} else {
+					Files.copy(file.toPath(), new File(dirNode.getDir(), file.getName()).toPath(), REPLACE_EXISTING);
+				}
+				return new FileNode(getConsole(), getTree(), new File(dirNode.getDir(), file.getName()));
+			} else {
+				JOptionPane.showMessageDialog(getConsole(), "Cannot overwrite - delete first " + new File(dirNode.getDir(), file.getName()));
+				return null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public FileNode(File file, Console console, JTree tree, String icon) {
 		super(file, console, tree, icon);
 		this.file = file;
 	}
 
 	public FileNode clone() {
-		return new FileNode(file, getConsole(), getTree(), ""+getImage());
+		return new FileNode(file, getConsole(), getTree(), "" + getImage());
 	}
 
 	@Override
