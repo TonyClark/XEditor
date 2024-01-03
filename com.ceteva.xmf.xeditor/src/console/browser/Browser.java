@@ -26,8 +26,8 @@ public class Browser extends JSplitPane {
 		return elementBrowser.getElementBrowser();
 	}
 
-	public void addChild(int parent, int child, String label) {
-		elementBrowser.getElementBrowser().addChild(parent, child, label);
+	public void addChild(int parent, int child, String label, String imageFile) {
+		elementBrowser.getElementBrowser().addChild(parent, child, label, imageFile);
 	}
 
 	public void setRoot(Vector<Object> tree) {

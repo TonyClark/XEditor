@@ -31,12 +31,12 @@ public class ElementBrowser extends JTree implements MouseListener {
 		ToolTipManager.sharedInstance().registerComponent(this);
 	}
 
-	public void addChild(int parent, int child, String label) {
+	public void addChild(int parent, int child, String label,String imageFile) {
 		// Maintain in label order...
-		ElementNode      parentNode = getNode((ElementNode) getModel().getRoot(), parent);
-		ElementNode      childNode  = new ElementNode(child, label);
-		DefaultTreeModel model      = (DefaultTreeModel) getModel();
-		int              index      = -1;
+		ElementNode parentNode = getNode((ElementNode) getModel().getRoot(), parent);
+		ElementNode childNode = new ElementNode(child, label,imageFile);
+		DefaultTreeModel model = (DefaultTreeModel) getModel();
+		int index = -1;
 		for (int i = 0; i < parentNode.getChildCount() && index == -1; i++) {
 			ElementNode n = (ElementNode) parentNode.getChildAt(i);
 			if (n.getLabel().compareTo(label) > 0)
@@ -51,7 +51,7 @@ public class ElementBrowser extends JTree implements MouseListener {
 	public void addChild(ElementNode parentNode, ElementNode childNode) {
 		// Maintain in label order...
 		DefaultTreeModel model = (DefaultTreeModel) getModel();
-		int              index = -1;
+		int index = -1;
 		for (int i = 0; i < parentNode.getChildCount() && index == -1; i++) {
 			ElementNode n = (ElementNode) parentNode.getChildAt(i);
 			if (n.getLabel().compareTo(childNode.getLabel()) > 0)
@@ -83,10 +83,11 @@ public class ElementBrowser extends JTree implements MouseListener {
 	}
 
 	private ElementNode createTree(Vector<Object> tree) {
-		String      label  = (String) tree.get(0);
-		int         handle = (int) tree.get(1);
-		ElementNode node   = new ElementNode(handle, label);
-		for (int i = 2; i < tree.size(); i++) {
+		String label = (String) tree.get(0);
+		int handle = (int) tree.get(1);
+		String imageFile = (String) tree.get(2);
+		ElementNode node = new ElementNode(handle, label, imageFile);
+		for (int i = 3; i < tree.size(); i++) {
 			ElementNode child = createTree((Vector<Object>) tree.get(i));
 			addChild(node, child);
 		}
@@ -102,7 +103,7 @@ public class ElementBrowser extends JTree implements MouseListener {
 			TreePath path = getSelectionPath();
 			if (path != null) {
 				ElementNode node = (ElementNode) path.getLastPathComponent();
-				int         id   = node.getElementId();
+				int id = node.getElementId();
 				Console.call("getBrowserMenu", new Object[] { id }, (results) -> {
 					Vector<MItem> items = (Vector<MItem>) results;
 					if (items.size() > 0) {
@@ -119,8 +120,8 @@ public class ElementBrowser extends JTree implements MouseListener {
 
 	public void refresh(int id) {
 		DefaultTreeModel model = (DefaultTreeModel) getModel();
-		ElementNode      root  = (ElementNode) model.getRoot();
-		ElementNode      node  = getNode(root, id);
+		ElementNode root = (ElementNode) model.getRoot();
+		ElementNode node = getNode(root, id);
 		if (node == root) {
 			Console.send("refreshBrowserRoot", new Object[] {});
 		} else {
@@ -165,8 +166,8 @@ public class ElementBrowser extends JTree implements MouseListener {
 
 	public void setElementImage(int id, String imageFile) {
 		DefaultTreeModel model = (DefaultTreeModel) getModel();
-		ElementNode      root  = (ElementNode) model.getRoot();
-		ElementNode      node  = getNode(root, id);
+		ElementNode root = (ElementNode) model.getRoot();
+		ElementNode node = getNode(root, id);
 		if (node != null) {
 			node.setImageFile(imageFile);
 			repaint();
@@ -175,10 +176,10 @@ public class ElementBrowser extends JTree implements MouseListener {
 
 	@Override
 	public String getToolTipText(MouseEvent event) {
-		Point p      = event.getPoint();
-		int   selRow = getRowForLocation(p.x, p.y);
+		Point p = event.getPoint();
+		int selRow = getRowForLocation(p.x, p.y);
 		if (selRow != -1) {
-			TreePath    path = getPathForRow(selRow);
+			TreePath path = getPathForRow(selRow);
 			ElementNode node = (ElementNode) path.getLastPathComponent();
 			if (node instanceof HoverProvider) {
 				HoverProvider h = (HoverProvider) node;
@@ -191,8 +192,8 @@ public class ElementBrowser extends JTree implements MouseListener {
 
 	public void setHoverText(int id, String text) {
 		DefaultTreeModel model = (DefaultTreeModel) getModel();
-		ElementNode      root  = (ElementNode) model.getRoot();
-		ElementNode      node  = getNode(root, id);
+		ElementNode root = (ElementNode) model.getRoot();
+		ElementNode node = getNode(root, id);
 		text = "<html>" + text.replaceAll("\n", "<br>") + "</html>";
 		if (node != null) {
 			node.setText(text);

@@ -7,8 +7,8 @@ context Histories
 
   @Class History
 
-    @Attribute propertyUpdates             : [PropertyUpdate] (<,!,+,-) end
-    @Attribute lifecycleEvents             : [LifecycleEvent] (<,!,+,-) end
-    @Attribute relationshipLifecycleEvents : [LifecycleEvent] (<,!,+,-) end
+    @Attribute propertyUpdates             : [PropertyUpdate]             (<,!,+,-) end
+    @Attribute lifecycleEvents             : [LifecycleEvent]             (<,!,+,-) end
+    @Attribute relationshipLifecycleEvents : [RelationshipLifecycleEvent] (<,!,+,-) end
 
   end

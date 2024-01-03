@@ -11,13 +11,13 @@ context AbstractSyntax
     
     @Operation getIcon(c:Class):String
       if c = XOCL::Class
-      then "icons/class.png"
+      then "icons/class.gif"
       else 
         if c = XOCL::Attribute
-        then "icons/attribute.png"
+        then "icons/attribute.gif"
         else  
           if c = OCL::Operation
-          then "icons/operation.png"
+          then "icons/operation.gif"
           else "icons/def.gif"
           end
         end

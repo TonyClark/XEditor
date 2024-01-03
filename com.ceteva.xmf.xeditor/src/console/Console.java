@@ -70,9 +70,29 @@ public class Console extends JFrame implements WindowListener {
 	public static String[]         XOSArgs        = new String[] { "-port", "9999", "-image", "../com.ceteva.xmf.system/xmf-img/console.img", "-heapSize", "11000", "-freeHeap", "20", "-stackSize", "50",
 	    "-arg", "initfile:../com.ceteva.xmf.xeditor/xmf/init.o" };
 
-	public static void xmfInitialized() {
-		// Called from XMF when it is up and running and ready to receive messages...
-		run();
+	public static void addMessage(String message, Object[] args, CallConsumer consumer) {
+		synchronized (queue) {
+			queue.add(new Message(message, args, (result) -> {
+				if (consumer != null) {
+					new Thread(() -> {
+						consumer.consume(result);
+					}).start();
+				}
+			}));
+			queue.notifyAll();
+		}
+	}
+
+	private static boolean allThreadsWaiting() {
+		threads.Thread start = XOS.getXVM().currentThread();
+		threads.Thread t = start;
+		do {
+			if (t.stateToString().equals("ACTIVE"))
+				return false;
+			else
+				t = t.next();
+		} while (t != start);
+		return true;
 	}
 
 	public static void browse(String path) {
@@ -85,17 +105,71 @@ public class Console extends JFrame implements WindowListener {
 		}
 	}
 
-	public static void addMessage(String message, Object[] args, CallConsumer consumer) {
-		synchronized (queue) {
-			queue.add(new Message(message, args, (result) -> {
-				if (consumer != null) {
-					new Thread(() -> {
-						consumer.consume(result);
-					}).start();
-				}
-			}));
-			queue.notifyAll();
+	public static void call(String handlerName, Object[] args, CallConsumer consumer) {
+
+		// Synchronous call and return...
+
+		// System.err.println("Call " + handlerName);
+
+		addMessage(handlerName, args, consumer);
+	}
+
+	public static int getConsoleHeight() {
+		return CONSOLE_HEIGHT;
+	}
+
+	public static int getConsoleWidth() {
+		return CONSOLE_WIDTH;
+	}
+
+	public static int getConsoleX() {
+		return CONSOLE_X;
+	}
+
+	public static int getConsoleY() {
+		return CONSOLE_Y;
+	}
+
+	public static JFileChooser getFileChooser() {
+		return fileChooser;
+	}
+
+	private static Vector<Object> getThreadStates() {
+		threads.Thread start = XOS.getXVM().currentThread();
+		Vector<Object> states = new Vector<Object>();
+		threads.Thread t = start;
+		do {
+			states.add(t.stateToString());
+			t = t.next();
+		} while (t != start);
+		return states;
+	}
+
+	public static String getXMF_INIT() {
+		return XMF_INIT;
+	}
+
+	public static String getXMF_SRC() {
+		return XMF_SRC;
+	}
+
+	public static <T> String htmlList(Vector<T> values) {
+		String html = "<html>";
+		for (int i = 0; i < values.size(); i++) {
+			html = html + values.get(i);
+			if (i < values.size() - 1) {
+				html = html + "<br>";
+			}
 		}
+		return html + "</html";
+	}
+
+	public static void main(String[] args) {
+		System.setOut(new PrintStream(new ConsoleOutput(editor)));
+		System.setIn(consoleInput);
+		new Thread(() -> {
+			XOS.init(XOSArgs);
+		}).start();
 	}
 
 	public static void run() {
@@ -158,85 +232,6 @@ public class Console extends JFrame implements WindowListener {
 
 	}
 
-	private static boolean allThreadsWaiting() {
-		threads.Thread start = XOS.getXVM().currentThread();
-		threads.Thread t = start;
-		do {
-			if (t.stateToString().equals("ACTIVE"))
-				return false;
-			else
-				t = t.next();
-		} while (t != start);
-		return true;
-	}
-
-	private static Vector<Object> getThreadStates() {
-		threads.Thread start = XOS.getXVM().currentThread();
-		Vector<Object> states = new Vector<Object>();
-		threads.Thread t = start;
-		do {
-			states.add(t.stateToString());
-			t = t.next();
-		} while (t != start);
-		return states;
-	}
-
-	public static void call(String handlerName, Object[] args, CallConsumer consumer) {
-
-		// Synchronous call and return...
-
-		// System.err.println("Call " + handlerName);
-
-		addMessage(handlerName, args, consumer);
-	}
-
-	public static int getConsoleHeight() {
-		return CONSOLE_HEIGHT;
-	}
-
-	public static int getConsoleWidth() {
-		return CONSOLE_WIDTH;
-	}
-
-	public static int getConsoleX() {
-		return CONSOLE_X;
-	}
-
-	public static int getConsoleY() {
-		return CONSOLE_Y;
-	}
-
-	public static JFileChooser getFileChooser() {
-		return fileChooser;
-	}
-
-	public static String getXMF_INIT() {
-		return XMF_INIT;
-	}
-
-	public static String getXMF_SRC() {
-		return XMF_SRC;
-	}
-
-	public static <T> String htmlList(Vector<T> values) {
-		String html = "<html>";
-		for (int i = 0; i < values.size(); i++) {
-			html = html + values.get(i);
-			if (i < values.size() - 1) {
-				html = html + "<br>";
-			}
-		}
-		return html + "</html";
-	}
-
-	public static void main(String[] args) {
-		System.setOut(new PrintStream(new ConsoleOutput(editor)));
-		System.setIn(consoleInput);
-		new Thread(() -> {
-			XOS.init(XOSArgs);
-		}).start();
-	}
-
 	public static void send(String handlerName, Object[] args) {
 
 		// Asynchronous send...
@@ -245,6 +240,11 @@ public class Console extends JFrame implements WindowListener {
 
 		addMessage(handlerName, args, (value) -> {
 		});
+	}
+
+	public static void xmfInitialized() {
+		// Called from XMF when it is up and running and ready to receive messages...
+		run();
 	}
 
 	private LanguagePanel languagePanel;
@@ -335,17 +335,8 @@ public class Console extends JFrame implements WindowListener {
 		}
 	}
 
-	private void browseSuperlanguages() {
-		File htmlFile = new File("doc/superlanguages.pdf");
-		try {
-			Desktop.getDesktop().browse(htmlFile.toURI());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void addChild(int parent, int child, String label) {
-		xmfPanel.addChild(parent, child, label);
+	public void addChild(int parent, int child, String label, String imageFile) {
+		xmfPanel.addChild(parent, child, label, imageFile);
 	}
 
 	private void addHTMLFiles(JMenu document, File dir) {
@@ -364,6 +355,26 @@ public class Console extends JFrame implements WindowListener {
 			for (File file : files) {
 				addHTMLFiles(menu, file);
 			}
+		}
+	}
+
+	public void browse() {
+		int mode = fileChooser.getFileSelectionMode();
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		int result = fileChooser.showDialog(this, "Browse");
+		if (result == JFileChooser.APPROVE_OPTION) {
+			File dir = fileChooser.getSelectedFile();
+			xmfPanel.browseDir(dir);
+		}
+		fileChooser.setFileSelectionMode(mode);
+	}
+
+	private void browseSuperlanguages() {
+		File htmlFile = new File("doc/superlanguages.pdf");
+		try {
+			Desktop.getDesktop().browse(htmlFile.toURI());
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -447,6 +458,10 @@ public class Console extends JFrame implements WindowListener {
 		});
 	}
 
+	public void createBrowser(String label) {
+		xmfPanel.createBrowser(label);
+	}
+
 	private void createScratch() {
 		try {
 			if (!SCRATCH.exists()) {
@@ -495,6 +510,10 @@ public class Console extends JFrame implements WindowListener {
 		xmfPanel.eval(text);
 	}
 
+	public void exit() {
+		System.exit(0);
+	}
+
 	private void findDef() {
 		SwingUtilities.invokeLater(() -> {
 			send("findDef", new Object[] {});
@@ -532,6 +551,20 @@ public class Console extends JFrame implements WindowListener {
 
 	public XMFPanel getXmfPanel() {
 		return xmfPanel;
+	}
+
+	public void handleNameResolution(Vector<String> names) {
+		xmfPanel.handleNameResolution(names);
+	}
+
+	public void hasError(File file, boolean hasError) {
+		if (xmfPanel != null)
+			xmfPanel.hasError(file, hasError);
+	}
+
+	public void hasError(XMFEditor editor, boolean hasError) {
+		if (xmfPanel != null)
+			xmfPanel.hasError(editor, hasError);
 	}
 
 	public void load(File file) {
@@ -592,6 +625,16 @@ public class Console extends JFrame implements WindowListener {
 		xmfPanel.setCaretPosition(pos);
 	}
 
+	public void setDirty(File file, boolean dirty) {
+		if (xmfPanel != null)
+			xmfPanel.setDirty(file, dirty);
+	}
+
+	public void setDirty(XMFEditor editor, boolean dirty) {
+		if (xmfPanel != null)
+			xmfPanel.setDirty(editor, dirty);
+	}
+
 	public void setLanguagePanel(LanguagePanel languagePanel) {
 		this.languagePanel = languagePanel;
 	}
@@ -602,6 +645,10 @@ public class Console extends JFrame implements WindowListener {
 
 	public void setXmfPanel(XMFPanel xmfPanel) {
 		this.xmfPanel = xmfPanel;
+	}
+
+	public void showDiagram(String label, Model model) {
+		diagrams(getX(), getY(), (d) -> d.showDiagram(label, model));
 	}
 
 	private void touchBinaries() {
@@ -659,53 +706,6 @@ public class Console extends JFrame implements WindowListener {
 	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub
 
-	}
-
-	public void exit() {
-		System.exit(0);
-	}
-
-	public void browse() {
-		int mode = fileChooser.getFileSelectionMode();
-		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		int result = fileChooser.showDialog(this, "Browse");
-		if (result == JFileChooser.APPROVE_OPTION) {
-			File dir = fileChooser.getSelectedFile();
-			xmfPanel.browseDir(dir);
-		}
-		fileChooser.setFileSelectionMode(mode);
-	}
-
-	public void handleNameResolution(Vector<String> names) {
-		xmfPanel.handleNameResolution(names);
-	}
-
-	public void setDirty(XMFEditor editor, boolean dirty) {
-		if (xmfPanel != null)
-			xmfPanel.setDirty(editor, dirty);
-	}
-
-	public void setDirty(File file, boolean dirty) {
-		if (xmfPanel != null)
-			xmfPanel.setDirty(file, dirty);
-	}
-
-	public void hasError(XMFEditor editor, boolean hasError) {
-		if (xmfPanel != null)
-			xmfPanel.hasError(editor, hasError);
-	}
-
-	public void hasError(File file, boolean hasError) {
-		if (xmfPanel != null)
-			xmfPanel.hasError(file, hasError);
-	}
-
-	public void createBrowser(String label) {
-		xmfPanel.createBrowser(label);
-	}
-
-	public void showDiagram(String label, Model model) {
-		diagrams(getX(), getY(), (d) -> d.showDiagram(label, model));
 	}
 
 }

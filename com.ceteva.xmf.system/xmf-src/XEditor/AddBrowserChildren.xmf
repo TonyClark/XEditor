@@ -10,19 +10,22 @@ context XEditor
            @For child in element.contents() do
               @TypeCase(child)
                 Package do
-                  Console.CONSOLE.addChild(elementId,xmf.getHandle(child),child.toString())
+                  Console.CONSOLE.addChild(elementId,xmf.getHandle(child),child.toString(),"icons/package.gif")
                 end
                 Class do
-                  Console.CONSOLE.addChild(elementId,xmf.getHandle(child),child.toString())
+                  Console.CONSOLE.addChild(elementId,xmf.getHandle(child),child.toString(),"icons/class.gif")
                 end
                 Attribute do
-                  Console.CONSOLE.addChild(elementId,xmf.getHandle(child),child.name() + ":" + child.type.toString())
+                  Console.CONSOLE.addChild(elementId,xmf.getHandle(child),child.name() + ":" + child.type.toString(),"icons/attribute.gif")
                 end
                 ForeignOperation do
                   null
                 end
                 Operation do
-                  Console.CONSOLE.addChild(elementId,xmf.getHandle(child),child.name() + "(" + child.paramNames()->separateWith(",") + ")")
+                  Console.CONSOLE.addChild(elementId,xmf.getHandle(child),child.name() + "(" + child.paramNames()->separateWith(",") + ")","icons/operation.gif")
+                end
+                NameSpace do
+                  Console.CONSOLE.addChild(elementId,xmf.getHandle(child),child.toString(),"icons/namespace.gif")
                 end
                 else null
               end;
@@ -33,7 +36,7 @@ context XEditor
            if element.isKindOf(Class)
            then 
               @For instance in element.allInstances() do
-                 Console.CONSOLE.addChild(elementId,xmf.getHandle(instance),instance.toString())
+                 Console.CONSOLE.addChild(elementId,xmf.getHandle(instance),instance.toString(),null)
               end
            end
          end

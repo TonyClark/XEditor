@@ -104,8 +104,8 @@ public class XMFPanel extends JSplitPane {
 		sourcePanel.setCaretPosition(pos);
 	}
 
-	public void addChild(int parent, int child, String label) {
-		browser.addChild(parent, child, label);
+	public void addChild(int parent, int child, String label, String imageFile) {
+		browser.addChild(parent, child, label, imageFile);
 	}
 
 	public void setRoot(Vector<Object> tree) {

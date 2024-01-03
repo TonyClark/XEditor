@@ -112,7 +112,29 @@ context Root
               Attribute do
                 object.name() + ":" + object.type.toString()
               end
+              NamedElement do
+                object.name().toString()
+              end
               else object.toString()
+            end;
+          image = 
+            @TypeCase(object)
+              Package do
+                "icons/package.gif"
+              end
+              Attribute do
+                "icons/attribute.gif"
+              end
+              Class do
+                "icons/class.gif"
+              end
+              CompiledOperation do
+                "icons/operation.gif"
+              end
+              NameSpace do
+                "icons/namespace.gif"
+              end
+              else "icons/obj.gif"
             end;
           children = 
             @TypeCase(object)
@@ -132,7 +154,7 @@ context Root
               end
               else [] 
             end
-      in [label,handle] + children
+      in [label,handle,image] + children
       end
     end
 

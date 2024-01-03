@@ -12,14 +12,15 @@ public class ElementNode extends DefaultMutableTreeNode implements ImageProvider
 	private String imageFile = null;
 	private String hover     = null;
 
-	public ElementNode(int elementId, String label) {
+	public ElementNode(int elementId, String label, String imageFile) {
 		super(label);
 		this.elementId = elementId;
 		this.label = label;
+		this.imageFile = imageFile;
 	}
 
 	public DefaultMutableTreeNode clone() {
-		return new ElementNode(elementId, label);
+		return new ElementNode(elementId, label, imageFile);
 	}
 
 	public int getElementId() {

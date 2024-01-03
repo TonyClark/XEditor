@@ -26,7 +26,7 @@ public class TradingProjectTreeRenderer extends DefaultTreeCellRenderer {
 			String        imageFile = i.getImageFile();
 			if (imageFile != null) {
 				if (!imageCache.containsKey(imageFile)) {
-					imageCache.put(imageFile, new ImageIcon(new ImageIcon(imageFile).getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+					imageCache.put(imageFile, new ImageIcon(new ImageIcon(imageFile).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
 				}
 				setIcon(imageCache.get(imageFile));
 			}
