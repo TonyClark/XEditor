@@ -8,14 +8,23 @@ import javax.swing.tree.TreePath;
 
 public class Package extends PackageElement {
 
-	private Vector<PackageElement> contents = new Vector<PackageElement>();
-	private Vector<Edge>           edges    = new Vector<Edge>();
-	private Vector<Note>           notes    = new Vector<Note>();
+	private Vector<PackageElement> contents    = new Vector<PackageElement>();
+	private Vector<Edge>           edges       = new Vector<Edge>();
+	private Vector<Note>           notes       = new Vector<Note>();
 	private String                 path;
+	private String                 packageNote = null;
 
 	public Package(String path, String name) {
 		super(name);
 		this.path = path;
+	}
+
+	public String getPackageNote() {
+		return packageNote;
+	}
+
+	public void setPackageNote(String packageNote) {
+		this.packageNote = packageNote;
 	}
 
 	public Class addClass(String name) {
@@ -24,8 +33,8 @@ public class Package extends PackageElement {
 		return c;
 	}
 
-	public void addEnum(String name,Vector<String> names) {
-		contents.add(new Enum(name,names));
+	public void addEnum(String name, Vector<String> names) {
+		contents.add(new Enum(name, names));
 	}
 
 	public void addImportedClass(String sourcePath, String name) {
@@ -58,6 +67,9 @@ public class Package extends PackageElement {
 	public String getPlantUML() {
 		if (isVisible()) {
 			String s = "package \"<color:#Brown><size:14>" + getName() + "\" as " + getName() + "{\n";
+			if(packageNote != null) {
+				s += "note \"" + packageNote + "\" as N\n";
+			}
 			for (PackageElement e : contents) {
 				s += e.getPlantUML();
 			}

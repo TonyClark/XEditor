@@ -2,7 +2,6 @@ parserImport XOCL;
 
 import DTDL;
 import Types;
-import Interfaces;
 import Elements;
 
 context Elements

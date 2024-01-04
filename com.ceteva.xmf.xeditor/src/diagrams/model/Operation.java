@@ -29,7 +29,7 @@ public class Operation implements Visible {
 
 	public String getPlantUML() {
 		if (isVisible()) {
-			String s = "<size:8><color:#DarkGreen>" + name + "(";
+			String s = "<size:12><color:#DarkGreen>" + name + "(";
 			for (int i = 0; i < args.size(); i++) {
 				s += args.get(i).getPlantUML();
 				if (i + 1 < args.size()) {

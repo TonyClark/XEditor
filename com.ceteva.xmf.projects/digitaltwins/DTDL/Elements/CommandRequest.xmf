@@ -5,10 +5,10 @@ import Types;
 
 context Behaviour
 
-  @Class CommandResponse
+  @Class CommandRequest
 
     @Doc
-      A CommandResponse describes the outputs from a Command.
+      A CommandRequest describes the inputs to a Command.
     end
     
     @Attribute id             : String = newId()  (<)       end
@@ -17,7 +17,13 @@ context Behaviour
     @Attribute displayName    : String = ""       (<,!)     end
     @Attribute name           : String            (<,!)     end
     @Attribute schema         : Schema            (<,!)     end
-
+    
     @Constructor(name,schema) ! end
+
+    @Operation asArg() 
+      let Arg = xmf.javaClass("diagrams.model.Arg")
+      in Arg(name,schema.getModelType())
+      end
+    end
 
   end

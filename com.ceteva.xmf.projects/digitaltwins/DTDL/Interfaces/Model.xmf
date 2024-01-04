@@ -4,6 +4,7 @@ import AbstractSyntax;
 import DTDL;
 import Interfaces;
 import Elements;
+import Goals;
 
 context Interfaces
 
@@ -15,8 +16,9 @@ context Interfaces
 
     @Attribute name      : String    (<) end
     @Attribute interface : Interface (<) end
+    @Attribute goal      : Goal      (<) end
 
-    @Constructor(name,interface) ! end
+    @Constructor(name,interface,goal) ! end
 
     @Operation getDiagramLabel():String
       name
@@ -26,7 +28,8 @@ context Interfaces
       let Model = xmf.javaClass("diagrams.model.Model") then
           model = Model("",name) then
           package = model.getPackage()
-      in interface.addDiagram(package);
+      in package.setPackageNote(goal.description);
+         interface.addDiagram(package);
          model.getPlantUML()
       end
     end

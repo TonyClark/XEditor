@@ -1,0 +1,15 @@
+parserImport XOCL;
+
+import DTDL;
+import Objects;
+
+context ! Objects
+
+  @Class Link
+
+    @Attribute name   : String (<,!) end
+    @Attribute target : Object (<,!) end
+
+    @Constructor(name,target) ! end
+
+  end

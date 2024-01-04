@@ -4,17 +4,23 @@ import DTDL;
 import Interfaces;
 import Elements;
 import Types;
+import Goals;
+import Behaviour;
 
 context Root
-  @Snapshot HomeOffice(DTDL)
+  @Snapshot OfficeBuilding(DTDL)
 
     model = Model[
-      name = "House_Interface_Model";
-      interface = house
+      name = "OfficeBuildingTwin";
+      interface = office;
+      goal = Goal[
+        description = "Rooms are heated to the desired temperature when they are occupied. Occupantds use swipe cards to enter and exit the room. Heating is off in empty rooms. Heating is on until the desired temperature is reached.",
+        satisfiedBy = []
+      ]
     ]
 
-    house = Interface[
-      displayName = "House";
+    office = Interface[
+      displayName = "Office";
       contents = [
         Property[
            name = "address",
@@ -74,13 +80,32 @@ context Root
            name = "name",
            schema = PrimitiveSchema("String")
         ],
+        Property[
+           name = "desiredTemp",
+           schema = PrimitiveSchema("Double")
+        ], 
+        Property[
+           name = "isHeating",
+           schema = PrimitiveSchema("Boolean")
+        ],
         Telemetry[
           name = "temperature",
           schema = PrimitiveSchema("Double")
         ],
         Telemetry[
-          name = "humidity",
-          schema = PrimitiveSchema("Double")
+          name = "numOfOccupants",
+          schema = PrimitiveSchema("Integer")
+        ],
+        Command[
+          name="heat",
+          request = CommandRequest[
+            name = "in",
+            schema = PrimitiveSchema("Boolean")
+          ],
+          response = CommandResponse[
+            name = "out",
+            schema = PrimitiveSchema("Boolean")
+          ]
         ]
       ]
 

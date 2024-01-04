@@ -4,7 +4,7 @@ import DTDL;
 import Interfaces;
 import Elements;
 
-context Elements
+context Elements 
 
   @Class Relationship extends InterfaceElement
 

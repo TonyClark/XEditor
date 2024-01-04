@@ -2,7 +2,6 @@ parserImport XOCL;
 
 import DTDL;
 import Behaviour;
-import Interfaces;
 import Elements;
 
 context Elements
@@ -13,12 +12,22 @@ context Elements
       A Command describes a function or operation that 
       can be performed on any digital twin.
     end
-    
-    
 
     @Attribute request      : CommandRequest    (<,!) end
     @Attribute response     : CommandResponse   (<,!) end
 
     @Constructor(name) ! end
+
+    @Operation addDiagram(package,class)
+      class.addOperation(self.getName(),self.getArgs(),self.getType()).setVisible(true)
+    end
+
+    @Operation getArgs()
+      [request.asArg()]
+    end
+
+    @Operation getType()
+      response.getType()
+    end
 
   end 

@@ -3,40 +3,48 @@ parserImport Manifests;
 
 @Manifest DTDL
 
-  @File DTDL                            end
-  @File Types                           end
-  @File Behaviour                       end
-  @File Maps                            end
-  @File Interfaces                      end
-  @File Elements                        end
-  @File Histories                       end
-  @File Schema                          end
-  @File PrimitiveSchema                 end
-  @File ComplexSchema                   end
-  @File Array                           end
-  @File EnumValue                       end
-  @File Enum                            end
-  @File MapKey                          end
-  @File MapValue                        end
-  @File Map                             end
-  @File Field                           end
-  @File Object                          end
-  @File InterfaceElement                end
-  @File Property                        end
-  @File Telemetry                       end
-  @File Interface                       end
-  @File Model                           end
-  @File Relationship                    end
-  @File Component                       end
-  @File CommandRequest                  end
-  @File CommandResponse                 end
-  @File Command                         end
-  @File Action                          end
-  @File DateTime                        end
-  @File HistoryEntry                    end
-  @File LifecycleEvent                  end
-  @File RelationshipLifecycleEvent      end
-  @File PropertyUpdate                  end
-  @File History                         end
+  @File DTDL                                  end
+  @File Types/Types                           end
+  @File Behaviour/Behaviour                   end
+  @File Types/Maps                            end
+  @File Interfaces/Interfaces                 end
+  @File Elements/Elements                     end
+  @File Histories/Histories                   end
+  @File Types/Schema                          end
+  @File Types/PrimitiveSchema                 end
+  @File Types/ComplexSchema                   end
+  @File Types/Array                           end
+  @File Types/EnumValue                       end
+  @File Types/Enum                            end
+  @File Types/MapKey                          end
+  @File Types/MapValue                        end
+  @File Types/Map                             end
+  @File Types/Field                           end
+  @File Types/Object                          end
+  @File Elements/InterfaceElement             end
+  @File Elements/Property                     end
+  @File Elements/Telemetry                    end
+  @File Interfaces/Interface                  end
+  @File Elements/Relationship                 end
+  @File Elements/Component                    end
+  @File Elements/CommandRequest               end
+  @File Elements/CommandResponse              end
+  @File Elements/Command                      end
+  @File Histories/Action                      end
+  @File Histories/DateTime                    end
+  @File Histories/HistoryEntry                end
+  @File Histories/LifecycleEvent              end
+  @File Histories/RelationshipLifecycleEvent  end
+  @File Histories/PropertyUpdate              end
+  @File Histories/History                     end
+  @File Goals/Goals                           end
+  @File Goals/Goal                            end
+  @File Interfaces/Model                      end
+  @File Objects/Objects                       end
+  @File Objects/Slot                          end
+  @File Objects/Link                          end
+  @File Objects/Object                        end
+
+do DTDL.init()
 
 end;

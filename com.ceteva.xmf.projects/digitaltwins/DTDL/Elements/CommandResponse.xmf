@@ -5,10 +5,10 @@ import Types;
 
 context Behaviour
 
-  @Class CommandRequest
+  @Class CommandResponse
 
     @Doc
-      A CommandRequest describes the inputs to a Command.
+      A CommandResponse describes the outputs from a Command.
     end
     
     @Attribute id             : String = newId()  (<)       end
@@ -17,7 +17,11 @@ context Behaviour
     @Attribute displayName    : String = ""       (<,!)     end
     @Attribute name           : String            (<,!)     end
     @Attribute schema         : Schema            (<,!)     end
-    
+
     @Constructor(name,schema) ! end
+
+    @Operation getType() 
+      schema.getModelType()
+    end
 
   end
