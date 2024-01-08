@@ -22,6 +22,8 @@ context Root
           in @For a in class.attributes do
                if [Integer,Boolean,String,Float]->contains(a.underlyingType())
                then c.addField(a.name.toString(),getType(a.type)) 
+               elseif a.type.isKindOf(OpType)
+               then c.addField(a.name.toString(),getType(a.type)) 
                end
              end;
            
@@ -114,6 +116,11 @@ context Root
       then 
         let Set = xmf.javaClass("diagrams.model.Set")
         in Set(getType(type.elementType))
+        end
+      elseif type.isKindOf(OpType)
+      then 
+        let FunType = xmf.javaClass("diagrams.model.FunType")
+        in FunType(type.domains->collect(t | getType(t)),getType(type.range))
         end
       else
         let NamedType = xmf.javaClass("diagrams.model.NamedType")

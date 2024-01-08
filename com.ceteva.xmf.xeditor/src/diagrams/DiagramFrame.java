@@ -117,32 +117,36 @@ public class DiagramFrame extends JFrame {
 	private void getDiagramSuppliers() {
 		Console.call("getDiagramSuppliers", new Object[] {}, (pairs) -> {
 			SwingUtilities.invokeLater(() -> {
-				Vector<Object> names = new Vector<Object>();
-				Vector<String> diagrams = new Vector<String>();
-				Vector<Object> tree = new Vector<Object>();
-				tree.add("Diagrams");
-				for (Vector<String> pair : (Vector<Vector<String>>) pairs) {
-					names.add("Diagrams::" + pair.get(0));
-					diagrams.add(pair.get(1));
-					Vector<Object> element = new Vector<Object>();
-					element.add(pair.get(0));
-					tree.add(element);
-				}
-				String name = getPackagePath(button.getX(), button.getY(), tree);
-				if (name != null) {
-					if (tabTable.containsKey(name)) {
-						tabs.setSelectedComponent(tabTable.get(name));
-					} else {
-						int i = names.indexOf(name);
-						String diagram = diagrams.get(i);
-						BasicDiagramTab tab = new BasicDiagramTab(console, this, name, SVG.plantUML2SVG(diagram));
-						TabLabel.LabelAction delete = () -> delete(name);
-						TabLabel.LabelAction select = () -> select(name);
-						TabLabel label = new TabLabel(name, name, delete, select);
-						tabTable.put(name, tab);
-						tabs.addTab(name, tab);
-						tabs.setTabComponentAt(tabs.indexOfTab(name), label);
+				try {
+					Vector<Object> names = new Vector<Object>();
+					Vector<String> diagrams = new Vector<String>();
+					Vector<Object> tree = new Vector<Object>();
+					tree.add("Diagrams");
+					for (Vector<String> pair : (Vector<Vector<String>>) pairs) {
+						names.add("Diagrams::" + pair.get(0));
+						diagrams.add(pair.get(1));
+						Vector<Object> element = new Vector<Object>();
+						element.add(pair.get(0));
+						tree.add(element);
 					}
+					String name = getPackagePath(button.getX(), button.getY(), tree);
+					if (name != null) {
+						if (tabTable.containsKey(name)) {
+							tabs.setSelectedComponent(tabTable.get(name));
+						} else {
+							int i = names.indexOf(name);
+							String diagram = diagrams.get(i);
+							BasicDiagramTab tab = new BasicDiagramTab(console, this, name, SVG.plantUML2SVG(diagram));
+							TabLabel.LabelAction delete = () -> delete(name);
+							TabLabel.LabelAction select = () -> select(name);
+							TabLabel label = new TabLabel(name, name, delete, select);
+							tabTable.put(name, tab);
+							tabs.addTab(name, tab);
+							tabs.setTabComponentAt(tabs.indexOfTab(name), label);
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			});
 		});

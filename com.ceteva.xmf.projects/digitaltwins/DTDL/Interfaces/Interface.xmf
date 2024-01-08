@@ -37,6 +37,10 @@ context Interfaces
         end
       end
     end
+
+    @Operation getElement(name:String)
+      @Find(e,contents) when e.getName() = name do e.getSchema() else null end
+    end
     
 
   end

@@ -22,7 +22,7 @@ public class FunType extends Type {
 				s += ",";
 			}
 		}
-		return s + ")" + range.getPlantUML();
+		return s + ") -> " + range.getPlantUML();
 	}
 
 }

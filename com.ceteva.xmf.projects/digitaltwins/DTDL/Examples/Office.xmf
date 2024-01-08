@@ -1,0 +1,50 @@
+parserImport XOCL;
+
+import DTDL;
+import Interfaces;
+import Elements;
+import Types;
+import Goals;
+import Behaviour;
+import Objects;
+
+context Root
+  @Snapshot Office(Objects) 
+
+    office = ModelInstance[
+
+      name = "Office1";
+
+      model = OfficeBuilding::model;
+
+      root = Component[
+
+        id = "o1",
+
+        type = OfficeBuilding::office,
+
+        links = [],
+
+        slots = [
+          Slot[
+            name = "address",
+            value = Obj[
+              type = OfficeBuilding::office.getElement("address"),
+              slots = [
+              ]
+            ]
+          ]
+        ],
+
+        telemetry = [],
+
+        events = EventStream[
+
+          event = @Operation(time) null end
+        
+        ]
+      ]
+
+    ]
+
+  end

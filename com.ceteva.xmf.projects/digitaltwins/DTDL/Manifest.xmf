@@ -42,8 +42,14 @@ parserImport Manifests;
   @File Interfaces/Model                      end
   @File Objects/Objects                       end
   @File Objects/Slot                          end
+  @File Objects/TimedValue                    end
+  @File Objects/TelemetryStream               end
   @File Objects/Link                          end
-  @File Objects/Object                        end
+  @File Objects/Event                         end
+  @File Objects/EventStream                   end
+  @File Objects/Component                     end
+  @File Objects/Obj                           end
+  @File Objects/ModelInstance                 end
 
 do DTDL.init()
 

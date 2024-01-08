@@ -1,0 +1,12 @@
+parserImport XOCL;
+
+import DTDL;
+import Objects;
+
+context Objects
+
+  @Class EventStream
+
+   @Attribute event : (Time) -> Event end
+
+  end

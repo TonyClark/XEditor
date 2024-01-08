@@ -33,6 +33,12 @@ public class Package extends PackageElement {
 		return c;
 	}
 
+	public Component addComponent(String id,String type) {
+		Component o = new Component(id,type);
+		contents.add(o);
+		return o;
+	}
+
 	public void addEnum(String name, Vector<String> names) {
 		contents.add(new Enum(name, names));
 	}
@@ -67,7 +73,7 @@ public class Package extends PackageElement {
 	public String getPlantUML() {
 		if (isVisible()) {
 			String s = "package \"<color:#Brown><size:14>" + getName() + "\" as " + getName() + "{\n";
-			if(packageNote != null) {
+			if (packageNote != null) {
 				s += "note \"" + packageNote + "\" as N\n";
 			}
 			for (PackageElement e : contents) {

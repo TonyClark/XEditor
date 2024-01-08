@@ -1,0 +1,37 @@
+parserImport XOCL;
+
+import DTDL;
+import Objects;
+import Interfaces;
+
+context Objects 
+
+  @Class Component 
+
+    @Attribute id        : String               (<,!)   end
+    @Attribute type      : Interface            (<,!)   end
+    @Attribute slots     : [Slot]               (<,!,+) end
+    @Attribute links     : [Link]               (<,!,+) end
+    @Attribute telemetry : [TelemetryStream]    (<,!,+) end
+    @Attribute events    : EventStream          (<,!)   end
+
+    @Constructor(id,type) ! end
+
+    @Operation addDiagram(package)
+      if package.getElement(id) = null
+        then 
+        let cmp = package.addComponent(id,type.getDisplayName())
+        in @For slot in slots do
+             if type.isSimpleSlot(slot.getName())
+             then cmp.addSlot(slot.getName(),slot.getValue())
+             else 
+               let element = slot.getValue().addDiagram(package)
+               in package.addEdge(cmp,element,slot.getName())
+               end
+             end
+           end
+        end
+      end
+    end
+
+  end

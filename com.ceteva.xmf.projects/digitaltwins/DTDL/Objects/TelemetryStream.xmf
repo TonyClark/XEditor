@@ -1,0 +1,15 @@
+parserImport XOCL;
+
+import DTDL;
+import Objects;
+
+context Objects
+
+  @Class TelemetryStream
+
+    @Attribute name   : String     (<,!)     end
+    @Attribute values : TimedValue (<,!,+,-) end
+
+    @Constructor(name,values) ! end
+
+  end

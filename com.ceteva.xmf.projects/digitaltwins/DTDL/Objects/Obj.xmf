@@ -1,0 +1,31 @@
+parserImport XOCL;
+
+import DTDL;
+import Objects;
+import Interfaces;
+import Types;
+
+context Objects 
+
+  @Class Obj 
+
+    @Attribute type      : Object            (<,!)   end
+    @Attribute slots     : [Slot]            (<,!,+) end
+
+    @Constructor(type) ! end
+
+    @Operation addDiagram(package)
+      let obj = package.addObj(type.getDisplayName())
+      in @For slot in slots do
+           if type.isSimpleSlot(slot.getName())
+           then obj.addSlot(slot.getName(),slot.getValue())
+           else 
+             let element = slot.getValue().addDiagram(package)
+             in package.addEdge(obj,element,slot.getName())
+             end
+           end
+         end
+      end
+    end
+
+  end

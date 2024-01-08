@@ -1,0 +1,15 @@
+parserImport XOCL;
+
+import DTDL;
+import Objects;
+
+context Objects
+
+  @Class Event
+
+    @Attribute name  : String (<,!)  end
+    @Attribute value : Element (<,!) end
+
+    @Constructor(name,value) ! end
+
+  end

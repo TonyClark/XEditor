@@ -1,0 +1,12 @@
+parserImport XOCL;
+
+import DTDL;
+import Objects;
+
+context Objects
+
+  @Class TimedValue
+
+    @Attribute valueAt: (Time)->Element end
+
+  end
