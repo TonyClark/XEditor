@@ -23,7 +23,7 @@ No Documentation Specified
 <TD COLSPAN=2><FONT SIZE="+2">
 <B>Constructors</B></FONT></TD>
 </TR>
-<TR><TD>Filmstrip(name,rootClasses,rootObjects,classes,operations,target,message,args,start)</TD><TD> No Documentation </TD></TR>
+<TR><TD>Filmstrip(name,rootClasses,rootObjects,classes,operations,start,rules,constraints)</TD><TD> No Documentation </TD></TR>
 </TABLE>
 <BR><HR><BR>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
@@ -31,19 +31,18 @@ No Documentation Specified
 <TD COLSPAN=3><FONT SIZE="+2">
 <B>Attributes</B></FONT></TD>
 </TR>
-<TR><TD><B>args</B></TD><TD><A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>classes</B></TD><TD><A HREF="../../../Root/XCore/Class/index.html">Seq(Class)<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>colours</B></TD><TD><A HREF="../../../Root/Filmstrips/ColourMap/index.html">ColourMap<A></TD><TD>No Documentation Specified</TD></TR>
-<TR><TD><B>message</B></TD><TD><A HREF="../../../Root/XCore/String/index.html">String<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>constraints</B></TD><TD><A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>name</B></TD><TD><A HREF="../../../Root/XCore/String/index.html">String<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>objects</B></TD><TD><A HREF="../../../Root/XCore/Object/index.html">Seq(Object)<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>operations</B></TD><TD><A HREF="../../../Root/OCL/Operation/index.html">Seq(Operation)<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>rootClasses</B></TD><TD><A HREF="../../../Root/XCore/Class/index.html">Seq(Class)<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>rootObjects</B></TD><TD><A HREF="../../../Root/XCore/Object/index.html">Seq(Object)<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>rules</B></TD><TD><A HREF="../../../Root/XRules/Rules/index.html">Rules<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>stack</B></TD><TD><A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">Seq(FilmstripStep)<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>start</B></TD><TD><A HREF="../../../Root/OCL/Operation/index.html">Operation<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>step</B></TD><TD><A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">FilmstripStep<A></TD><TD>No Documentation Specified</TD></TR>
-<TR><TD><B>target</B></TD><TD><A HREF="../../../Root/XCore/Object/index.html">Object<A></TD><TD>No Documentation Specified</TD></TR>
 <TR>
 <TD COLSPAN=3>
 <FONT SIZE="-1">
@@ -59,20 +58,36 @@ No Documentation Specified
 </TR>
 <TR><TD><B>addNewListener(listener:<A HREF="../../../Root/OCL/Operation/index.html">Operation<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>asJavaFilmstrip():<A HREF="../../../Root/XCore/Element/index.html">Seq(Element)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>check():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>createStep(filmstrip:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,untracedOperation:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>currentStep():<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">FilmstripStep<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>garbageCollect(objects:<A HREF="../../../Root/XCore/Object/index.html">Seq(Object)<A>):<A HREF="../../../Root/XCore/Object/index.html">Seq(Object)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getAncestors(s:<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">FilmstripStep<A>):<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">Seq(FilmstripStep)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getChildren(s:<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">FilmstripStep<A>):<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">Seq(FilmstripStep)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getDescendents(s:<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">FilmstripStep<A>):<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">Seq(FilmstripStep)<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>getDoc(o:<A HREF="../../../Root/XCore/CompiledOperation/index.html">CompiledOperation<A>):<A HREF="../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getLeftNeighbour(s:<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">FilmstripStep<A>):<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">FilmstripStep<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getLeftSiblings(s:<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">FilmstripStep<A>):<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">Seq(FilmstripStep)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getParent(s:<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">FilmstripStep<A>):<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">FilmstripStep<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getRightNeighbour(s:<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">FilmstripStep<A>):<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">FilmstripStep<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getRightSiblings(s:<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">FilmstripStep<A>):<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">Seq(FilmstripStep)<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getRules():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getSnapshot(index:<A HREF="../../../Root/XCore/Integer/index.html">Integer<A>):<A HREF="../../../Root/Filmstrips/Snapshot/index.html">Snapshot<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getStep():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>instrumentOperations():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>isRoot(s:<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">FilmstripStep<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>listExp(exps:<A HREF="../../../Root/XCore/Performable/index.html">Seq(Performable)<A>):<A HREF="../../../Root/XCore/Performable/index.html">Performable<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>popStep():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>pushStep(step:<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">FilmstripStep<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>removeNewListener(listener:<A HREF="../../../Root/OCL/Operation/index.html">Operation<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>resetOperations():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>run():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>select(steps:<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">Seq(FilmstripStep)<A>,success:<A HREF="../../../(FilmstripStep,() -> Boolean) -> Boolean/index.html">(FilmstripStep,() -> Boolean) -> Boolean<A>,fail:<A HREF="../../../() -> Boolean/index.html">() -> Boolean<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>selectAll(steps:<A HREF="../../../Root/Filmstrips/FilmstripStep/index.html">Seq(FilmstripStep)<A>,next:<A HREF="../../../(FilmstripStep,(() -> Boolean) -> Boolean,() -> Boolean) -> Boolean/index.html">(FilmstripStep,(() -> Boolean) -> Boolean,() -> Boolean) -> Boolean<A>,finally:<A HREF="../../../(() -> Boolean) -> Boolean/index.html">(() -> Boolean) -> Boolean<A>,fail:<A HREF="../../../() -> Boolean/index.html">() -> Boolean<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR>
 <TD COLSPAN=2>
 <FONT SIZE="-1">
-<B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+<B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
 </TD>
 </TR>
 </TABLE>
@@ -85,14 +100,20 @@ No Documentation Specified
 <TD><PRE>
 @Grammar extends OCL::OCL.grammar
       Filmstrip ::= name = Name
+      
         bs = Bindings 'in' 
+        
         'roots' '[' rootClasses = <<Exp>> ',' rootObjects = <<Exp>> ']' ';'
 
         'monitor' '[' classes = <<Exp>> ',' operations = <<Exp>> ']' ';'
 
         'start' start = <<Exp>>
+
+        rules = ('rules' <<Exp>> | { [| XRules::Rules() |] })
+
+        constraints =  ('check' <<Exp>> * | { [] })
       
-      'end' { Let(bs, [| Filmstrip(<name.lift()>,<rootClasses> ->asSeq,<rootObjects> ->asSeq,<classes> ->asSeq,<operations> ->asSeq,null,"root",[],@Operation() <start> end) |]) }.
+      'end' { Let(bs, [| Filmstrip(<name.lift()>,<rootClasses> ->asSeq,<rootObjects> ->asSeq,<classes> ->asSeq,<operations> ->asSeq,@Operation() <start> end,<rules>,<Filmstrip::listExp(constraints)>) |]) }.
     end
 </PRE></TD>
 </TABLE>

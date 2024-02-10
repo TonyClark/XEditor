@@ -17,19 +17,19 @@ No Documentation Specified
 <A HREF="../../../../../Root/XOCL/Syntax/index.html">Syntax</A>
 <BR><HR>
 <B>Subclasses</B>
-<A HREF="../../../../../Root/Languages/MicroJava/Expressions/FieldRef/index.html">FieldRef</A>
-,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Update/index.html">Update</A>
-,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/UnExp/index.html">UnExp</A>
-,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Cast/index.html">Cast</A>
-,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Int/index.html">Int</A>
+<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Var/index.html">Var</A>
 ,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/This/index.html">This</A>
-,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Float/index.html">Float</A>
-,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Boolean/index.html">Boolean</A>
-,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/BinExp/index.html">BinExp</A>
-,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/New/index.html">New</A>
-,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Send/index.html">Send</A>
-,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Var/index.html">Var</A>
 ,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/JString/index.html">JString</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Update/index.html">Update</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Boolean/index.html">Boolean</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Int/index.html">Int</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/New/index.html">New</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/UnExp/index.html">UnExp</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/BinExp/index.html">BinExp</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Cast/index.html">Cast</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Float/index.html">Float</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/Send/index.html">Send</A>
+,<A HREF="../../../../../Root/Languages/MicroJava/Expressions/FieldRef/index.html">FieldRef</A>
 <BR><HR><BR>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -61,7 +61,7 @@ No Documentation Specified
 <TR>
 <TD COLSPAN=2>
 <FONT SIZE="-1">
-<B>From</B> <A HREF="../../../../../Root/XOCL/Syntax/index.html">Syntax</A>: compile, eval, lift, liftKeyArgs, liftValue, maxLocals, syntaxInit. <BR><B>From</B> <A HREF="../../../../../Root/XCore/Performable/index.html">Performable</A>: FV, compile, endLine, eval, line, maxLocals, pprint, pprint, pprint, setEndLine, setLine. <BR><B>From</B> <A HREF="../../../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+<B>From</B> <A HREF="../../../../../Root/XOCL/Syntax/index.html">Syntax</A>: compile, eval, lift, liftKeyArgs, liftValue, maxLocals, syntaxInit. <BR><B>From</B> <A HREF="../../../../../Root/XCore/Performable/index.html">Performable</A>: FV, compile, endLine, eval, line, maxLocals, pprint, pprint, pprint, setEndLine, setLine. <BR><B>From</B> <A HREF="../../../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
 </TD>
 </TR>
 </TABLE>

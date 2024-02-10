@@ -25,6 +25,7 @@ No Documentation Specified
 </TR>
 <TR><TD>Loop()</TD><TD> No Documentation </TD></TR>
 <TR><TD>Loop(inputChannel,outputChannel)</TD><TD> No Documentation </TD></TR>
+<TR><TD>Loop(inputChannel,outputChannel,exceptionHandler,resultHandler)</TD><TD> No Documentation </TD></TR>
 <TR><TD>Loop(prompt,env,target,inputChannel,outputChannel)</TD><TD> No Documentation </TD></TR>
 </TABLE>
 <BR><HR><BR>
@@ -36,6 +37,7 @@ No Documentation Specified
 <TR><TD><B>commands</B></TD><TD><A HREF="../../../Root/XCore/Performable/index.html">Seq(Performable)<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>engine</B></TD><TD><A HREF="../../../Root/Parser/Machine/Engine/index.html">Engine<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>env</B></TD><TD><A HREF="../../../Root/Env/Env/index.html">Env<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>exceptionHandler</B></TD><TD><A HREF="../../../(Exception) -> Element/index.html">(Exception) -> Element<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>grammar</B></TD><TD><A HREF="../../../Root/Parser/BNF/Grammar/index.html">Grammar<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>imports</B></TD><TD><A HREF="../../../Root/XCore/NameSpace/index.html">Seq(NameSpace)<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>inputChannel</B></TD><TD><A HREF="../../../Root/IO/InputChannel/index.html">InputChannel<A></TD><TD>No Documentation Specified</TD></TR>
@@ -48,6 +50,7 @@ No Documentation Specified
 <TR><TD><B>printLength</B></TD><TD><A HREF="../../../Root/XCore/Integer/index.html">Integer<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>printPrettily</B></TD><TD><A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>prompt</B></TD><TD><A HREF="../../../Root/XCore/String/index.html">String<A></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>resultHandler</B></TD><TD><A HREF="../../../(Element) -> Element/index.html">(Element) -> Element<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>returnValue</B></TD><TD><A HREF="../../../Root/XCore/Element/index.html">Element<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>ribbonWidth</B></TD><TD><A HREF="../../../Root/XCore/Integer/index.html">Integer<A></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>startNT</B></TD><TD><A HREF="../../../Root/XCore/String/index.html">String<A></TD><TD>No Documentation Specified</TD></TR>
@@ -68,8 +71,12 @@ No Documentation Specified
 <B>Operations</B></FONT></TD>
 </TR>
 <TR><TD><B>deleteNameSpace(nameSpace:<A HREF="../../../Root/XCore/NameSpace/index.html">NameSpace<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>exceptionHandler():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>exitOperation():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getExceptionHandler():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>getResultHandler():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>handleException(exception:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>handleResult(result:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>importNameSpace(nameSpace:<A HREF="../../../Root/XCore/NameSpace/index.html">NameSpace<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>imports():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>loop():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
@@ -78,6 +85,7 @@ No Documentation Specified
 <TR><TD><B>pushCommand(c:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>read(engine:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>readEvalPrint(engine:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,promptString:<A HREF="../../../Root/XCore/Element/index.html">Element<A>,env:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>resultHandler():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>returnOperation():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>setGrammar(v:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>setImports(v:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
@@ -87,7 +95,7 @@ No Documentation Specified
 <TR>
 <TD COLSPAN=2>
 <FONT SIZE="-1">
-<B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+<B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
 </TD>
 </TR>
 </TABLE>

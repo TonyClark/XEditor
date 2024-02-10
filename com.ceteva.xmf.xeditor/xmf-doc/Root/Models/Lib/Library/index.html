@@ -60,17 +60,18 @@ No Documentation Specified
         taken the book from the library. Both book and reader are retained in 
         the library record system.
       </TD></TR>
+<TR><TD><B>closeLibrary():<A HREF="../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>getBook(title:<A HREF="../../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../../Root/Models/Lib/Book/index.html">Book<A></B></TD><TD> 
         Returns a book with the supplied title. 
         This operation assumes there is such a book.
       </TD></TR>
 <TR><TD><B>getBooks():<A HREF="../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
-<TR><TD><B>getBorrows():<A HREF="../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>getBorrows(name:<A HREF="../../../../Root/XCore/String/index.html">String<A>,title:<A HREF="../../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../../Root/Models/Lib/Borrows/index.html">Borrows<A></B></TD><TD> 
         Returns a borrowing record between the reader with the supplied 
         name and the book with the supplied title. This operation assumes
         that there is such a record.
       </TD></TR>
+<TR><TD><B>getBorrows():<A HREF="../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>getIdCounter():<A HREF="../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>getReader(name:<A HREF="../../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../../Root/Models/Lib/Reader/index.html">Reader<A></B></TD><TD> 
         Returns the reader with the supplied name.
@@ -90,6 +91,7 @@ No Documentation Specified
 <TR><TD><B>newId():<A HREF="../../../../Root/XCore/Integer/index.html">Integer<A></B></TD><TD> 
         Allocated a unique identifier for a new reader.
       </TD></TR>
+<TR><TD><B>openLibrary():<A HREF="../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>removeReader(name:<A HREF="../../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>return(name:<A HREF="../../../../Root/XCore/String/index.html">String<A>,title:<A HREF="../../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD> 
         Returns the book with the supplied title that is borrowed by the reader
@@ -100,11 +102,11 @@ No Documentation Specified
 <TR><TD><B>setBorrows(v:<A HREF="../../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>setIdCounter(v:<A HREF="../../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>setReaders(v:<A HREF="../../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
-<TR><TD><B>toString():<A HREF="../../../../Root/XCore/String/index.html">String<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>toString():<A HREF="../../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR>
 <TD COLSPAN=2>
 <FONT SIZE="-1">
-<B>From</B> <A HREF="../../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+<B>From</B> <A HREF="../../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
 </TD>
 </TR>
 </TABLE>

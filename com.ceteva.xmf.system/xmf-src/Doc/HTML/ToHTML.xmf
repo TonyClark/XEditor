@@ -103,7 +103,7 @@ context Doc
         NameSpace::VISITED := NameSpace::VISITED + [self.name]; 
         //"class \" [[ACTION:" + name + " " + name + "]]\" as " + name + " {\n" +
         let isLocal = packages->contains(owner) then
-            importPrefix = if not isLocal then owner.name + "::" else "" end;
+            importPrefix = if owner <> null andthen not isLocal then owner.name + "::" else "" end;
             isGetter(o) = o.hasProperty("GETTER");
             isUpdater(o) = o.hasProperty("UPDATER")
         in 

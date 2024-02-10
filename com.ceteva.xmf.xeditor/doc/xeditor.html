@@ -39,6 +39,8 @@
 <li><a href="#strings">Strings</a></li>
 <li><a href="#vectors">Vectors</a></li>
 <li><a href="#files">Files</a></li>
+<li><a href="#building-a-new-image">Building a New Image</a></li>
+<li><a href="#system-manifest-and-boot">System Manifest and Boot</a></li>
 <li><a href="#system-images">System Images</a></li>
 </ul>
 </li>
@@ -60,7 +62,7 @@
 <p><strong>Why would anyone be interested in XOCL?</strong> Many languages such as Java and Python provide increasingly abstract programming constructs where implementation details are hidden from the programmer. This makes it easier to check the use of the constructs and makes the code easier to maintain. XOCL already has many such constructs and it is easy to add your own.</p>
 <p><strong>Why would anyone be interested in meta-programming?</strong> Many languages such as Python and Java increasingly provide access to the type-level and expose platform execution mechanisms. This makes it easier to create adaptive systems. Access to programs-as-data within a programming environment makes it easy to create Domin Specific Languages and to create applications that consist of components written in languages appropriate to a range of domain experts.</p>
 <p><strong>What is XEditor?</strong> XEditor provides a language-aware text editor for creating and interacting with XMF-based applications. XEditor provides access to XMF source files located in a folder structure, allows the files to be viewed and edited. The files can then be loaded into the XMF machine leading to new definitions or modifications to exiting definitions. The XEditor console provided interactive access to the current set of definitions.</p>
-<p>XEditor is the sibling platform of <a href="https://le4mm.org">XEditor</a>. Both platforms are based on XMF , XCore and XOCL. XEditor builds text-based tools using XMF (with some associated graphics tooling), XModeler builds (multi-level) diagram-based tools using XMF (with some associated text tooling).</p>
+<p>XEditor is the sibling platform of <a href="https://le4mm.org">XModeler</a>. Both platforms are based on XMF , XCore and XOCL. XEditor builds text-based tools using XMF (with some associated graphics tooling), XModeler builds (multi-level) diagram-based tools using XMF (with some associated text tooling).</p>
 <p><strong>What can I use XEditor for?</strong> The following types of application would be ideal for XEditor:</p>
 <ul>
 <li>Prototyping data-rich applications.</li>
@@ -81,7 +83,7 @@
 <li>com.ceteva.xmf.projects: A collection of projects using Editor.</li>
 </ul>
 <p>The machine and editor downloads are Eclipse projects which can be loaded into Eclipse and run as a Java application using console.Console as the main class.</p>
-<p>Alternatively, the script xeditor in com.ceteva.xmf.xeditor can be used to start Editor from its parent folder.</p>
+<p>Alternatively, the script <code>xeditor</code> in com.ceteva.xmf.xeditor can be used to start Editor from its parent folder.</p>
 <h2 id="editor-components">Editor Components</h2>
 <p>The XEditor consists of a file browser, file editor, menu bar, and an interactive console.</p>
 <h3 id="file-browser">File Browser</h3>
@@ -430,6 +432,23 @@ v.asSeq().println();
   end
 end;
 </code></pre>
+<h4 id="building-a-new-image">Building a New Image</h4>
+<p>XEditor runs by loading an XMF image into the the XMF virtual machine. An XMF image is created by loading compiled XOCL files into an empty machine and then saving the machine state into an image file.</p>
+<p>The XEditor provides access to the complete source code written in XOCL so you can change any feature, recompile the system and then rebuild it in order too hange how fundamental features work. In addition, you can easily add additional features into the XEditor image.</p>
+<p>Building the system can be performed under program control and is supported through the XMF menu. In order to create a new image you should follow the steps:</p>
+<ol>
+<li>If you want to recompile the entire system use <code>XMF -&gt; Touch -&gt; Source</code> to update the file-write-date for all files.</li>
+<li>Use <code>XMF -&gt; Compile</code> to ensure that all source files are translated to <code>.o</code> files. Note that any compilation errors will cause the process to terminate and must be fixed before repeating this step.</li>
+<li>Use <code>XMF-&gt;Build-&gt;XMF</code> to build a kernel image.</li>
+<li>Use <code>XMF-&gt;Build-&gt;Console</code> to extend the kernel image with the XEditor implementation. The resulting image is created in <code>com.ceteva.xmf.system/images</code>.</li>
+<li>Restart XEditor in order to boot from the newly created image.</li>
+</ol>
+<p><strong>NB</strong> Since the compiler is part of the saved image, you should keep a copy of <code>com.ceteva.xmf.system/images</code> in order to revert to a previous version if an image becomes corrupt.</p>
+<h4 id="system-manifest-and-boot">System Manifest and Boot</h4>
+<p>The files <code>xmf-src/Manifest.xmf</code> and <code>Boot/BootConsole.xmf</code> are important. XMF uses manifest files to define the order of files and sub-directories when recompiling and loading binary files into the system.</p>
+<p>Modify <code>xmf-src/Manifest.xmf</code>  to define the list of files and sub-directories that are included when recompiling the complete system.</p>
+<p>Modify <code>Boot/BootConsole.xmf</code>  to define the list of files and sub-directories loaded into a new image.</p>
+<p>Note that <strong>both</strong> of these files must be modified in order to define the system build. Under normal circumstances, user-level definitions should be defined in a folder containing a single manifest file.</p>
 <h4 id="system-images">System Images</h4>
 <p>You can save the current state of the system as an image. The operation<br>
 <code>XMF::saveState</code> takes a file and an operation of one argument. The operation is called with the command line arguments when the image restarts. XMF is in control of the Console application and therefore must start it up before the operation returns. The saved image must be used as the boot image at startup. Typically images are found in <code>com.ceteva.xmf.system/xmf-img/...</code></p>

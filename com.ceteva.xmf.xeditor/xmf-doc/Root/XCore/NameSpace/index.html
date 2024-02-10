@@ -31,20 +31,19 @@ NameSpace
 <BR><HR>
 <B>Subclasses</B>
 <A HREF="../../../Root/Parser/BNF/Grammar/index.html">Grammar</A>
+,<A HREF="../../../Root/XCore/Classifier/index.html">Classifier</A>
 ,<A HREF="../../../Root/PreferenceManager/index.html">PreferenceManager</A>
 ,<A HREF="../../../Root/XCore/Dependency/index.html">Dependency</A>
-,<A HREF="../../../Root/XCore/Classifier/index.html">Classifier</A>
 ,<A HREF="../../../Root/XCore/Snapshot/index.html">Snapshot</A>
 ,<A HREF="../../../Root/IO/Directory/index.html">Directory</A>
-,<A HREF="../../../Parser/EventManager/index.html">EventManager</A>
-,<A HREF="../../../Root/Associations/AssociationInstance/index.html">AssociationInstance</A>
+,<A HREF="../../../Root/XML/Parser/EventManager/index.html">EventManager</A>
 ,<A HREF="../../../Root/Projects/ProjectManager/index.html">ProjectManager</A>
 ,<A HREF="../../../Root/Associations/Association/index.html">Association</A>
 ,<A HREF="../../../Root/Associations/IntrinsicAssociationConstraint/index.html">IntrinsicAssociationConstraint</A>
+,<A HREF="../../../Root/Associations/AssociationInstance/index.html">AssociationInstance</A>
 ,<A HREF="../../../Root/XOCL/SyntaxNameSpace/index.html">SyntaxNameSpace</A>
-,<A HREF="../../../Root/Languages/MicroJava/Structure/PackageNameSpace/index.html">PackageNameSpace</A>
 ,<A HREF="../../../Root/Languages/MicroJava/Structure/ClassNameSpace/index.html">ClassNameSpace</A>
-,<A HREF="../../../Root/XML/Parser/EventManager/index.html">EventManager</A>
+,<A HREF="../../../Root/Languages/MicroJava/Structure/PackageNameSpace/index.html">PackageNameSpace</A>
 <BR><HR><BR>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -90,8 +89,8 @@ NameSpace
 <TR><TD><B>hasElement(name:<A HREF="../../../Root/XCore/String/index.html">String<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>importedFrom(e:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/NameSpace/index.html">NameSpace<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>imports(e:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Boolean/index.html">Boolean<A></B></TD><TD>No Documentation Specified</TD></TR>
-<TR><TD><B>init(args:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>init():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
+<TR><TD><B>init(args:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>initBindings():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>lift():<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
 <TR><TD><B>lookupPath(path:<A HREF="../../../Root/XCore/String/index.html">Seq(String)<A>,default:<A HREF="../../../Root/XCore/Element/index.html">Element<A>):<A HREF="../../../Root/XCore/Element/index.html">Element<A></B></TD><TD>No Documentation Specified</TD></TR>
@@ -112,7 +111,7 @@ NameSpace
 <TR>
 <TD COLSPAN=2>
 <FONT SIZE="-1">
-<B>From</B> <A HREF="../../../Root/XCore/IndexedContainer/index.html">IndexedContainer</A>: add, add, addContentDaemon, contentDaemons, contents, index, indices, init, initContents, remove, removeContentDaemon. <BR><B>From</B> <A HREF="../../../Root/XCore/NamedElement/index.html">NamedElement</A>: getNamedElement, href, name, path, pathSeq, repopulate, setName, toString. <BR><B>From</B> <A HREF="../../../Root/XCore/DocumentedElement/index.html">DocumentedElement</A>: doc, ensureDoc, setDoc. <BR><B>From</B> <A HREF="../../../Root/XCore/Container/index.html">Container</A>: add, addContentDaemon, allContents, allContentsOf, allContentsThat, checkConstraints, checkConstraints, contentDaemons, contents, contentsOf, contentsThat, deleteRecursive, includes, init, initContents, remove, removeContentDaemon, traceAll, untraceAll. <BR><B>From</B> <A HREF="../../../Root/XCore/Contained/index.html">Contained</A>: addTo, allOwners, deleteRecursive, owner, removeFromOwner, setOwner. <BR><B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
+<B>From</B> <A HREF="../../../Root/XCore/IndexedContainer/index.html">IndexedContainer</A>: add, add, addContentDaemon, contentDaemons, contents, index, indices, init, initContents, remove, removeContentDaemon. <BR><B>From</B> <A HREF="../../../Root/XCore/NamedElement/index.html">NamedElement</A>: getNamedElement, href, name, path, pathSeq, repopulate, setName, toString. <BR><B>From</B> <A HREF="../../../Root/XCore/DocumentedElement/index.html">DocumentedElement</A>: doc, ensureDoc, setDoc. <BR><B>From</B> <A HREF="../../../Root/XCore/Container/index.html">Container</A>: add, addContentDaemon, allContents, allContentsOf, allContentsThat, checkConstraints, checkConstraints, contentDaemons, contents, contentsOf, contentsThat, deleteRecursive, includes, init, initContents, remove, removeContentDaemon, traceAll, untraceAll. <BR><B>From</B> <A HREF="../../../Root/XCore/Contained/index.html">Contained</A>: addTo, allOwners, deleteRecursive, owner, removeFromOwner, setOwner. <BR><B>From</B> <A HREF="../../../Root/XCore/Object/index.html">Object</A>: addDaemon, addMultiDaemon, addPersistentDaemon, addStructuralFeature, allCompositeValues, allCompositeValuesAndSelf, allDaemonsWithId, allDaemonsWithTarget, compositeValues, daemonNamed, daemonWithId, daemonWithIdAndTarget, daemons, daemonsActive, destroyDaemon, edit, edit, fire, get, getProperties, getProperty, getStructuralFeatureNames, hasDaemonNamed, hasDaemonWithId, hasDaemonWithIdAndTarget, hasDaemonWithTarget, hasProperty, hasSlot, hasStructuralFeature, hotLoad, hotLoaded, init, initSlots, machineInit, removeDaemon, removeDaemonNamed, removeDaemonsWithId, removeDaemonsWithTarget, removeStructuralFeature, renameSlot, set, setDaemons, setDaemonsActive, setHotLoad, setProperty, slotDenied, slotMissing, slotMissing, slots. <BR><B>From</B> <A HREF="../../../Root/XCore/Element/index.html">Element</A>: addTo, allHTMLEntries, allHTMLPackages, checkConstraints, copy, deleteRecursive, die, edit, equals, error, ferror, hashCode, init, init, isKindOf, isReallyKindOf, isTypeOf, lift, noOperationFound, oclIsKindOf, oclIsTypeOf, of, pprint, pprint, pprint, pprintln, print, println, removeDaemon, removeDaemon, save, save2, send, setOf, systemId, toHTML, toSnapshot, toSnapshot, toString, toType, writeHTML, writeHTML, writeHTMLAllEntries, writeHTMLAllPackages, writeHTMLIndex, writeHTMLOverview, writeXML, writeXMLFile, yield. <BR></FONT>
 </TD>
 </TR>
 </TABLE>
