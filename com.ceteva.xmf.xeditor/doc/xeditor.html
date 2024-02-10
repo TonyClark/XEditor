@@ -1,0 +1,454 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>xeditor</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__left">
+    <div class="stackedit__toc">
+      
+<ul>
+<li><a href="#xeditor">XEditor</a>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#editor-components">Editor Components</a>
+<ul>
+<li><a href="#file-browser">File Browser</a></li>
+<li><a href="#editor-panel">Editor Panel</a></li>
+<li><a href="#the-console">The Console</a></li>
+<li><a href="#top-level-loop-help">Top Level Loop Help</a></li>
+<li><a href="#top-level-commands">Top Level Commands</a></li>
+</ul>
+</li>
+<li><a href="#the-xmf-menu">The XMF Menu</a></li>
+<li><a href="#basic-xocl">Basic XOCL</a></li>
+<li><a href="#example-executable-models">Example Executable Models</a></li>
+<li><a href="#snippets-of-useful-information">Snippets of Useful Information</a>
+<ul>
+<li>
+<ul>
+<li><a href="#integers">Integers</a></li>
+<li><a href="#floats">Floats</a></li>
+<li><a href="#booleans">Booleans</a></li>
+<li><a href="#strings">Strings</a></li>
+<li><a href="#vectors">Vectors</a></li>
+<li><a href="#files">Files</a></li>
+<li><a href="#system-images">System Images</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  <div class="stackedit__right">
+    <div class="stackedit__html">
+      <p><img src="images/x_up_right.png" width="100" height="100"></p>
+<h1 id="xeditor">XEditor</h1>
+<p><em>Language Oriented Text Editing Powered by XMF and XOCL</em></p>
+<h2 id="overview">Overview</h2>
+<p><strong>What is XMF?</strong> XMF is a language platform for working with text-based languages. XMF provides a high-level language called XOCL that offers a large number of useful language constructs. The XOCL data model is called XCore, everything written in XOCL - including XOCL programs - are defined by the XOCL data model. Furthermore, XCore can be extended (or even changed) making the XMF platform ideal for meta-programming: defining new language constructs.</p>
+<p><strong>Why would anyone be interested in XOCL?</strong> Many languages such as Java and Python provide increasingly abstract programming constructs where implementation details are hidden from the programmer. This makes it easier to check the use of the constructs and makes the code easier to maintain. XOCL already has many such constructs and it is easy to add your own.</p>
+<p><strong>Why would anyone be interested in meta-programming?</strong> Many languages such as Python and Java increasingly provide access to the type-level and expose platform execution mechanisms. This makes it easier to create adaptive systems. Access to programs-as-data within a programming environment makes it easy to create Domin Specific Languages and to create applications that consist of components written in languages appropriate to a range of domain experts.</p>
+<p><strong>What is XEditor?</strong> XEditor provides a language-aware text editor for creating and interacting with XMF-based applications. XEditor provides access to XMF source files located in a folder structure, allows the files to be viewed and edited. The files can then be loaded into the XMF machine leading to new definitions or modifications to exiting definitions. The XEditor console provided interactive access to the current set of definitions.</p>
+<p>XEditor is the sibling platform of <a href="https://le4mm.org">XEditor</a>. Both platforms are based on XMF , XCore and XOCL. XEditor builds text-based tools using XMF (with some associated graphics tooling), XModeler builds (multi-level) diagram-based tools using XMF (with some associated text tooling).</p>
+<p><strong>What can I use XEditor for?</strong> The following types of application would be ideal for XEditor:</p>
+<ul>
+<li>Prototyping data-rich applications.</li>
+<li>Creating simulations.</li>
+<li>Programming language research.</li>
+<li>Reflective/Adaptive languages.</li>
+<li>Teaching executable modelling.</li>
+<li>Meta-modelling.</li>
+<li>Domain Specific Languages.</li>
+<li>Tooling for language support.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>Editor is open source and consists of several components, all of which can be downloaded from <a href="https://github.com/TonyClark/XEditor">This GitHub Repository</a>:</p>
+<ul>
+<li>com.ceteva.xmf.machine: A virtual machine and associated libraries written in Java.</li>
+<li>com.ceteva.xmf.system: The XMF system written in XOCL. XEditor provides access to the complete source code for the XMF system including its compiler and language processing systems. The XMF system can be modified by loading new definitions into a running system or by changing the source code and rebuilding a new image.</li>
+<li>com.ceteva.xmf.xeditor: The Java libraries that support the editor and its toolset.</li>
+<li>com.ceteva.xmf.projects: A collection of projects using Editor.</li>
+</ul>
+<p>The machine and editor downloads are Eclipse projects which can be loaded into Eclipse and run as a Java application using console.Console as the main class.</p>
+<p>Alternatively, the script xeditor in com.ceteva.xmf.xeditor can be used to start Editor from its parent folder.</p>
+<h2 id="editor-components">Editor Components</h2>
+<p>The XEditor consists of a file browser, file editor, menu bar, and an interactive console.</p>
+<h3 id="file-browser">File Browser</h3>
+<img src="images/file_browser.png" width="200" height="400">
+<p>The XEditor file browser (shown on the left) which provides access to the files from a supplied collection of root folders. The XEditor is supplied with its own source code contained within the folder xmf-src. Normally the XEditor source folder will be one of the folders in the file browser. With the file browser you can:</p>
+<ul>
+<li>Open and close folders using the mouse.</li>
+<li>Open files for editing using mouse double-click.</li>
+<li>Load files into XMF using the right-click menu on a file.</li>
+<li>Create new files or folders using the right-click menu on a folder.</li>
+</ul>
+<p>Files called Manifest.xmf are treated specially. They contain manifests that refer to folders and files. Loading a manifest causes XMF to load the files references by the manifest in the order that they occur.</p>
+<h3 id="editor-panel">Editor Panel</h3>
+<img src="images/editor_panel.png" width="300" height="250">
+<p>The XEditor editor panel is shown to the right of the file browser and contains the currently selected file. The editor will be configured to understand the language of the file contents and to provide suitable functionality. Normally this is the XOCL language. With the editor panel you can:</p>
+<ul>
+<li>Edit a file in the usual way.</li>
+<li>Use Cmd-S to save a file that has been edited.</li>
+<li>Use Cmd-C to copy selected text.</li>
+<li>Use Cmd-V to paste copied text.</li>
+<li>Use Cmd-Z to undo the last edit.</li>
+<li>Use Cmd-X to delete the selected text.</li>
+<li>Use Cmd-L to evaluate the file (using the compiler)</li>
+</ul>
+<p>The editor panel is a right-click menu that provides access to:</p>
+<ul>
+<li>Text zoom-in and zoom-out.</li>
+<li>Changing the background colour of the editor panel.</li>
+<li>Searching for text within the file.</li>
+<li>Evaluating the selected text (either highlighted using the mouse or identified with red delimiters)</li>
+</ul>
+<p>The editor-panel provides language-specific functionality applied to the file contents:</p>
+<ul>
+<li>It checks the syntax. Errors are shown in the error-strip to the right of the panel.</li>
+<li>It checks the semantics. Errors are shown in the error-strip to the right of the panel.</li>
+<li>It provides menu items on the right-click menu.</li>
+</ul>
+<h3 id="the-console">The Console</h3>
+<p>The XEditor console is used to interact with the current definitions loaded into the XMF machine. The initial state of a machine consists of the XOCL language and its associated libraries in addition to any initialisation files that have been loaded on startup. The console works by reading in an expression or a command and then printing out a result. If you type the name of any global named-element (defined in Root or XCore) then the console responds by printing out the value associated with the name. Typically the console is used to create or reference an object and then either reference the value of the object’s slot or send the object a message. For example the following inspects the attributes slot of the object named Class:</p>
+<pre><code>[1] XMF&gt; Class.attributes.name;
+{
+  constructors,
+  isAbstract,
+  attributes,
+  resourceName}
+[1] XMF&gt; 
+</code></pre>
+<p>and sending a message:</p>
+<pre><code>[1] XMF&gt; Class.allAttributes().name;
+{
+  bindings,
+  constraints,
+  default,
+  constructors,
+  imports,
+  operations,
+  isFinal,
+  resourceName,
+  name,
+  parents,...}
+[1] XMF&gt; 
+</code></pre>
+<p>Notice the use of … which means that the current pretty-printing length has been reached. This can be changed by:</p>
+<pre><code>[1] XMF&gt; ?pp l 100
+true
+[1] XMF&gt; Class.allAttributes().name;
+{
+  bindings,
+  constraints,
+  default,
+  constructors,
+  imports,
+  operations,
+  isFinal,
+  resourceName,
+  name,
+  parents,
+  contents,
+  isAbstract,
+  owner,
+  grammar,
+  documentation,
+  attributes}
+[1] XMF&gt; 
+</code></pre>
+<p>The use of ?pp is an example of a top-level loop command. You can print out the documentation on the top-level commands using ?h:</p>
+<pre><code>[1] XMF&gt; ?h
+</code></pre>
+<h3 id="top-level-loop-help">Top Level Loop Help</h3>
+<p>The XMF top level loop is a command interpreter that reads<br>
+commands typed at a console, evaluates the commands and then<br>
+prints the result. The interpreter understands any valid XMF syntax<br>
+(such as XOCL) including language extensions that have been defined<br>
+using XBNF and accessed using ‘@’. When you type these commands<br>
+you must terminate them with a ‘;’ before pressing return (note that<br>
+‘;’ is the command terminator and commands may span several lines).<br>
+Note if a single quote (’) is used in a command it should be part of<br>
+of a pair. If not, input will be halted until another one is entered.</p>
+<p>The command interpreter has its own state: it remembers the most<br>
+recently evaluated values and the last error that occurred.<br>
+The variables v0, v1 and v2 are the last three values produced<br>
+by the top level. These variables can be useful when you want to<br>
+navigate to or compute a value and then use it in a subsequent<br>
+command. Errors may occur in commands typed at the top level.<br>
+When an error occurs, an exception is thrown and caught by the top<br>
+level loop. The loop then prints out error diagnostics. The value<br>
+of the variable xx is the most recently raised exception.</p>
+<p>The XMF Console uses the Escape key as an interrupt. This can be<br>
+useful if you have caused XMF to enter an infinite loop or to start<br>
+a lengthy calculation that you wish to terminate. Interrupts are<br>
+handled by XMF on the next instruction cycle, the interrupt will<br>
+throw an exception.</p>
+<p>The command interpreter has its own command language.<br>
+Each top level command starts with a ‘?’. Top level commands must<br>
+occur on a single line and are terminated by return rather than ‘;’.</p>
+<h3 id="top-level-commands">Top Level Commands</h3>
+<pre><code>?ah                  Help on the syntax of patterns for ?a.
+  
+  ?a &lt;PATTERN&gt;         Named elements apropos the pattern. 
+  
+  ?cl [&lt;FILE&gt;]         Combines ?c and ?l.
+   
+  ?c &lt;FILE&gt;            Compile the file.
+  ?c                   Compile the most recently compiled file.
+   
+  ?h                   Top level command help.
+  
+  ?i [+|-] &lt;PATH&gt;*     Import(+) or remove(-) a name space at the top level.
+  
+  ?l &lt;FILE&gt;            Load the binary file.
+  ?l                   Load the most recently loaded binary.
+  
+  ?m (b|l|d|bl) [&lt;Dir&gt;] Build, load or delete manifest entries.
+  ?m w &lt;Dir&gt; &lt;File&gt;     Write boot file based on manifest to file.
+  ?m t &lt;Dir&gt; (s|b)      Touch binaries or sources.
+   
+  ?o                   Print out the current options.
+  ?o saveSource bool   Toggle compiler saving source code.
+  ?o sourcePos  bool   Toggle compiler saving source positions.
+  ?o localNames bool   Toggle compiler saving local names.
+  ?o checkTypes bool   Toggle compiler type checking code.
+  
+  ?pp                  Display the current pretty-printing settings.
+  ?pp (d|l,p,r) &lt;INT&gt;  Set the pretty print depth, length, page or ribbon.
+  ?pp (on|off)         Toggle pretty printing at the top level.
+  ?pp x                Display the most recent exception in full.
+  
+  ?sh                  Start a dos shell. Enter exit to return.
+  
+  ?s &lt;FILE&gt;            Saves a system image in the file.
+  ?s &lt;FILE&gt; &lt;FILE&gt;     Saves an image that boots from the second file.
+  
+  ?stats               Print machine stats.
+   
+  ?t &lt;FILE&gt;            Update the last write date of the file.
+  
+  ?x                   Exit current XMF level.
+</code></pre>
+<h2 id="the-xmf-menu">The XMF Menu</h2>
+<img src="images/XMF_menu.png" width="200" height="400">
+<p>The XMF Menu provides access to system-level functionality:</p>
+<ul>
+<li>
+<p>Compile is used to compile all of the system-level files contained in xmf-src.  If any of the *.xmf files are our of date with respect to the corresponding *.o then they are compiled.</p>
+</li>
+<li>
+<p>Touch is used to make all *.xmf source files or all *.o files up-to-date.<br>
+By touching all the source files and then selecting Compile (above),<br>
+the entire system is recompiled.</p>
+</li>
+<li>
+<p>Documentation is used to either generate all system documentation or to<br>
+view the documentation. The system documenation contains all packages that are  reachable from Root. The format of the documentation is HTML and is contained in the xmf-doc folder.</p>
+</li>
+<li>
+<p>Build is used to recreate the system images. The system images are contained in xmf-img. You should build the XMF image and then build the console image.  The XEditor boots from console.img. If you have changed any of the system files then you should recompile the system, rebuild the system and then restart XEditor.</p>
+</li>
+<li>
+<p>Find displays a number of dialogs that can be used to interactively find<br>
+elements of the system.</p>
+</li>
+<li>
+<p>Diagrams displays the interactive diagram tool.</p>
+</li>
+</ul>
+<h2 id="basic-xocl">Basic XOCL</h2>
+<p>In general an XOCL file should have the following elements in order…</p>
+<pre><code>parserImport LanguageNameSpace;
+</code></pre>
+<p>The language name space is typically a package that defines syntax classes. A syntax class SC has a grammar and can therefore be used as @SC … in the  body of this file. There can be any number of parser import declarations.</p>
+<pre><code>import ImportedNameSpace;
+</code></pre>
+<p>The imported name space is typically a package that contains class and operation definitions that are referenced by name in the body of the file. There can be any number of import declarations.</p>
+<p>The body of the file starts here…</p>
+<pre><code>context NameSpace
+   NamedElement
+</code></pre>
+<p>The named element (for example a class or an operation) is added to the name space when the file is loaded.</p>
+<h2 id="example-executable-models">Example Executable Models</h2>
+<p>There are example models in xmf-src/models:</p>
+<ul>
+<li>
+<p>A library model  <img src="images/lib.png" width="400" height="800"></p>
+<p>Try running <code>Models::Lib::test1()</code></p>
+</li>
+<li>
+<p>A shopping model <img src="images/shopping.png" width="600" height="1000"></p>
+</li>
+</ul>
+<h2 id="snippets-of-useful-information">Snippets of Useful Information</h2>
+<h4 id="integers">Integers</h4>
+<pre><code>// Some key integer operations. Browse XCore::Integer for more details.
+
+// Conversions...
+123.asFloat().println();
+123.asSeq().println();
+123.toString().println();
+
+// Comparison...
+123.max(100).println();
+123.min(100).println();
+
+// Modulo...
+123.mod(2).println();
+
+// Square Root...
+123.sqrt().println();
+
+// Sequence...
+0.to(20).println();
+
+// Character codes...
+
+Root::a       := 97;
+Root::A       := 97 - 26;
+Root::one     := 49;
+Root::newline := 10;
+Root::space   := 32;
+
+// Character predicates...
+
+a.isAlphaChar().println();
+a.isLowerCaseChar().println();
+a.isUpperCaseChar().println();
+A.isUpperCaseChar().println();
+one.isNumericChar().println();
+newline.isNewLineChar().println();
+space.isWhiteSpaceChar().println();
+
+// Random number ...
+
+Integer::random(10).println();
+</code></pre>
+<h4 id="floats">Floats</h4>
+<pre><code>// Some key float operations. Browse XCore::Float for more details.
+
+// Coversion to integer...
+
+12.3.ceiling().println();
+12.3.floor().println();
+12.7.ceiling().println();
+12.7.floor().println();
+12.7.round().println();
+
+// Trigonometry...
+
+45.0.cos().println();
+45.0.sin().println();
+
+// Creation from integers.
+
+Float(10,5).println();
+</code></pre>
+<h4 id="booleans">Booleans</h4>
+<pre><code>// Some key boolean operations. Browse XCore::Boolean for more details.
+
+true.booland(false).println();
+false.boolor(true).println();
+</code></pre>
+<h4 id="strings">Strings</h4>
+<pre><code>// Some key string operations. Browse XCore::String for more details.
+
+// Size...
+"a string".size().println();
+
+// Conversion...
+"true".asBool().println();
+"123.45".asFloat().println();
+"123".asInt().println();
+"123".asSeq().println();
+"123".asSet().println();
+"abcdef".asSymbol().println();
+"&lt;x&gt;body&lt;/x&gt;".asXML().println();
+"ABCDE".toLower().println();
+"ABCDE".toUpper().println();
+"|".print();"   xyz   ".stripWhiteSpace().print();"|".println();
+"|".print();"   xyz   ".stripLeadingWhiteSpace().print();"|".println();
+"|".print();"   xyz   ".stripTrailingWhiteSpace().print();"|".println();
+"|".print();"*******xyz".stripNonAlphaChars().println();
+"abcabc".subst("xxx","bc",true).println();
+"abcabc".subst("xxx","bc",false).println();
+"a&gt;b&gt;c&gt;d&gt;e&gt;f".splitBy(Seq{"&gt;".at(0)},0,0).println();
+"abcdefghijkl".subString(0,5).println();
+"abcdefghijkl".truncate(5).println();
+"abcdefghijkl".upperCaseInitialLetter().println();
+"ABCDEFGHIJKL".lowerCaseInitialLetter().println();
+
+// Indexing...
+"12345".at(3).println();
+"12345".indexOf("2",0).println();
+
+// Files...
+xmf.homeDir().println();
+(xmf.homeDir() + "/xmf/init.xmf").fileExists().println();
+(xmf.homeDir() + "/xmf/init.xmf").fileSize().println();
+(xmf.homeDir() + "/xmf/init.xmf").isDir().println();
+(xmf.homeDir() + "/xmf").isDir().println();
+(xmf.homeDir() + "/xmf/init.xmf").isOlder(xmf.homeDir() + "/XMF/XMF.o").println();
+(xmf.homeDir() + "/xmf/init.xmf").parentDir().println();
+</code></pre>
+<h4 id="vectors">Vectors</h4>
+<pre><code>Root::v := Vector(5);
+
+v.put(0,10);
+v.put(1,11);
+v.put(2,12);
+v.put(3,13);
+v.put(4,14);
+
+v.println();
+
+v.ref(2).println();
+v.indexOf(12).println();
+v.size().println();
+
+v.asSeq().println();
+</code></pre>
+<h4 id="files">Files</h4>
+<pre><code>// Get the contents of a file...
+
+@XOCL::WithOpenFile(fin &lt;- xmf.homeDir() + "/xmf/init.xmf")
+  let size = (xmf.homeDir() + "/xmf/init.xmf").fileSize() then
+      chars = Vector(size)
+  in fin.read(chars);
+     chars.asString().println()
+  end
+end;
+</code></pre>
+<h4 id="system-images">System Images</h4>
+<p>You can save the current state of the system as an image. The operation<br>
+<code>XMF::saveState</code> takes a file and an operation of one argument. The operation is called with the command line arguments when the image restarts. XMF is in control of the Console application and therefore must start it up before the operation returns. The saved image must be used as the boot image at startup. Typically images are found in <code>com.ceteva.xmf.system/xmf-img/...</code></p>
+<pre><code>xmf.saveState(xmf.homeDir()+"/example_image.img", 
+  @Operation(initArgs) 
+    format(stdout,"Restart~%",[]);
+    Root::Console := xmf.javaClass("console.Console");
+    // Create the console...
+    Console();
+    // Create the browser tree. This is set as part of the image creation in BootConsole.xmf
+    Console.CONSOLE.setRoot(XEditor::getBrowserTree(Root))
+  end);
+</code></pre>
+<blockquote>
+<p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
+</blockquote>
+
+    </div>
+  </div>
+</body>
+
+</html>

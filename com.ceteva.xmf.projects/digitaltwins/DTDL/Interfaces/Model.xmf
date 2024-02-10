@@ -1,0 +1,44 @@
+parserImport XOCL;
+
+import AbstractSyntax;
+import DTDL;
+import Interfaces;
+import Elements;
+import Goals;
+
+context Interfaces
+
+  @Class Model extends DiagramSupplier, NameSpace
+
+    @Doc
+      The root for the DTDL model.
+    end
+
+    @Attribute interface : Interface                (<) end
+    @Attribute goal      : Goal                     (<) end
+
+    @Constructor(name,interface,goal) ! end
+
+    @Operation getDiagramLabel():String
+      name
+    end
+
+    @Operation getDiagram(ignore:Table)
+      let Model = xmf.javaClass("diagrams.model.Model") then
+          model = Model(name,name) then
+          package = model.getPackage()
+      in package.setPackageNote(goal.description);
+         interface.addDiagram(package);
+         model
+      end
+    end
+
+    @Operation resolveReferences(env)
+      interface.resolveReferences(env);
+      NameSpace::define(interface,self,false); 
+      @For i in interface.getComponents() do
+        NameSpace::define(i,self,false)
+      end
+    end
+
+  end

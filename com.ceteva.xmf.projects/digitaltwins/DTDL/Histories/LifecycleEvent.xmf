@@ -1,0 +1,14 @@
+parserImport XOCL;
+
+import DTDL;
+import Histories;
+import Interfaces;
+
+context Histories
+
+  @Class LifecycleEvent extends HistoryEntry
+
+    @Attribute twinId    : String    (<,!) end
+    @Attribute interface : Interface (<,!) end
+
+  end

@@ -1,0 +1,18 @@
+parserImport XOCL;
+
+import DTDL;
+import Objects;
+
+context Objects
+
+  @Class TimedValue
+
+    @Attribute valueAt: (Time)->Value end
+
+    @Constructor(valueAt) ! end
+
+    @Operation getValue(time:Time):Value
+      valueAt(time)
+    end
+
+  end

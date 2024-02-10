@@ -1,0 +1,25 @@
+parserImport XOCL;
+
+import Filmstrips;
+
+context Filmstrips
+  @Class ColourMap
+    @Attribute types:[Classifier] end
+    @Operation reset()
+      self.types := []
+    end
+    @Operation getColourName(type:Classifier):String
+      if not(types->contains(type))
+      then self.types := types + [type]
+      end;
+      @Case types.indexOf(type) of
+        0  do   "Application"     end
+        1  do   "Business"        end
+        2  do   "Implementation"  end
+        3  do   "Motivation"      end
+        4  do   "Physical"        end
+        5  do   "Strategy"        end
+        else    "Gray"   
+      end
+    end
+  end

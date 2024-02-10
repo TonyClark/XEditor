@@ -1,0 +1,26 @@
+parserImport XOCL;
+
+import Filmstrips;
+
+context Filmstrips
+
+  @Class Field
+  
+    @Attribute name:String   (<) end
+    @Attribute value:Element (<) end
+    
+    @Constructor(name,value) ! end
+
+    @Operation getDiagramField() 
+      "  " + name + " = " + value.toString() + "\n"
+    end
+
+    @Operation setValue(o:Object)
+      o.set(name,value)
+    end
+
+    @Operation addDiagramField(model)
+      model.addSlot(name,value.toString())
+    end
+    
+  end

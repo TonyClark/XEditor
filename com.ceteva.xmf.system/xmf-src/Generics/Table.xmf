@@ -1,0 +1,43 @@
+parserImport XOCL;
+
+import Generics;
+
+context Generics
+ 
+    @Class Table (Key:Classifier,Value:Classifier)
+
+      @Doc
+        Acts as a proxy to a table and ensures that the
+        keys and values are of the correct types. Supports
+        normal table operations. 
+      end
+
+      @Attribute table : XCore::Table = XCore::Table(10) (<,!) end
+
+      @Operation asVector()                     table.asVector()       end
+      @Operation clear()                        table.clear()          end
+      @Operation entries()                      table.entries()        end
+      @Operation getValue(key:Key)              table.get(key)         end
+      @Operation hasKey(key:Key)                table.hasKey(key)      end
+      @Operation hasValue(value:Value)          table.hasValue(value)  end
+      @Operation isEmpty()                      table.isEmpty()        end
+      @Operation keys():[Key]                   table.keys()           end
+      @Operation pprint()                       table.pprint()         end
+      @Operation putValue(key:key,value:Value)  table.put(key,value)   end
+      @Operation rehash()                       table.rehash()         end
+      @Operation remove(key:Key)                table.remove(key)      end
+      @Operation ref(index:Integer)             table.ref(index)       end
+      @Operation set(index:Integer,value:Value) table.set(index,value) end
+      @Operation size()                         table.size()           end
+      @Operation toString()                     table.toString()       end
+      @Operation values():[Value]               table.values()         end
+
+      @Constraint allValuesCorrect
+        self.values()->forAll(v | v.isKindOf(Value))
+      end
+
+      @Constraint allKeysCorrect
+        self.keys()->forAll(k | k.isKindOf(Key))
+      end
+
+    end

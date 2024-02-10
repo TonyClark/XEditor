@@ -1,0 +1,137 @@
+parserImport XOCL;
+
+import Filmstrips;
+import AbstractSyntax;
+
+context Filmstrips 
+
+  @Class Snapshot extends DiagramSupplier
+  
+    @Attribute records: [Record] (<,!,+,-) end
+    @Attribute links  : [Link]   (<,!,+,-) end
+    @Attribute maps   : [Map]    (<,!,+,-) end
+
+    @Operation asJavaSnapshot(colours:ColourMap)
+      let Snapshot = xmf.javaClass("diagrams.filmstrips.Snapshot")
+      in Snapshot(self.getDiagram(colours))
+      end
+    end
+
+    @Operation buildObjects():[Object]
+      // Reconstuct the objects represented by the snapshot...
+      let idToObject = Table(10)
+      in @For record in records do
+           record.addObject(idToObject)
+         end;
+         @For link in links do
+           link.addLink(idToObject)
+         end;
+         idToObject.values()
+      end
+    end
+
+    @Operation dot(record:Record,name:String):Element
+      if record.hasName(name)
+      then record.dot(name)
+      elseif record.getType().hasAttribute(name)
+      then
+        links->select(l | l.getSource() = record.getId())->collect(l | @Find(r,records) when r.getId() = l.getTarget() else null end)
+      else throw Exceptions::Error("implement the rest of dot: " + record.toString() + "." + name)
+      end
+    end
+
+    @Operation getInstances(class:Class):[Record]
+      records->select(r | r.getType().inheritsFrom(class))
+    end
+    
+    @Operation populate(objects:[Object])
+      @For o in objects do
+        self.populateRecord(o,objects);
+        @For s in o.slots() do
+          if s.value <> null andthen not(s.value.isKindOf(Operation))
+          then 
+            if s.value.of().of() = Generics::Table
+            then self.populateTable(o,s.name,s.value,objects)
+            elseif s.value.isKindOf(Object)
+            then self.populateLink(s.name,o,s.value,objects)
+            elseif s.value.isKindOf(Seq(Element)) or s.value.isKindOf(Set(Element))
+            then 
+              let seq = s.value->asSeq
+              in @Count i from 0 to seq->size do
+                   let value = seq->at(i)
+                   in self.populateIndexedLink(s.name,i,o,value,objects)
+                   end
+                 end
+              end
+            end
+          end
+        end
+      end
+    end
+
+    @Operation populateRecord(o:Object,objects:[Object])
+      let fields = [];
+          id = objects->indexOf(o)
+      in @For s in o.slots() do
+           if [Integer,String,Float,Boolean]->contains(s.value.of())
+           then fields := [Field(s.name,s.value)] + fields
+           end
+         end;
+         self.records := [Record(id,o.of(),fields)] + records
+      end
+    end
+
+    @Operation populateLink(name:String,object:Object,value:Object,objects:[Object])
+      if objects->includes(value)
+      then
+        let source = objects->indexOf(object);
+            target = objects->indexOf(value)
+        in self.links := [Link(name,source,target)] + links
+        end
+      end
+    end
+
+    @Operation populateIndexedLink(name:String,index:Integer,object:Object,value:Object,objects:[Object])
+      if objects->includes(value)
+      then
+        let source = objects->indexOf(object);
+            target = objects->indexOf(value)
+        in self.links := [IndexedLink(name,index,source,target)] + links
+        end
+      end
+    end
+
+    @Operation populateTable(object,name,table,objects)
+      let map = Map(name)
+      in @For key in table.keys() do
+           map.addToMappings(Mapping(key.toString(),table.getValue(key).toString()))
+         end;
+         self.addToMaps(map)
+      end
+    end
+      
+    @Operation getDiagram(colours:ColourMap):String
+      self.getDiagramModel("","",colours).getPlantUML()
+    end
+
+    @Operation getDiagramLabel():String
+      "Snapshot"
+    end
+
+    @Operation getDiagramModel(path:String,name:String,colours:ColourMap)
+      let Model = xmf.javaClass("diagrams.model.Model") then
+          model = Model(path,name)
+      in @For r in records do
+           r.addDiagramObject(colours,model)
+         end;
+         @For l in links do
+           l.addDiagramLink(model)
+         end;
+         @For m in maps do
+           m.addDiagramMap(colours,model)
+         end;
+         model
+      end
+    end
+      
+  end

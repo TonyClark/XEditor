@@ -1,0 +1,17 @@
+parserImport XOCL;
+
+import DTDL;
+import Histories;
+
+context Histories
+
+  @Class PropertyUpdate extends HistoryEntry
+
+    @Attribute sourceTimeStamp    : DateTime (<,!) end
+    @Attribute id                 : String   (<,!) end
+    @Attribute key                : String   (<,!) end
+    @Attribute value              : Object   (<,!) end
+    @Attribute relationshipId     : String   (<,!) end
+    @Attribute relationshipTarget : String   (<,!) end
+    
+  end

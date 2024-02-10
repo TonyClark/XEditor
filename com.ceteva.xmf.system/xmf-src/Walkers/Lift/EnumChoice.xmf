@@ -1,0 +1,28 @@
+parserImport Walkers;
+
+import OCL;
+import Walkers;
+
+@Handler EnumChoice in Lift(choice,arg,encountered)
+  if choice.of().attributes->isEmpty
+  then Path::toPath(choice.pathSeq())
+  elseif encountered
+  then
+    [| <arg>.ref(<IntExp(stack.indexOf(choice))>) |]
+  else
+    stack.push(choice);
+    let var = Var(self.newVar())
+    in [| <arg>.push(<self.newExp(choice)>);
+          let <var.name> = <arg>.top()
+          in
+            <choice.slots()->iterate(s exp = var |
+              [| <exp>; 
+                 <var>.<s.name.toString()> := 
+                   <self.dispatch(choice.get(s.name.toString()),arg)> 
+              |])>
+          end
+       |]
+    end
+  end 
+  
+end; 

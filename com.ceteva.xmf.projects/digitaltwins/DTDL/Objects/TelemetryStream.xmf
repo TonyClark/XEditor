@@ -1,0 +1,23 @@
+parserImport XOCL;
+
+import DTDL;
+import Objects;
+
+context Objects
+
+  @Class TelemetryStream extends Value
+
+    @Attribute name   : String     (<,!)     end
+    @Attribute values : TimedValue (<,!,+,-) end
+
+    @Constructor(name,values) ! end
+
+    @Operation getValue(time:Time)
+      values.getValue(time)
+    end
+
+    @Operation tick(time:Time)
+      null
+    end
+
+  end

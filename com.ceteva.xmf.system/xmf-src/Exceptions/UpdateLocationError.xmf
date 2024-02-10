@@ -1,0 +1,15 @@
+parserImport XOCL;
+
+context Exceptions
+
+  @Class UpdateLocationError extends Exception
+     
+    @Attribute location : Performable end
+    @Attribute value    : Performable end
+    
+    @Constructor(location,value) !
+       self.setBacktrace();
+       self.message := "Location " + location.pprint() + " := " + value.pprint() + " is illegal."
+    end
+    
+  end

@@ -1,0 +1,115 @@
+parserImport XOCL;
+
+import AbstractSyntax;
+import DTDL;
+import Interfaces;
+import Elements;
+import Types;
+
+context Interfaces
+
+  @Class Interface extends Schema, NamedElement
+
+    @Doc
+      An Interface describes the contents (Commands, Components, Properties, 
+      Relationships, and Telemetries) of any digital twin. Interfaces are 
+      reusable and can be reused as the schema for Components in another 
+      Interface.
+    end
+
+    
+    @Attribute id             : String = newId()               (<)       end
+    @Attribute comment        : String = ""                    (<,!)     end
+    @Attribute description    : String = ""                    (<,!)     end
+    @Attribute displayName    : String = ""                    (<,!)     end
+    @Attribute context_       : String = "dtmi:dtdl:context;3" (<,!)     end
+    @Attribute extends        : [Interface]                    (<,!,+,-) end
+    @Attribute contents       : [InterfaceElement]             (<,!,+,-) end
+    @Attribute components     : [Interface]                    (<,!,+,-) end
+    @Attribute constraints    : [Constraint]                   (<,!,+,-) end
+
+    @Constructor(id,displayName) ! end
+
+    @Constructor(id,displayName,contents)
+      self.name := Symbol(displayName)
+    end
+
+    @Operation addDiagram(package)
+      if package.getElement(displayName) = null
+        then 
+        let class = package.addClass(displayName)
+        in @For element in contents do
+             element.addDiagram(package,class)
+           end;
+           @For constraint in constraints do 
+             package.addNote(class,constraint.getDescription())
+           end
+        end
+      end
+    end
+
+    @Operation addDiagram(package,class)
+      null
+    end
+
+    @Operation addMenu(component,time:Time,model)
+      @For command in contents->select(e | e.isKindOf(Command)) when command.getName() <> "tick" do
+        model.createMenu(component.getId(),[command.getName()]);
+        Diagram::defineMenuHandler(model.getName(),[component.getId(),command.getName()],
+           @Operation()
+             command.getCommand().invoke(component,[time,component,[]]);
+             model
+           end)
+      end
+    end
+
+    @Operation call(name:String,component,args)
+      self.getElement(name).getOperation().invoke(component,args,[])
+    end
+
+    @Operation checkConstraints(time:Time,instance:Object):[Report]
+      constraints->collect(c | c.check(time,instance))
+    end
+
+    @Operation contents():{NamedElement}
+      components->asSet
+    end
+
+    @Operation getElement(name:String)
+      @Find(e,contents) 
+        when e.getName() = name 
+        do e 
+        else 
+          @Find(i,components) 
+            when i.getDisplayName() = name 
+            do i 
+            else null 
+          end 
+      end
+    end
+
+    @Operation getModelType():Object
+      let NamedType = xmf.javaClass("diagrams.model.NamedType")
+      in NamedType(displayName)
+      end
+    end
+    
+    @Operation hasBinding(name:String):Boolean
+      components->exists(c | c.getDisplayName() = name)
+    end
+
+    @Operation hasCommand(name:String):Boolean
+      self.getElement(name) <> null andthen self.getElement(name).isKindOf(Command)
+    end
+
+    @Operation resolveReferences(env)
+      @For e in contents do
+        e.resolveReferences(env.bind(displayName,self))
+      end;
+      @For e in components do
+        e.resolveReferences(env.bind(displayName,self))
+      end
+    end
+    
+
+  end

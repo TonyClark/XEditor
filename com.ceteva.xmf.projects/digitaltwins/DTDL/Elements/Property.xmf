@@ -1,0 +1,50 @@
+parserImport XOCL;
+
+import DTDL;
+import Types;
+import Elements;
+import Exceptions;
+
+context Elements
+
+  @Class Property extends InterfaceElement
+
+    @Doc
+      A Property describes the read-only and read/write state of any digital twin. 
+      For example, a device serial number may be a read-only Property; the desired 
+      temperature on a thermostat may be a read-write Property; and the name of a 
+      room may be a read-write Property.
+    end
+    
+    @Attribute schema   : Schema  (<,!) end
+    @Attribute writable : Boolean (<,!) end
+
+    @Constructor(id,name,schema) ! end
+
+    @Operation addDiagram(package,class)
+      if self.isSimpleProperty()
+      then class.addField(self.getName(),schema.getModelType())
+      else 
+        let className = self.getName().upperCaseInitialLetter() + "Obj"
+        in schema.addSchemaClass(className,package);
+           package.addEdge(class,package.getElement(className),self.getName())
+        end
+      end
+    end
+
+    @Operation isSimpleProperty():Boolean
+      schema.isKindOf(PrimitiveSchema) or schema.isKindOf(Array) or schema.isKindOf(Interfaces::Interface)
+    end
+    
+    @Operation resolveReferences(env) 
+      if schema.isKindOf(String)
+      then 
+        if env.binds(schema)
+        then self.setSchema(env.lookup(schema))
+        else throw Error("unbound type name: " + schema)
+        end
+      else schema.resolveReferences(env)
+      end
+    end
+    
+  end

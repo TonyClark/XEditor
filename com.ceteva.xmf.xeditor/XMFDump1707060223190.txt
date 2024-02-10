@@ -1,0 +1,210 @@
+
+Call frame backtrace:
+
+Current stack frame instructions:
+  <Unknown instruction 109>
+  STARTCALL
+  <Unknown instruction 109>
+  LOCAL 2
+  <Unknown instruction 109>
+  LOCAL 3
+  <Unknown instruction 109>
+  DYNAMIC(1) 'Walkers' <--- 
+----------------------------------------------------------------------------------------------------
+Called(82): Element::pprint at line 35 char 0
+Self: class excel.ExcelReader
+Supers: pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): 100
+Local(1): 40
+Local(2): 2
+Local(3): 10
+Local(4): 0
+Local(5): null
+Local(6): null
+Local(7): null
+Local(8): null
+Local(9): null
+Local(10): null
+Source Code:
+    @Operation pprint(width : Integer,ribbon : Integer,depth : Integer,length : Integer,linePosition : Integer):String
+  let printer = Walkers::PPrint(depth,length) then
+      doc = printer.dispatch(self,0);
+      machine = Machine(width,ribbon)
+  in machine.load(Seq{doc},linePosition);
+     machine.run();
+     machine.text()
+  end
+end
+constant(0) = Array(printer,doc,machine)
+constant(1) = 'Walkers'
+constant(2) = 'PPrint'
+constant(3) = 'Machine'
+constant(4) = 'dispatch'
+constant(5) = 'load'
+constant(6) = 'run'
+constant(7) = 'text'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(65): Loop::handleResult at line 181 char 0
+Self: Loop[fields=commands,inputChannel,outputChannel,prompt,env,target,imports,grammar,startNT,printBanner,terminated,returnValue,value,lastValue,lastLastValue,printPrettily,exceptionHandler,resultHandler,pageWidth,ribbonWidth,printDepth,printLength,engine]
+Supers: handleResult,handleException,exitOperation,deleteNameSpace,toString,getResultHandler,resultHandler,getExceptionHandler,exceptionHandler,setPrintBanner,setStartNT,setGrammar,setImports,imports,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): class excel.ExcelReader
+Local(1): null
+Local(2): null
+Local(3): null
+Local(4): null
+Source Code:
+    @Operation handleResult(result : XCore::Element):XCore::Element
+  if printPrettily
+  then let pretty = result.pprint(pageWidth,ribbonWidth,printDepth,printLength)
+       in format(outputChannel,"~S~%",Seq{pretty})
+       end
+  else format(outputChannel,"~S~%",Seq{result})
+  end 
+end
+constant(0) = Array(pretty,formatOut)
+constant(1) = 'printPrettily'
+constant(2) = 'pageWidth'
+constant(3) = 'ribbonWidth'
+constant(4) = 'printDepth'
+constant(5) = 'printLength'
+constant(6) = 'pprint'
+constant(7) = 'outputChannel'
+constant(8) = 
+constant(9) = 'writeString'
+constant(10) = 'write'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(52): ?::handleResult at line 35 char 0
+Self: Loop[fields=commands,inputChannel,outputChannel,prompt,env,target,imports,grammar,startNT,printBanner,terminated,returnValue,value,lastValue,lastLastValue,printPrettily,exceptionHandler,resultHandler,pageWidth,ribbonWidth,printDepth,printLength,engine]
+Supers: 
+Local(0): class excel.ExcelReader
+Source Code:
+    @Operation handleResult(r : XCore::Element):XCore::Element
+  Set{XEditor::hideException();
+  self.handleResult(r)}
+end
+constant(0) = Array()
+constant(1) = 'XEditor'
+constant(2) = 'hideException'
+constant(3) = 'handleResult'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(40): Loop::anonymous at line 210 char 0
+Self: Loop[fields=commands,inputChannel,outputChannel,prompt,env,target,imports,grammar,startNT,printBanner,terminated,returnValue,value,lastValue,lastLastValue,printPrettily,exceptionHandler,resultHandler,pageWidth,ribbonWidth,printDepth,printLength,engine]
+Supers: loop,importNameSpace,handleResult,handleException,exitOperation,deleteNameSpace,toString,getResultHandler,resultHandler,getExceptionHandler,exceptionHandler,setPrintBanner,setStartNT,setGrammar,setImports,imports,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Source Code:
+    try
+      self.readEvalPrint(engine,promptString,env)
+    catch(exception)
+      exceptionHandler.invoke(self,Seq{exception},Seq{})
+    end
+constant(0) = Array()
+constant(1) = 'engine'
+constant(2) = 'readEvalPrint'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(24): Loop::loop at line 76 char 0
+Self: Loop[fields=commands,inputChannel,outputChannel,prompt,env,target,imports,grammar,startNT,printBanner,terminated,returnValue,value,lastValue,lastLastValue,printPrettily,exceptionHandler,resultHandler,pageWidth,ribbonWidth,printDepth,printLength,engine]
+Supers: loop,importNameSpace,handleResult,handleException,exitOperation,deleteNameSpace,toString,getResultHandler,resultHandler,getExceptionHandler,exceptionHandler,setPrintBanner,setStartNT,setGrammar,setImports,imports,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): [1] XMF> 
+Local(1): Pair[fields=left,right]
+Local(2): promptString
+Local(3): env
+Source Code:
+    @Operation loop():XCore::Element
+  let promptString = "[" + Loop::level.toString() + "] " + prompt;
+      env = self.loopEnv()
+  in if printBanner
+     then self.printBanner()
+     else false
+     end ;
+     Loop::level :=Loop::level + 1;
+     @While not terminated do
+       try
+         self.readEvalPrint(engine,promptString,env)
+       catch(exception)
+         exceptionHandler.invoke(self,Seq{exception},Seq{})
+       end
+     end;
+     Loop::level :=Loop::level - 1;
+     returnValue
+  end
+end
+constant(0) = Array(promptString,env)
+constant(1) = 'loopEnv'
+constant(2) = [
+constant(3) = 'Loop'
+constant(4) = 'level'
+constant(5) = ] 
+constant(6) = 'prompt'
+constant(7) = 'printBanner'
+constant(8) = level
+constant(9) = 'putElement'
+constant(10) = 'terminated'
+constant(11) = Seq{Seq{exception,Seq{2,Seq{'XCore','Element'}}},Seq{2,Seq{'XCore','Element'}},Seq{'parserImports'},Seq{'charStart'|0},Seq{'charEnd'|0}}
+constant(12) = CodeBox('anonymous',0,Code(<Unknown instruction 109>,SELF 0,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,MKSEQ 1,<Unknown instruction 109>,MKSEQ 0,<Unknown instruction 109>,DYNAMIC(1) 'exceptionHandler',TAILSEND 3 'invoke',RETURN,RETURN))
+constant(13) = 'anonymous'
+constant(14) = CodeBox('anonymous',0,Code(STARTCALL,<Unknown instruction 109>,DYNAMIC(1) 'engine',<Unknown instruction 109>,GLOBAL 0 0,<Unknown instruction 109>,GLOBAL 0 0,SENDSELF 3 'readEvalPrint',RETURN,RETURN))
+constant(15) = 'returnValue'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(12): ?::anonymous at line 40 char 0
+Self: Fun('anonymous')
+Supers: anonymous
+Source Code:
+    try
+      topLevel.loop()
+    catch(exception)
+      xmf.raise(exception);
+      Kernel_die()
+    end
+constant(0) = Array()
+constant(1) = 'loop'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(0): ?::anonymous at line 76 char 0
+Self: Fun('anonymous')
+Supers: anonymous
+Source Code:
+    @Operation anonymous():XCore::Element
+  try
+    topLevel.loop()
+  catch(exception)
+    xmf.raise(exception);
+    Kernel_die()
+  end
+end
+constant(0) = Array()
+constant(1) = Seq{Seq{exception,Seq{2,Seq{'XCore','Element'}}},Seq{2,Seq{'XCore','Element'}},Seq{'parserImports'},Seq{'charStart'|0},Seq{'charEnd'|0}}
+constant(2) = CodeBox('anonymous',0,Code(STARTCALL,<Unknown instruction 109>,LOCAL 0,<Unknown instruction 109>,DYNAMIC(1) 'xmf',SEND 1 'raise',POP,<Unknown instruction 109>,<Unknown instruction 80>,TAILENTER 0,RETURN,RETURN))
+constant(3) = 'anonymous'
+constant(4) = CodeBox('anonymous',0,Code(STARTCALL,<Unknown instruction 109>,GLOBAL 0 0,SEND 0 'loop',RETURN,RETURN))
+----------------------------------------------------------------------------------------------------
+
+
+
+java.lang.Exception
+	at engine.Machine.saveBacktrace(Machine.java:9461)
+	at engine.Machine.saveBacktrace(Machine.java:9448)
+	at engine.Machine.handleThrow(Machine.java:4536)
+	at engine.Machine.perform(Machine.java:4514)
+	at threads.ThreadInitiator.start(ThreadInitiator.java:21)
+	at xos.OperatingSystem.runThread(OperatingSystem.java:1586)
+	at xos.OperatingSystem.runReadyThread(OperatingSystem.java:1573)
+	at xos.OperatingSystem.run(OperatingSystem.java:1553)
+	at xos.OperatingSystem.init(OperatingSystem.java:621)
+	at console.Console.lambda$2(Console.java:200)
+	at java.base/java.lang.Thread.run(Thread.java:833)

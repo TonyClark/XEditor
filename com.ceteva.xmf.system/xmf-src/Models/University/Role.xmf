@@ -1,0 +1,14 @@
+parserImport XOCL;
+
+import Models;
+import University;
+
+context University
+
+  @Class Role isabstract
+
+    @Attribute FTE : Integer (<,!) end
+
+    @Constructor(FTE) ! end
+
+  end

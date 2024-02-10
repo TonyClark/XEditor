@@ -1,0 +1,11 @@
+parserImport XOCL;
+
+import Parser;
+
+context Tokens
+
+  @Class TokenStream isabstract
+
+    // Used to create a lazy sequence of tokens...
+
+  end

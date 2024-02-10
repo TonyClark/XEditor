@@ -1,0 +1,32 @@
+parserImport XOCL;
+
+context Root
+
+  @Package Excel
+
+    @Operation readWorkbook(file:String):Workbook
+      let ExcelReader = xmf.javaClass("excel.ExcelReader")
+      in translateWorkbook(file,ExcelReader.readWorkbook(file))
+      end
+    end
+
+    @Operation translateWorkbook(file,workBook)
+      Workbook(file,[ translateSheet(sheet) | sheet <- workBook.getValues() ])
+    end
+
+     @Operation translateSheet(sheet) 
+       let name = sheet.getValues()->head.getValue();
+           rows = [ translateRow(row) | row <- sheet.getValues()->tail ]
+       in Sheet(name,rows)
+       end
+     end
+
+     @Operation translateRow(row)
+       [ translateValue(value) | value <- row.getValues() ]
+     end
+
+     @Operation translateValue(value) 
+       value.getValue()
+     end
+
+  end

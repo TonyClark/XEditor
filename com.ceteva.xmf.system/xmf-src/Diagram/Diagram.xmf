@@ -1,0 +1,302 @@
+parserImport XOCL;
+
+import Exceptions; 
+
+context Root
+
+  @Package Diagram
+
+    @Doc
+      This package serves as a name-space for operations that
+      create Java instances of the package diagrams.model and
+      which are used by a diagram panel to manage a class diagram.
+    end
+
+    @Bind 
+
+      // The link handler table maps diagram names to link handler tables.
+      // A link handler table maps a link (string) to a handler (operation)
+      // A handler maps the link to an SVG string.
+    
+      linkHandlers = Table(20) 
+      
+    end
+
+    @Bind
+
+      // Menu handlers work like link handlers but the menu event is of the
+      // form name_...
+
+      menuHandlers = Table(20)
+      
+    end
+
+    @Operation addClass(package,class:Class)
+      if not(package.hasClass(class.owner().path(),class.name.toString()))
+      then 
+        if class.owner().path() = package.getPath()
+        then 
+          // Local class...
+          let c = package.addClass(class.name.toString())
+          in @For a in class.attributes do
+               if [Integer,Boolean,String,Float]->contains(a.underlyingType())
+               then c.addField(a.name.toString(),getType(a.type)) 
+               elseif a.type.isKindOf(OpType)
+               then c.addField(a.name.toString(),getType(a.type)) 
+               end
+             end;
+           
+             @For a in class.attributes do
+               if a.underlyingType().isKindOf(Class)
+               then 
+                 let mult = if a.type.isKindOf(Seq) or a.type.isKindOf(Set) then "*" else "" end;
+                     type = a.underlyingType() then
+                     name = type.name.toString()
+                 in if a.underlyingType().isKindOf(Enum)
+                    then addEnum(package,a.underlyingType())
+                    else addClass(package,a.underlyingType())
+                    end;
+                    if package.hasImportedClass(type.owner().path(),name)
+                    then package.addEdge(c,package.getImportedClass(type.owner().path(),name),mult + a.name.toString())
+                    else package.addEdge(c,package.getElement(name),mult + a.name.toString())
+                    end
+                 end
+               end
+             end;
+
+             @For parent in class.parents do
+               addClass(package,parent);
+               if package.hasImportedClass(parent.owner().path(),parent.name.toString())
+               then package.addInherits(c,package.getImportedClass(parent.owner().path(),parent.name.toString()))
+               else package.addInherits(c,package.getElement(parent.name.toString()))
+               end
+             end;
+
+             @For o in class.operations do
+               if not(isUpdater(o)) and not(isGetter(o))
+               then 
+                 let Arg = xmf.javaClass("diagrams.model.Arg");
+                     Operation = xmf.javaClass("diagrams.model.Operation");
+                     type = getType(o.type());
+                     names = o.paramNames();
+                     types = o.paramTypes() then
+                     args = names.zip(types)->collect(pair | Arg(pair->head,getType(pair->tail)))
+                 in c.addOperation(o.name.toString(),args,type)
+                 end
+               end
+             end;
+
+             if class.documentation <> null
+             then
+               package.addNote(c,class.documentation.doc)
+             end
+          end
+        else
+          // Imported class..
+          package.addImportedClass(class.owner().path(),class.name.toString())
+        end
+      end
+    end
+
+    @Operation addEnum(package,enum:Enum)
+      if package.getElement(enum.name.toString()) = null
+      then
+        let owner = enum.owner().path();
+            names = enum.contents()->asSeq->collect(c | c.name.toString())
+        in if not(package.hasClass(owner,enum.name.toString()))
+           then package.addEnum(enum.name.toString(),names)
+           else package.addImportedEnum(owner,enum.name.toString())
+           end
+        end
+      end
+    end
+    
+    @Operation addPackage(owner:Package,package:Package)
+     let p = owner.addPackage(package.path(),package.name.toString())
+     in @For class in package.classes do
+           if class.isKindOf(Enum)
+           then addEnum(p,class)
+           else addClass(p,class)
+           end
+         end;
+         @For package in package.packages do
+           addPackage(p,package)
+         end
+      end
+    end
+
+    @Operation createDiagramLinkHandler(name:String)
+      linkHandlers.put(name,Table(30))
+    end
+
+    @Operation createDiagramMenuHandler(name:String)
+      menuHandlers.put(name,Table(30))
+    end
+
+    @Operation defineLinkHandler(name:String,link:String,handler:(String) -> String)
+      if linkHandlers.hasKey(name)
+      then 
+        let table = linkHandlers.get(name)
+        in table.put(link,handler)
+        end
+      else 
+        createDiagramLinkHandler(name);
+        defineLinkHandler(name,link,handler)
+      end
+    end
+
+    @Operation defineMenuHandler(name:String,menu:[String],handler:() -> Object)
+
+      // The handler should return a new model...
+      
+      if menuHandlers.hasKey(name)
+      then 
+        let table = menuHandlers.get(name)
+        in table.put(menu.separateWith("_"),handler)
+        end
+      else 
+        createDiagramMenuHandler(name);
+        defineMenuHandler(name,menu,handler)
+      end
+    end
+
+    @Operation getType(type:DataType)
+      if type.isKindOf(Seq)
+      then 
+        let List = xmf.javaClass("diagrams.model.List")
+        in List(getType(type.elementType))
+        end
+      elseif type.isKindOf(Set)
+      then 
+        let Set = xmf.javaClass("diagrams.model.Set")
+        in Set(getType(type.elementType))
+        end
+      elseif type.isKindOf(OpType)
+      then 
+        let FunType = xmf.javaClass("diagrams.model.FunType")
+        in FunType(type.domains->collect(t | getType(t)),getType(type.range))
+        end
+      else
+        let NamedType = xmf.javaClass("diagrams.model.NamedType")
+        in if type = Integer
+           then NamedType.INTEGER
+           elseif type = String
+           then NamedType.STRING
+           elseif type = Boolean
+           then NamedType.BOOLEAN
+           elseif type = Float
+           then NamedType.FLOAT
+           else NamedType(type.name.toString())
+           end
+        end
+      end
+    end
+
+    @Operation hasLinkHandler(name:String):Bolean
+      linkHandlers.hasKey(name)
+    end
+
+    @Operation hasMenuHandler(name:String):Bolean
+      menuHandlers.hasKey(name)
+    end
+
+    @Operation handleLink(name:String,link:String):String
+      if linkHandlers.hasKey(name)
+      then 
+        let table = linkHandlers.get(name)
+        in if table.hasKey(link)
+           then 
+             let handler = table.get(link)
+             in handler(link)
+             end
+           else throw Error("no handler for link " + link)
+           end
+        end
+      else throw Error("no link handler for diagram named " + name)
+      end
+    end
+
+    @Operation handleMenu(name:String,menu:[String]):String
+      if menuHandlers.hasKey(name)
+      then 
+        let table = menuHandlers.get(name)
+        in if table.hasKey(menu.separateWith("_"))
+           then 
+             let handler = table.get(menu.separateWith("_"))
+             in handler()
+             end
+           else throw Error("no handler for menu " + menu + " in " + table)
+           end
+        end
+      else throw Error("no menu handler for diagram named " + name)
+      end
+    end
+
+    @Operation isGetter(o:Operation):Boolean
+      o.hasProperty("GETTER")
+    end
+
+    @Operation isUpdater(o:Operation):Boolean
+      o.hasProperty("UPDATER")
+    end
+
+    @Operation package2Model(package:Package)
+      let Model = xmf.javaClass("diagrams.model.Model") then
+          model = Model(package.path(),package.name.toString())
+      in @For class in package.classes do
+           if class.isKindOf(Enum)
+           then addEnum(model.getPackage(),class)
+           else addClass(model.getPackage(),class)
+           end
+         end;
+         @For package in package.packages do
+           addPackage(model.getPackage(),package)
+         end;
+         model
+      end
+    end
+
+    @Operation package2SVG(package:Package) 
+      let SVG = xmf.javaClass("web.SVG")
+      in SVG.plantUML2SVG(package2Model(package).getPlantUML())
+      end
+    end
+
+    @Operation removeDiagramLinkHandlers(name:String)
+      linkHandlers.remove(name)
+    end
+
+    @Operation snapshot2Model(snapshot:Snapshot)
+      let snap = snapshot2Snap(snapshot)
+      in let model = snap.getDiagramModel(snapshot.name().toString(),snapshot.name().toString(),Filmstrips::ColourMap())
+         in @For package in snapshot.packages do
+              @For operation in package.operations do
+                if operation.arity() = 0
+                then 
+                  model.createMenu(operation.name().toString(),[]);
+                  defineMenuHandler(snapshot.name().toString(),[operation.name().toString()],operation)
+                end
+              end
+            end;
+            model
+         end
+      end
+    end
+
+    @Operation snapshot2Snap(snapshot:Snapshot):Filmstrips::Snapshot
+      let snap = Filmstrips::Snapshot();
+          isLegalObject(o) = o <> null andthen snapshot.packages->exists(p | p.classes->contains(o.of())) then
+          find = Walkers::Find(isLegalObject)
+      in find.walk(snapshot.names()->collect(n | snapshot.getElement(n)),20);
+         snap.populate(find.results);
+         snap
+      end
+    end
+
+    @Operation snapshot2SVG(snapshot:Snapshot) 
+      let SVG = xmf.javaClass("web.SVG")
+      in SVG.plantUML2SVG(snapshot2Model(snapshot).getPlantUML())
+      end
+    end
+     
+  end

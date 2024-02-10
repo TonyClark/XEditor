@@ -1,0 +1,19 @@
+parserImport XOCL;
+
+
+context Filmstrips
+
+  @Class Transition
+
+    // Built from a step suitable for matching in a constraint...
+
+    @Attribute sources:[Object] (<) end
+    @Attribute targets:[Object] (<) end
+    @Attribute message:String (<) end
+    @Attribute target:Object (<) end
+    @Attribute args:[Element] (<) end
+    @Attribute result:Element (<) end
+
+    @Constructor(target,message,args,result,sources,targets) ! end
+
+  end

@@ -1,0 +1,22 @@
+parserImport Manifests;
+
+
+@Manifest University
+
+  @File University           end
+  @File Assessment           end
+  @File Module               end
+  @File TeachingContribution end
+  @File Programme            end
+  @File Role                 end
+  @File Staff                end
+  @File AcademicMode         end
+  @File Technician           end
+  @File Academic             end
+  @File Department           end
+  @File School               end
+  @File College              end
+  @File UniversityClass      end
+  //@File Aston                end
+
+end;

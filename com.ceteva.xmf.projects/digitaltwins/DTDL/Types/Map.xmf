@@ -1,0 +1,23 @@
+parserImport XOCL;
+
+import DTDL;
+import Types;
+import Maps;
+
+context Maps
+
+  @Class Map extends ComplexSchema
+
+    @Doc
+      A Map describes a data type of key-value pairs 
+      where the values share the same schema. The key 
+      in a Map must be a string. The values in a Map 
+      can be any schema.
+    end
+    
+    @Attribute mapKey         : MapKey            (<,!)     end
+    @Attribute mapValue       : MapValue          (<,!)     end
+
+    @Constructor(mapKey,mapValue) ! end
+
+  end

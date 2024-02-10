@@ -1,0 +1,537 @@
+
+Call frame backtrace:
+
+Current stack frame instructions:
+  <Unknown instruction 109>
+  STARTCALL
+  <Unknown instruction 109>
+  SELF 0
+  OF
+  SEND 0 'allOperations'
+  ASSEQ
+  <Unknown instruction 109>
+  <Unknown instruction 109>
+  DYNAMIC(2) 'Symbol' <--- 
+----------------------------------------------------------------------------------------------------
+Called(229): ForeignObject::send at line 80 char 0
+Self: class excel.ExcelReader
+Supers: send,toString,target,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): toString
+Local(1): ()
+Local(2): null
+Local(3): null
+Local(4): null
+Local(5): null
+Local(6): null
+Local(7): null
+Local(8): null
+Local(9): null
+Local(10): null
+Local(11): null
+Local(12): null
+Local(13): null
+Source Code:
+    @Operation send(message : XCore::Element,args : XCore::Element):Element
+  let name = if message.isKindOf(Symbol)
+             then message
+             else Symbol(message)
+             end ;
+      operations = self.of().allOperations()->asSeq then
+      operations = operations->select(o |
+                     o.name = name and (o.arity() = args->size or (o.isVarArgs() and (args->size >= (o.arity() - 1)))))
+  in if operations->isEmpty
+     then Kernel_sendForeignInstance(self,message,args)
+     else let op = operations->head
+          in op.invoke(self,args,operations)
+          end
+     end 
+  end
+end
+constant(0) = Array(name,operations,iterExpCollection,op)
+constant(1) = 'allOperations'
+constant(2) = 'Symbol'
+constant(3) = 'default'
+constant(4) = 'name'
+constant(5) = 'isVarArgs'
+constant(6) = 'Kernel_sendForeignInstance'
+constant(7) = 'invoke'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(207): Seq(Element)::map at line 680 char 0
+Self: Seq{class excel.ExcelReader,null,null,null,null}
+Supers: map,max,mul,prefixes,prepend,qsort,ref,removeAt,replaceAt,reverse,sel,select,separateWith,set,setTail,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): toString
+Local(1): ()
+Local(2): Seq{class excel.ExcelReader,null,null,null,null}
+Local(3): Seq{null,null,null,null}
+Local(4): class excel.ExcelReader
+Local(5): ()
+Local(6): null
+Local(7): null
+Local(8): null
+Source Code:
+    @Operation map(message : XCore::Element,args : XCore::Element):XCore::Element
+  self->collect(x |
+    x.send(message,args))
+end
+constant(0) = Array(iterExpCollection)
+constant(1) = 'default'
+constant(2) = 'send'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(177): StackFrame::toString at line 211 char 0
+Self: StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos]
+Supers: toString,resourceName,print,printCall,paramTypes,paramNames,ownerName,owner,operation,name,localNames,localValues,args,arity,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): Loop().
+Local(1): messageTarget
+Source Code:
+    @Operation toString():String
+  let messageTarget = if target = null
+                      then ""
+                      else target.toString() + "."
+                      end 
+  in messageTarget + self.name() + "(" + values->map("toString")->separateWith(",") + ")"
+  end
+end
+constant(0) = Array(messageTarget)
+constant(1) = 'target'
+constant(2) = 
+constant(3) = .
+constant(4) = 'name'
+constant(5) = (
+constant(6) = ,
+constant(7) = toString
+constant(8) = 'values'
+constant(9) = 'map'
+constant(10) = 'separateWith'
+constant(11) = )
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(138): Exception::toJavaFrame at line 74 char 0
+Self: MachineException[fields=message,backtrace,resourceName,charCount,lineCount,data,id]
+Supers: toJavaFrame,stackFrames,toString,setBacktrace,printFrame,printBasicBacktrace,printBacktrace,printBacktraceHeader,printBacktrace,display,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos]
+Local(1): Seq{result}
+Local(2): Seq{Element}
+Local(3): Seq{class excel.ExcelReader}
+Local(4): Seq{null,null}
+Local(5): Seq{null,null}
+Local(6): 4
+Local(7): 6
+Local(8): 6
+Local(9): Seq{result = class excel.ExcelReader}
+Local(10): Seq{null   = null,null   = null}
+Local(11): Loop()
+Local(12): ../com.ceteva.xmf.system/xmf-src/TopLevel/Loop.xmf
+Local(13): Seq{../com.ceteva.xmf.system/xmf-src/TopLevel/Loop.xmf}
+Local(14): paramNames
+Local(15): paramTypes
+Local(16): paramValues
+Local(17): localNames
+Local(18): localValues
+Local(19): maxLocalLength
+Local(20): maxParamLength
+Local(21): max
+Local(22): argNodes
+Local(23): localNodes
+Local(24): targetNode
+Local(25): resourceName
+Local(26): resourceNode
+Source Code:
+    @Operation toJavaFrame(frame : XCore::Element):XCore::Element
+  let paramNames = frame.paramNames();
+      paramTypes = frame.paramTypes()->collect(c |
+                     c.name.toString());
+      paramValues = frame.args()->collect(v |
+                      valueToString(v)) then
+      localNames = frame.localNames()->select(x |
+                     x.isKindOf(XCore::Element))->asSeq->collect(name |
+                     name.toString()) then
+      localValues = frame.localValues()->select(x |
+                      x.isKindOf(XCore::Element))->asSeq->collect(v |
+                      valueToString(v));
+      maxLocalLength = localNames->select(x |
+                         x.isKindOf(XCore::Element))->asSeq->collect(name |
+                         name->size).max();
+      maxParamLength = paramNames->select(x |
+                         x.isKindOf(XCore::Element))->asSeq->collect(name |
+                         name->size).max() then
+      max = maxLocalLength.max(maxParamLength) then
+      argNodes = paramNames.zip(paramValues).zip(paramTypes)->select(x |
+                   x.isKindOf(XCore::Element))->asSeq->collect(pair |
+                   ArgNode(pair->head->head,pair->head->tail,pair->tail,max,propertyNodes(pair->head->tail,Seq{})));
+      localNodes = localNames.zip(localValues)->select(x |
+                     x.isKindOf(XCore::Element))->asSeq->collect(pair |
+                     LocalNode(pair->head,pair->tail,max,propertyNodes(pair->tail,Seq{})));
+      targetNode = TargetNode(frame.target.toString(),frame.target.of().path(),propertyNodes(frame.target,Seq{}));
+      resourceName = frame.resourceName() then
+      resourceNode = if resourceName = ""
+                     then Seq{}
+                     else Seq{ResourceNode(resourceName,frame.line,frame.charPos)}
+                     end 
+  in CodeBoxNode(frame.toString(),resourceNode + Seq{targetNode} + argNodes + localNodes)
+  end
+end
+constant(0) = Array(iterExpCollection,paramNames,paramTypes,paramValues,localNames,localValues,maxLocalLength,maxParamLength,max,argNodes,localNodes,targetNode,resourceName,resourceNode)
+constant(1) = 'args'
+constant(2) = 'default'
+constant(3) = 'paramTypes'
+constant(4) = 'name'
+constant(5) = 'paramNames'
+constant(6) = 'localNames'
+constant(7) = 'XCore'
+constant(8) = 'Element'
+constant(9) = 'max'
+constant(10) = 'localValues'
+constant(11) = 'resourceName'
+constant(12) = 'target'
+constant(13) = 'path'
+constant(14) = 'zip'
+constant(15) = 
+constant(16) = 'line'
+constant(17) = 'charPos'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(105): Exception::anonymous at line 77 char 0
+Self: MachineException[fields=message,backtrace,resourceName,charCount,lineCount,data,id]
+Supers: anonymous,stackFrames,toString,setBacktrace,printFrame,printBasicBacktrace,printBacktrace,printBacktraceHeader,printBacktrace,display,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): Seq{StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos],StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos],StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos],StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos],StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos],StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos],StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos]}
+Local(1): Seq{StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos],StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos],StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos],StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos],StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos]}
+Local(2): StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos]
+Local(3): Seq{class excel.ExcelReader.pprint(100,40,2,10,0,null,null,null,null,null,null)}
+Local(4): iterExpCollection
+Local(5): null
+Local(6): null
+Local(7): null
+Source Code:
+    try
+      ExceptionNode(message.toString(),self.stackFrames()->select(x |
+        x.isKindOf(XCore::Element))->asSeq->collect(frame |
+        toJavaFrame(frame)))
+    catch(x)
+      x.printBacktrace()
+    end
+constant(0) = Array(iterExpCollection)
+constant(1) = 'message'
+constant(2) = 'stackFrames'
+constant(3) = 'default'
+constant(4) = 'XCore'
+constant(5) = 'Element'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(67): Exception::anonymous at line 76 char 0
+Self: MachineException[fields=message,backtrace,resourceName,charCount,lineCount,data,id]
+Supers: anonymous,stackFrames,toString,setBacktrace,printFrame,printBasicBacktrace,printBacktrace,printBacktraceHeader,printBacktrace,display,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): class exceptions.ExceptionNode
+Local(1): class exceptions.CodeBoxNode
+Local(2): class exceptions.ArgNode
+Local(3): class exceptions.TargetNode
+Local(4): class exceptions.PropertyNode
+Local(5): class exceptions.LocalNode
+Local(6): class exceptions.ResourceNode
+Local(7): 2
+Local(8): 10
+Local(9): 10
+Local(10): Fun('valueToString')
+Local(11): Fun('propertyNodes')
+Local(12): Fun('toJavaFrame')
+Local(13): ExceptionNode'
+Local(14): CodeBoxNode'
+Local(15): ArgNode'
+Local(16): TargetNode'
+Local(17): PropertyNode'
+Local(18): LocalNode'
+Local(19): ResourceNode'
+Local(20): maxDepth'
+Local(21): maxList'
+Local(22): maxVector'
+Local(23): valueToString'
+Local(24): propertyNodes'
+Local(25): toJavaFrame'
+Source Code:
+    @Operation anonymous():XCore::Element
+  let ExceptionNode' = xmf.javaClass("exceptions.ExceptionNode");
+      CodeBoxNode' = xmf.javaClass("exceptions.CodeBoxNode");
+      ArgNode' = xmf.javaClass("exceptions.ArgNode");
+      TargetNode' = xmf.javaClass("exceptions.TargetNode");
+      PropertyNode' = xmf.javaClass("exceptions.PropertyNode");
+      LocalNode' = xmf.javaClass("exceptions.LocalNode");
+      ResourceNode' = xmf.javaClass("exceptions.ResourceNode");
+      maxDepth' = 2;
+      maxList' = 10;
+      maxVector' = 10;
+      valueToString' = @Operation valueToString(value : XCore::Element):XCore::Element
+                         @TypeCase(value)
+                           Null do
+                             "null"
+                           end
+                           Seq(Element) do
+                             if value->size > maxList
+                             then "..."
+                             else value.toString()
+                             end 
+                           end
+                           Set(Element) do
+                             if value->size > maxList
+                             then "..."
+                             else value.toString()
+                             end 
+                           end
+                           Vector do
+                             if value->size > maxVector
+                             then "..."
+                             else value.toString()
+                             end 
+                           end
+                         end
+                       end;
+      propertyNodes' = @Operation propertyNodes(value : XCore::Element,visited : XCore::Element):XCore::Element
+                         if visited->size < maxDepth andthen not (visited->includes(value)) andthen value <> null andthen value.isKindOf(Object)
+                         then let max = value.slots()->collect(s |
+                                          s.name.toString()->size).max()
+                              in value.slots()->select(x |
+                                   x.isKindOf(XCore::Element))->asSeq->collect(s |
+                                   PropertyNode(s.name.toString(),valueToString(s.value),max,propertyNodes(s.value,Seq{value} + visited)))
+                              end
+                         elseif visited->size < maxDepth andthen not (visited->includes(value)) andthen value <> null andthen value.isKindOf(Seq(Element))
+                         then if value->size < maxList
+                              then 0.to(value->size - 1)->select(x |
+                                     x.isKindOf(XCore::Element))->asSeq->collect(i |
+                                     PropertyNode("->at(" + i + ")",valueToString(value->at(i)),value->size + 5,propertyNodes(value->at(i),Seq{value} + visited)))
+                              else Seq{}
+                              end 
+                         elseif visited->size < maxDepth andthen not (visited->includes(value)) andthen value <> null andthen value.isKindOf(Vector)
+                         then if value->size < maxVector
+                              then 0.to(value->size - 1)->select(x |
+                                     x.isKindOf(XCore::Element))->asSeq->collect(i |
+                                     PropertyNode("->at(" + i + ")",valueToString(value->at(i)),value->size + 5,propertyNodes(value->at(i),Seq{value} + visited)))
+                              else Seq{}
+                              end 
+                         else Seq{}
+                         end 
+                       end;
+      toJavaFrame' = @Operation toJavaFrame(frame : XCore::Element):XCore::Element
+                       let paramNames = frame.paramNames();
+                           paramTypes = frame.paramTypes()->collect(c |
+                                          c.name.toString());
+                           paramValues = frame.args()->collect(v |
+                                           valueToString(v)) then
+                           localNames = frame.localNames()->select(x |
+                                          x.isKindOf(XCore::Element))->asSeq->collect(name |
+                                          name.toString()) then
+                           localValues = frame.localValues()->select(x |
+                                           x.isKindOf(XCore::Element))->asSeq->collect(v |
+                                           valueToString(v));
+                           maxLocalLength = localNames->select(x |
+                                              x.isKindOf(XCore::Element))->asSeq->collect(name |
+                                              name->size).max();
+                           maxParamLength = paramNames->select(x |
+                                              x.isKindOf(XCore::Element))->asSeq->collect(name |
+                                              name->size).max() then
+                           max = maxLocalLength.max(maxParamLength) then
+                           argNodes = paramNames.zip(paramValues).zip(paramTypes)->select(x |
+                                        x.isKindOf(XCore::Element))->asSeq->collect(pair |
+                                        ArgNode(pair->head->head,pair->head->tail,pair->tail,max,propertyNodes(pair->head->tail,Seq{})));
+                           localNodes = localNames.zip(localValues)->select(x |
+                                          x.isKindOf(XCore::Element))->asSeq->collect(pair |
+                                          LocalNode(pair->head,pair->tail,max,propertyNodes(pair->tail,Seq{})));
+                           targetNode = TargetNode(frame.target.toString(),frame.target.of().path(),propertyNodes(frame.target,Seq{}));
+                           resourceName = frame.resourceName() then
+                           resourceNode = if resourceName = ""
+                                          then Seq{}
+                                          else Seq{ResourceNode(resourceName,frame.line,frame.charPos)}
+                                          end 
+                       in CodeBoxNode(frame.toString(),resourceNode + Seq{targetNode} + argNodes + localNodes)
+                       end
+                     end
+  in toJavaFrame := toJavaFrame';
+     propertyNodes := propertyNodes';
+     valueToString := valueToString';
+     maxVector := maxVector';
+     maxList := maxList';
+     maxDepth := maxDepth';
+     ResourceNode := ResourceNode';
+     LocalNode := LocalNode';
+     PropertyNode := PropertyNode';
+     TargetNode := TargetNode';
+     ArgNode := ArgNode';
+     CodeBoxNode := CodeBoxNode';
+     ExceptionNode := ExceptionNode';
+     try
+       ExceptionNode(message.toString(),self.stackFrames()->select(x |
+         x.isKindOf(XCore::Element))->asSeq->collect(frame |
+         toJavaFrame(frame)))
+     catch(x)
+       x.printBacktrace()
+     end
+  end
+end
+constant(0) = Array(ExceptionNode',CodeBoxNode',ArgNode',TargetNode',PropertyNode',LocalNode',ResourceNode',maxDepth',maxList',maxVector',valueToString',propertyNodes',toJavaFrame')
+constant(1) = Seq{Seq{frame,Seq{2,Seq{'XCore','Element'}}},Seq{2,Seq{'XCore','Element'}},Seq{'parserImports'},Seq{'charStart'|0},Seq{'charEnd'|0}}
+constant(2) = CodeBox('toJavaFrame',13,Code(<Unknown instruction 109>,<Unknown instruction 109>,STARTCALL,SENDLOCAL 0 'args'0,SETLOCPOP 1,UNBINDDYN Array(iterExpCollection,paramNames,paramTypes,paramValues,localNames,localValues,maxLocalLength,maxParamLength,max,argNodes,localNodes,targetNode,resourceName,resourceNode),<Unknown instruction 109>,LOCAL 1,SETLOCPOP 2,STARTCALL,<Unknown instruction 109>,LOCAL 1,OF,SEND 0 'default',SETLOCPOP 4,LOCAL 2,ISEMPTY,SKPF 1,SKP 18,LOCAL 2,SEL,SETLOCPOP 3,LOCAL 3,LOCAL 2,EXCLUDING,SETLOCPOP 2,STARTCALL,<Unknown instruction 109>,LOCAL 3,<Unknown instruction 109>,GLOBAL 0 1,ENTER 1,<Unknown instruction 109>,LOCAL 4,INCLUDING,SETLOCPOP 4,SKPBACK 21,LOCAL 4,<Unknown instruction 108>,<Unknown instruction 109>,STARTCALL,SENDLOCAL 0 'paramTypes'0,SETLOCPOP 1,UNBINDDYN Array(iterExpCollection,paramNames,paramTypes,paramValues,localNames,localValues,maxLocalLength,maxParamLength,max,argNodes,localNodes,targetNode,resourceName,resourceNode),<Unknown instruction 109>,LOCAL 1,SETLOCPOP 2,STARTCALL,<Unknown instruction 109>,LOCAL 1,OF,SEND 0 'default',SETLOCPOP 4,LOCAL 2,ISEMPTY,SKPF 1,SKP 14,LOCAL 2,SEL,SETLOCPOP 3,LOCAL 3,LOCAL 2,EXCLUDING,SETLOCPOP 2,DOTLOCAL valueToString: unknown tag 32 4,<Unknown instruction 101>,<Unknown instruction 109>,LOCAL 4,INCLUDING,SETLOCPOP 4,SKPBACK 17,LOCAL 4,<Unknown instruction 108>,STARTCALL,SENDLOCAL 0 'paramNames'0,SETLOCPOP 1,SETLOCPOP 2,SETLOCPOP 3,UNBINDDYN 'args',UNBINDDYN Seq{Seq{1,Seq{Seq},Seq{Seq{2,Seq{'FilmstripStep'}}}}},UNBINDDYN valueToString: unknown tag 120,<Unknown instruction 109>,<Unknown instruction 109>,STARTCALL,SENDLOCAL 0 'localNames'0,SETLOCPOP 4,UNBINDDYN valueToString: unknown tag 109,<Unknown instruction 109>,LOCAL 4,SETLOCPOP 5,STARTCALL,<Unknown instruction 109>,LOCAL 4,OF,SEND 0 'default',SETLOCPOP 7,LOCAL 5,ISEMPTY,SKPF 1,SKP 24,LOCAL 5,SEL,SETLOCPOP 6,LOCAL 6,LOCAL 5,EXCLUDING,SETLOCPOP 5,<Unknown instruction 109>,DYNAMIC(7) 'XCore',GETELEMENT 'Element',<Unknown instruction 109>,LOCAL 6,ISKINDOF,SKPF 5,LOCAL 6,<Unknown instruction 109>,LOCAL 7,INCLUDING,SKP 2,<Unknown instruction 109>,LOCAL 7,NOOP,SETLOCPOP 7,SKPBACK 27,LOCAL 7,<Unknown instruction 108>,ASSEQ,SETLOCPOP 4,UNBINDDYN valueToString: unknown tag 109,<Unknown instruction 109>,LOCAL 4,SETLOCPOP 5,STARTCALL,<Unknown instruction 109>,LOCAL 4,OF,SEND 0 'default',SETLOCPOP 7,LOCAL 5,ISEMPTY,SKPF 1,SKP 15,LOCAL 5,SEL,SETLOCPOP 6,LOCAL 6,LOCAL 5,EXCLUDING,SETLOCPOP 5,<Unknown instruction 109>,LOCAL 6,<Unknown instruction 101>,<Unknown instruction 109>,LOCAL 7,INCLUDING,SETLOCPOP 7,SKPBACK 18,LOCAL 7,<Unknown instruction 108>,SETLOCPOP 4,UNBINDDYN valueToString: unknown tag 35,STARTCALL,<Unknown instruction 109>,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 1,SETLOCPOP 5,UNBINDDYN valueToString: unknown tag 109,<Unknown instruction 109>,LOCAL 5,SETLOCPOP 6,STARTCALL,<Unknown instruction 109>,LOCAL 5,OF,SEND 0 'default',SETLOCPOP 8,LOCAL 6,ISEMPTY,SKPF 1,SKP 24,LOCAL 6,SEL,SETLOCPOP 7,LOCAL 7,LOCAL 6,EXCLUDING,SETLOCPOP 6,<Unknown instruction 109>,DYNAMIC(7) 'XCore',GETELEMENT 'Element',<Unknown instruction 109>,LOCAL 7,ISKINDOF,SKPF 5,LOCAL 7,<Unknown instruction 109>,LOCAL 8,INCLUDING,SKP 2,<Unknown instruction 109>,LOCAL 8,NOOP,SETLOCPOP 8,SKPBACK 27,LOCAL 8,<Unknown instruction 108>,ASSEQ,SETLOCPOP 5,UNBINDDYN valueToString: unknown tag 109,<Unknown instruction 109>,LOCAL 5,SETLOCPOP 6,STARTCALL,<Unknown instruction 109>,LOCAL 5,OF,SEND 0 'default',SETLOCPOP 8,LOCAL 6,ISEMPTY,SKPF 1,SKP 15,LOCAL 6,SEL,SETLOCPOP 7,LOCAL 7,LOCAL 6,EXCLUDING,SETLOCPOP 6,<Unknown instruction 109>,LOCAL 7,SIZE,<Unknown instruction 109>,LOCAL 8,INCLUDING,SETLOCPOP 8,SKPBACK 18,LOCAL 8,<Unknown instruction 108>,SEND 0 'max',STARTCALL,<Unknown instruction 109>,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 4,SETLOCPOP 5,UNBINDDYN valueToString: unknown tag 109,<Unknown instruction 109>,LOCAL 5,SETLOCPOP 6,STARTCALL,<Unknown instruction 109>,LOCAL 5,OF,SEND 0 'default',SETLOCPOP 8,LOCAL 6,ISEMPTY,SKPF 1,SKP 24,LOCAL 6,SEL,SETLOCPOP 7,LOCAL 7,LOCAL 6,EXCLUDING,SETLOCPOP 6,<Unknown instruction 109>,DYNAMIC(7) 'XCore',GETELEMENT 'Element',<Unknown instruction 109>,LOCAL 7,ISKINDOF,SKPF 5,LOCAL 7,<Unknown instruction 109>,LOCAL 8,INCLUDING,SKP 2,<Unknown instruction 109>,LOCAL 8,NOOP,SETLOCPOP 8,SKPBACK 27,LOCAL 8,<Unknown instruction 108>,ASSEQ,SETLOCPOP 5,UNBINDDYN valueToString: unknown tag 109,<Unknown instruction 109>,LOCAL 5,SETLOCPOP 6,STARTCALL,<Unknown instruction 109>,LOCAL 5,OF,SEND 0 'default',SETLOCPOP 8,LOCAL 6,ISEMPTY,SKPF 1,SKP 15,LOCAL 6,SEL,SETLOCPOP 7,LOCAL 7,LOCAL 6,EXCLUDING,SETLOCPOP 6,<Unknown instruction 109>,LOCAL 7,SIZE,<Unknown instruction 109>,LOCAL 8,INCLUDING,SETLOCPOP 8,SKPBACK 18,LOCAL 8,<Unknown instruction 108>,SEND 0 'max',<Unknown instruction 109>,<Unknown instruction 109>,STARTCALL,SENDLOCAL 0 'localValues'0,SETLOCPOP 5,UNBINDDYN valueToString: unknown tag 109,<Unknown instruction 109>,LOCAL 5,SETLOCPOP 6,STARTCALL,<Unknown instruction 109>,LOCAL 5,OF,SEND 0 'default',SETLOCPOP 8,LOCAL 6,ISEMPTY,SKPF 1,SKP 24,LOCAL 6,SEL,SETLOCPOP 7,LOCAL 7,LOCAL 6,EXCLUDING,SETLOCPOP 6,<Unknown instruction 109>,DYNAMIC(7) 'XCore',GETELEMENT 'Element',<Unknown instruction 109>,LOCAL 7,ISKINDOF,SKPF 5,LOCAL 7,<Unknown instruction 109>,LOCAL 8,INCLUDING,SKP 2,<Unknown instruction 109>,LOCAL 8,NOOP,SETLOCPOP 8,SKPBACK 27,LOCAL 8,<Unknown instruction 108>,ASSEQ,SETLOCPOP 5,UNBINDDYN valueToString: unknown tag 109,<Unknown instruction 109>,LOCAL 5,SETLOCPOP 6,STARTCALL,<Unknown instruction 109>,LOCAL 5,OF,SEND 0 'default',SETLOCPOP 8,LOCAL 6,ISEMPTY,SKPF 1,SKP 18,LOCAL 6,SEL,SETLOCPOP 7,LOCAL 7,LOCAL 6,EXCLUDING,SETLOCPOP 6,STARTCALL,<Unknown instruction 109>,LOCAL 7,<Unknown instruction 109>,GLOBAL 0 1,ENTER 1,<Unknown instruction 109>,LOCAL 8,INCLUDING,SETLOCPOP 8,SKPBACK 21,LOCAL 8,<Unknown instruction 108>,SETLOCPOP 5,SETLOCPOP 6,SETLOCPOP 7,UNBINDDYN valueToString: unknown tag 99,UNBINDDYN valueToString: unknown tag 32,UNBINDDYN Array(),STARTCALL,<Unknown instruction 109>,LOCAL 7,SENDLOCAL 1 'max'6,SETLOCPOP 8,UNBINDDYN 5000,STARTCALL,SENDLOCAL 0 'resourceName'0,STARTCALL,DOTLOCAL Array(iterExpCollection,paramNames,paramTypes,paramValues,localNames,localValues,maxLocalLength,maxParamLength,max,argNodes,localNodes,targetNode,resourceName,resourceNode) 12,<Unknown instruction 101>,STARTCALL,DOTLOCAL Array(iterExpCollection,paramNames,paramTypes,paramValues,localNames,localValues,maxLocalLength,maxParamLength,max,argNodes,localNodes,targetNode,resourceName,resourceNode) 12,OF,SEND 0 'path',STARTCALL,DOTLOCAL Array(iterExpCollection,paramNames,paramTypes,paramValues,localNames,localValues,maxLocalLength,maxParamLength,max,argNodes,localNodes,targetNode,resourceName,resourceNode) 12,<Unknown instruction 109>,MKSEQ 0,<Unknown instruction 109>,GLOBAL 0 1,ENTER 2,<Unknown instruction 109>,GLOBAL 0 1,ENTER 3,<Unknown instruction 109>,<Unknown instruction 109>,STARTCALL,<Unknown instruction 109>,LOCAL 5,SENDLOCAL 1 'zip'4,SETLOCPOP 9,UNBINDDYN Array(iterExpCollection,params,fail),<Unknown instruction 109>,LOCAL 9,SETLOCPOP 10,STARTCALL,<Unknown instruction 109>,LOCAL 9,OF,SEND 0 'default',SETLOCPOP 12,LOCAL 10,ISEMPTY,SKPF 1,SKP 24,LOCAL 10,SEL,SETLOCPOP 11,LOCAL 11,LOCAL 10,EXCLUDING,SETLOCPOP 10,<Unknown instruction 109>,DYNAMIC(7) 'XCore',GETELEMENT 'Element',<Unknown instruction 109>,LOCAL 11,ISKINDOF,SKPF 5,LOCAL 11,<Unknown instruction 109>,LOCAL 12,INCLUDING,SKP 2,<Unknown instruction 109>,LOCAL 12,NOOP,SETLOCPOP 12,SKPBACK 27,LOCAL 12,<Unknown instruction 108>,ASSEQ,SETLOCPOP 9,UNBINDDYN Array(iterExpCollection,params,fail),<Unknown instruction 109>,LOCAL 9,SETLOCPOP 10,STARTCALL,<Unknown instruction 109>,LOCAL 9,OF,SEND 0 'default',SETLOCPOP 12,LOCAL 10,ISEMPTY,SKPF 1,SKP 27,LOCAL 10,SEL,SETLOCPOP 11,LOCAL 11,LOCAL 10,EXCLUDING,SETLOCPOP 10,STARTCALL,LOCALHEAD 11,LOCALTAIL 11,<Unknown instruction 109>,LOCAL 8,STARTCALL,LOCALTAIL 11,<Unknown instruction 109>,MKSEQ 0,<Unknown instruction 109>,GLOBAL 0 1,ENTER 2,<Unknown instruction 109>,GLOBAL 0 1,ENTER 4,<Unknown instruction 109>,LOCAL 12,INCLUDING,SETLOCPOP 12,SKPBACK 30,LOCAL 12,<Unknown instruction 108>,<Unknown instruction 109>,<Unknown instruction 109>,STARTCALL,<Unknown instruction 109>,LOCAL 2,STARTCALL,<Unknown instruction 109>,LOCAL 3,SENDLOCAL 1 'zip'1,SEND 1 'zip',SETLOCPOP 9,UNBINDDYN Array(iterExpCollection,params,fail),<Unknown instruction 109>,LOCAL 9,SETLOCPOP 10,STARTCALL,<Unknown instruction 109>,LOCAL 9,OF,SEND 0 'default',SETLOCPOP 12,LOCAL 10,ISEMPTY,SKPF 1,SKP 24,LOCAL 10,SEL,SETLOCPOP 11,LOCAL 11,LOCAL 10,EXCLUDING,SETLOCPOP 10,<Unknown instruction 109>,DYNAMIC(7) 'XCore',GETELEMENT 'Element',<Unknown instruction 109>,LOCAL 11,ISKINDOF,SKPF 5,LOCAL 11,<Unknown instruction 109>,LOCAL 12,INCLUDING,SKP 2,<Unknown instruction 109>,LOCAL 12,NOOP,SETLOCPOP 12,SKPBACK 27,LOCAL 12,<Unknown instruction 108>,ASSEQ,SETLOCPOP 9,UNBINDDYN Array(iterExpCollection,params,fail),<Unknown instruction 109>,LOCAL 9,SETLOCPOP 10,STARTCALL,<Unknown instruction 109>,LOCAL 9,OF,SEND 0 'default',SETLOCPOP 12,LOCAL 10,ISEMPTY,SKPF 1,SKP 31,LOCAL 10,SEL,SETLOCPOP 11,LOCAL 11,LOCAL 10,EXCLUDING,SETLOCPOP 10,STARTCALL,LOCALHEAD 11,HEAD,LOCALHEAD 11,TAIL,LOCALTAIL 11,<Unknown instruction 109>,LOCAL 8,STARTCALL,LOCALHEAD 11,TAIL,<Unknown instruction 109>,MKSEQ 0,<Unknown instruction 109>,GLOBAL 0 1,ENTER 2,<Unknown instruction 109>,GLOBAL 0 1,ENTER 5,<Unknown instruction 109>,LOCAL 12,INCLUDING,SETLOCPOP 12,SKPBACK 34,LOCAL 12,<Unknown instruction 108>,SETLOCPOP 9,SETLOCPOP 10,SETLOCPOP 11,SETLOCPOP 12,UNBINDDYN 'StrExp',UNBINDDYN valueToString: unknown tag 32,UNBINDDYN Seq{'name'|'Negate'},UNBINDDYN valueToString: unknown tag 99,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 12,<Unknown instruction 109>,PUSHSTR ,EQL,SKPF 3,<Unknown instruction 109>,MKSEQ 0,SKP 10,<Unknown instruction 109>,STARTCALL,<Unknown instruction 109>,LOCAL 12,DOTLOCAL Array(iterExpCollection,paramNames,paramTypes,paramValues,localNames,localValues,maxLocalLength,maxParamLength,max,argNodes,localNodes,targetNode,resourceName,resourceNode) 16,DOTLOCAL Array(iterExpCollection,paramNames,paramTypes,paramValues,localNames,localValues,maxLocalLength,maxParamLength,max,argNodes,localNodes,targetNode,resourceName,resourceNode) 17,<Unknown instruction 109>,GLOBAL 0 1,ENTER 3,MKSEQ 1,NOOP,SETLOCPOP 13,UNBINDDYN 'Element',<Unknown instruction 109>,LOCAL 0,<Unknown instruction 101>,<Unknown instruction 109>,LOCAL 13,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 11,MKSEQ 1,<Unknown instruction 109>,LOCAL 9,<Unknown instruction 109>,LOCAL 10,ADD,ADD,ADD,<Unknown instruction 109>,GLOBAL 0 1,TAILENTER 2,RETURN,RETURN))
+constant(3) = toJavaFrame
+constant(4) = Seq{Seq{value,Seq{2,Seq{'XCore','Element'}}},Seq{visited,Seq{2,Seq{'XCore','Element'}}},Seq{2,Seq{'XCore','Element'}},Seq{'parserImports'},Seq{'charStart'|0},Seq{'charEnd'|0}}
+constant(5) = CodeBox('propertyNodes',5,Code(<Unknown instruction 109>,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 1,SIZE,<Unknown instruction 109>,GLOBAL 0 1,LESS,SKPF 30,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,<Unknown instruction 109>,LOCAL 1,INCLUDES,NOT,SKPF 18,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,<Unknown instruction 109>,NULL,EQL,NOT,SKPF 6,<Unknown instruction 109>,DYNAMIC(1) 'Object',<Unknown instruction 109>,LOCAL 0,ISKINDOF,SKP 2,<Unknown instruction 109>,PUSHFALSE,NOOP,SKP 2,<Unknown instruction 109>,PUSHFALSE,NOOP,SKP 2,<Unknown instruction 109>,PUSHFALSE,NOOP,SKPF 140,<Unknown instruction 109>,STARTCALL,<Unknown instruction 109>,STARTCALL,SENDLOCAL 0 'slots'0,SETLOCPOP 2,UNBINDDYN Array(iterExpCollection,max),<Unknown instruction 109>,LOCAL 2,SETLOCPOP 3,STARTCALL,<Unknown instruction 109>,LOCAL 2,OF,SEND 0 'default',SETLOCPOP 5,LOCAL 3,ISEMPTY,SKPF 1,SKP 15,LOCAL 3,SEL,SETLOCPOP 4,LOCAL 4,LOCAL 3,EXCLUDING,SETLOCPOP 3,DOTLOCAL 0 4,<Unknown instruction 101>,SIZE,<Unknown instruction 109>,LOCAL 5,INCLUDING,SETLOCPOP 5,SKPBACK 18,LOCAL 5,<Unknown instruction 108>,SEND 0 'max',SETLOCPOP 2,UNBINDDYN 'Object',<Unknown instruction 109>,<Unknown instruction 109>,STARTCALL,SENDLOCAL 0 'slots'0,SETLOCPOP 3,UNBINDDYN valueToString: unknown tag 97,<Unknown instruction 109>,LOCAL 3,SETLOCPOP 4,STARTCALL,<Unknown instruction 109>,LOCAL 3,OF,SEND 0 'default',SETLOCPOP 6,LOCAL 4,ISEMPTY,SKPF 1,SKP 24,LOCAL 4,SEL,SETLOCPOP 5,LOCAL 5,LOCAL 4,EXCLUDING,SETLOCPOP 4,<Unknown instruction 109>,DYNAMIC(6) 'XCore',GETELEMENT 'Element',<Unknown instruction 109>,LOCAL 5,ISKINDOF,SKPF 5,LOCAL 5,<Unknown instruction 109>,LOCAL 6,INCLUDING,SKP 2,<Unknown instruction 109>,LOCAL 6,NOOP,SETLOCPOP 6,SKPBACK 27,LOCAL 6,<Unknown instruction 108>,ASSEQ,SETLOCPOP 3,UNBINDDYN valueToString: unknown tag 97,<Unknown instruction 109>,LOCAL 3,SETLOCPOP 4,STARTCALL,<Unknown instruction 109>,LOCAL 3,OF,SEND 0 'default',SETLOCPOP 6,LOCAL 4,ISEMPTY,SKPF 1,SKP 37,LOCAL 4,SEL,SETLOCPOP 5,LOCAL 5,LOCAL 4,EXCLUDING,SETLOCPOP 4,STARTCALL,DOTLOCAL valueToString: unknown tag 45 4,<Unknown instruction 101>,STARTCALL,DOTLOCAL valueToString: unknown tag 45 8,<Unknown instruction 109>,GLOBAL 0 1,ENTER 1,<Unknown instruction 109>,LOCAL 2,STARTCALL,DOTLOCAL valueToString: unknown tag 45 8,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,MKSEQ 1,<Unknown instruction 109>,LOCAL 1,ADD,<Unknown instruction 109>,GLOBAL 0 1,ENTER 2,<Unknown instruction 109>,GLOBAL 0 1,ENTER 4,<Unknown instruction 109>,LOCAL 6,INCLUDING,SETLOCPOP 6,SKPBACK 40,LOCAL 6,SKP 368,<Unknown instruction 109>,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 1,SIZE,<Unknown instruction 109>,GLOBAL 0 1,LESS,SKPF 32,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,<Unknown instruction 109>,LOCAL 1,INCLUDES,NOT,SKPF 20,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,<Unknown instruction 109>,NULL,EQL,NOT,SKPF 8,STARTCALL,<Unknown instruction 109>,DYNAMIC(9) 'Element',ENTERDYN 1 'Seq',<Unknown instruction 109>,LOCAL 0,ISKINDOF,SKP 2,<Unknown instruction 109>,PUSHFALSE,NOOP,SKP 2,<Unknown instruction 109>,PUSHFALSE,NOOP,SKP 2,<Unknown instruction 109>,PUSHFALSE,NOOP,SKPF 138,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,SIZE,<Unknown instruction 109>,GLOBAL 0 1,LESS,SKPF 126,<Unknown instruction 109>,<Unknown instruction 109>,STARTCALL,<Unknown instruction 109>,LOCAL 0,SIZE,<Unknown instruction 109>,PUSHINT 1,SUB,<Unknown instruction 109>,PUSHINT 0,SEND 1 'to',SETLOCPOP 2,UNBINDDYN Array(iterExpCollection,max),<Unknown instruction 109>,LOCAL 2,SETLOCPOP 3,STARTCALL,<Unknown instruction 109>,LOCAL 2,OF,SEND 0 'default',SETLOCPOP 5,LOCAL 3,ISEMPTY,SKPF 1,SKP 24,LOCAL 3,SEL,SETLOCPOP 4,LOCAL 4,LOCAL 3,EXCLUDING,SETLOCPOP 3,<Unknown instruction 109>,DYNAMIC(6) 'XCore',GETELEMENT 'Element',<Unknown instruction 109>,LOCAL 4,ISKINDOF,SKPF 5,LOCAL 4,<Unknown instruction 109>,LOCAL 5,INCLUDING,SKP 2,<Unknown instruction 109>,LOCAL 5,NOOP,SETLOCPOP 5,SKPBACK 27,LOCAL 5,<Unknown instruction 108>,ASSEQ,SETLOCPOP 2,UNBINDDYN Array(iterExpCollection,max),<Unknown instruction 109>,LOCAL 2,SETLOCPOP 3,STARTCALL,<Unknown instruction 109>,LOCAL 2,OF,SEND 0 'default',SETLOCPOP 5,LOCAL 3,ISEMPTY,SKPF 1,SKP 55,LOCAL 3,SEL,SETLOCPOP 4,LOCAL 4,LOCAL 3,EXCLUDING,SETLOCPOP 3,STARTCALL,<Unknown instruction 109>,PUSHSTR ->at(,<Unknown instruction 109>,LOCAL 4,<Unknown instruction 109>,PUSHSTR ),ADD,ADD,STARTCALL,<Unknown instruction 109>,LOCAL 4,<Unknown instruction 109>,LOCAL 0,AT,<Unknown instruction 109>,GLOBAL 0 1,ENTER 1,<Unknown instruction 109>,LOCAL 0,SIZE,<Unknown instruction 109>,PUSHINT 5,ADD,STARTCALL,<Unknown instruction 109>,LOCAL 4,<Unknown instruction 109>,LOCAL 0,AT,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,MKSEQ 1,<Unknown instruction 109>,LOCAL 1,ADD,<Unknown instruction 109>,GLOBAL 0 1,ENTER 2,<Unknown instruction 109>,GLOBAL 0 1,ENTER 4,<Unknown instruction 109>,LOCAL 5,INCLUDING,SETLOCPOP 5,SKPBACK 58,LOCAL 5,SKP 2,<Unknown instruction 109>,MKSEQ 0,NOOP,SKP 184,<Unknown instruction 109>,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 1,SIZE,<Unknown instruction 109>,GLOBAL 0 1,LESS,SKPF 30,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,<Unknown instruction 109>,LOCAL 1,INCLUDES,NOT,SKPF 18,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,<Unknown instruction 109>,NULL,EQL,NOT,SKPF 6,<Unknown instruction 109>,DYNAMIC(14) 'Vector',<Unknown instruction 109>,LOCAL 0,ISKINDOF,SKP 2,<Unknown instruction 109>,PUSHFALSE,NOOP,SKP 2,<Unknown instruction 109>,PUSHFALSE,NOOP,SKP 2,<Unknown instruction 109>,PUSHFALSE,NOOP,SKPF 138,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,SIZE,<Unknown instruction 109>,GLOBAL 0 1,LESS,SKPF 126,<Unknown instruction 109>,<Unknown instruction 109>,STARTCALL,<Unknown instruction 109>,LOCAL 0,SIZE,<Unknown instruction 109>,PUSHINT 1,SUB,<Unknown instruction 109>,PUSHINT 0,SEND 1 'to',SETLOCPOP 2,UNBINDDYN Array(iterExpCollection,max),<Unknown instruction 109>,LOCAL 2,SETLOCPOP 3,STARTCALL,<Unknown instruction 109>,LOCAL 2,OF,SEND 0 'default',SETLOCPOP 5,LOCAL 3,ISEMPTY,SKPF 1,SKP 24,LOCAL 3,SEL,SETLOCPOP 4,LOCAL 4,LOCAL 3,EXCLUDING,SETLOCPOP 3,<Unknown instruction 109>,DYNAMIC(6) 'XCore',GETELEMENT 'Element',<Unknown instruction 109>,LOCAL 4,ISKINDOF,SKPF 5,LOCAL 4,<Unknown instruction 109>,LOCAL 5,INCLUDING,SKP 2,<Unknown instruction 109>,LOCAL 5,NOOP,SETLOCPOP 5,SKPBACK 27,LOCAL 5,<Unknown instruction 108>,ASSEQ,SETLOCPOP 2,UNBINDDYN Array(iterExpCollection,max),<Unknown instruction 109>,LOCAL 2,SETLOCPOP 3,STARTCALL,<Unknown instruction 109>,LOCAL 2,OF,SEND 0 'default',SETLOCPOP 5,LOCAL 3,ISEMPTY,SKPF 1,SKP 55,LOCAL 3,SEL,SETLOCPOP 4,LOCAL 4,LOCAL 3,EXCLUDING,SETLOCPOP 3,STARTCALL,<Unknown instruction 109>,PUSHSTR ->at(,<Unknown instruction 109>,LOCAL 4,<Unknown instruction 109>,PUSHSTR ),ADD,ADD,STARTCALL,<Unknown instruction 109>,LOCAL 4,<Unknown instruction 109>,LOCAL 0,AT,<Unknown instruction 109>,GLOBAL 0 1,ENTER 1,<Unknown instruction 109>,LOCAL 0,SIZE,<Unknown instruction 109>,PUSHINT 5,ADD,STARTCALL,<Unknown instruction 109>,LOCAL 4,<Unknown instruction 109>,LOCAL 0,AT,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,MKSEQ 1,<Unknown instruction 109>,LOCAL 1,ADD,<Unknown instruction 109>,GLOBAL 0 1,ENTER 2,<Unknown instruction 109>,GLOBAL 0 1,ENTER 4,<Unknown instruction 109>,LOCAL 5,INCLUDING,SETLOCPOP 5,SKPBACK 58,LOCAL 5,SKP 2,<Unknown instruction 109>,MKSEQ 0,NOOP,SKP 2,<Unknown instruction 109>,MKSEQ 0,NOOP,NOOP,NOOP,RETURN,RETURN))
+constant(6) = propertyNodes
+constant(7) = Seq{Seq{value,Seq{2,Seq{'XCore','Element'}}},Seq{2,Seq{'XCore','Element'}},Seq{'parserImports'},Seq{'charStart'|0},Seq{'charEnd'|0}}
+constant(8) = CodeBox('valueToString',1,Code(<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,SETLOCPOP 1,UNBINDDYN Array(typeCaseValue),<Unknown instruction 109>,<Unknown instruction 109>,DYNAMIC(1) 'Null',<Unknown instruction 109>,LOCAL 1,ISKINDOF,SKPF 3,<Unknown instruction 109>,PUSHSTR null,SKP 79,<Unknown instruction 109>,STARTCALL,<Unknown instruction 109>,DYNAMIC(3) 'Element',ENTERDYN 1 'Seq',<Unknown instruction 109>,LOCAL 1,ISKINDOF,SKPF 16,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,SIZE,<Unknown instruction 109>,GLOBAL 0 1,GRE,SKPF 3,<Unknown instruction 109>,PUSHSTR ...,SKP 3,<Unknown instruction 109>,LOCAL 0,<Unknown instruction 101>,NOOP,SKP 53,<Unknown instruction 109>,STARTCALL,<Unknown instruction 109>,DYNAMIC(3) 'Element',ENTERDYN 1 'Set',<Unknown instruction 109>,LOCAL 1,ISKINDOF,SKPF 16,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,SIZE,<Unknown instruction 109>,GLOBAL 0 1,GRE,SKPF 3,<Unknown instruction 109>,PUSHSTR ...,SKP 3,<Unknown instruction 109>,LOCAL 0,<Unknown instruction 101>,NOOP,SKP 27,<Unknown instruction 109>,<Unknown instruction 109>,DYNAMIC(7) 'Vector',<Unknown instruction 109>,LOCAL 1,ISKINDOF,SKPF 16,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,SIZE,<Unknown instruction 109>,GLOBAL 0 1,GRE,SKPF 3,<Unknown instruction 109>,PUSHSTR ...,SKP 3,<Unknown instruction 109>,LOCAL 0,<Unknown instruction 101>,NOOP,SKP 3,<Unknown instruction 109>,LOCAL 0,<Unknown instruction 101>,NOOP,NOOP,NOOP,NOOP,RETURN,RETURN))
+constant(9) = valueToString
+constant(10) = exceptions.ResourceNode
+constant(11) = 'xmf'
+constant(12) = 'javaClass'
+constant(13) = exceptions.LocalNode
+constant(14) = exceptions.PropertyNode
+constant(15) = exceptions.TargetNode
+constant(16) = exceptions.ArgNode
+constant(17) = exceptions.CodeBoxNode
+constant(18) = exceptions.ExceptionNode
+constant(19) = Seq{Seq{x,Seq{2,Seq{'XCore','Element'}}},Seq{2,Seq{'XCore','Element'}},Seq{'parserImports'},Seq{'charStart'|0},Seq{'charEnd'|0}}
+constant(20) = CodeBox('anonymous',0,Code(<Unknown instruction 109>,LOCAL 0,TAILSEND 0 'printBacktrace',RETURN,RETURN))
+constant(21) = 'anonymous'
+constant(22) = CodeBox('anonymous',4,Code(STARTCALL,<Unknown instruction 109>,DYNAMIC(1) 'message',<Unknown instruction 101>,<Unknown instruction 109>,<Unknown instruction 109>,STARTCALL,SENDSELF 0 'stackFrames',SETLOCPOP 0,UNBINDDYN Array(iterExpCollection),<Unknown instruction 109>,LOCAL 0,SETLOCPOP 1,STARTCALL,<Unknown instruction 109>,LOCAL 0,OF,SEND 0 'default',SETLOCPOP 3,LOCAL 1,ISEMPTY,SKPF 1,SKP 24,LOCAL 1,SEL,SETLOCPOP 2,LOCAL 2,LOCAL 1,EXCLUDING,SETLOCPOP 1,<Unknown instruction 109>,DYNAMIC(4) 'XCore',GETELEMENT 'Element',<Unknown instruction 109>,LOCAL 2,ISKINDOF,SKPF 5,LOCAL 2,<Unknown instruction 109>,LOCAL 3,INCLUDING,SKP 2,<Unknown instruction 109>,LOCAL 3,NOOP,SETLOCPOP 3,SKPBACK 27,LOCAL 3,<Unknown instruction 108>,ASSEQ,SETLOCPOP 0,UNBINDDYN Array(iterExpCollection),<Unknown instruction 109>,LOCAL 0,SETLOCPOP 1,STARTCALL,<Unknown instruction 109>,LOCAL 0,OF,SEND 0 'default',SETLOCPOP 3,LOCAL 1,ISEMPTY,SKPF 1,SKP 18,LOCAL 1,SEL,SETLOCPOP 2,LOCAL 2,LOCAL 1,EXCLUDING,SETLOCPOP 1,STARTCALL,<Unknown instruction 109>,LOCAL 2,<Unknown instruction 109>,GLOBAL 0 0,ENTER 1,<Unknown instruction 109>,LOCAL 3,INCLUDING,SETLOCPOP 3,SKPBACK 21,LOCAL 3,<Unknown instruction 108>,<Unknown instruction 109>,GLOBAL 0 0,ENTER 2,RETURN,RETURN))
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(54): XEditor::showException at line 0 char 0
+Self: null
+Supers: showException
+Local(0): MachineException[fields=message,backtrace,resourceName,charCount,lineCount,data,id]
+Source Code:
+    @Operation showException(exception : Exception):XCore::Element
+  xmf.javaClass("console.Console").CONSOLE.showException(exception.toJava())
+end
+constant(0) = Array()
+constant(1) = 'toJava'
+constant(2) = console.Console
+constant(3) = 'xmf'
+constant(4) = 'javaClass'
+constant(5) = 'CONSOLE'
+constant(6) = 'showException'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(41): ?::handleException at line 34 char 0
+Self: Loop[fields=commands,inputChannel,outputChannel,prompt,env,target,imports,grammar,startNT,printBanner,terminated,returnValue,value,lastValue,lastLastValue,printPrettily,exceptionHandler,resultHandler,pageWidth,ribbonWidth,printDepth,printLength,engine]
+Supers: 
+Local(0): MachineException[fields=message,backtrace,resourceName,charCount,lineCount,data,id]
+Source Code:
+    @Operation handleException(x : XCore::Element):XCore::Element
+  Set{XEditor::showException(x);
+  self.handleException(x)}
+end
+constant(0) = Array()
+constant(1) = 'XEditor'
+constant(2) = 'showException'
+constant(3) = 'handleException'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(24): Loop::loop at line 76 char 0
+Self: Loop[fields=commands,inputChannel,outputChannel,prompt,env,target,imports,grammar,startNT,printBanner,terminated,returnValue,value,lastValue,lastLastValue,printPrettily,exceptionHandler,resultHandler,pageWidth,ribbonWidth,printDepth,printLength,engine]
+Supers: loop,importNameSpace,handleResult,handleException,exitOperation,deleteNameSpace,toString,getResultHandler,resultHandler,getExceptionHandler,exceptionHandler,setPrintBanner,setStartNT,setGrammar,setImports,imports,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): [1] XMF> 
+Local(1): Pair[fields=left,right]
+Local(2): promptString
+Local(3): env
+Source Code:
+    @Operation loop():XCore::Element
+  let promptString = "[" + Loop::level.toString() + "] " + prompt;
+      env = self.loopEnv()
+  in if printBanner
+     then self.printBanner()
+     else false
+     end ;
+     Loop::level :=Loop::level + 1;
+     @While not terminated do
+       try
+         self.readEvalPrint(engine,promptString,env)
+       catch(exception)
+         exceptionHandler.invoke(self,Seq{exception},Seq{})
+       end
+     end;
+     Loop::level :=Loop::level - 1;
+     returnValue
+  end
+end
+constant(0) = Array(promptString,env)
+constant(1) = 'loopEnv'
+constant(2) = [
+constant(3) = 'Loop'
+constant(4) = 'level'
+constant(5) = ] 
+constant(6) = 'prompt'
+constant(7) = 'printBanner'
+constant(8) = level
+constant(9) = 'putElement'
+constant(10) = 'terminated'
+constant(11) = Seq{Seq{exception,Seq{2,Seq{'XCore','Element'}}},Seq{2,Seq{'XCore','Element'}},Seq{'parserImports'},Seq{'charStart'|0},Seq{'charEnd'|0}}
+constant(12) = CodeBox('anonymous',0,Code(<Unknown instruction 109>,SELF 0,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,MKSEQ 1,<Unknown instruction 109>,MKSEQ 0,<Unknown instruction 109>,DYNAMIC(1) 'exceptionHandler',TAILSEND 3 'invoke',RETURN,RETURN))
+constant(13) = 'anonymous'
+constant(14) = CodeBox('anonymous',0,Code(STARTCALL,<Unknown instruction 109>,DYNAMIC(1) 'engine',<Unknown instruction 109>,GLOBAL 0 0,<Unknown instruction 109>,GLOBAL 0 0,SENDSELF 3 'readEvalPrint',RETURN,RETURN))
+constant(15) = 'returnValue'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(12): ?::anonymous at line 40 char 0
+Self: Fun('anonymous')
+Supers: anonymous
+Source Code:
+    try
+      topLevel.loop()
+    catch(exception)
+      xmf.raise(exception);
+      Kernel_die()
+    end
+constant(0) = Array()
+constant(1) = 'loop'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(0): ?::anonymous at line 76 char 0
+Self: Fun('anonymous')
+Supers: anonymous
+Source Code:
+    @Operation anonymous():XCore::Element
+  try
+    topLevel.loop()
+  catch(exception)
+    xmf.raise(exception);
+    Kernel_die()
+  end
+end
+constant(0) = Array()
+constant(1) = Seq{Seq{exception,Seq{2,Seq{'XCore','Element'}}},Seq{2,Seq{'XCore','Element'}},Seq{'parserImports'},Seq{'charStart'|0},Seq{'charEnd'|0}}
+constant(2) = CodeBox('anonymous',0,Code(STARTCALL,<Unknown instruction 109>,LOCAL 0,<Unknown instruction 109>,DYNAMIC(1) 'xmf',SEND 1 'raise',POP,<Unknown instruction 109>,<Unknown instruction 80>,TAILENTER 0,RETURN,RETURN))
+constant(3) = 'anonymous'
+constant(4) = CodeBox('anonymous',0,Code(STARTCALL,<Unknown instruction 109>,GLOBAL 0 0,SEND 0 'loop',RETURN,RETURN))
+----------------------------------------------------------------------------------------------------
+
+
+
+java.lang.Exception
+	at engine.Machine.saveBacktrace(Machine.java:9460)
+	at engine.Machine.saveBacktrace(Machine.java:9447)
+	at engine.Machine.handleThrow(Machine.java:4535)
+	at engine.Machine.perform(Machine.java:4513)
+	at threads.ThreadInitiator.start(ThreadInitiator.java:21)
+	at xos.OperatingSystem.runThread(OperatingSystem.java:1586)
+	at xos.OperatingSystem.runReadyThread(OperatingSystem.java:1573)
+	at xos.OperatingSystem.run(OperatingSystem.java:1553)
+	at xos.OperatingSystem.init(OperatingSystem.java:621)
+	at console.Console.lambda$2(Console.java:200)
+	at java.base/java.lang.Thread.run(Thread.java:833)

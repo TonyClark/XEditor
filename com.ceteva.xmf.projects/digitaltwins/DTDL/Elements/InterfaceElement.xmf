@@ -1,0 +1,19 @@
+parserImport XOCL;
+
+import DTDL;
+
+context Elements
+
+  @Class InterfaceElement isabstract 
+    
+    @Attribute name           : String            (<,!)     end
+    @Attribute id             : String = newId()  (<)       end
+    @Attribute comment        : String = ""       (<,!)     end
+    @Attribute description    : String = ""       (<,!)     end
+    @Attribute displayName    : String = ""       (<,!)     end
+
+    @AbstractOp addDiagram(package,class) end
+
+    @AbstractOp resolveReferences(env) end
+
+  end

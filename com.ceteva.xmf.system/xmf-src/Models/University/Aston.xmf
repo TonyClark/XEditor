@@ -1,0 +1,71 @@
+parserImport XOCL;
+
+import Models;
+import University;
+import Excel;
+
+context Root
+  @Operation mkAston()
+    let Aston       = University::University("Aston");
+        EPS         = College("EPS");
+        HLS         = College("HLS");
+        BSS         = College("BSS");
+        EaI         = School("Engineering & Innovation");
+        MechEng     = Department("Mechanical Engineering");
+        AChemBio    = Department("Applied Chemistry & Biotechnology");
+        DesignTech  = Department("Design Technology & Technology Innovation");
+        CSaDT       = School("Computer Science & Digital Technologies");
+        Maths       = Department("Applied Maths & Data Science");
+        AI          = Department("Applied AI & Robotics");
+        SECyber     = Department("Software Engineering & Cybersecurity");
+        ECE         = Department("Electronics & Computer Engineering");
+        CompSci     = Programme("Computer Science");
+        IaBE        = School("Infrastructure & Built Environment");
+        Arch        = Department("Architecture & Urban Planning");
+        EngMan      = Department("Engineering Management");
+        Civil       = Department("Civil Engineering");
+        data        = "/Users/tonyclark/Library/CloudStorage/Dropbox/Aston_Files/Staff/Performance/CoreHRA03 - Current Employees & Appointments - v3.xlsx" then
+        workbook    = readWorkbook(data) then
+        sheet       = workbook.getSheets()->head then
+        header      = sheet.getRows()->head then
+        surname     = header->indexOf("Surname");
+        forename    = header->indexOf("Forename");
+        department  = header->indexOf("Department");
+        staff       = sheet.getRows()->tail
+    in Aston.addToColleges(EPS);
+       Aston.addToColleges(HLS);
+       Aston.addToColleges(BSS);
+       EPS.addToSchools(EaI);
+       EaI.addToDepartments(MechEng);
+       EaI.addToDepartments(AChemBio);
+       EaI.addToDepartments(DesignTech);
+       EPS.addToSchools(CSaDT);
+       CSaDT.addToDepartments(Maths);
+       CSaDT.addToDepartments(AI);
+       CSaDT.addToDepartments(SECyber);
+       CSaDT.addToDepartments(ECE);
+       CSaDT.addToProgrammes(CompSci);
+       EPS.addToSchools(IaBE);
+       IaBE.addToDepartments(Arch);
+       IaBE.addToDepartments(EngMan);
+       IaBE.addToDepartments(Civil);
+       format(stdout,"~S~%",[header]);
+       @For staffMember in staff do
+         if staffMember->size > 0
+         then 
+           let name = staffMember->at(forename) + staffMember->at(surname);
+               dept = staffMember->at(department)
+           in @Case dept of
+                "Infrastructure & Sustainable Eng" do
+                  Arch.addToStaff(Academic(name,AcademicMode::TR))
+                end
+                else null
+              end
+           end
+         end
+       end;
+       Aston
+    end
+  end
+
+Root::Aston := mkAston().toSnapshot();

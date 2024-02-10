@@ -1,0 +1,97 @@
+parserImport XOCL;
+
+// This file implements the mechanism for transforming XMF objects into inspector
+// values. An inspector value is displayed on an inspector snapshot diagram which
+// allows the structure and relationships of XMF objects to be visualised and managed.
+
+context XEditor
+  @Operation editOperation(o:Operation . rest) 
+     let snapshot = if rest = [] then "Default Snapshot" else rest->head end then
+        CodeInspector = xmf.javaClass("inspect.CodeInspector");
+        source = o.source()
+     in if source <> null and source <> ""
+        then CodeInspector(snapshot,xmf.getHandle(o),o.name(),source)
+        else self.editObject(o,snapshot)
+        end
+     end
+   end  
+
+context XEditor
+  @Operation editClass(c:Class . rest)
+    let snapshot = if rest = [] then "Default Snapshot" else rest->head end then
+        Inspector = xmf.javaClass("inspect.ClassInspector") then
+        cHandle = xmf.getHandle(c);
+        cLabel = c.toString();
+        report = c.checkConstraints() then
+        report = report.filterFailures() then
+        satisfied = report.satisfied;
+        reportString = report.reportString()
+    in Inspector.mkInspector(snapshot,cHandle,cLabel,satisfied,reportString)
+    end
+  end 
+
+context XEditor
+  @Operation editObject(o:Object . rest)
+    let snapshot = if rest = [] then "Default Snapshot" else rest->head end then
+        Inspector = xmf.javaClass("inspect.ObjectInspector");
+        InspectorField = xmf.javaClass("inspect.InspectorField");
+        InspectorString = xmf.javaClass("inspect.value.InspectorString");
+        InspectorBool = xmf.javaClass("inspect.value.InspectorBool");
+        InspectorInt = xmf.javaClass("inspect.value.InspectorInt");
+        InspectorFloat = xmf.javaClass("inspect.value.InspectorFloat");
+        InspectorElement = xmf.javaClass("inspect.value.InspectorElement");
+        InspectorList = xmf.javaClass("inspect.value.InspectorList");
+        InspectorSet = xmf.javaClass("inspect.value.InspectorSet")
+    in @Letrec getValue(v) = 
+        @TypeCase(v)
+          Null    do InspectorElement(xmf.getHandle(null),"null",[]) end
+          Boolean do InspectorBool(v) end
+          Float do InspectorFloat(v) end
+          Integer do InspectorInt(v) end
+          String do InspectorString(v) end
+          Seq(Element) do InspectorList([ getValue(x) | x <- v ]) end
+          Set(Element) do InspectorSet([ getValue(x) | x <- v ]) end
+          else 
+            let operations = v.of().allOperations()->select(o | o.arity() = 0)->collect(o | o.name.toString())
+            in InspectorElement(xmf.getHandle(v),v.toString(),operations)
+            end
+        end
+    in let
+        oHandle = xmf.getHandle(o);
+        oLabel = o.toString();
+        cHandle = xmf.getHandle(o.of());
+        cLabel = o.of().toString();
+        fields = o.slots()->collect(s | InspectorField(s.name.toString(),getValue(s.value)));
+        report = o.checkConstraints() then
+        report = report.filterFailures() then
+        satisfied = report.satisfied;
+        reportString = report.reportString()
+    in Inspector.mkInspector(snapshot,oHandle,oLabel,cHandle,cLabel,fields,o.isKindOf(Class),satisfied,reportString)
+    end
+    end
+    end
+  end
+
+
+context XEditor
+  @Operation editPackage(p:Package . rest)
+    let snapshot = if rest = [] then "Default Snapshot" else rest->head end then
+        Inspector = xmf.javaClass("inspect.ObjectInspector");
+        InspectorElement = xmf.javaClass("inspect.value.InspectorElement");
+        InspectorField = xmf.javaClass("inspect.InspectorField") then
+        oHandle = xmf.getHandle(p);
+        oLabel = p.toString();
+        cHandle = xmf.getHandle(p.of());
+        cLabel = p.of().toString();
+        fields = p.names()->collect(name | 
+          let value = p.getElement(name) then
+              operations = value.of().allOperations()->select(o | o.arity() = 0)->collect(o | o.name.toString())
+          in InspectorField(name.toString(),InspectorElement(xmf.getHandle(value),value.toString(),operations))
+          end);
+        report = p.checkConstraints() then
+        report = report.filterFailures() then
+        satisfied = report.satisfied;
+        reportString = report.reportString()
+    in Inspector.mkInspector(snapshot,oHandle,oLabel,cHandle,cLabel,fields,p.isKindOf(Class),satisfied,reportString)
+    end
+  end

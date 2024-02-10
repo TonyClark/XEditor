@@ -1,0 +1,123 @@
+parserImport XOCL;
+
+import AbstractSyntax;
+
+context AbstractSyntax
+
+  @Class LocationWalker extends Walkers::Walker 
+  
+    @Attribute actions:[[Integer]] end
+    @Attribute definiensStack : [DefiniensRecord] end 
+    
+    @Operation getIcon(c:Class):String
+      if c = XOCL::Class
+      then "icons/class.gif"
+      else 
+        if c = XOCL::Attribute
+        then "icons/attribute.gif"
+        else  
+          if c = OCL::Operation
+          then "icons/operation.gif"
+          else "icons/def.gif"
+          end
+        end
+      end
+    end 
+
+    @Operation getDefiniens(name:String):Definiens
+      @Find(r,definiensStack) when r.name = name do r.definiens else null end
+    end
+    
+    @Operation pushDefiniens(name:String,d:Definiens)
+      self.definiensStack := [DefiniensRecord(name,d)] + definiensStack
+    end
+    
+    @Operation popDefiniens() 
+      self.definiensStack := definiensStack->tail
+    end
+
+    @Operation pushDefiniensContainer(c:DefiniensContainer,editor)
+      @For o in c.getDefiniens() do
+        self.actions := Seq{[PUSH_DEFINIENS_REF,self.getIcon(o.of()),o.getName(),o.charStart,o.charEnd] | actions};
+        self.pushDefiniens(o.getName().toString(),o)
+      end
+    end
+ 
+    @Operation popDefiniensContainer(c:DefiniensContainer,editor)
+      @For o in c.getDefiniens() do
+        self.actions := Seq{[POP_DEFINIENS] | actions};
+        self.popDefiniens()
+      end
+    end
+    
+    @Operation walkObject(o,editor) 
+
+      if o.isKindOf(Located)
+      then self.actions := Seq{[REGISTER_LOCATION,o.charStart,o.charEnd] | actions}
+      end;
+    
+      if o.isKindOf(Definiens) andthen o.getName().isKindOf(String)
+      then 
+        self.actions := Seq{[PUSH_DEFINIENS,self.getIcon(o.of()),o.getName(),o.charStart,o.charEnd] | actions};
+        self.pushDefiniens(o.getName().toString(),o)
+      end;
+      
+      if o.isKindOf(DefiniensContainer) 
+      then self.pushDefiniensContainer(o,editor) 
+      end;
+
+      if o.isKindOf(DefiniendumContainer)
+      then 
+        @For d in o.getDefiniendums() do
+          self.walk(d,editor)
+        end
+      end;
+
+      if o.isKindOf(DefiniensSupplier)
+      then 
+        @For r in o.getSupplied() do
+          self.actions := Seq{[PUSH_DEFINIENS_REF,null,r.name,r.definiens.charStart,r.definiens.charEnd] | actions};
+          self.pushDefiniens(r.name,r.definiens)
+        end
+      end;
+
+      if o.isKindOf(Definiendum)
+      then 
+        if o.definiens <> null 
+        then 
+          self.actions := Seq{[REGISTER_DEFINIENDUM,o.getName(),o.charStart,o.charEnd,o.definiens.charStart,o.definiens.charEnd] | actions}
+        else 
+          let definiens = self.getDefiniens(o.getName().toString())
+          in if definiens <> null
+             then self.actions := Seq{[REGISTER_DEFINIENDUM,o.getName(),o.charStart,o.charEnd,definiens.charStart,definiens.charEnd] | actions}
+             else editor.missingDefiniens("Cannot find definiens for: " + o.toString())
+             end
+          end
+        end
+      end;
+      
+      super(o,editor);
+
+      if o.isKindOf(DefiniensSupplier)
+      then 
+        @For r in o.getSupplied() do
+          self.actions := Seq{[POP_DEFINIENS] | actions};
+          self.popDefiniens()
+        end
+      end;
+      
+      if o.isKindOf(DefiniensContainer) 
+      then self.popDefiniensContainer(o,editor) 
+      end;
+
+      
+    
+      if o.isKindOf(Definiens) andthen o.getName().isKindOf(String)
+      then 
+        self.actions := Seq{[POP_DEFINIENS] | actions};
+        self.popDefiniens()
+      end
+      
+      
+    end 
+  end

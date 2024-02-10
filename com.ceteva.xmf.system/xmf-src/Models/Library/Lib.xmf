@@ -1,0 +1,60 @@
+parserImport XOCL;
+
+// This file contains a simple example of a model and some associated OCL code.
+// Interesting things to note are given by comments in the rest of the file...
+
+import Models;
+
+// Named definitions must be added to a name-space using 'context':
+context Models
+
+  // Packages are name=spaces that contain traditional model-elements (+ other things too)...
+  @Package Lib
+
+   
+    @Operation populateLib(l:Lib)   
+      l.openLibrary();
+      let maxBooks = 2; maxReaders = 2 in 
+      @For n in 0.to(maxBooks) do l.addBook("book" + n) end;
+      @For n in 0.to(maxReaders) do l.addReader("reader" + n) end;
+      @For b in 0.to(maxBooks) do 
+        @For r in 0.to(maxReaders) do 
+          l.borrow("reader" + r,"book" + b);
+          l.return("reader" + r,"book" + b)
+        end 
+      end;
+      l.borrow("reader0","book0")
+      //l.return("reader0","book0")
+      end
+      //l.closeLibrary()
+    end      
+  
+    @Operation test1()
+  
+      // Create a library programmatically and then check its
+      // constraints. Generate a report and edit it. Once edited
+      // remove the offending book and re-run the constraint. That
+      // leaves two fred's. Rename one of them to bert and re-run
+      // the constraints...
+    
+      let l = Lib::Library()
+      in populateLib(l);
+         l.checkConstraints();
+         l
+      end
+    end     
+  
+    @Operation test2()
+      let l = Lib::Library() then
+          maxBooks = 2; maxReaders = 2 
+      in 
+        @For n in 0.to(maxBooks) do l.addBook("book" + n) end;
+        @For n in 0.to(maxReaders) do l.addReader("reader" + n) end;
+        @For p in 0.to(maxBooks-1).zip(0.to(maxReaders-1)) do
+          l.borrow("reader" + p->tail,"book" + p->head) 
+        end;
+        l.edit("Library");
+        l
+      end  
+    end
+  end

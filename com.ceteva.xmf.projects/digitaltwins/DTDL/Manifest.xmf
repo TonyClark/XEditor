@@ -1,0 +1,59 @@
+parserImport Manifests;
+
+
+@Manifest DTDL
+
+  @File DTDL                                  end
+  @File Types/Types                           end
+  @File Behaviour/Behaviour                   end
+  @File Types/Maps                            end
+  @File Interfaces/Interfaces                 end
+  @File Elements/Elements                     end
+  @File Histories/Histories                   end
+  @File Types/Schema                          end
+  @File Types/PrimitiveSchema                 end
+  @File Types/ComplexSchema                   end
+  @File Types/Array                           end
+  @File Types/EnumValue                       end
+  @File Types/Enum                            end
+  @File Types/MapKey                          end
+  @File Types/MapValue                        end
+  @File Types/Map                             end
+  @File Types/Field                           end
+  @File Types/Object                          end
+  @File Elements/InterfaceElement             end
+  @File Elements/Property                     end
+  @File Elements/Telemetry                    end
+  @File Interfaces/Report                     end
+  @File Interfaces/Constraint                 end
+  @File Interfaces/Interface                  end
+  @File Elements/Relationship                 end
+  @File Elements/CommandRequest               end
+  @File Elements/CommandResponse              end
+  @File Elements/Command                      end
+  @File Histories/Action                      end
+  @File Histories/DateTime                    end
+  @File Histories/HistoryEntry                end
+  @File Histories/LifecycleEvent              end
+  @File Histories/RelationshipLifecycleEvent  end
+  @File Histories/PropertyUpdate              end
+  @File Histories/History                     end
+  @File Goals/Goals                           end
+  @File Goals/Goal                            end
+  @File Interfaces/Model                      end
+  @File Objects/Objects                       end
+  @File Objects/Value                         end
+  @File Objects/AtomicValue                   end
+  @File Objects/Slot                          end
+  @File Objects/TimedValue                    end
+  @File Objects/TelemetryStream               end
+  @File Objects/Component                     end
+  @File Objects/Record                        end
+  @File Objects/Sequence                      end
+  @File Objects/ModelInstance                 end
+  @File Interfaces/DigitalTwinModel           end
+  //@Ref Examples                               end
+
+do DTDL.init()
+
+end;

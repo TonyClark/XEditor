@@ -1,0 +1,31 @@
+parserImport XOCL;
+
+import Filmstrips;
+
+context Filmstrips 
+
+  @Class Map 
+
+    @Bind counter = 0 end
+
+    @Operation getMapId() 
+      Map::counter := Map::counter + 1;
+      Map::counter
+    end
+
+    @Attribute id       :Integer = Map::getMapId()  (<)       end
+    @Attribute title    : String                    (<)       end
+    @Attribute mappings : [Mapping]                 (<,!,+,-) end
+
+    @Constructor(title) ! end
+
+    @Operation addDiagramMap(colours:ColourMap,model)
+      let map = model.getPackage().addTable(title)
+      in map.setId("MAP"+id);
+         @For mapping in mappings do
+           mapping.addDiagramMapping(map)
+         end
+      end
+    end
+
+  end

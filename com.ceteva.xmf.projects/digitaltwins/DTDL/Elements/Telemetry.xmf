@@ -1,0 +1,49 @@
+parserImport XOCL;
+
+import DTDL;
+import Types;
+import Interfaces;
+import Elements;
+import Exceptions;
+
+context Elements
+
+  @Class Telemetry extends InterfaceElement
+
+    @Doc
+      Telemetry describes the data emitted by any digital twin, 
+      whether the data is a regular stream of sensor readings or 
+      a computed stream of data, such as occupancy, or an 
+      occasional alert or information message.
+    end
+    
+    @Attribute schema : Schema (<,!) end
+
+    @Constructor(name,schema) ! end
+
+    @Operation addDiagram(package,class)
+      if self.isSimpleProperty()
+      then class.addField("@"+self.getName(),schema.getModelType())
+      else 
+        let className = self.getName().upperCaseInitialLetter() + "Obj"
+        in schema.addSchemaClass(className,package);
+           package.addEdge(class,package.getElement(className),"@"+self.getName())
+        end
+      end
+    end
+
+    @Operation isSimpleProperty():Boolean
+      schema.isKindOf(PrimitiveSchema)
+    end
+    
+    @Operation resolveReferences(env) 
+      if schema.isKindOf(String)
+      then 
+        if env.binds(schema)
+        then self.setSchema(env.lookup(schema))
+        else throw Error("unbound type name: " + schema)
+        end
+      end
+    end
+
+  end

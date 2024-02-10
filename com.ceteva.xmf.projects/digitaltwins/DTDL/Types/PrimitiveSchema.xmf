@@ -1,0 +1,37 @@
+parserImport XOCL;
+
+import DTDL;
+import Types;
+import Exceptions;
+
+context Types
+
+  @Class PrimitiveSchema extends Schema
+
+    @Doc
+      A full set of primitive data types are provided 
+      and can be specified directly as the value of a 
+      schema property in a Digital Twin model.
+    end
+
+    @Attribute name : String (<,!) end
+
+    @Constructor(name) ! end
+
+    @Operation getModelType()
+      @Case name of
+        "String" do xmf.javaClass("diagrams.model.NamedType").STRING end
+        "Double" do xmf.javaClass("diagrams.model.NamedType").FLOAT end
+        "Integer" do xmf.javaClass("diagrams.model.NamedType").INTEGER end
+        "Boolean" do xmf.javaClass("diagrams.model.NamedType").BOOLEAN end
+        "Toggle" do xmf.javaClass("diagrams.model.NamedType").BOOLEAN end
+        else throw Error("unknown type: " + name)
+      end
+    end
+    
+    @Operation resolveReferences(env) 
+      null
+    end
+      
+
+  end

@@ -1,0 +1,19 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import AbstractSyntax;
+import Diagram;
+
+@EventHandler getPackageModel(path)
+
+  // Generate the paxkage tree for the whole of XMF...
+ 
+    try
+      let package = path.lookupPath(Root)
+      in package2Model(package)
+      end
+    catch(exception)
+      format(stdout,"Package structure generation error ~S.~%",[exception]);
+      Root::xmfException := exception
+    end
+  end;

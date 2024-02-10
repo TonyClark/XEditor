@@ -1,0 +1,33 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import Filmstrips;
+import AbstractSyntax;
+
+@EventHandler getPlots()
+
+  // Return the registered plot names...
+  
+    try
+      format(stdout,"Selecting Plot Suppliers ...~%",[]);
+      (Plot::registeredPlots)->collect(p | p.name.toString())
+    catch(exception)
+      format(stdout,"Plot suppliers generation error ~S.~%",[exception]);
+      Root::xmfException := exception;
+      []
+    end
+  end;
+
+@EventHandler generatePlot(name)
+
+  // Generate a plot...
+  
+    try
+      format(stdout,"Generating Plot ...~%",[]);
+      @Find(plot,Plot::registeredPlots) when plot.name.toString() = name do plot() else null end
+    catch(exception)
+      format(stdout,"Plot generation error ~S.~%",[exception]);
+      Root::xmfException := exception;
+      []
+    end
+  end;

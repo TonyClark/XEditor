@@ -1,0 +1,110 @@
+parserImport XOCL;
+
+import DTDL;
+import Objects;
+import Interfaces;
+
+context Objects 
+
+  @Class Component extends Value, NamedElement
+
+    @Attribute id        : String               (<,!)     end
+    @Attribute type      : Interface            (<,!)     end
+    @Attribute slots     : [Slot]               (<,!,+)   end
+
+    @Constructor(id) ! end
+
+    @Constructor(id,type,slots) 
+      self.name := Symbol(id)
+    end
+
+    @Operation addDiagram(modelInstance,time:Time,model,package)
+      if package.getElement(id) = null
+      then 
+        let cmp = package.addObj(id,type.getDisplayName());
+            reports = type.checkConstraints(time,self) then
+            satisfied = reports->forAll(report | report.getSatisfied());
+            reason = reports->iterate(r t="" | t + r.getReason())
+        in cmp.setBackground(if satisfied then "white" else "Implementation" end);
+           if reason <> "" then package.addNote(cmp,reason) end; 
+           type.addMenu(self,time,model);
+           @For slot in slots do
+             let value = slot.getValue()
+             in @TypeCase(value)
+                  AtomicValue do
+                    if type.getElement(slot.getName()).getSchema().getName() = "Toggle"
+                    then 
+                      let s = cmp.addSlot(slot.getName(),value.getValue().toString());
+                          link = "toggle(" + id + "," + slot.getName() + ")"
+                      in s.setLink(link);
+                         Diagram::defineLinkHandler(model.getName(),link,@Operation(s)
+                           value.setValue(not(value.getValue()));
+                           modelInstance.getDiagram(Table(10))
+                         end)
+                      end
+                    else cmp.addSlot(slot.getName(),value.getValue().toString())
+                    end
+                  end
+                  Record do
+                    let record = value.addDiagram(modelInstance,time,model,package)
+                    in package.addEdge(cmp,record,slot.getName())
+                    end
+                  end
+                  Component do
+                    let target = slot.getValue().addDiagram(modelInstance,time,model,package)
+                    in package.addEdge(cmp,target,slot.getName())
+                    end
+                  end
+                  Sequence do
+                    if value.getValues()->forAll(v | v.isKindOf(AtomicValue))
+                    then cmp.addSlot(slot.getName(),value.getValues().toString())
+                    else
+                      @For v in value.getValues() do
+                        let target = v.addDiagram(modelInstance,time,model,package)
+                        in package.addEdge(cmp,target,slot.getName())
+                        end
+                      end
+                    end
+                  end
+                  TelemetryStream do
+                    let q = package.addQueue(value.getName());
+                        currentValue = value.getValue(time)
+                    in package.addEdge(q,cmp,slot.getName());
+                       cmp.addSlot(slot.getName(),currentValue)
+                    end
+                  end
+                end
+             end
+           end;
+           cmp 
+        end
+      else package.getElement(id)
+      end
+    end
+
+    @Operation getValue(name:String)
+      @Find(slot,slots) 
+        when slot.getName() = name 
+        do slot.getValue() 
+      end
+    end
+
+    @Operation setValue(name:String,value:Value)
+      @Find(slot,slots) 
+        when slot.getName() = name 
+        do slot.setValue(value) 
+      end
+    end
+      
+
+    @Operation tick(time:Time)
+      if type.hasCommand("tick")
+      then type.call("tick",self,[time,self,[]])
+      end;
+      @For slot in slots do
+        slot.tick(time)
+      end
+    end
+        
+
+  end

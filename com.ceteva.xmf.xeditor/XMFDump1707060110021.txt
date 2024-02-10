@@ -1,0 +1,232 @@
+
+Call frame backtrace:
+
+Current stack frame instructions:
+  <Unknown instruction 109>
+  STARTCALL
+  <Unknown instruction 109>
+  LOCAL 0
+  <Unknown instruction 109>
+  LOCAL 1
+  <Unknown instruction 109>
+  LOCAL 2
+  DOTSELF 'target'
+  SEND 3 'eval'
+  SETLOCPOP 3
+  UNBINDDYN Array(o)
+  <Unknown instruction 109>
+  <Unknown instruction 109>
+  DYNAMIC(3) 'Object'
+  <Unknown instruction 109>
+  LOCAL 3
+  ISKINDOF
+  SKPF 26
+  <Unknown instruction 109>
+  <Unknown instruction 109>
+  LOCAL 3
+  STARTCALL
+  <Unknown instruction 109>
+  DYNAMIC(4) 'name'
+  SEND 0 'asSymbol'
+  <Unknown instruction 111> <--- 
+----------------------------------------------------------------------------------------------------
+Called(73): Dot::eval at line 9 char 0
+Self: Dot[fields=definiens,charEnd,charStart,endLine,line,target,name]
+Supers: eval,lift,isSelfDot,isLocalDot,dotLocalIndex,compileDroppedName,compile,maxLocals,FV,pprint,getName,toString,getName,typeExp,compile,maxLocals,FV,pprint,pprint,pprint,endLine,setEndLine,line,setLine,pprint,pprint,pprint,maxLocals,FV,eval,compile,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): Loop[fields=commands,inputChannel,outputChannel,prompt,env,target,imports,grammar,startNT,printBanner,terminated,returnValue,value,lastValue,lastLastValue,printPrettily,exceptionHandler,resultHandler,pageWidth,ribbonWidth,printDepth,printLength,engine]
+Local(1): Pair[fields=left,right]
+Local(2): Seq{Package[fields=intrinsicAssociationConstraints,associationInstances,grammar,contents,isFinal,isAbstract,packages,classes,metaPackage,bindings,imports,resourceName,documentation,owner,default,constraints,constructors,operations,attributes,parents,associations,name],NameSpace[fields=documentation,bindings,contents,imports,owner,name]}
+Local(3): class excel.ExcelReader
+Local(4): o
+Source Code:
+    @Operation eval(target : XCore::Element,env : XCore::Element,imports : XCore::Element):XCore::Element
+  let o = self.target.eval(target,env,imports)
+  in if o.isKindOf(Object)
+     then if o.hasSlot(name.asSymbol())
+          then o.get(name.asSymbol())
+          else o.slotMissing(name.asSymbol())
+          end 
+     else o.dot(name.asSymbol())
+     end 
+  end
+end
+constant(0) = Array(o)
+constant(1) = 'target'
+constant(2) = 'eval'
+constant(3) = 'Object'
+constant(4) = 'name'
+constant(5) = 'asSymbol'
+constant(6) = 'slotMissing'
+constant(7) = 'dot'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(52): Loop::readEvalPrint at line 281 char 0
+Self: Loop[fields=commands,inputChannel,outputChannel,prompt,env,target,imports,grammar,startNT,printBanner,terminated,returnValue,value,lastValue,lastLastValue,printPrettily,exceptionHandler,resultHandler,pageWidth,ribbonWidth,printDepth,printLength,engine]
+Supers: readEvalPrint,pushCommand,read,printBanner,loopEnv,loop,importNameSpace,handleResult,handleException,exitOperation,deleteNameSpace,toString,getResultHandler,resultHandler,getExceptionHandler,exceptionHandler,setPrintBanner,setStartNT,setGrammar,setImports,imports,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): Engine[fields=callStack,failStack,parseError,expected,maxCharPos,lastToken,frame,fail,TOCS,TOFS,RESULT,token,type,tokenizer,imports,consumeToken,charPosStack,syntaxConstructs]
+Local(1): [1] XMF> 
+Local(2): Pair[fields=left,right]
+Local(3): Dot[fields=definiens,charEnd,charStart,endLine,line,target,name]
+Local(4): Pair[fields=left,right]
+Local(5): null
+Local(6): command
+Local(7): env
+Local(8): null
+Source Code:
+    @Operation readEvalPrint(engine : XCore::Element,promptString : XCore::Element,env : XCore::Element):XCore::Element
+  format(outputChannel,promptString);
+  outputChannel.flush();
+  let command = self.read(engine)
+  in if command <> null
+     then 
+       self.pushCommand(command);
+       let env = env.bind("xx",xmf.exception).bind("v0",self.value).bind("v1",self.lastValue).bind("v2",self.lastLastValue) then
+           result = command.eval(target,env,imports)
+       in self.lastLastValue := lastValue;
+          self.lastValue := value;
+          self.value := result;
+          resultHandler.invoke(self,Seq{result},Seq{})
+       end
+     else false
+     end 
+  end
+end
+constant(0) = Array(command,env,result)
+constant(1) = 'outputChannel'
+constant(2) = 'format'
+constant(3) = 'flush'
+constant(4) = 'read'
+constant(5) = 'pushCommand'
+constant(6) = v2
+constant(7) = 'lastLastValue'
+constant(8) = v1
+constant(9) = 'lastValue'
+constant(10) = v0
+constant(11) = 'value'
+constant(12) = xx
+constant(13) = 'xmf'
+constant(14) = 'exception'
+constant(15) = 'bind'
+constant(16) = 'target'
+constant(17) = 'imports'
+constant(18) = 'eval'
+constant(19) = 'resultHandler'
+constant(20) = 'invoke'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(40): Loop::anonymous at line 210 char 0
+Self: Loop[fields=commands,inputChannel,outputChannel,prompt,env,target,imports,grammar,startNT,printBanner,terminated,returnValue,value,lastValue,lastLastValue,printPrettily,exceptionHandler,resultHandler,pageWidth,ribbonWidth,printDepth,printLength,engine]
+Supers: loop,importNameSpace,handleResult,handleException,exitOperation,deleteNameSpace,toString,getResultHandler,resultHandler,getExceptionHandler,exceptionHandler,setPrintBanner,setStartNT,setGrammar,setImports,imports,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Source Code:
+    try
+      self.readEvalPrint(engine,promptString,env)
+    catch(exception)
+      exceptionHandler.invoke(self,Seq{exception},Seq{})
+    end
+constant(0) = Array()
+constant(1) = 'engine'
+constant(2) = 'readEvalPrint'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(24): Loop::loop at line 76 char 0
+Self: Loop[fields=commands,inputChannel,outputChannel,prompt,env,target,imports,grammar,startNT,printBanner,terminated,returnValue,value,lastValue,lastLastValue,printPrettily,exceptionHandler,resultHandler,pageWidth,ribbonWidth,printDepth,printLength,engine]
+Supers: loop,importNameSpace,handleResult,handleException,exitOperation,deleteNameSpace,toString,getResultHandler,resultHandler,getExceptionHandler,exceptionHandler,setPrintBanner,setStartNT,setGrammar,setImports,imports,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): [1] XMF> 
+Local(1): Pair[fields=left,right]
+Local(2): promptString
+Local(3): env
+Source Code:
+    @Operation loop():XCore::Element
+  let promptString = "[" + Loop::level.toString() + "] " + prompt;
+      env = self.loopEnv()
+  in if printBanner
+     then self.printBanner()
+     else false
+     end ;
+     Loop::level :=Loop::level + 1;
+     @While not terminated do
+       try
+         self.readEvalPrint(engine,promptString,env)
+       catch(exception)
+         exceptionHandler.invoke(self,Seq{exception},Seq{})
+       end
+     end;
+     Loop::level :=Loop::level - 1;
+     returnValue
+  end
+end
+constant(0) = Array(promptString,env)
+constant(1) = 'loopEnv'
+constant(2) = [
+constant(3) = 'Loop'
+constant(4) = 'level'
+constant(5) = ] 
+constant(6) = 'prompt'
+constant(7) = 'printBanner'
+constant(8) = level
+constant(9) = 'putElement'
+constant(10) = 'terminated'
+constant(11) = Seq{Seq{exception,Seq{2,Seq{'XCore','Element'}}},Seq{2,Seq{'XCore','Element'}},Seq{'parserImports'},Seq{'charStart'|0},Seq{'charEnd'|0}}
+constant(12) = CodeBox('anonymous',0,Code(<Unknown instruction 109>,SELF 0,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,MKSEQ 1,<Unknown instruction 109>,MKSEQ 0,<Unknown instruction 109>,DYNAMIC(1) 'exceptionHandler',TAILSEND 3 'invoke',RETURN,RETURN))
+constant(13) = 'anonymous'
+constant(14) = CodeBox('anonymous',0,Code(STARTCALL,<Unknown instruction 109>,DYNAMIC(1) 'engine',<Unknown instruction 109>,GLOBAL 0 0,<Unknown instruction 109>,GLOBAL 0 0,SENDSELF 3 'readEvalPrint',RETURN,RETURN))
+constant(15) = 'returnValue'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(12): ?::anonymous at line 40 char 0
+Self: Fun('anonymous')
+Supers: anonymous
+Source Code:
+    try
+      topLevel.loop()
+    catch(exception)
+      xmf.raise(exception);
+      Kernel_die()
+    end
+constant(0) = Array()
+constant(1) = 'loop'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(0): ?::anonymous at line 76 char 0
+Self: Fun('anonymous')
+Supers: anonymous
+Source Code:
+    @Operation anonymous():XCore::Element
+  try
+    topLevel.loop()
+  catch(exception)
+    xmf.raise(exception);
+    Kernel_die()
+  end
+end
+constant(0) = Array()
+constant(1) = Seq{Seq{exception,Seq{2,Seq{'XCore','Element'}}},Seq{2,Seq{'XCore','Element'}},Seq{'parserImports'},Seq{'charStart'|0},Seq{'charEnd'|0}}
+constant(2) = CodeBox('anonymous',0,Code(STARTCALL,<Unknown instruction 109>,LOCAL 0,<Unknown instruction 109>,DYNAMIC(1) 'xmf',SEND 1 'raise',POP,<Unknown instruction 109>,<Unknown instruction 80>,TAILENTER 0,RETURN,RETURN))
+constant(3) = 'anonymous'
+constant(4) = CodeBox('anonymous',0,Code(STARTCALL,<Unknown instruction 109>,GLOBAL 0 0,SEND 0 'loop',RETURN,RETURN))
+----------------------------------------------------------------------------------------------------
+
+
+
+java.lang.Exception
+	at engine.Machine.saveBacktrace(Machine.java:9459)
+	at engine.Machine.saveBacktrace(Machine.java:9446)
+	at engine.Machine.handleThrow(Machine.java:4534)
+	at engine.Machine.perform(Machine.java:4512)
+	at threads.ThreadInitiator.start(ThreadInitiator.java:21)
+	at xos.OperatingSystem.runThread(OperatingSystem.java:1586)
+	at xos.OperatingSystem.runReadyThread(OperatingSystem.java:1573)
+	at xos.OperatingSystem.run(OperatingSystem.java:1553)
+	at xos.OperatingSystem.init(OperatingSystem.java:621)
+	at console.Console.lambda$2(Console.java:200)
+	at java.base/java.lang.Thread.run(Thread.java:833)

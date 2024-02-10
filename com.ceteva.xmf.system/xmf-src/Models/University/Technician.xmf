@@ -1,0 +1,10 @@
+parserImport XOCL;
+
+import Models;
+import University;
+
+context University
+
+  @Class Technician extends Staff
+
+  end

@@ -1,0 +1,21 @@
+parserImport Manifests;
+
+
+@Manifest Examples
+
+  @File HeatedOfficeBuilding        end
+  @File AirControlledOfficeBuilding end
+  @File HeatedOffice                end
+  @File AirControlledOffice         end
+  @File OfficeBuilding              end
+  @File Office                      end
+
+  do {
+
+    DTDL::DATA_FILE := "../com.ceteva.xmf.projects/digitaltwins/DTDL/Examples/data.xlsx"; 
+    
+    "loaded"
+
+  }
+
+end;

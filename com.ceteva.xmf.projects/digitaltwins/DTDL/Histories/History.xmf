@@ -1,0 +1,14 @@
+parserImport XOCL;
+
+import DTDL;
+import Histories;
+
+context Histories
+
+  @Class History
+
+    @Attribute propertyUpdates             : [PropertyUpdate]             (<,!,+,-) end
+    @Attribute lifecycleEvents             : [LifecycleEvent]             (<,!,+,-) end
+    @Attribute relationshipLifecycleEvents : [RelationshipLifecycleEvent] (<,!,+,-) end
+
+  end

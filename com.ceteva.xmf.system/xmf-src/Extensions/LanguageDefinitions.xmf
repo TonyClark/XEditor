@@ -1,0 +1,56 @@
+parserImport XOCL;
+parserImport Parser::BNF;
+
+import Parser::BNF;
+import XOCL;
+
+@Canonical(Attribute)
+  @Attribute name : type [(<|!|+|-,...)] en@
+end;
+
+@Canonical(Bind)
+  @Bind name = exp] en@
+end;
+
+@Canonical(Canonical)
+  @Canonical(exp)
+    char...
+  en@
+end;
+
+@Canonical(Class)
+  @Class name [exten@s exp,...] [metaclass exp] [isabstract]
+    @Attribute name : type modifier... en@... 
+    @Constructor(name,...) [!] [exp] en@...
+    @Operation name(arg,...)[:type]
+      exp
+    en@... 
+  en@
+end;
+
+@Canonical(Doc)
+  @Doc 
+    char...
+  en@
+end;
+
+@Canonical(For)
+  Various forms:
+  @For name,... in            exp,... [ when exp ] do exp en@
+  @For name,... inReverse     exp,... [ when exp ] do exp en@
+  @For name,... inTableKeys   exp,... [ when exp ] do exp en@
+  @For name,... inTableValues exp,... [ when exp ] do exp en@
+end;
+
+@Canonical(Operation)
+  @Operation name ([arg,...])[:type] [ [name=value,...] ]
+    [doc]
+    exp 
+  en@
+end;
+
+@Canonical(Package)
+  @Package name [exten@s exp,...] [metapackage exp]
+    def... 
+  en@
+end;

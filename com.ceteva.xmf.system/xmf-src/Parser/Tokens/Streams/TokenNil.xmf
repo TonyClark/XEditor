@@ -1,0 +1,19 @@
+parserImport XOCL;
+
+import Parser;
+import Tokens;
+import Streams;
+
+context Streams
+
+  @Class TokenNil extends TokenStream
+
+    @Constructor() ! end
+
+    @Operation asSeq():[Token]
+      []
+    end
+
+    @Operation force() null end
+
+  end

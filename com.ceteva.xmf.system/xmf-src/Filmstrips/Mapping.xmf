@@ -1,0 +1,18 @@
+parserImport XOCL;
+
+import Filmstrips;
+
+context Filmstrips 
+
+  @Class Mapping
+
+    @Attribute key   : String (<) end
+    @Attribute value : String (<) end
+
+    @Constructor(key,value) ! end
+
+    @Operation addDiagramMapping(map)
+      map.addSlot(key,value)
+    end
+
+  end

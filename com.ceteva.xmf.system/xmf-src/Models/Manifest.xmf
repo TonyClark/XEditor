@@ -1,0 +1,23 @@
+parserImport Manifests;
+
+/******************************************************************************
+ *                                                                            *
+ *                                XMF Manifest                                *
+ *                              ---------------                               *
+ *                                                                            *
+ *         This file defines all the packages in the XMF System.              *
+ *         When compiling the system, use this file to determine which        *
+ *         files need recompiling Manifest load directives will load          *
+ *         packages in as appropriate when they are used by the compiler.     *
+ *         Use this manifest to generate boot files for the system.           *
+ *                                                                            *
+ ******************************************************************************/ 
+
+@Manifest Models
+  @File Models    end
+  @Ref Library    end
+  @Ref Shopping   end
+  @Ref Banking    end
+  @Ref University end
+  @File GLib      end
+end;

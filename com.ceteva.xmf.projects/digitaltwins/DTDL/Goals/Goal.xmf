@@ -1,0 +1,16 @@
+parserImport XOCL;
+
+import DTDL;
+import Goals;
+import Histories;
+
+context Goals
+
+  @Class Goal
+
+    @Attribute description : String    (<) end
+    @Attribute satisfiedBy : [History] (<) end
+
+    @Constructor(description,satisfiedBy) end
+
+  end

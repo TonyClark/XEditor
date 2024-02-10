@@ -1,0 +1,13 @@
+parserImport XOCL;
+
+import Parser::BNF;
+
+context Languages 
+
+  @Class Language extends NamedElement
+
+    @Attribute grammar : Grammar (<,!) end
+
+    @Constructor(name,grammar) ! end
+
+  end

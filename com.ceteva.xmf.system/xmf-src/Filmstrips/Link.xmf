@@ -1,0 +1,44 @@
+parserImport XOCL;
+
+import Filmstrips;
+
+context Filmstrips
+
+  @Class Link
+  
+    @Attribute name:String     (<)  end
+    @Attribute source:Integer  (<)  end
+    @Attribute target:Integer  (<)  end
+    
+    @Constructor(name,source,target) ! end
+      
+    @Operation getDiagramLink():String
+      source + " ---> " + target + " : " + name + "\n"
+    end
+
+    @Operation addLink(idToObject:Table)
+      let os = idToObject.get(source);
+          ot = idToObject.get(target)
+      in @TypeCase(os.of().getAttribute(name).type)
+           Set(Element) do
+             os.set(name,os.get(name)->including(ot))
+           end
+           Seq(Element) do
+             os.set(name,os.get(name) + [ot])
+           end
+           else os.set(name,ot)
+         end
+      end
+    end
+
+    @Operation addDiagramLink(model)
+      let s = source.toString();
+          t = target.toString();
+          package = model.getPackage() then
+          source = package.getElement(s);
+          target = package.getElement(t)
+      in model.getPackage().addEdge(source,target,name)
+      end
+    end
+    
+  end

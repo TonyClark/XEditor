@@ -1,0 +1,50 @@
+parserImport XOCL;
+
+import Exceptions;
+import Filmstrips;
+
+context Filmstrips
+
+  @Class Record
+  
+    @Attribute id:Integer      (<) end
+    @Attribute type:Classifier (<) end
+    @Attribute fields:[Field]  (<) end
+    
+    @Constructor(id,type,fields) ! end
+
+    @Operation addObject(idToObject:Table)
+      let o = type()
+      in @For field in fields do
+           field.setValue(o)
+         end;
+         idToObject.put(id,o)
+      end
+    end
+
+    @Operation dot(name:String):Element
+      @Find(field,fields) when field.getName() = name 
+        do field.getValue() 
+        else throw Error("no field named " + name) 
+      end
+    end
+
+    @Operation hasName(name:String):Boolean
+      fields->exists(f | f.getName() = name)
+    end
+
+    @Operation getDiagramObject(colours:ColourMap):String
+      "object \"<u>" + id + ":" + type.name + "</u>\" as " + id + " #" + colours.getColourName(type) + " {\n" +
+        fields->iterate(f x="" | x + f.getDiagramField()) + 
+      "}\n"
+    end
+
+    @Operation addDiagramObject(colours:ColourMap,model)
+      let obj = model.getPackage().addObj(id.toString(),type.name.toString())
+      in @For field in fields do
+           field.addDiagramField(obj)
+         end;
+         obj.setBackground(colours.getColourName(type))
+      end
+    end
+  end

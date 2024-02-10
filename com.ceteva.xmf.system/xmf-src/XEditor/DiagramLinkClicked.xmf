@@ -1,0 +1,18 @@
+parserImport XOCL;
+parserImport XEditor;
+
+import Diagram;
+
+@EventHandler diagramLinkClicked(name:String,link:String)
+
+  // The link has been clicked on the named diagram. Handle the link and
+  // return the SVG to update the diagram...
+  
+    try
+      handleLink(name,link)
+    catch(exception)
+      Root::xmfException := exception;
+      exception.printBacktrace();
+      null
+    end
+  end;

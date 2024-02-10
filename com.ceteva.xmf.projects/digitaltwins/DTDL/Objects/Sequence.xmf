@@ -1,0 +1,24 @@
+parserImport XOCL;
+
+import DTDL;
+import Objects;
+
+context Objects
+
+  @Class Sequence extends Value
+
+    @Attribute values : [Value] (<,!,+,-) end
+
+    @Constructor(values) ! end
+
+    @Operation tick(time:Time)
+      @For value in values do
+        value.tick(time)
+      end
+    end
+
+    @Operation getValue()
+      values
+    end
+
+  end

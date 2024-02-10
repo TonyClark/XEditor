@@ -1,0 +1,38 @@
+parserImport XOCL;
+parserImport Parser::BNF;
+
+import OCL;
+import XOCL;
+import Parser::BNF;
+
+context BNF
+
+  @Class Canonical extends Sugar
+  
+    @Doc
+      This language structure is used to define the canonical language
+      definition for a grammar.
+    end
+
+    @Attribute classifier : String end
+    @Attribute canonical  : String end
+    
+    @Constructor(classifier,canonical) end
+  
+    @Grammar extends OCL::OCL.grammar
+    
+      Canonical ::= '(' c = <<Exp>> ')' doc = Char* 'end' { Canonical(c,doc->asString.subst("end","en@",true)) }.
+      
+    end
+    
+    @Operation desugar()
+      [| <classifier>.grammar.setCanonical(<canonical.lift()>) |]
+    end
+    
+    @Operation pprint(out,indent)
+      format(out,"@Canonical(~S)~%~V",[classifier.pprint(),indent + 2]);
+      format(out,"~S~%~V",Seq{canonical,indent});
+      format(out,"end")
+    end
+    
+  end

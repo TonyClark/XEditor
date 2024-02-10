@@ -1,0 +1,138 @@
+parserImport XOCL;
+
+context Root
+  @Package AbstractSyntax
+  
+    @Doc
+      This package contains classes and operations that support the construction
+      and manipulation of abstract syntax trees. All abstract syntax tree objects 
+      should be instances of XCore:Located so that editors can reference the
+      source code.
+    end
+
+    @Class AbstractSyntaxElement end
+
+    @Class LocatedAbstractSyntax extends Located, AbstractSyntaxElement end
+    
+    @Class NameDef extends LocatedAbstractSyntax 
+      @Doc
+        A name that is being introduced. An AST alement whose name is used as the
+        introduction of that name should use this as the type of the name rather 
+        than String.
+      end
+      @Attribute name:String end 
+      @Constructor(name) ! end 
+    end
+    
+    @Class Definiens extends LocatedAbstractSyntax 
+      @Doc
+        Part of an abstract syntax tree that represents a named definition. 
+      end
+      @AbstractOp getName():String end
+    end
+    
+    @Class DefiniensRecord
+      @Attribute name : String end
+      @Attribute definiens : Definiens end
+      @Constructor(name,definiens) ! end
+    end
+    
+    @Class DefiniensContainer extends LocatedAbstractSyntax
+      @Doc
+        Part of an abstract syntax tree that represents a container of named definitions. 
+      end
+      @AbstractOp getDefiniens():[Definiens] end
+    end
+    
+    @Class DefiniensSupplier extends LocatedAbstractSyntax
+      @Doc
+        Part of an abstract syntax tree that represents a supplier of names linked
+        to definiens trees.
+      end
+      @AbstractOp getSupplied():[DefiniensRecord] end
+    end
+    
+    @Class Definiendum extends LocatedAbstractSyntax 
+      @Doc
+        An AST object that represents the use of a defined name. Once loaded
+        an editor can pass over the AST and link up a defini$ndum with its
+        correspondng definiens so that tools can link uses to defining occurrences.
+      end
+      @Attribute definiens:Definiens end 
+      @AbstractOp getName():String end
+    end
+    
+    @Class NameRef extends Definiendum 
+      @Doc 
+        A name ref is used instead of String where the AST should support linking
+        of the use of a name to its defining occurrence.
+      end
+      @Attribute name:String end 
+      @Constructor(name) ! end 
+      @Operation getName() name end
+    end
+    
+    @Class KeepSource extends LocatedAbstractSyntax
+      @Doc
+        An abstract syntax tree that has been synthesized within << and >> will
+        automatically set the source code via the parsing engine.
+      end
+      @Attribute source : String end
+    end
+
+    @Class DefiniendumContainer extends LocatedAbstractSyntax
+      @Doc
+        An element that contains definie_ndums  that would otherwise not
+        be encountered by a walker. They may be sugar or derived abstract
+        syntax.
+      end
+      @AbstractOp getDefiniendums():[Object] end
+    end
+
+    @Class DiagramSupplier extends AbstractSyntaxElement
+      @Doc
+        An element is a diagram supplier when it returns a string that
+        can be displayed as a diagram.
+      end
+    
+      @AbstractOp getDiagram(links:Table):String 
+        // The links are populated with SVG actions to perform when 
+        // diagram elements are selected with the mouse.
+      end 
+
+      @AbstractOp getDiagramLabel():String
+      end
+      
+    end
+
+    @Class FilmstripSupplier extends AbstractSyntaxElement
+      @Doc
+        An element is a filmstrip supplier when it returns an
+        instance of Filmstrip containing a sequence of steps
+        that can be displayed as diagrams. The label is used to
+        choose the supplier in a GUI.
+      end
+    
+      @AbstractOp getFilmstrip():Filmstrips::Filmstrip
+      end
+
+      @AbstractOp getLabel():String
+      end
+      
+    end
+    
+  end
+
+Snapshot.addParent(AbstractSyntax::DiagramSupplier);
+
+context Snapshot
+  @Operation getDiagramLabel() 
+    name.toString() 
+  end
+  
+context Snapshot
+  @Operation getDiagram(t) 
+    let model = Diagram::snapshot2Model(self) 
+    in model
+    end
+  end

@@ -1,0 +1,19 @@
+parserImport XOCL;
+
+import DTDL;
+import Objects;
+
+context Objects
+
+  @Class Slot
+
+    @Attribute name  : String (<,!) end
+    @Attribute value : Value  (<,!) end
+
+    @Constructor(name,value) ! end
+
+    @Operation tick(time:Time)
+      value.tick(time)
+    end
+
+  end

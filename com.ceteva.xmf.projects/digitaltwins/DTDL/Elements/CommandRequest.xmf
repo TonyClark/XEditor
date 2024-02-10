@@ -1,0 +1,40 @@
+parserImport XOCL;
+
+import DTDL;
+import Types;
+import Exceptions;
+
+context Behaviour
+
+  @Class CommandRequest
+
+    @Doc
+      A CommandRequest describes the inputs to a Command.
+    end
+    
+    @Attribute id             : String = newId()  (<)       end
+    @Attribute comment        : String = ""       (<,!)     end
+    @Attribute description    : String = ""       (<,!)     end
+    @Attribute displayName    : String = ""       (<,!)     end
+    @Attribute name           : String            (<,!)     end
+    @Attribute schema         : Schema            (<,!)     end
+    
+    @Constructor(name,schema) ! end
+
+    @Operation asArg() 
+      let Arg = xmf.javaClass("diagrams.model.Arg")
+      in Arg(name,schema.getModelType())
+      end
+    end
+    
+    @Operation resolveReferences(env) 
+      if schema.isKindOf(String)
+      then 
+        if env.binds(schema)
+        then self.setSchema(env.lookup(schema))
+        else throw Error("unbound type name: " + schema)
+        end
+      end
+    end
+
+  end

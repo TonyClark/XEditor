@@ -1,0 +1,14 @@
+parserImport XOCL;
+
+import Excel;
+
+context Excel
+
+  @Class Sheet
+
+    @Attribute name   : String  (<,!)     end
+    @Attribute rows   : [Row]   (<,!,+,-) end
+
+    @Constructor(name,rows) ! end
+
+  end

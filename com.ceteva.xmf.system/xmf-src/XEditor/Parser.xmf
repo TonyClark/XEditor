@@ -1,0 +1,57 @@
+parserImport XOCL; 
+parserImport XEditor;
+
+import XEditor;
+import AbstractSyntax;
+import Exceptions;
+
+context Root @Class Location @Attribute x:Integer end @Attribute y:Integer end @Constructor(x,y) ! end end
+
+Root::LOCATION_MANAGER := LocationManager(); 
+Root::PARSED_MODEL     := null;
+
+@EventHandler parser(key,text,language,editor)
+
+  // This handler is invoked by the editor each time it needs to parse the text.
+  // This may be invoked when there are syntax errors, in which case the error
+  // is returns as a triple [charStart,charEnd,message]. If no error occurs then
+  // the char start is -1...
+    editor.startActivity("Parsing"); 
+    Root::PARSED_MODEL := null;
+    try 
+      if language.lookupPath(Root) <> null
+      then 
+        let grammar = language.lookupPath(Root).grammar;
+            engine = Parser::Machine::Engine() then
+            model = grammar.parseString(text,grammar.startingSymbol,[],[],engine)
+        in 
+          editor.endActivity("Parse");
+          editor.setLanguageConstructs(engine.getSyntaxConstructs()->collect(c | c.toJava()));
+          Root::PARSED_MODEL := model;
+          [-1,-1,""]
+        end
+      else throw LanguageNotDefined(language.subst("*","::",true).splitBy("*",0,0))
+      end
+    catch(exception)
+       editor.displayError(exception.toString());
+       @TypeCase(exception)
+         XMFEditorError do Root::xmfException := exception;
+           [exception.charStart,exception.charEnd,exception.message]
+         end
+         Parser::ParseError do Root::xmfException := exception;
+           [exception.errorPos,exception.errorPos,exception.message]
+         end
+         LanguageNotDefined do Root::xmfException := exception;
+           [0,text.indexOf(";"),exception.message]
+         end
+         Exception do Root::xmfException := exception;
+           showException(exception);
+           [0,text->size - 1,exception.message]
+         end
+         Object do Root::xmfException := exception;
+           showException(exception);
+           [0,text->size - 1,exception.message]
+         end
+      end
+  end
+end;  

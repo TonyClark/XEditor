@@ -1,0 +1,43 @@
+parserImport XOCL;
+
+import DTDL;
+import Interfaces;
+import Elements;
+import Exceptions;
+
+context Elements 
+
+  @Class Relationship extends InterfaceElement
+
+    @Doc
+      A Relationship describes a link to another digital 
+      twin and enables graphs of digital twins to be created. 
+      A Relationship is different from a Component because 
+      it describes a link to a separate digital twin.
+    end
+
+    @Attribute maxMultiplicity  : Integer = 0      (<,!) end
+    @Attribute minMultiplicity  : Integer = 0      (<,!) end
+    @Attribute properties       : [Property]       (<,!) end
+    @Attribute target           : Interface = null (<,!) end
+    @Attribute writable         : Boolean = false  (<,!) end
+
+    @Constructor(name,target) ! end
+
+    @Operation addDiagram(package,class)
+      target.addDiagram(package);
+      package.addEdge(class,package.getElement(target.getDisplayName()),self.getName())
+    end
+    
+    @Operation resolveReferences(env) 
+      if target.isKindOf(String)
+      then 
+        if env.binds(target)
+        then self.setTarget(env.lookup(target))
+        else throw Error("unbound type name: " + target)
+        end
+      else target.resolveReferences(env)
+      end
+    end
+
+  end

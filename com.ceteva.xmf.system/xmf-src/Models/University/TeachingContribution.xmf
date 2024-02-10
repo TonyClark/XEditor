@@ -1,0 +1,15 @@
+parserImport XOCL;
+
+import Models;
+import University;
+
+context University
+
+  @Class TeachingContribution 
+
+    @Attribute module      : Module (<,!) end
+    @Attribute proportion  : Float  (<,!) end
+
+    @Constructor(module,proportion) ! end
+
+  end

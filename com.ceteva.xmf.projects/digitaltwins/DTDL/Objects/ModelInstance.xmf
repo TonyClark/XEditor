@@ -1,0 +1,91 @@
+parserImport XOCL;
+parserImport Parser::BNF;
+
+import AbstractSyntax;
+import DTDL;
+import Interfaces;
+import Objects;
+
+
+context Objects
+
+  @Class ModelInstance extends DiagramSupplier, NameSpace
+
+    @Attribute model : Model                 (<,!) end
+    @Attribute root  : Component             (<,!) end
+    @Attribute time  : Time = Time(0,0,0,0)  (<,!) end
+
+    @Constructor(name,model,root) ! 
+      NameSpace::define(root,self,false)
+    end
+
+    @Grammar extends OCL::OCL.grammar
+
+      ModelInstance ::= n=Name '(' model=Exp ')' '{'
+
+        root=ModelComponent
+
+      '}' { [| ModelInstance(Symbol(<n.lift()>),<model>,<root>) |] }.
+
+      ModelComponent ::= 'component' n=Name '(' interface=Exp ')' '{'
+
+        slots = Slots
+
+        '}' 
+        { [| Component(<n.lift()>,<interface>,<slots>) |] }.
+
+      Slots ::= s=Slot ss=Slots { [| [ <s> ] + <ss> |] } | { [| [] |] }.
+
+      Slot ::= n=Name '=' v=Value { [| Slot(<n.lift()>,<v>) |] }.
+
+      Value ::= 
+        e=Int ';' { [| AtomicValue(<e.lift()>) |] }
+      | e=Str  ';' { [| AtomicValue(<e.lift()>) |] }
+      | 'true'    ';' { [| AtomicValue(true) |] }
+      | 'false'   ';' { [| AtomicValue(false) |] }
+      | e = Float ';' { [| AtomicValue(<e.lift()>) |] }
+      | Record
+      | '[' vs = Values ']' { [| Sequence(<vs>) |] }
+      | ModelComponent
+      | TStream.
+
+      TStream ::= '@' '(' n=Name ')' e = SimpleExp ';' { [| TelemetryStream(<n.lift()>,TimedValue(@Operation(time) <e> end)) |] }.
+
+      Values ::= v=Value vs=(',' Value)* { ([v]+vs)->iterate(e l=[| [] |] | [| <l> + [ <e> ] |]) }.
+
+      Record ::= '{' s=Slots '}' { [| Record(<s>) |] }.
+
+    end
+
+    @Operation getDiagramLabel():String
+      name
+    end
+
+    @Operation getDiagram(ignore:Table)
+      let Model = xmf.javaClass("diagrams.model.Model") then
+          model = Model("",name) then
+          package = model.getPackage()
+      in model.createMenu("Tick",[]);
+         Diagram::defineMenuHandler(name.toString(),["Tick"],
+           @Operation()
+             self.setTime(time + Time(0,0,1,0));
+             root.tick(time);
+             self.getDiagram(ignore)
+           end); 
+         root.addDiagram(self,time,model,package).addSlot("time",time.seconds);
+         model
+      end
+    end
+    
+   @Operation sensorValue(file:String,sensorName:String,time:Time)
+     let w = Excel::readWorkbook(file) then 
+         s = w.getSheets()->head then
+         rs = s.getRows() then
+         row = @Find(row,rs) when row->head = sensorName do row->tail end then
+         value = row->at(time.seconds)
+     in
+       value
+     end
+    end
+
+  end

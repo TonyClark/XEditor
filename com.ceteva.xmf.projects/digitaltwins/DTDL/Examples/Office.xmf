@@ -1,0 +1,65 @@
+parserImport XOCL;
+parserImport DTDL::Objects;
+
+import DTDL;
+import Interfaces;
+import Elements;
+import Types;
+import Goals;
+import Behaviour;
+import Objects; 
+import ModelInstance;
+import OfficeBuilding; 
+
+context Root  
+  @ModelInstance Office(OfficeBuilding) { 
+    component o1(Office) { 
+      constructionYear = 2020;
+      address = { street="Station Road"; city = "Bristol"; postcode = "B128GH"; }
+      airQualityStatus = @(s0) sensorValue(DATA_FILE,"s0",time).asBool();   
+      floors=[  
+        component o2(Floor) {
+          name = "f1";
+          rooms = [
+            component o3(Room) {
+              name = "r1";
+              internalAir = false;
+              desiredTemp = 45.0;
+              isHeating = false;
+              temperature = 40.0;
+              occupants = @(s1) sensorValue(DATA_FILE,"s1",time).round();
+            },
+            component o4(Room) {
+              name = "r2";
+              internalAir = false;
+              desiredTemp = 50.0;
+              isHeating = false;
+              temperature = 48.0;
+              occupants = @(s2) sensorValue(DATA_FILE,"s2",time).round();
+            }
+          ]
+        }, 
+        component o5(Floor) {
+          name = "f2";
+          rooms = [
+            component o6(Room) {
+              name = "r3";
+              internalAir = false;
+              desiredTemp = 45.0;
+              isHeating = false;
+              temperature = 40.0;
+              occupants = @(s3) sensorValue(DATA_FILE,"s3",time).round();
+            },
+            component o7(Room) {
+              name = "r4";
+              internalAir = false;
+              desiredTemp = 50.0;
+              isHeating = false;
+              temperature = 48.0;
+              occupants = @(s4) sensorValue(DATA_FILE,"s4",time).round();
+            }
+          ]
+        }
+      ] 
+    }
+}

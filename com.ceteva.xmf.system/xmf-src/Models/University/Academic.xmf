@@ -1,0 +1,14 @@
+parserImport XOCL;
+
+import Models;
+import University;
+
+context University
+
+  @Class Academic extends Staff
+
+    @Attribute academicMode : AcademicMode (<,!) end
+
+    @Constructor(name,academicMode) ! end
+
+  end

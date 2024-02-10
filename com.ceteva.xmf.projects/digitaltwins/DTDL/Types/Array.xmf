@@ -1,0 +1,38 @@
+parserImport XOCL;
+
+import DTDL;
+import Types;
+import Exceptions;
+
+context Types
+
+  @Class Array extends ComplexSchema
+
+    @Doc
+      An Array describes an indexable data type 
+      where each element is of the same schema. 
+      The schema for an Array's element can itself 
+      be a primitive or complex schema.
+    end
+    
+    @Attribute elementSchema  : Schema            (<,!)     end
+
+    @Constructor(elementSchema) ! end
+
+    @Operation getModelType()
+      let List = xmf.javaClass("diagrams.model.List")
+      in List(elementSchema.getModelType())
+      end
+    end
+    
+    @Operation resolveReferences(env) 
+      if elementSchema.isKindOf(String)
+      then 
+        if env.binds(elementSchema)
+        then self.setElementSchema(env.lookup(elementSchema))
+        else throw Error("unbound type name: " + schema)
+        end
+      end
+    end
+
+  end

@@ -1,0 +1,387 @@
+
+Call frame backtrace:
+
+Current stack frame instructions:
+  <Unknown instruction 109>
+  STARTCALL
+  <Unknown instruction 109>
+  LOCAL 2
+  <Unknown instruction 109>
+  LOCAL 3
+  <Unknown instruction 109>
+  DYNAMIC(1) 'Walkers' <--- 
+----------------------------------------------------------------------------------------------------
+Called(167): Element::pprint at line 35 char 0
+Self: class excel.ExcelReader
+Supers: pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): 80
+Local(1): 80
+Local(2): 2
+Local(3): 10
+Local(4): 19
+Local(5): null
+Local(6): null
+Local(7): null
+Local(8): null
+Local(9): null
+Local(10): null
+Source Code:
+    @Operation pprint(width : Integer,ribbon : Integer,depth : Integer,length : Integer,linePosition : Integer):String
+  let printer = Walkers::PPrint(depth,length) then
+      doc = printer.dispatch(self,0);
+      machine = Machine(width,ribbon)
+  in machine.load(Seq{doc},linePosition);
+     machine.run();
+     machine.text()
+  end
+end
+constant(0) = Array(printer,doc,machine)
+constant(1) = 'Walkers'
+constant(2) = 'PPrint'
+constant(3) = 'Machine'
+constant(4) = 'dispatch'
+constant(5) = 'load'
+constant(6) = 'run'
+constant(7) = 'text'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(127): StackFrame::anonymous at line 156 char 0
+Self: StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos]
+Supers: printCall,paramTypes,paramNames,ownerName,owner,operation,name,localNames,localValues,args,arity,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): Loop
+Local(1): 'handleResult'
+Local(2): 16
+Local(3): Loop[fields=commands,inputChannel,outputChannel,prompt,env,target,imports,grammar,startNT,printBanner,terminated,returnValue,value,lastValue,lastLastValue,printPrettily,exceptionHandler,resultHandler,pageWidth,ribbonWidth,printDepth,printLength,engine]
+Local(4): 2
+Local(5): 10
+Local(6): ()
+Local(7): true
+Local(8): class excel.ExcelReader
+Local(9): true
+Local(10): null
+Local(11): null
+Local(12): null
+Local(13): ownerName
+Local(14): name
+Local(15): width
+Local(16): topLevel
+Local(17): printDepth
+Local(18): printLength
+Local(19): forColl0
+Local(20): null
+Local(21): arg
+Local(22): null
+Local(23): null
+Local(24): null
+Local(25): null
+Source Code:
+    try
+      let ownerName = self.ownerName();
+          name = self.name() then
+          width = ownerName->size + name->size;
+          topLevel = xmf.property("topLevel") then
+          printDepth = topLevel.printDepth;
+          printLength = topLevel.printLength
+      in format(out,"~S::~S(",Seq{ownerName,name});
+         @For arg in self.args() do
+           let pp = arg.pprint(80,80,printDepth,printLength,width + 3)
+           in format(out,"~S",Seq{pp});
+              if pp->asSeq->includes("
+") and not isLast
+              then format(out,",~%~V",Seq{width + 3})
+              elseif not isLast
+              then format(out,",")
+              else false
+              end 
+           end
+         end;
+         format(out,") aborted at line = ~S",Seq{line})
+      end
+    catch(exception)
+      format(out,"Problem printing call: ~S~%",Seq{exception.message})
+    end
+constant(0) = Array(ownerName,name,width,topLevel,printDepth,printLength,formatOut,forColl0,arg,pp,spaces)
+constant(1) = 'name'
+constant(2) = 'ownerName'
+constant(3) = topLevel
+constant(4) = 'xmf'
+constant(5) = 'property'
+constant(6) = 'printLength'
+constant(7) = 'printDepth'
+constant(8) = 
+constant(9) = 'writeString'
+constant(10) = ::
+constant(11) = (
+constant(12) = 'args'
+constant(13) = 'pprint'
+constant(14) = 
+
+constant(15) = ,
+constant(16) = 'write'
+constant(17) = 'format'
+constant(18) = ) aborted at line = 
+constant(19) = 'line'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(114): StackFrame::printCall at line 76 char 0
+Self: StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos]
+Supers: printCall,paramTypes,paramNames,ownerName,owner,operation,name,localNames,localValues,args,arity,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): StandardOutputChannel[fields=channel]
+Source Code:
+    @Operation printCall(out : XCore::Element):XCore::Element
+  try
+    let ownerName = self.ownerName();
+        name = self.name() then
+        width = ownerName->size + name->size;
+        topLevel = xmf.property("topLevel") then
+        printDepth = topLevel.printDepth;
+        printLength = topLevel.printLength
+    in format(out,"~S::~S(",Seq{ownerName,name});
+       @For arg in self.args() do
+         let pp = arg.pprint(80,80,printDepth,printLength,width + 3)
+         in format(out,"~S",Seq{pp});
+            if pp->asSeq->includes("
+") and not isLast
+            then format(out,",~%~V",Seq{width + 3})
+            elseif not isLast
+            then format(out,",")
+            else false
+            end 
+         end
+       end;
+       format(out,") aborted at line = ~S",Seq{line})
+    end
+  catch(exception)
+    format(out,"Problem printing call: ~S~%",Seq{exception.message})
+  end
+end
+constant(0) = Array()
+constant(1) = Seq{Seq{exception,Seq{2,Seq{'XCore','Element'}}},Seq{2,Seq{'XCore','Element'}},Seq{'parserImports'},Seq{'charStart'|0},Seq{'charEnd'|0}}
+constant(2) = CodeBox('anonymous',1,Code(<Unknown instruction 109>,<Unknown instruction 109>,GLOBAL 0 0,SETLOCPOP 1,UNBINDDYN Array(formatOut),STARTCALL,PUSHSTR Problem printing call: ,SENDLOCAL 1 'writeString'1,POP,STARTCALL,DOTLOCAL Array(formatOut) 3,<Unknown instruction 101>,SENDLOCAL 1 'writeString'1,POP,STARTCALL,PUSHSTR ,SENDLOCAL 1 'writeString'1,POP,STARTCALL,PUSHINT 10,SENDLOCAL 1 'write'1,POP,PUSHSTR ,<Unknown instruction 109>,LOCAL 1,TAILSEND 1 'writeString',RETURN,RETURN))
+constant(3) = 'anonymous'
+constant(4) = CodeBox('anonymous',13,Code(<Unknown instruction 109>,STARTCALL,SENDSELF 0 'name',STARTCALL,SENDSELF 0 'ownerName',SETLOCPOP 0,SETLOCPOP 1,UNBINDDYN Array(ownerName,name,width,topLevel,printDepth,printLength,formatOut,forColl0,arg,pp,spaces),UNBINDDYN Fun('toString'),STARTCALL,<Unknown instruction 109>,PUSHSTR topLevel,<Unknown instruction 109>,DYNAMIC(4) 'xmf',SEND 1 'property',<Unknown instruction 109>,LOCAL 0,SIZE,<Unknown instruction 109>,LOCAL 1,SIZE,ADD,SETLOCPOP 2,SETLOCPOP 3,UNBINDDYN <Class Type>,UNBINDDYN 4,DOTLOCAL <Thread 5> 6,DOTLOCAL <Thread 5> 7,SETLOCPOP 4,SETLOCPOP 5,UNBINDDYN valueToString: unknown tag 29,UNBINDDYN valueToString: unknown tag 45,<Unknown instruction 109>,<Unknown instruction 109>,GLOBAL 0 0,SETLOCPOP 6,UNBINDDYN false,STARTCALL,PUSHSTR ,SENDLOCAL 1 'writeString'6,POP,STARTCALL,<Unknown instruction 109>,LOCAL 0,<Unknown instruction 101>,SENDLOCAL 1 'writeString'6,POP,STARTCALL,PUSHSTR ::,SENDLOCAL 1 'writeString'6,POP,STARTCALL,<Unknown instruction 109>,LOCAL 1,<Unknown instruction 101>,SENDLOCAL 1 'writeString'6,POP,STARTCALL,PUSHSTR (,SENDLOCAL 1 'writeString'6,<Unknown instruction 108>,POP,<Unknown instruction 109>,STARTCALL,SENDSELF 0 'args',ASSEQ,SETLOCPOP 6,UNBINDDYN valueToString: unknown tag 61,<Unknown instruction 109>,<Unknown instruction 109>,PUSHTRUE,SETLOCPOP 7,LOCAL 6,<Unknown instruction 91>,SKPF 129,<Unknown instruction 109>,LOCALHEAD 6,SETLOCPOP 8,UNBINDDYN valueToString: unknown tag 97,LOCALTAIL 6,SETLOC 6,POP,<Unknown instruction 109>,LOCALISEMPTY 6,SETLOCPOP 9,<Unknown instruction 109>,STARTCALL,<Unknown instruction 109>,PUSHINT 80,<Unknown instruction 109>,PUSHINT 80,<Unknown instruction 109>,LOCAL 4,<Unknown instruction 109>,LOCAL 5,<Unknown instruction 109>,LOCAL 2,<Unknown instruction 109>,PUSHINT 3,ADD,SENDLOCAL 5 'pprint'8,SETLOCPOP 10,UNBINDDYN <Thread 13>,<Unknown instruction 109>,<Unknown instruction 109>,GLOBAL 0 0,SETLOCPOP 11,UNBINDDYN Seq{Seq{Seqp|Clause[fields=charEnd,charStart,owner,name,args,body,blocks,nullable,first,follow,cache]},Seq{IfTail|Clause[fields=charEnd,charStart,owner,name,args,body,blocks,nullable,first,follow,cache]},Seq{SetCmpExp|Clause[fields=charEnd,charStart,owner,name,args,body,blocks,nullable,first,follow,cache]},Seq{Patterns|Clause[fields=charEnd,charStart,owner,name,args,body,blocks,nullable,first,follow,cache]},Seq{KeyArg|Clause[fields=charEnd,charStart,owner,name,args,body,blocks,nullable,first,follow,cache]},Seq{Keyp|Clause[fields=charEnd,charStart,owner,name,args,body,blocks,nullable,first,follow,cache]},Seq{Lift|Clause[fields=charEnd,charStart,owner,name,args,body,blocks,nullable,first,follow,cache]},Seq{OpType|Clause[fields=charEnd,charStart,owner,name,args,body,blocks,nullable,first,follow,cache]}},STARTCALL,PUSHSTR ,SENDLOCAL 1 'writeString'11,POP,STARTCALL,<Unknown instruction 109>,LOCAL 10,<Unknown instruction 101>,SENDLOCAL 1 'writeString'11,POP,STARTCALL,PUSHSTR ,SENDLOCAL 1 'writeString'11,<Unknown instruction 108>,POP,<Unknown instruction 109>,<Unknown instruction 109>,PUSHSTR 
+,LOCALASSEQ 10,INCLUDES,<Unknown instruction 109>,LOCAL 9,NOT,AND,SKPF 47,<Unknown instruction 109>,<Unknown instruction 109>,GLOBAL 0 0,SETLOCPOP 11,UNBINDDYN Seq{Seq{Seqp|Clause[fields=charEnd,charStart,owner,name,args,body,blocks,nullable,first,follow,cache]},Seq{IfTail|Clause[fields=charEnd,charStart,owner,name,args,body,blocks,nullable,first,follow,cache]},Seq{SetCmpExp|Clause[fields=charEnd,charStart,owner,name,args,body,blocks,nullable,first,follow,cache]},Seq{Patterns|Clause[fields=charEnd,charStart,owner,name,args,body,blocks,nullable,first,follow,cache]},Seq{KeyArg|Clause[fields=charEnd,charStart,owner,name,args,body,blocks,nullable,first,follow,cache]},Seq{Keyp|Clause[fields=charEnd,charStart,owner,name,args,body,blocks,nullable,first,follow,cache]},Seq{Lift|Clause[fields=charEnd,charStart,owner,name,args,body,blocks,nullable,first,follow,cache]},Seq{OpType|Clause[fields=charEnd,charStart,owner,name,args,body,blocks,nullable,first,follow,cache]}},STARTCALL,PUSHSTR ,,SENDLOCAL 1 'writeString'11,POP,STARTCALL,PUSHINT 10,SENDLOCAL 1 'write'11,POP,STARTCALL,PUSHSTR ,SENDLOCAL 1 'writeString'11,POP,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 2,<Unknown instruction 109>,PUSHINT 3,ADD,SETLOCPOP 12,UNBINDDYN valueToString: unknown tag 102,<Unknown instruction 109>,LOCAL 12,<Unknown instruction 109>,PUSHINT 0,GRE,SKPF 8,STARTCALL,PUSHINT 32,SENDLOCAL 1 'write'11,POP,DECLOCAL 12,POP,<Unknown instruction 109>,SKPBACK 13,PUSHTRUE,<Unknown instruction 108>,POP,STARTCALL,PUSHSTR ,SENDLOCAL 1 'writeString'11,<Unknown instruction 108>,SKP 14,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 9,NOT,SKPF 7,STARTCALL,<Unknown instruction 109>,GLOBAL 0 0,<Unknown instruction 109>,PUSHSTR ,,ENTERDYN 2 'format',SKP 1,PUSHFALSE,NOOP,NOOP,<Unknown instruction 108>,POP,<Unknown instruction 109>,PUSHFALSE,SETLOC 7,<Unknown instruction 108>,POP,<Unknown instruction 109>,SKPBACK 131,PUSHTRUE,<Unknown instruction 108>,POP,<Unknown instruction 109>,<Unknown instruction 109>,GLOBAL 0 0,SETLOCPOP 6,UNBINDDYN false,STARTCALL,PUSHSTR ) aborted at line = ,SENDLOCAL 1 'writeString'6,POP,STARTCALL,<Unknown instruction 109>,DYNAMIC(19) 'line',<Unknown instruction 101>,SENDLOCAL 1 'writeString'6,POP,STARTCALL,PUSHSTR ,SENDLOCAL 1 'writeString'6,<Unknown instruction 108>,<Unknown instruction 108>,<Unknown instruction 108>,<Unknown instruction 108>,<Unknown instruction 108>,<Unknown instruction 108>,<Unknown instruction 108>,RETURN,RETURN))
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(93): Backtrace::printCalls at line 58 char 0
+Self: Backtrace[fields=frames]
+Supers: printCalls,printCalls,diagnostic,diagnostic,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): StandardOutputChannel[fields=channel]
+Local(1): Seq{StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos],StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos],StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos],StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos],StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos],StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos]}
+Local(2): false
+Local(3): StackFrame[fields=codeBox,codeIndex,globals,dynamics,locals,target,supers,handler,values,line,charPos]
+Local(4): false
+Local(5): forColl0
+Local(6): null
+Local(7): frame
+Local(8): null
+Source Code:
+    @Operation printCalls(out : XCore::Element):XCore::Element
+  @For frame in frames do
+    frame.printCall(out);
+    format(out,"~%")
+  end
+end
+constant(0) = Array(forColl0,frame)
+constant(1) = 'frames'
+constant(2) = 'printCall'
+constant(3) = ~%
+constant(4) = 'format'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(79): Loop::anonymous at line 169 char 0
+Self: Loop[fields=commands,inputChannel,outputChannel,prompt,env,target,imports,grammar,startNT,printBanner,terminated,returnValue,value,lastValue,lastLastValue,printPrettily,exceptionHandler,resultHandler,pageWidth,ribbonWidth,printDepth,printLength,engine]
+Supers: handleException,exitOperation,deleteNameSpace,toString,getResultHandler,resultHandler,getExceptionHandler,exceptionHandler,setPrintBanner,setStartNT,setGrammar,setImports,imports,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Source Code:
+    try
+      xmf.raise(exception);
+      format(outputChannel,"~%")
+    catch(newException)
+      format(outputChannel," **** Error reporting top level error! ***~%");
+      format(outputChannel," **** Tried to raise: ~S~%",Seq{exception});
+      format(outputChannel," **** Failed with: ~S~%",Seq{newException})
+    end
+constant(0) = Array()
+constant(1) = 'xmf'
+constant(2) = 'raise'
+constant(3) = 'outputChannel'
+constant(4) = ~%
+constant(5) = 'format'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(66): Loop::handleException at line 76 char 0
+Self: Loop[fields=commands,inputChannel,outputChannel,prompt,env,target,imports,grammar,startNT,printBanner,terminated,returnValue,value,lastValue,lastLastValue,printPrettily,exceptionHandler,resultHandler,pageWidth,ribbonWidth,printDepth,printLength,engine]
+Supers: handleException,exitOperation,deleteNameSpace,toString,getResultHandler,resultHandler,getExceptionHandler,exceptionHandler,setPrintBanner,setStartNT,setGrammar,setImports,imports,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): MachineException[fields=message,backtrace,resourceName,charCount,lineCount,data,id]
+Source Code:
+    @Operation handleException(exception : XCore::Element):XCore::Element
+  try
+    xmf.raise(exception);
+    format(outputChannel,"~%")
+  catch(newException)
+    format(outputChannel," **** Error reporting top level error! ***~%");
+    format(outputChannel," **** Tried to raise: ~S~%",Seq{exception});
+    format(outputChannel," **** Failed with: ~S~%",Seq{newException})
+  end
+end
+constant(0) = Array()
+constant(1) = Seq{Seq{newException,Seq{2,Seq{'XCore','Element'}}},Seq{2,Seq{'XCore','Element'}},Seq{'parserImports'},Seq{'charStart'|0},Seq{'charEnd'|0}}
+constant(2) = CodeBox('anonymous',1,Code(STARTCALL,<Unknown instruction 109>,DYNAMIC(1) 'outputChannel',<Unknown instruction 109>,PUSHSTR  **** Error reporting top level error! ***~%,ENTERDYN 2 'format',POP,<Unknown instruction 109>,<Unknown instruction 109>,DYNAMIC(1) 'outputChannel',SETLOCPOP 1,UNBINDDYN Array(formatOut),STARTCALL,PUSHSTR  **** Tried to raise: ,SENDLOCAL 1 'writeString'1,POP,STARTCALL,<Unknown instruction 109>,GLOBAL 0 0,<Unknown instruction 101>,SENDLOCAL 1 'writeString'1,POP,STARTCALL,PUSHSTR ,SENDLOCAL 1 'writeString'1,POP,STARTCALL,PUSHINT 10,SENDLOCAL 1 'write'1,POP,STARTCALL,PUSHSTR ,SENDLOCAL 1 'writeString'1,<Unknown instruction 108>,POP,<Unknown instruction 109>,<Unknown instruction 109>,DYNAMIC(1) 'outputChannel',SETLOCPOP 1,UNBINDDYN Array(formatOut),STARTCALL,PUSHSTR  **** Failed with: ,SENDLOCAL 1 'writeString'1,POP,STARTCALL,<Unknown instruction 109>,LOCAL 0,<Unknown instruction 101>,SENDLOCAL 1 'writeString'1,POP,STARTCALL,PUSHSTR ,SENDLOCAL 1 'writeString'1,POP,STARTCALL,PUSHINT 10,SENDLOCAL 1 'write'1,POP,PUSHSTR ,<Unknown instruction 109>,LOCAL 1,TAILSEND 1 'writeString',RETURN,RETURN))
+constant(3) = 'anonymous'
+constant(4) = CodeBox('anonymous',0,Code(STARTCALL,<Unknown instruction 109>,GLOBAL 0 0,<Unknown instruction 109>,DYNAMIC(1) 'xmf',SEND 1 'raise',POP,STARTCALL,<Unknown instruction 109>,DYNAMIC(3) 'outputChannel',<Unknown instruction 109>,PUSHSTR ~%,ENTERDYN 2 'format',RETURN,RETURN))
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(53): ?::handleException at line 34 char 0
+Self: Loop[fields=commands,inputChannel,outputChannel,prompt,env,target,imports,grammar,startNT,printBanner,terminated,returnValue,value,lastValue,lastLastValue,printPrettily,exceptionHandler,resultHandler,pageWidth,ribbonWidth,printDepth,printLength,engine]
+Supers: 
+Local(0): MachineException[fields=message,backtrace,resourceName,charCount,lineCount,data,id]
+Source Code:
+    @Operation handleException(x : XCore::Element):XCore::Element
+  Set{XEditor::showException(x);
+  self.handleException(x)}
+end
+constant(0) = Array()
+constant(1) = 'XEditor'
+constant(2) = 'showException'
+constant(3) = 'handleException'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(36): Loop::loop at line 76 char 0
+Self: Loop[fields=commands,inputChannel,outputChannel,prompt,env,target,imports,grammar,startNT,printBanner,terminated,returnValue,value,lastValue,lastLastValue,printPrettily,exceptionHandler,resultHandler,pageWidth,ribbonWidth,printDepth,printLength,engine]
+Supers: loop,importNameSpace,handleResult,handleException,exitOperation,deleteNameSpace,toString,getResultHandler,resultHandler,getExceptionHandler,exceptionHandler,setPrintBanner,setStartNT,setGrammar,setImports,imports,slots,slotMissing,addDaemon,addMultiDaemon,addPersistentDaemon,addStructuralFeature,allCompositeValues,allCompositeValuesAndSelf,compositeValues,allDaemonsWithId,allDaemonsWithTarget,daemons,daemonsActive,daemonNamed,daemonWithId,daemonWithIdAndTarget,destroyDaemon,edit,edit,fire,hasDaemonNamed,hasDaemonWithId,hasDaemonWithIdAndTarget,hasDaemonWithTarget,getStructuralFeatureNames,hasStructuralFeature,get,getProperty,getProperties,hasProperty,hasSlot,hotLoad,hotLoaded,init,initSlots,machineInit,removeDaemon,removeDaemonNamed,removeDaemonsWithId,removeDaemonsWithTarget,removeStructuralFeature,renameSlot,set,setDaemons,setDaemonsActive,setHotLoad,setProperty,slotMissing,slotDenied,pprint,pprint,pprint,pprintln,writeXMLFile,writeXML,lift,toSnapshot,toSnapshot,toType,allHTMLEntries,allHTMLPackages,toHTML,writeHTML,writeHTML,writeHTMLAllEntries,writeHTMLAllPackages,writeHTMLIndex,writeHTMLOverview,yield,toString,systemId,setOf,send,save2,save,removeDaemon,removeDaemon,println,print,oclIsKindOf,oclIsTypeOf,noOperationFound,isTypeOf,isReallyKindOf,init,init,of,isKindOf,addTo,checkConstraints,copy,deleteRecursive,die,edit,equals,error,ferror,hashCode
+Local(0): [1] XMF> 
+Local(1): Pair[fields=left,right]
+Local(2): promptString
+Local(3): env
+Source Code:
+    @Operation loop():XCore::Element
+  let promptString = "[" + Loop::level.toString() + "] " + prompt;
+      env = self.loopEnv()
+  in if printBanner
+     then self.printBanner()
+     else false
+     end ;
+     Loop::level :=Loop::level + 1;
+     @While not terminated do
+       try
+         self.readEvalPrint(engine,promptString,env)
+       catch(exception)
+         exceptionHandler.invoke(self,Seq{exception},Seq{})
+       end
+     end;
+     Loop::level :=Loop::level - 1;
+     returnValue
+  end
+end
+constant(0) = Array(promptString,env)
+constant(1) = 'loopEnv'
+constant(2) = [
+constant(3) = 'Loop'
+constant(4) = 'level'
+constant(5) = ] 
+constant(6) = 'prompt'
+constant(7) = 'printBanner'
+constant(8) = level
+constant(9) = 'putElement'
+constant(10) = 'terminated'
+constant(11) = Seq{Seq{exception,Seq{2,Seq{'XCore','Element'}}},Seq{2,Seq{'XCore','Element'}},Seq{'parserImports'},Seq{'charStart'|0},Seq{'charEnd'|0}}
+constant(12) = CodeBox('anonymous',0,Code(<Unknown instruction 109>,SELF 0,<Unknown instruction 109>,<Unknown instruction 109>,LOCAL 0,MKSEQ 1,<Unknown instruction 109>,MKSEQ 0,<Unknown instruction 109>,DYNAMIC(1) 'exceptionHandler',TAILSEND 3 'invoke',RETURN,RETURN))
+constant(13) = 'anonymous'
+constant(14) = CodeBox('anonymous',0,Code(STARTCALL,<Unknown instruction 109>,DYNAMIC(1) 'engine',<Unknown instruction 109>,GLOBAL 0 0,<Unknown instruction 109>,GLOBAL 0 0,SENDSELF 3 'readEvalPrint',RETURN,RETURN))
+constant(15) = 'returnValue'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(24): ?::anonymous at line 44 char 0
+Self: Fun('anonymous')
+Supers: anonymous
+Source Code:
+    try
+      topLevel.loop()
+    catch(exception)
+      excepton.printBacktrace();
+      launch()
+    end
+constant(0) = Array()
+constant(1) = 'loop'
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(12): ?::anonymous at line 76 char 0
+Self: Fun('anonymous')
+Supers: anonymous
+Source Code:
+    try
+      try
+        topLevel.loop()
+      catch(exception)
+        excepton.printBacktrace();
+        launch()
+      end
+    catch(exception)
+      xmf.raise(exception);
+      Kernel_die()
+    end
+constant(0) = Array()
+constant(1) = Seq{Seq{exception,Seq{2,Seq{'XCore','Element'}}},Seq{2,Seq{'XCore','Element'}},Seq{'parserImports'},Seq{'charStart'|0},Seq{'charEnd'|0}}
+constant(2) = CodeBox('anonymous',0,Code(STARTCALL,<Unknown instruction 109>,DYNAMIC(1) 'excepton',SEND 0 'printBacktrace',POP,<Unknown instruction 109>,GLOBAL 0 1,TAILENTER 0,RETURN,RETURN))
+constant(3) = 'anonymous'
+constant(4) = CodeBox('anonymous',0,Code(STARTCALL,<Unknown instruction 109>,GLOBAL 0 0,SEND 0 'loop',RETURN,RETURN))
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Called(0): ?::anonymous at line 76 char 0
+Self: Fun('anonymous')
+Supers: anonymous
+Source Code:
+    @Operation anonymous():XCore::Element
+  try
+    try
+      topLevel.loop()
+    catch(exception)
+      excepton.printBacktrace();
+      launch()
+    end
+  catch(exception)
+    xmf.raise(exception);
+    Kernel_die()
+  end
+end
+constant(0) = Array()
+constant(1) = Seq{Seq{exception,Seq{2,Seq{'XCore','Element'}}},Seq{2,Seq{'XCore','Element'}},Seq{'parserImports'},Seq{'charStart'|0},Seq{'charEnd'|0}}
+constant(2) = CodeBox('anonymous',0,Code(STARTCALL,<Unknown instruction 109>,LOCAL 0,<Unknown instruction 109>,DYNAMIC(1) 'xmf',SEND 1 'raise',POP,<Unknown instruction 109>,<Unknown instruction 80>,TAILENTER 0,RETURN,RETURN))
+constant(3) = 'anonymous'
+constant(4) = CodeBox('anonymous',0,Code(<Unknown instruction 109>,GLOBAL 0 0,CONST Seq{Seq{exception,Seq{2,Seq{'XCore','Element'}}},Seq{2,Seq{'XCore','Element'}},Seq{'parserImports'},Seq{'charStart'|0},Seq{'charEnd'|0}},<Unknown instruction 109>,NULL,MKFUN 1 0 2,TRY1 4,RETURN,RETURN))
+----------------------------------------------------------------------------------------------------
+
+
+
+java.lang.Exception
+	at engine.Machine.saveBacktrace(Machine.java:9460)
+	at engine.Machine.saveBacktrace(Machine.java:9447)
+	at engine.Machine.handleThrow(Machine.java:4535)
+	at engine.Machine.perform(Machine.java:4513)
+	at threads.ThreadInitiator.start(ThreadInitiator.java:21)
+	at xos.OperatingSystem.runThread(OperatingSystem.java:1586)
+	at xos.OperatingSystem.runReadyThread(OperatingSystem.java:1573)
+	at xos.OperatingSystem.run(OperatingSystem.java:1553)
+	at xos.OperatingSystem.init(OperatingSystem.java:621)
+	at console.Console.lambda$2(Console.java:200)
+	at java.base/java.lang.Thread.run(Thread.java:833)

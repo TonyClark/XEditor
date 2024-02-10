@@ -1,0 +1,43 @@
+parserImport XOCL;
+
+import DTDL;
+import Behaviour;
+import Elements;
+
+context Elements
+
+  @Class Command extends InterfaceElement
+
+    @Doc
+      A Command describes a function or operation that 
+      can be performed on any digital twin. The action is performed
+      by an operation whose arguments are the current time, the target 
+      component and the message arguments. The operation performs any 
+      side effects on the supplied component and then returns a value.
+    end
+
+    @Attribute request      : CommandRequest                (<,!) end
+    @Attribute response     : CommandResponse               (<,!) end
+    @Attribute operation    : (Time,Element,[Element])->Element  (<,!) end
+
+    @Constructor(name,request,response,operation) ! end
+
+    @Operation addDiagram(package,class)
+      class.addOperation(self.getName(),self.getArgs(),self.getType()).setVisible(true)
+    end
+
+    @Operation getArgs()
+      [request.asArg()]
+    end
+
+    @Operation getType()
+      response.getType()
+    end
+    
+    @Operation resolveReferences(env) 
+      request.resolveReferences(env);
+      response.resolveReferences(env)
+    end
+
+
+  end 

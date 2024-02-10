@@ -1,0 +1,44 @@
+parserImport XOCL;
+
+import XEditor;
+
+context XEditor
+  @Operation addBrowserChildren(elementId:Integer)
+    let element = xmf.getObjectWithHandle(elementId)
+      in if element.isKindOf(Container)
+         then 
+           @For child in element.contents() do
+              @TypeCase(child)
+                Package do
+                  Console.CONSOLE.addChild(elementId,xmf.getHandle(child),child.toString(),"icons/package.gif")
+                end
+                Class do
+                  Console.CONSOLE.addChild(elementId,xmf.getHandle(child),child.toString(),"icons/class.gif")
+                end
+                Attribute do
+                  Console.CONSOLE.addChild(elementId,xmf.getHandle(child),child.name() + ":" + child.type.toString(),"icons/attribute.gif")
+                end
+                ForeignOperation do
+                  null
+                end
+                Operation do
+                  Console.CONSOLE.addChild(elementId,xmf.getHandle(child),child.name() + "(" + child.paramNames()->separateWith(",") + ")","icons/operation.gif")
+                end
+                NameSpace do
+                  Console.CONSOLE.addChild(elementId,xmf.getHandle(child),child.toString(),"icons/namespace.gif")
+                end
+                else null
+              end;
+              if child<>null 
+              then addBrowserChildren(xmf.getHandle(child))
+              end
+           end;
+           if element.isKindOf(Class)
+           then 
+              @For instance in element.allInstances() do
+                 Console.CONSOLE.addChild(elementId,xmf.getHandle(instance),instance.toString(),null)
+              end
+           end
+         end
+      end
+    end

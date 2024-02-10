@@ -1,0 +1,13 @@
+parserImport XOCL;
+
+import Exceptions;
+
+context Exceptions
+
+  @Class LanguageNotDefined extends PathNotFound
+
+    @Constructor(path)
+      self.init([path,[]])
+    end
+
+  end

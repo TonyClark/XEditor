@@ -1,0 +1,32 @@
+parserImport XOCL;
+parserImport DTDL::Objects;
+
+import DTDL;
+import Interfaces;
+import Elements;
+import Types;
+import Goals;
+import Behaviour;
+import Objects; 
+import ModelInstance;
+import AirControlledOfficeBuilding;
+
+context Root  
+  @ModelInstance AirControlledOffice(AirControlledOfficeBuilding) { 
+    component o1(Office) { 
+      constructionYear = 2020;
+      address = { street="Station Road"; city = "Bristol"; postcode = "B128GH"; }
+      airQualityStatus = @(s0) sensorValue(DATA_FILE,"s0",time).asBool();
+      floors=[  
+        component o2(Floor) {
+          name = "f1";
+          rooms = [
+            component o3(Room) {
+              name = "r1";
+              internalAir = false;
+            }
+          ]
+        }
+      ] 
+    }
+}  

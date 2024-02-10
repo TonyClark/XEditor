@@ -1,0 +1,16 @@
+parserImport XOCL;
+
+import DTDL;
+import Objects;
+
+context Objects
+
+  @Class Value
+
+    @Operation getValue(time:Time)
+      self
+    end
+
+    @AbstractOp tick(time:Time) end
+
+  end

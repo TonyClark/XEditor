@@ -1,0 +1,23 @@
+parserImport XOCL;
+
+import DTDL;
+
+context Types
+
+  @Class Schema isabstract
+
+    @Doc
+      Schemas are used to describe the on-the-wire or 
+      serialized format of the data in a Digital Twin Interface. 
+      A full set of primitive data types are provided, along 
+      with support for a variety of complex schemas: Array, 
+      Enum, Map, and Object. 
+    end
+
+    @AbstractOp getModelType():Object
+      // return the java object representing the type.
+    end
+
+    @AbstractOp resolveReferences(env) end
+
+  end

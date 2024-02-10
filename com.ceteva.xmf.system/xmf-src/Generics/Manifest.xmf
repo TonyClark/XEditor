@@ -1,0 +1,13 @@
+parserImport Manifests;
+
+
+@Manifest Generics
+  @File Generics          end
+  @File Container         end
+  @File NamedContainer    end
+  @File NamedRelation     end
+  @File Relation          end
+  @File Unique            end
+  @File TransactionSystem end
+  @File Table             end
+end;

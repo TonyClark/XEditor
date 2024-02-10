@@ -1,0 +1,37 @@
+parserImport XOCL;
+
+import Walkers;
+
+context Walkers
+
+  @Class Copy extends Walker
+
+    // This should copy all elements that have identity and return a deep
+    // sopy of the supplied value. The definition is incomplete - add tables, vectors etc.
+
+    @Attribute map:Table = Table(100) end 
+     
+    @Operation walkObject(o:Object,arg:Element)
+       
+       if map.hasKey(o)
+       then map.get(o)
+       else
+         let newObj = Kernel_newObj(o.of())
+         in map.put(o,newObj);
+            @For slot in o.slots() do
+              Kernel_addAtt(newObj,slot.name,self.walk(slot.value,arg))
+            end;
+            newObj
+         end
+       end
+     end
+     
+     @Operation walkSeq(s:Seq(Element),arg:Element):Element 
+       Seq{self.walk(s->head,arg) | self.walk(s->tail,arg)}
+     end
+     
+     @Operation walkSet(s:Set(Element),arg:Element):Element 
+       s->collect(e | self.walk(e,arg))
+     end
+
+  end

@@ -1,0 +1,23 @@
+parserImport XOCL;
+
+import DTDL;
+import Types;
+
+context Types
+
+  @Class EnumValue
+
+    @Doc
+      An EnumValue describes an element of an Enum.
+    end
+    
+    @Attribute id             : String = newId()  (<)       end
+    @Attribute comment        : String = ""       (<,!)     end
+    @Attribute description    : String = ""       (<,!)     end
+    @Attribute displayName    : String = ""       (<,!)     end
+    @Attribute name           : String            (<,!)     end
+    @Attribute enumValue      : String            (<,!)     end
+
+    @Constructor(name,enumValue) ! end
+
+  end

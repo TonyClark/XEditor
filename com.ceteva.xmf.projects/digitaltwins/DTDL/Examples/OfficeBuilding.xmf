@@ -1,0 +1,59 @@
+parserImport XOCL;
+parserImport DTDL;
+
+import DTDL;
+import Interfaces; 
+import Elements;
+import Types;  
+import Goals;
+import Behaviour;  
+import Objects; 
+import Exceptions;    
+   
+context Root    
+  @DigitalTwinModel OfficeBuilding { 
+    goal { 
+      "Rooms are heated to the desired temperature when they are occupied. 
+       Occupants use swipe cards to enter and exit the room. Heating is 
+       off in empty rooms. Heating is on until the desired temperature 
+       is reached. When the external air quality of the building is bad 
+       then air circulation must be internal."
+    }
+    interface Office { 
+      address          : { street:String; city:String; postcode:String; };
+      constructionYear : String;
+      owner            : String;
+      floors           -> Floor; 
+      airQualityStatus : <Boolean>;
+      constraint { 
+        "when the air quality status is false then the circulation should be internal."
+        airQualityStatus or floors->forAll(floor | floor.rooms->forAll(room | room.internalAir))
+      }
+    } 
+    interface Floor {
+      name : String;
+      rooms -> Room;
+    }
+    interface Room {
+      name        : String;
+      desiredTemp : Double;
+      temperature : Double;
+      isHeating   : Toggle;
+      occupants   : <Integer>;
+      internalAir : Toggle;
+      command tick():Double =  
+        if isHeating
+        then temperature := temperature + 1
+        else temperature := temperature - 1 
+        end;
+      constraint { 
+        "heating should be on when occupants are in the room up to the desired temp."
+        not(occupants > 0) or isHeating or (temperature - desiredTemp).abs() <= 1
+      }
+      constraint {
+        "heating should be off when occupants are not in the room."
+        not(occupants = 0) or 
+        not(isHeating)
+      }
+    }  
+}   

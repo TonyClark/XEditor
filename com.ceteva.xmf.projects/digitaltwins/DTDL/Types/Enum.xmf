@@ -1,0 +1,22 @@
+parserImport XOCL;
+
+import DTDL;
+import Types;
+
+context Types
+
+  @Class Enum extends ComplexSchema
+
+    @Doc
+      An Enum describes a data type with a set 
+      of named labels that map to values. An 
+      Enum has integer or string values, and 
+      its labels are strings.
+    end
+    
+    @Attribute valueSchema    : Schema            (<,!)     end
+    @Attribute enumValues     : [EnumValue]       (<,!,+,-) end
+
+    @Constructor(valueSchema) ! end
+
+  end

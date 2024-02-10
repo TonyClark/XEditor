@@ -1,0 +1,11 @@
+parserImport Manifests;
+
+
+@Manifest Excel
+
+  @File Excel       end
+  @File Row         end
+  @File Sheet       end
+  @File Workbook    end
+
+end;

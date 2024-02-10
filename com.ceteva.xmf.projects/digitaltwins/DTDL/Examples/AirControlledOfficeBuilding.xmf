@@ -1,0 +1,38 @@
+parserImport XOCL;
+parserImport DTDL;
+
+import DTDL;
+import Interfaces; 
+import Elements;
+import Types;  
+import Goals;
+import Behaviour;  
+import Objects; 
+import Exceptions; 
+   
+context Root    
+  @DigitalTwinModel AirControlledOfficeBuilding { 
+    goal { 
+      "When the external air quality of the building is bad then air 
+      circulation must be internal."
+    }
+    interface Office { 
+      address          : { street:String; city:String; postcode:String; };
+      constructionYear : String;
+      owner            : String;
+      airQualityStatus : <Boolean>;
+      floors           -> Floor; 
+      constraint { 
+        "when the air quality status is false then the circulation should be internal."
+        airQualityStatus or floors->forAll(floor | floor.rooms->forAll(room | room.internalAir))
+      }
+    } 
+    interface Floor {
+      name : String;
+      rooms -> Room;
+    }
+    interface Room {
+      name        : String;
+      internalAir : Toggle;
+    }
+}

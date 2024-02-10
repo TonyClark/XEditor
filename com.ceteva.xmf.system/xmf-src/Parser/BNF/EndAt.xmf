@@ -1,0 +1,65 @@
+parserImport XOCL;
+
+/******************************************************************************
+ *                                                                            *
+ *                                     EndAt                                  *
+ *                             -------------------                            *
+ *                                                                            *
+ *  During a parse we may encounter @C ... end. The grammar associated with   *
+ *  the classifier C handles the input from that point. Inserting an EndAt    *
+ *  instruction into the code stream causes the parsing machine to record     *
+ *  when the grammar returns the synthesized syntax. This can then be saved   *
+ *  in the parsing machine for processing by any client.                      *
+ *                                                                            *
+ ******************************************************************************/
+
+import Parser::BNF;
+import OCL;
+
+context Parser::BNF
+ 
+   @Class EndAt extends Recognizer
+
+     @Attribute classifier : Classifier  (<) end // The classifier @Classifier ... end
+     @Attribute exp        : Performable (<) end // The synthesized code.
+
+     @Constructor(classifier,exp) ! end
+   
+     @Operation code(out)
+       self.error("This should not get called.")
+     end
+   
+     @Operation FV():Set(String)
+       self.error("This should not get called.")
+     end
+     
+     @Operation last(g:Grammar,called:[String]):{String}
+       self.error("This should not get called.")
+     end
+     
+     @Operation toExp(FV:Set(String))
+       self.error("This should not get called.")
+     end
+
+     @Operation toJava() 
+
+       // Language constructs are used by the editor to colourize
+       // chunks of syntax that use syntax classes...
+       
+       let LanguageConstruct = xmf.javaClass("editor.construct.LanguageConstruct");
+           Keyword = xmf.javaClass("editor.construct.Keyword") then
+           charStart = if exp <> null andthen exp.isKindOf(Performable) then exp.charStart else 0 end;
+           charEnd = if exp <> null andthen exp.isKindOf(Performable) then exp.charEnd else 0 end;
+           XOCLKeywords = OCL::OCL.grammar.keywords()->asSeq then 
+           keywords = if classifier.grammar <> null then (classifier.grammar.keywords()->asSeq - XOCLKeywords)->collect(t | Keyword(t)) else [] end then
+           keywords = keywords-XOCLKeywords;
+           canonical = if classifier.grammar <> null then classifier.grammar.getCanonical() else "no def" end
+       in LanguageConstruct(classifier.name.toString(),canonical,charStart,charEnd,keywords) 
+       end
+     end
+     
+     @Operation transform(FV,grammar)
+       self.error("This should not get called.")
+     end
+     
+   end

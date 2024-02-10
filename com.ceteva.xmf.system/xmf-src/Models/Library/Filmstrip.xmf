@@ -1,0 +1,98 @@
+parserImport XOCL;
+parserImport Filmstrips;
+parserImport XRules;
+parserImport Filmstrips::Constraints;
+
+import Models;
+import Lib;
+import Filmstrips; 
+
+context Lib
+  @Rules LibRules import Root
+    @Rule GetIdCount([Models::Lib::Library[idCounter=N] | Rest],N) ! end
+    @Rule GetIdCount([Obj | Rest],N) GetIdCount(Rest,N) end
+  end 
+    
+//Lib::LibRules.debug := true;
+ 
+Root::libraryFilmstrip := 
+@Filmstrip libraryFilmstrip 
+  l = Library()        
+in     
+  roots [[Library],[l]];
+  monitor [[Library,Reader,Book,Borrows],Lib.classes->iterate(c os = {} | c.operations + os)];
+  start populateLib(l) 
+  rules LibRules
+  check  
+
+    @Constraint openThenCloseLibrary
+      <D> ( 
+        // if the library opens...
+        { v1 = o1."openLibrary"([]) |- s1 -> t1 } 
+        implies 
+        // ... then the library must eventually close...
+        <R> { v3 = o3."closeLibrary"(a3) |- s2 -> t3 } 
+      )
+    end
+    
+    @Constraint allBorrowedBooksWereAdded
+      [D*] ( 
+        // whenever a borrow occurs...
+        { v1 = o1."borrow"([r,b]) |- s1 -> t1 } 
+        implies 
+        //... previously the book must have been added to the library...
+        <L> { v2 = o2."addBook"([b]) |- s2 -> t2 }
+      )
+    end  
+      
+    @Constraint everyBookBorrowedIsReturned
+      [D*] ( 
+        // whenever a borrow occurs...
+        { v1 = o1."borrow"([r,b]) |- s1 -> t1 } 
+        implies 
+        // subsequently the book must be returned...
+        <R> { v2 = o2."return"([r,b]) |- s2 -> t2 })
+    end  
+    
+    @Constraint readersMustJoinBeforeBorrowing
+      [D*] ( 
+        // whenever a book is borrowed...
+        { v1 = o1."borrow"([r,b]) |- s1 -> t1 } 
+        implies 
+        // previously the reader must have joined the library...
+        <L> { v2 = o2."addReader"([r]) |- s2 -> t2 } )
+    end   
+    
+    @Constraint addReaderIncrementsIdCounter
+      [D*] (
+        // whenever we add a reader...
+        { v1 = o1."addReader"([r]) |- s -> t } 
+        implies 
+        // ... the idCount of the library must be increased...
+        { <- GetIdCount(s,i1) GetIdCount(t,i2) i2 = i1 + 1})
+    end  
+    
+    @Constraint addReaderCallsNewId
+      [D*] (
+        // whenver we add a reader...
+        { v1 = o."addReader"([r]) |- s1 -> t1 } 
+        implies 
+        // ... there is a nested message to create a new id...
+        <D> { v2 = o."newId"([]) |- s2 -> t2 })
+    end 
+end;   
+
+//Root::testFilmstrip := 
+@Filmstrip libFilmstrip 
+  l = Library()        
+in  
+  roots [
+    [Library],    // All instances of Library are shown in the snapshot.
+    [l]           // Initial snapshot object.
+  ]; 
+  monitor [
+    Lib.classes,  // Every instance will be added to the snapshot.
+    Lib.classes->iterate(c os = {} | c.operations + os) // Every call is monitored.
+  ];
+  start populateLib(l) // Run a library scenario.
+end;   

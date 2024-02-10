@@ -1,0 +1,26 @@
+parserImport Parser::BNF; 
+parserImport XOCL;
+
+/******************************************************************************
+ *                                                                            *
+ *                              XOCL  Grammar                                 *
+ *                         ---------------------------                        *
+ *                                                                            *
+ *  This file contains the grammar that is used to parse XOCL code. Parsing   *
+ *  XOCL has two phases: translation of the input characters into an abstract *
+ *  syntax tree and then syntax processing by walking the abstract syntax. A  *
+ *  key task of the abstract syntax walker is to organise the operators such  *
+ *  as + and * to ensure the associativity and precedence rules are correct.  *
+ *  To implement the rules, the abstract syntax walker may transform the      *
+ *  abstract syntax tree.                                                     *
+ *                                                                            *
+ ******************************************************************************/ 
+context Root
+@Operation test(sensorName:String)
+  let w = Excel::readWorkbook("../com.ceteva.xmf.projects/digitaltwins/DTDL/Examples/data.xlsx") then
+      s = w.getSheets()->head then
+      rs = s.getRows() then
+      row = @Find(row,rs) when row->head = sensorName do row->tail end
+  in row
+  end
+end

@@ -1,0 +1,113 @@
+parserImport XOCL;
+parserImport Parser::BNF;
+
+import DTDL;
+import Interfaces;
+import Goals;
+import Types;
+import Elements;
+import Behaviour;
+import Walkers::Code;
+
+context DTDL 
+
+  @Class DigitalTwinModel 
+  
+     @Grammar extends OCL::OCL.grammar
+
+       DigitalTwinModel ::= n=Name '{' g=Goal is=Interface* '}' {
+         @For e in is->tail do is->head.addToComponents(e) end;
+         let model = Model(Symbol(n),is->head,g)
+         in model.resolveReferences(is->iterate(i e=[] | e.bind(i.getDisplayName(),i)));
+            model.lift()
+         end
+       }.
+       Goal ::= 'goal' '{' description=Str '}' { Goal(description.subst(" ","\n",true),[]) }.
+       Interface ::= 'interface' n=Name '{' empty = {[]} 
+         es=InterfaceElements^(empty) 
+         cs=InterfaceConstraints^(es)
+       '}' { cs->iterate(c i=es->iterate(e i = Interface(n,n,[]) | i.addToContents(e)) | i.addToConstraints(c)) }.
+       InterfaceConstraints(es) ::= c=InterfaceConstraint^(es) cs=InterfaceConstraints^(es) { cs + [c] } | { [] }.
+       InterfaceConstraint(es) ::= 
+         'constraint' '{' s=Str e=SimpleExp '}' { 
+            let walker = PropertyWalker();
+                names = [ e.getName() | e <- es, ?not(e.isKindOf(Telemetry)) ] + [ e.getName()+"@" | e <- es, ?(e.isKindOf(Telemetry)) ]then
+              e = walker.walk(resolve(order(e)),names)
+            in Constraint(OCL::Drop([| @Operation(time,component) <e> end |]),s) 
+            end
+        }.
+       InterfaceElements(es) ::= e=InterfaceElement^(es) es = { es + [e] } InterfaceElements^(es) | { es }.
+       InterfaceElement(es) ::= 
+         InterfaceProperty
+       | Telemetry
+       | InterfaceRel
+       | InterfaceCommand^(es).
+       InterfaceProperty ::= n=Name ':' t=InterfaceType ';' { Property(n,n,t) }.
+       InterfaceField ::= n=Name ':' t=InterfaceType ';' { Field(n,t) }.
+       InterfaceRel ::= n=Name '->' t=Name ';' { Relationship(n,t) }.
+       InterfaceCommand(es) ::= 'command' n=Name '(' as=CommandArgs ')' ':' t=InterfaceType '=' e=SimpleExp ';' {
+        Command(n,
+          CommandRequest("in",t),
+          CommandResponse("out",t),
+          let walker = PropertyWalker();
+              names = [ e.getName() | e <- es, ?not(e.isKindOf(Telemetry)) ] + [ e.getName()+"@" | e <- es, ?(e.isKindOf(Telemetry)) ]then
+              e = walker.walk(e,names)
+          in OCL::Drop([| 
+               @Operation(time,component,args) 
+                 <as->iterate(a exp = e | [| let <a> = args->at(<as->indexOf(a).lift()>) in <exp> end |])> 
+               end |])
+          end)
+       }.
+       CommandArgs ::= a=CommandArg as=(',' CommandArg)* { Seq{a | as} } | { [] }.
+       CommandArg ::= n=Name ':' t=InterfaceType { n }.
+       InterfaceType ::=
+         'Integer' { PrimitiveSchema("Integer") }
+       | 'String' { PrimitiveSchema("String") }
+       | 'Boolean' { PrimitiveSchema("Boolean") }
+       | 'Double' { PrimitiveSchema("Double") }
+       | 'Toggle' { PrimitiveSchema("Toggle") }
+       | Name
+       | '[' t=InterfaceType ']' { Array(t) }
+       | '{' fs=InterfaceField* '}' { Object(fs) }.
+       Telemetry ::= n=Name ':' '<' t=InterfaceType '>' ';' { Telemetry(n,t) }.
+     end 
+
+   end
+
+context DTDL
+
+  @Class PropertyWalker extends OCLWalker 
+
+    @Operation walkVar(line:Integer,charStart:Integer,charEnd:Integer,name:String,properties:[String])
+      if properties->includes(name)
+      then [| self.getValue(<name.lift()>).getValue() |]
+      elseif properties->includes(name+"@")
+      then [| self.getValue(<name.lift()>).getValue(time) |]
+      else super(line,charStart,charEnd,name,properties)
+      end
+    end
+
+    @Operation walkBinExp(charStart:Integer,charEnd:Integer,binOp:String,left:OCL,right:OCL,properties:[String])
+      if binOp = ":=" and left.isKindOf(OCL::Var)
+      then self.walkVarUpdate(charStart,charEnd,left.name,right,properties)
+      else super(charStart,charEnd,binOp,left,right,properties)
+      end
+    end
+
+    @Operation walkVarUpdate(charStart:Integer,charEnd:Integer,name:String,value:Performable,properties:[String])
+      if properties->includes(name)
+      then [| self.setValue(<name.toString().lift()>,AtomicValue(<self.walk(value,properties)>)) |]
+      else super(charStart,charEnd,name,value,properties)
+      end
+    end
+
+    @Operation walkDot(charStart:Integer,charEnd:Integer,name:String,target:OCL,properties:[String])
+      [| let tt = <self.walk(target,properties)>
+         in if tt.isKindOf(DTDL::Objects::Component)
+            then tt.getValue(<name.lift()>).getValue()
+            else <super(charStart,charEnd,name,target,properties)>
+            end
+         end |]
+    end
+    
+  end

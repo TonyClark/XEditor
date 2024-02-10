@@ -1,0 +1,7 @@
+parserImport XOCL;
+
+context DTDL
+
+  @Package Goals
+
+  end

@@ -1,0 +1,45 @@
+parserImport XOCL;
+
+import DTDL;
+import Types;
+import Exceptions;
+
+context Types
+
+  @Class Field
+
+    @Doc
+      A Field describes a field in an Object.
+    end
+    
+    @Attribute id             : String = newId()  (<)       end
+    @Attribute comment        : String = ""       (<,!)     end
+    @Attribute description    : String = ""       (<,!)     end
+    @Attribute displayName    : String = ""       (<,!)     end
+    @Attribute name           : String            (<,!)     end
+    @Attribute schema         : Schema            (<,!)     end
+
+    @Constructor(name,schema) ! end
+
+    @Operation addDiagram(package,class)
+      if schema.isKindOf(PrimitiveSchema) or schema.isKindOf(Array) or schema.isKindOf(Interfaces::Interface)
+      then class.addField(name,schema.getModelType())
+      else
+        let className = name.upperCaseInitialLetter() + "Obj"
+        in schema.addSchemaClass(className,package);
+           package.addEdge(class,package.getElement(),name)
+        end
+      end
+    end
+    
+    @Operation resolveReferences(env) 
+      if schema.isKindOf(String)
+      then 
+        if env.binds(schema)
+        then self.setSchema(env.lookup(schema))
+        else throw Error("unbound type name: " + schema)
+        end
+      end
+    end
+
+  end

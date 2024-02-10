@@ -1,0 +1,30 @@
+﻿parserImport XOCL;
+parserImport Parser::BNF;
+
+import DTDL;
+import Interfaces;
+import Goals;
+import Types;
+import Elements;
+
+context DTDL
+  @Class DigitalTwinModel
+     @Grammar extends OCL::OCL.grammar
+
+       DigitalTwinModel ::= n=Name g=Goal is=Interface* {
+         @For e in is->tail do is->head.addToContents(e) end;
+         Model(n,is->head,g)
+       }.
+       Goal ::= 'goal' '{' description=Str '}' { Goal(description,[]) }.
+       Interface ::= 'interface' n=Name '{' es=InterfaceElement* '}' { es->iterate(e i = Interface(n,n,[]) | i.addToContents(e)) }.
+       InterfaceElement ::= 
+         InterfaceField
+       | InterfaceRel.
+       InterfaceField ::= n=Name ':' t=InterfaceType ';' { Property(n,n,t) }.
+       InterfaceRel ::= n=Name '->' t=Name { Relationship(n,t) }.
+       InterfaceType ::=
+         'Integer' { PrimitiveSchema("Integer") }
+       | '[' t=InterfaceType ']' { Array(t) }
+       | '{' fs=InterfaceField* '}' { Record(fs) }.
+     end
+  end

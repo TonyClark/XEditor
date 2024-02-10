@@ -1,0 +1,82 @@
+parserImport XOCL;
+
+context Exception
+  @Operation toJava()
+    @Letrec 
+        ExceptionNode = xmf.javaClass("exceptions.ExceptionNode");
+        CodeBoxNode   = xmf.javaClass("exceptions.CodeBoxNode");
+        ArgNode       = xmf.javaClass("exceptions.ArgNode");
+        TargetNode    = xmf.javaClass("exceptions.TargetNode");
+        PropertyNode  = xmf.javaClass("exceptions.PropertyNode");
+        LocalNode     = xmf.javaClass("exceptions.LocalNode");
+        ResourceNode     = xmf.javaClass("exceptions.ResourceNode");
+        maxDepth      = 2;
+        maxList       = 10;
+        maxVector     = 10;
+        valueToString(value) = 
+          @TypeCase(value)
+            Null do "null" end
+            Seq(Element) do
+              if value->size > maxList
+              then "..."
+              else value.toString()
+              end
+            end
+            Set(Element) do
+              if value->size > maxList
+              then "..."
+              else value.toString()
+              end
+            end
+            Vector do
+              if value->size > maxVector
+              then "..."
+              else value.toString()
+              end
+            end
+            else value.toString()
+          end;
+            
+        propertyNodes(value,visited) =
+          if visited->size < maxDepth andthen not(visited->includes(value)) andthen value <> null andthen value.isKindOf(Object)
+          then 
+            let max = value.slots()->collect(s | s.name.toString()->size).max()
+            in [ PropertyNode(s.name.toString(),valueToString(s.value),max,propertyNodes(s.value,[value] + visited)) | s <- value.slots() ]
+            end
+          elseif visited->size < maxDepth andthen not(visited->includes(value)) andthen value <> null andthen value.isKindOf(Seq(Element))
+          then 
+            if value->size < maxList
+            then [ PropertyNode("->at(" + i + ")",valueToString(value->at(i)),value->size + 5,propertyNodes(value->at(i),[value] + visited)) | i <- 0.to(value->size-1) ]
+            else []
+            end
+          elseif visited->size < maxDepth andthen not(visited->includes(value)) andthen value <> null andthen value.isKindOf(Vector)
+          then 
+            if value->size < maxVector
+            then [ PropertyNode("->at(" + i + ")",valueToString(value->at(i)),value->size + 5,propertyNodes(value->at(i),[value] + visited)) | i <- 0.to(value->size-1) ]
+            else []
+            end
+          else []
+          end;
+        toJavaFrame(frame) = 
+          let paramNames     = frame.paramNames();
+              paramTypes     = frame.paramTypes()->collect(c | c.name.toString());
+              paramValues    = frame.args()->collect(v | valueToString(v)) then
+              localNames     = [ name.toString() | name <- frame.localNames() ] then
+              localValues    = [ valueToString(v) | v <- frame.localValues() ];
+              maxLocalLength = [ name->size | name <- localNames ].max();
+              maxParamLength = [ name->size | name <- paramNames ].max() then
+              max            = maxLocalLength.max(maxParamLength) then 
+              argNodes       = [ ArgNode(pair->head->head,pair->head->tail,pair->tail,max,propertyNodes(pair->head->tail,[])) | pair <- paramNames.zip(paramValues).zip(paramTypes) ];
+              localNodes     = [ LocalNode(pair->head,pair->tail,max,propertyNodes(pair->tail,[])) | pair <- localNames.zip(localValues) ];
+              targetNode     = TargetNode(frame.target.toString(),frame.target.of().path(),propertyNodes(frame.target,[]));
+              resourceName   = frame.resourceName() then
+              resourceNode   = if resourceName = "" then [] else [ ResourceNode(resourceName,frame.line,frame.charPos) ] end
+          in CodeBoxNode(frame.toString(),resourceNode + [targetNode] + argNodes + localNodes)
+          end
+    in try 
+         ExceptionNode(message.toString(),[ toJavaFrame(frame) | frame <- self.stackFrames() ])
+       catch(x)
+         x.printBacktrace()
+       end
+    end
+  end

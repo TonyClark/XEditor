@@ -1,0 +1,33 @@
+parserImport XOCL;
+
+import DTDL;
+import Types;
+
+context Types
+
+  @Class Object extends ComplexSchema
+
+    @Doc
+      An Object describes a data type made up of named fields (like a struct in C). 
+      The fields in an Object map can be primitive or complex schemas.
+    end
+    
+    @Attribute fields : [Field] (<,!,+,-) end
+
+    @Constructor(fields) ! end
+
+    @Operation addSchemaClass(name,package)
+      let class = package.addClass(name)
+      in @For field in fields do
+           field.addDiagram(package,class)
+         end
+      end
+    end
+    
+    @Operation resolveReferences(env) 
+      @For field in fields do
+        field.resolveReferences(env)
+      end
+    end
+
+  end

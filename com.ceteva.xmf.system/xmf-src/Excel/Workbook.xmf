@@ -1,0 +1,15 @@
+parserImport XOCL;
+
+
+context Excel
+
+  @Class Workbook
+
+    @Attribute file   : String  (<,!)     end
+    @Attribute sheets : [Sheet] (<,!,+,-) end
+
+    @Constructor(file) ! end
+
+    @Constructor(file,sheets) end
+
+  end

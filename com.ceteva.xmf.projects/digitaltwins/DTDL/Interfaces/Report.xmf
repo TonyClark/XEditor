@@ -1,0 +1,16 @@
+parserImport XOCL;
+
+import DTDL;
+import Interfaces;
+import Elements;
+
+context Interfaces
+
+  @Class Report
+
+    @Attribute satisfied : Boolean (<,!) end
+    @Attribute reason    : String  (<,!) end
+
+    @Constructor(satisfied,reason) ! end
+
+  end

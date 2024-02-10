@@ -1,0 +1,22 @@
+parserImport XOCL;
+
+import DTDL;
+import Objects;
+
+context Objects
+
+  @Class AtomicValue extends Value
+
+    @Attribute value : Element (<,!) end
+
+    @Constructor(value) ! end
+
+    @Operation getValue(time:Time)
+      self.getValue()
+    end
+
+    @Operation tick(time:Time)
+      null
+    end
+
+  end

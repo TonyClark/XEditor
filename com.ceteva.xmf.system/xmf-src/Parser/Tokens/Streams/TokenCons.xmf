@@ -1,0 +1,37 @@
+parserImport XOCL;
+
+import Parser;
+import Tokens;
+import Streams;
+
+context Streams
+
+  @Class TokenCons extends TokenStream
+
+    @Attribute head:Token       (<) end
+    @Attribute tail:TokenStream     end
+
+    @Constructor(head,tail) ! end
+
+    @Operation asSeq():[Token]
+      Seq{head | self.getTail().asSeq()}
+    end
+
+    @Operation getTail():TokenStream
+      if tail.isKindOf(Operation)
+      then 
+        self.tail := tail();
+        tail
+      else tail
+      end
+    end
+
+    @Operation force() 
+      if tail.isKindOf(Operation)
+      then 
+        tail().force()
+      else null
+      end
+    end
+
+  end

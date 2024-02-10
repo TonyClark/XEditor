@@ -1,0 +1,39 @@
+parserImport XOCL;
+
+import DTDL;
+import Objects;
+import Interfaces;
+import Types;
+
+context Objects 
+
+  @Class Record extends Value
+
+    @Bind counter = 0 end
+
+    @Operation nextId():Integer
+      Record::counter := Record::counter + 1;
+      Record::counter - 1
+    end
+
+    @Attribute id    : Integer = Record::nextId() (<,!) end
+    @Attribute slots : [Slot]  (<,!,+) end
+
+    @Constructor(slots) ! end
+
+    @Operation addDiagram(modelInstance,time:Time,model,package)
+      let record = package.addTable("record_" + id)
+      in @For slot in slots do
+           record.addSlot(slot.getName(),slot.getValue().getValue().toString())
+         end;
+         record
+      end
+    end
+
+    @Operation tick(time:Time)
+      @For slot in slots do
+        slot.tick(time)
+      end
+    end
+
+  end

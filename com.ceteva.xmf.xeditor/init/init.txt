@@ -1,0 +1,25 @@
+../com.ceteva.xmf.system/xmf-src:/Users/tonyclark/Dropbox/Aston_Files/Research/XMF/xmf_projects:/Users/tonyclark/Dropbox/Aston_Files/workspace/com.ceteva.xmf.xeditor/xmf /Users/tonyclark/Dropbox/Aston_Files/Research/XMF/xmf_projects/init/Manifest.o
+
+../com.ceteva.xmf.system/xmf-src:/Users/clarkt1/Dropbox/Aston_Files/Research/XMF/xmf_projects:/Users/clarkt1/Dropbox/Aston_Files/workspace/com.ceteva.xmf.xeditor/xmf /Users/clarkt1/Dropbox/Aston_Files/Research/XMF/xmf_projects/init/Manifest.o
+
+../com.ceteva.xmf.system/xmf-src:/Users/tonyclark/Library/CloudStorage/Dropbox/Aston_Files/Research/XMF/xmf_projects:/Users/tonyclark/Library/CloudStorage/Dropbox/Aston_Files/workspace/com.ceteva.xmf.xeditor/xmf /Users/tonyclark/Library/CloudStorage/Dropbox/Aston_Files/Research/XMF/xmf_projects/init/Manifest.o
+
+
+
+@startuml
+class Student {
+  Name
+}
+class X
+class Y
+class o <<Relation>>
+Student "0..*" - "1..*" Course
+X "0..*" - "1..*" Y
+(Student, Course) <|- o
+o <|- (X,Y)
+hide o circle
+hide o members
+@enduml
+
+--add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web
+

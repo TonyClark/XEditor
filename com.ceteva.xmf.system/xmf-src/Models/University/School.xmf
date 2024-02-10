@@ -1,0 +1,17 @@
+parserImport XOCL;
+
+import Models;
+import University;
+
+context University
+
+  @Class School
+
+    @Attribute name        : String       (<,!)     end
+    @Attribute departments : [Department] (<,!,+,-) end
+    @Attribute roles       : [Role]       (<,!,+,-) end
+    @Attribute programmes  : [Programme]  (<,!,+,-) end
+
+    @Constructor(name) ! end
+
+  end

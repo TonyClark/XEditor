@@ -1,0 +1,27 @@
+parserImport XOCL;
+
+import DTDL;
+import Interfaces;
+import Elements;
+
+context Interfaces
+
+  @Class Constraint
+
+    @Doc
+      A constraint is supplied with the current time and an
+      instance of an an interface and returns a report. The
+      report states whether the constraint is satisfied or not
+      and a description of the reason for success/failure.
+    end
+
+    @Attribute check       : (Time,Object) -> Report (<,!) end
+    @Attribute description : String                  (<,!) end
+
+    @Constructor(check,description) ! end
+
+    @Operation check(time:Time,component:Object):Report
+      Report(check.invoke(component,[time,component],[]),description)
+    end
+
+  end
