@@ -70,17 +70,16 @@ public class ConsoleTextArea extends JTextArea implements MouseListener {
 		public void actionPerformed(ActionEvent e) {
 			action.actionPerformed(e);
 		}
-
 	};
 
-	private ConsoleInput input;
-	private String buffer = "";
-	private int bufferIndex = 0;
-	private int commandIndex = 0;
-	private InputMode mode = InputMode.NORMAL;
-	private NameResolution names = null;
-	private JPopupMenu popup = new JPopupMenu();
-	private Action[] textActions = { COPY, PASTE };
+	private ConsoleInput   input;
+	private String         buffer       = "";
+	private int            bufferIndex  = 0;
+	private int            commandIndex = 0;
+	private InputMode      mode         = InputMode.NORMAL;
+	private NameResolution names        = null;
+	private JPopupMenu     popup        = new JPopupMenu();
+	private Action[]       textActions  = { COPY, PASTE };
 
 	public ConsoleTextArea(ConsoleInput input, int rows, int cols) {
 		this.input = input;
@@ -133,10 +132,10 @@ public class ConsoleTextArea extends JTextArea implements MouseListener {
 		}
 		input.add('\n');
 		commandIndex = 0;
-		bufferIndex = 0;
+		bufferIndex  = 0;
 		setText(getText().substring(0, getText().length()) + "\n");
 		buffer = "";
-		mode = InputMode.NORMAL;
+		mode   = InputMode.NORMAL;
 		if (names != null) {
 			names.dispose();
 			names = null;
@@ -161,6 +160,10 @@ public class ConsoleTextArea extends JTextArea implements MouseListener {
 					String prefix = names.getPrefix();
 					resetNames();
 					insert(lastName.replaceFirst(prefix, ""));
+				} else if (names.hasCommonPrefix()) {
+					String commonPrefix = names.getCommonPrefix();
+					String prefix = names.getPrefix();
+					insert(commonPrefix.replaceFirst(prefix, ""));
 				}
 			}
 			break;
@@ -298,7 +301,7 @@ public class ConsoleTextArea extends JTextArea implements MouseListener {
 		if (names != null) {
 			names.dispose();
 			this.names = null;
-			mode = InputMode.NORMAL;
+			mode       = InputMode.NORMAL;
 		}
 		grabFocus();
 	}
@@ -328,14 +331,33 @@ public class ConsoleTextArea extends JTextArea implements MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		maybeShowPopup(e);
-
+		if (!maybeShowPopup(e)) {
+			int length = getText().length();
+			try {
+				Rectangle2D r = modelToView(length - (buffer.length() - bufferIndex));
+				FontMetrics metric = getFontMetrics(getFont());
+				int mousex = e.getX();
+				int caretx = (int) r.getX();
+				if (mousex < caretx) {
+					while (mousex < caretx) {
+						left();
+						caretx -= metric.stringWidth("x");
+					}
+				} else {
+					while (mousex > caretx) {
+						right();
+						caretx += metric.stringWidth("x");
+					}
+				}
+			} catch (BadLocationException e1) {
+				e1.printStackTrace();
+			}
+		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		maybeShowPopup(e);
-
 	}
 
 	@Override
@@ -350,9 +372,11 @@ public class ConsoleTextArea extends JTextArea implements MouseListener {
 
 	}
 
-	private void maybeShowPopup(MouseEvent e) {
+	private boolean maybeShowPopup(MouseEvent e) {
 		if (e.isPopupTrigger()) {
 			popup.show(e.getComponent(), e.getX(), e.getY());
-		}
+			return true;
+		} else
+			return false;
 	}
 }

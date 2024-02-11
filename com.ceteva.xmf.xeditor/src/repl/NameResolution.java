@@ -14,26 +14,28 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class NameResolution extends JFrame implements MouseListener {
 
-	private static Font FONT = new Font("Roman", Font.PLAIN, 8);
-	private static Font BOLD = new Font("Roman", Font.BOLD, 8);
-	private static int GAP = 20;
-	private static int HEIGHT = 500;
+	private static Font FONT   = new Font("Roman", Font.PLAIN, 8);
+	private static Font BOLD   = new Font("Roman", Font.BOLD, 8);
+	private static int  GAP    = 20;
+	private static int  HEIGHT = 500;
 
-	private Vector<String> names;
-	private Vector<JLabel> labels = new Vector<JLabel>();
-	private int nameCount = 0;
-	private String lastName = "";
-	private String prefix = "";
-	private JPanel panel = new JPanel();
-	private int x, y;
+	private Vector<String>  names;
+	private Vector<JLabel>  labels    = new Vector<JLabel>();
+	private int             nameCount = 0;
+	private String          lastName  = "";
+	private String          prefix    = "";
+	private JPanel          panel     = new JPanel();
+	private int             x, y;
 	private ConsoleTextArea editor;
 
 	public NameResolution(int x, int y, Vector<String> names, ConsoleTextArea editor) {
-		this.x = x;
-		this.y = y;
-		this.names = names;
+		this.x      = x;
+		this.y      = y;
+		this.names  = names;
 		this.editor = editor;
 		try {
 			Collections.sort(names);
@@ -62,7 +64,7 @@ public class NameResolution extends JFrame implements MouseListener {
 
 	private void populatePanel() {
 		nameCount = 0;
-		lastName = "";
+		lastName  = "";
 		labels.clear();
 		for (String name : names) {
 			if (prefix.equals("") || name.startsWith(prefix)) {
@@ -158,6 +160,23 @@ public class NameResolution extends JFrame implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public String getCommonPrefix() {
+		String prefix = null;
+		for (JLabel label : labels) {
+			String name = label.getText();
+			if (prefix != null) {
+				prefix = StringUtils.getCommonPrefix(prefix, name);
+			} else
+				prefix = name;
+		}
+		return prefix;
+	}
+
+	public boolean hasCommonPrefix() {
+		String prefix = getCommonPrefix();
+		return prefix != null && prefix.length() != 0;
 	}
 
 }

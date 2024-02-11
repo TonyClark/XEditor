@@ -600,6 +600,10 @@ public class Console extends JFrame implements WindowListener, ComponentListener
 			xmfPanel.hasError(editor, hasError);
 	}
 
+	public void hideException() {
+		xmfPanel.hideException();
+	}
+
 	public void load(File file) {
 		String name = file.getName();
 		String language = getLanguageName(file);
@@ -660,10 +664,6 @@ public class Console extends JFrame implements WindowListener, ComponentListener
 		xmfPanel.setCaretPosition(pos);
 	}
 
-	public void setLinePosition(int line) {
-		xmfPanel.setLinePosition(line);
-	}
-
 	public void setDirty(File file, boolean dirty) {
 		if (xmfPanel != null)
 			xmfPanel.setDirty(file, dirty);
@@ -676,6 +676,10 @@ public class Console extends JFrame implements WindowListener, ComponentListener
 
 	public void setLanguagePanel(LanguagePanel languagePanel) {
 		this.languagePanel = languagePanel;
+	}
+
+	public void setLinePosition(int line) {
+		xmfPanel.setLinePosition(line);
 	}
 
 	public void setRoot(Vector<Object> tree) {
@@ -697,10 +701,6 @@ public class Console extends JFrame implements WindowListener, ComponentListener
 				xmfPanel.showException(node);
 			} 
 		}
-	}
-
-	public void hideException() {
-		xmfPanel.hideException();
 	}
 
 	private void touchBinaries() {

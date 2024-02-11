@@ -37,7 +37,7 @@ import XEditor;
              end
            catch(exception)
              Root::xmfException := exception;
-             print(exception.toString());
+             showException(exception);
              null
            end
          else null
